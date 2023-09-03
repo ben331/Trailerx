@@ -53,4 +53,8 @@ dependencies {
     implementation("com.squareup.moshi:moshi-kotlin:1.9.3")
     implementation("io.coil-kt:coil:1.1.1")
     implementation("com.google.android.material:material:1.9.0")
+    implementation("org.jetbrains.kotlinx-coroutines-android:1.4.1")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
 }
