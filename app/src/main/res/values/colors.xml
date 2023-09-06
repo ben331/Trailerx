@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="yellow">#F6C700</color>
-    <color name="black">#FF000000</color>
-    <color name="gray_700">#4B4747</color>
+    <color name="yellow_700">#F7B100</color>
+    <color name="yellow_400">#F6C700</color>
+    <color name="yellow_200">#F9DF7B</color>
+    <color name="black">#000000</color>
+    <color name="gray_800">#4B4747</color>
     <color name="gray_500">#9D9C9C</color>
-    <color name="gray_200">#F5F5F5</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="gray_100">#F5F5F5</color>
+    <color name="white">#FFFFFF</color>
+    <color name="deep_orange_900">#C23000</color>
 </resources>
