@@ -20,4 +20,5 @@
         <!-- Status Bar. -->
         <item name="android:statusBarColor">@color/yellow_400</item>
     </style>
+
 </resources>
