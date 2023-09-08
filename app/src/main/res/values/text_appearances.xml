@@ -10,21 +10,17 @@
     </style>
 
     <style name="TextAppearance.IMDb.PrimaryButtonText">
-        <item name="android:textColor">@color/gray_800</item>
-        <item name="android:fontFamily">@font/roboto_bold</item>
-        <item name="android:textSize">@dimen/text_size_medium</item>
+
     </style>
 
-    <style name="TextAppearance.IMDb.SecondaryButtonText">
-        <item name="android:fontFamily">@font/roboto_bold</item>
-        <item name="android:textSize">@dimen/text_size_medium</item>
-        <item name="android:textColor">@color/login_button_text_color_selector</item>
+    <style name="Theme.IMDb.SecondaryButtonText">
+
     </style>
 
     <style name="TextAppearance.IMDb.LoginTitle">
         <item name="android:fontFamily">@font/roboto_medium</item>
         <item name="android:textSize">@dimen/text_size_large</item>
-        <item name="android:textColor">@color/gray_100</item>
+        <item name="android:textColor">@color/gray_800</item>
     </style>
 
     <style name="TextAppearance.IMDb.LoginInput">
@@ -35,6 +31,7 @@
 
     <style name="TextAppearance.IMDb.Helper">
         <item name="android:fontFamily">@font/roboto_light_italic</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/text_size_small</item>
         <item name="android:textColor">@color/gray_500</item>
     </style>
@@ -42,11 +39,12 @@
     <style name="TextAppearance.IMDb.ItalicBody">
         <item name="android:fontFamily">@font/roboto_light_italic</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
-        <item name="android:textColor">@color/gray_500</item>
+        <item name="android:textColor">@color/gray_800</item>
     </style>
 
     <style name="TextAppearance.IMDb.DarkItalicBody">
-        <item name="android:fontFamily">@font/roboto_light_italic</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textStyle">bold|italic</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:textColor">@color/gray_800</item>
     </style>
