@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources >
 
-    <style name="Theme.IMDb.LoginButton" >
+    <style name="Theme.IMDb.LoginButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="android:enabled">false</item>
         <item name="android:background">@drawable/login_button_selector</item>
         <item name="android:radius">@dimen/button_radius</item>
