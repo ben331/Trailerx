@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources >
 
-    <style name="Theme.IMDb.LoginButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
-        <item name="android:enabled">false</item>
-        <item name="android:background">@drawable/login_button_selector</item>
-        <item name="android:radius">@dimen/button_radius</item>
-        <item name="android:textColor">@color/login_button_text_color_selector</item>
-        <item name="android:fontFamily">@font/roboto_bold</item>
-        <item name="android:textSize">@dimen/text_size_medium</item>
-        <item name="android:textAllCaps">false</item>
-    </style>
-
-    <style name="Theme.IMDb.AppButton" parent="Widget.MaterialComponents.Button">
+    <style name="Widget.IMDb.Button.Primary" parent="Widget.MaterialComponents.Button">
         <item name="android:background">@drawable/app_button_accented</item>
         <item name="android:backgroundTint">@drawable/app_button_accented</item>
         <item name="android:radius">@dimen/button_radius</item>
-        <item name="android:textColor">@color/gray_800</item>
-        <item name="android:fontFamily">@font/roboto_bold</item>
-        <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:textAllCaps">false</item>
+        <item name="android:textAppearance">@style/TextAppearance.IMDb.PrimaryButtonText</item>
+    </style>
+
+    <style name="Widget.IMDb.Button.Secondary" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:enabled">false</item>
+        <item name="android:background">@drawable/login_button_selector</item>
+        <item name="android:radius">@dimen/button_radius</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textAppearance">@style/TextAppearance.IMDb.SecondaryButtonText</item>
+    </style>
+
+    <style name="Widget.IMDb.TextInputLayout.Basic" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:background">@drawable/login_edit_text</item>
+        <item name="android:elevation">@dimen/elevation_medium</item>
+        <item name="android:paddingStart">@dimen/padding_large</item>
+        <item name="android:paddingEnd">@dimen/padding_large</item>
+        <item name="android:textAppearance">@style/TextAppearance.IMDb.LoginInput</item>
     </style>
 
 </resources>
