@@ -3,11 +3,9 @@
 
     <style name="Widget.IMDb.Button.Primary" parent="Widget.MaterialComponents.Button">
         <item name="android:layout_height">@dimen/button_height</item>
-        <item name="android:background">@drawable/app_button_accented</item>
         <item name="android:paddingStart">@dimen/padding_large</item>
         <item name="android:paddingEnd">@dimen/padding_large</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:textAppearance">@style/TextAppearance.IMDb.PrimaryButtonText</item>
         <item name="android:textColor">@color/gray_800</item>
         <item name="android:fontFamily">@font/roboto_bold</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
@@ -16,7 +14,6 @@
     <style name="Widget.IMDb.Button.Secondary" parent="Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="android:layout_height">@dimen/button_height</item>
         <item name="android:enabled">false</item>
-        <item name="android:background">@drawable/login_button_selector</item>
         <item name="android:paddingStart">@dimen/padding_large</item>
         <item name="android:paddingEnd">@dimen/padding_large</item>
         <item name="android:textAllCaps">false</item>
@@ -25,12 +22,16 @@
         <item name="android:textColor">@color/login_button_text_color_selector</item>
     </style>
 
-    <style name="Widget.IMDb.TextInputLayout.Basic" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="android:background">@drawable/login_edit_text</item>
-        <item name="android:elevation">@dimen/elevation_medium</item>
-        <item name="android:paddingStart">@dimen/padding_large</item>
-        <item name="android:paddingEnd">@dimen/padding_large</item>
-        <item name="android:textAppearance">@style/TextAppearance.IMDb.LoginInput</item>
+    <style name="Widget.IMDb.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.IMDb.TextInputLayout</item>
+        <item name="expandedHintEnabled">false</item>
     </style>
-
+    <style name="ThemeOverlay.IMDb.TextInputLayout" parent="">
+        <item name="colorPrimary">@color/gray_500</item>
+        <item name="colorOnSurface">@color/gray_800</item>
+        <item name="android:textColorPrimary">@color/gray_500</item>
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.IMDb.Subtitle1</item>
+        <item name="textAppearanceCaption">@style/TextAppearance.IMDb.Caption</item>
+        <item name="editTextStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
+    </style>
 </resources>

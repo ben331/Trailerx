@@ -9,14 +9,6 @@
         <item name="android:textColor">@color/gray_500</item>
     </style>
 
-    <style name="TextAppearance.IMDb.PrimaryButtonText">
-
-    </style>
-
-    <style name="Theme.IMDb.SecondaryButtonText">
-
-    </style>
-
     <style name="TextAppearance.IMDb.LoginTitle">
         <item name="android:fontFamily">@font/roboto_medium</item>
         <item name="android:textSize">@dimen/text_size_large</item>
@@ -29,9 +21,17 @@
         <item name="android:textColor">@color/gray_500</item>
     </style>
 
-    <style name="TextAppearance.IMDb.Helper">
+    <style name="TextAppearance.IMDb.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="fontFamily">@font/roboto_regular</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textColor">@color/gray_500</item>
+    </style>
+
+    <style name="TextAppearance.IMDb.Caption" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="fontFamily">@font/roboto_light_italic</item>
         <item name="android:fontFamily">@font/roboto_light_italic</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:textStyle">italic</item>
         <item name="android:textSize">@dimen/text_size_small</item>
         <item name="android:textColor">@color/gray_500</item>
     </style>
