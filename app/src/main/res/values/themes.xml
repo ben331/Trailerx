@@ -28,6 +28,7 @@
         <!-- Text Appearances. -->
         <item name="textAppearanceSubtitle1">@style/TextAppearance.IMDb.Subtitle1</item>
         <item name="textAppearanceCaption">@style/TextAppearance.IMDb.Caption</item>
+        <item name="textAppearanceButton">@style/TextAppearance.IMDb.Button</item>
 
         <!-- Shape Appearances. -->
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.IMDb.SmallComponent</item>
