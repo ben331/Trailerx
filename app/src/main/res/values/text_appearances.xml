@@ -3,10 +3,19 @@
     <style name="TextAppearance"/>
     <style name="TextAppearance.IMDb"/>
 
-    <style name="TextAppearance.IMDb.Button" parent="TextAppearance.MaterialComponents.Button">
+    <style name="TextAppearance.IMDb.Button.Primary" parent="TextAppearance.MaterialComponents.Button">
+        <item name="fontFamily">@font/roboto_bold</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="TextAppearance.IMDb.Button.Secondary" parent="TextAppearance.MaterialComponents.Button">
         <item name="fontFamily">@font/roboto_bold</item>
         <item name="android:fontFamily">@font/roboto_bold</item>
         <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 
     <style name="TextAppearance.IMDb.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">

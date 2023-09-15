@@ -17,7 +17,7 @@
 
     <!-- heights and widths -->
     <dimen name="button_height">72dp</dimen>
-    <dimen name="button_width">300dp</dimen>
+    <dimen name="button_width">350dp</dimen>
     <dimen name="edittext_layout_height">76dp</dimen>
     <dimen name="edittext_layout_width">302dp</dimen>
     <dimen name="edittext_height">68dp</dimen>
