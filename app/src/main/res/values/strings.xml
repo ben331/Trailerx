@@ -30,6 +30,7 @@
     <string name="home">Inicio</string>
     <string name="search">Buscar</string>
     <string name="play">Play</string>
+    <string name="profile">Perfil</string>
 
     /*
     ---HomeFragment---

@@ -24,10 +24,12 @@
     <dimen name="edittext_width">300dp</dimen>
     <dimen name="search_edittext_height">62dp</dimen>
     <dimen name="search_edittext_width">340dp</dimen>
+    <dimen name="nav_bar_height">72dp</dimen>
 
     <!-- radius -->
     <dimen name="button_radius">14dp</dimen>
     <dimen name="text_field_radius">12dp</dimen>
+    <dimen name="nav_bar_radius">34dp</dimen>
 
     <!-- Elevations -->
     <dimen name="elevation_medium">4dp</dimen>

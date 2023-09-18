@@ -54,4 +54,12 @@
         <item name="android:textSize">@dimen/text_size_large</item>
     </style>
 
+    <style name="Widget.IMDb.BottomNavigationView" parent="@style/Widget.MaterialComponents.BottomNavigationView.PrimarySurface">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.IMDb.BottomNavigationView</item>
+
+    </style>
+    <style name="ThemeOverlay.IMDb.BottomNavigationView" parent="">
+        <item name="colorOnSurfaceVariant">@color/white</item>
+    </style>
+
 </resources>
