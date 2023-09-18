@@ -35,13 +35,23 @@
         <item name="editTextStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
     </style>
 
-    <style name="Widget.IMDb.TextInputLayout.Login" parent="Widget.AppCompat.EditText">
-        <item name="android:background">@drawable/ic_editext_login_background</item>
-        <item name="android:elevation">@dimen/elevation_medium</item>
-        <item name="android:padding">@dimen/padding_large</item>
+    <style name="Widget.IMDb.TextInputLayout.Search" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.IMDb.SmallComponent.Filled</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+        <item name="startIconDrawable">@drawable/ic_search</item>
+        <item name="fontFamily">@font/roboto_regular</item>
+        <item name="iconTint">@color/gray_800</item>
+        <item name="hintEnabled">false</item>
+        <item name="startIconTint">@color/gray_500</item>
+    </style>
+
+    <style name="Widget.IMDb.TextInputEditText.Search" parent="">
+        <item name="android:gravity">top</item>
         <item name="android:textColor">@color/gray_500</item>
-        <item name="android:fontFamily">@font/roboto_light_italic</item>
-        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textColorHint">@color/gray_500</item>
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
     </style>
 
 </resources>

@@ -30,6 +30,6 @@
         <item name="textAppearanceButton">@style/TextAppearance.IMDb.Button.Primary</item>
 
         <!-- Shape Appearances. -->
-        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.IMDb.SmallComponent</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.IMDb.SmallComponent.Outlined</item>
     </style>
 </resources>

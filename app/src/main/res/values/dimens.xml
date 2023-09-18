@@ -22,6 +22,8 @@
     <dimen name="edittext_layout_width">302dp</dimen>
     <dimen name="edittext_height">68dp</dimen>
     <dimen name="edittext_width">300dp</dimen>
+    <dimen name="search_edittext_height">62dp</dimen>
+    <dimen name="search_edittext_width">340dp</dimen>
 
     <!-- radius -->
     <dimen name="button_radius">14dp</dimen>

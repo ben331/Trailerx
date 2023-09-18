@@ -17,7 +17,7 @@
 
     <style name="TextAppearance.IMDb.TextField.SignUp" parent="TextAppearance.MaterialComponents.Subtitle1">
         <item name="fontFamily">@font/roboto_regular</item>
-        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:textColor">@color/gray_500</item>
     </style>
