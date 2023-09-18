@@ -55,5 +55,7 @@
     <string name="recently_viewed">Vistas recientes</string>
     <string name="no_recent">No has visitado ninguna página recientemente.</string>
     <string name="favorite_people">Personas favoritas</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
