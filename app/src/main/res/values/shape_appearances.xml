@@ -4,6 +4,10 @@
     <style name="ShapeAppearance.IMDb.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">@dimen/text_field_radius</item>
+        <item name="boxBackgroundColor">@color/white</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/text_field_radius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/text_field_radius</item>
+        <item name="elevation">@dimen/elevation_medium</item>
     </style>
 
 </resources>

@@ -26,7 +26,6 @@
         <item name="android:statusBarColor">@color/yellow_400</item>
 
         <!-- Text Appearances. -->
-        <item name="textAppearanceSubtitle1">@style/TextAppearance.IMDb.Subtitle1</item>
         <item name="textAppearanceCaption">@style/TextAppearance.IMDb.Caption</item>
         <item name="textAppearanceButton">@style/TextAppearance.IMDb.Button.Primary</item>
 
