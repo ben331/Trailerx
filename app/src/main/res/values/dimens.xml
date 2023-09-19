@@ -25,6 +25,8 @@
     <dimen name="edittext_max_width">488dp</dimen>
     <dimen name="search_edittext_height">62dp</dimen>
     <dimen name="search_edittext_max_width">716dp</dimen>
+    <dimen name="splash_height">62dp</dimen>
+    <dimen name="splash_width">62dp</dimen>
 
     <dimen name="nav_bar_height">72dp</dimen>
     <dimen name="icon_layout_width">60dp</dimen>
