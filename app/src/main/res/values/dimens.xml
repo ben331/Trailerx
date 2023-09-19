@@ -11,20 +11,26 @@
     <dimen name="margin_small">8dp</dimen>
     <dimen name="margin_medium">16dp</dimen>
     <dimen name="margin_large">24dp</dimen>
+    <dimen name="margin_extra_large">40dp</dimen>
     <dimen name="padding_small">8dp</dimen>
     <dimen name="padding_medium">16dp</dimen>
     <dimen name="padding_large">24dp</dimen>
 
     <!-- heights and widths -->
-    <dimen name="button_height">72dp</dimen>
-    <dimen name="button_width">350dp</dimen>
+    <dimen name="button_height">56dp</dimen>
+    <dimen name="button_max_width">716dp</dimen>
+
     <dimen name="edittext_layout_height">76dp</dimen>
-    <dimen name="edittext_layout_width">302dp</dimen>
-    <dimen name="edittext_height">60dp</dimen>
-    <dimen name="edittext_width">300dp</dimen>
+    <dimen name="edittext_height">56dp</dimen>
+    <dimen name="edittext_max_width">716dp</dimen>
     <dimen name="search_edittext_height">62dp</dimen>
-    <dimen name="search_edittext_width">340dp</dimen>
+    <dimen name="search_edittext_max_width">716dp</dimen>
+
     <dimen name="nav_bar_height">72dp</dimen>
+    <dimen name="icon_layout_width">60dp</dimen>
+    <dimen name="icon_layout_height">60dp</dimen>
+    <dimen name="icon_width">32dp</dimen>
+    <dimen name="icon_height">32dp</dimen>
 
     <!-- radius -->
     <dimen name="button_radius">14dp</dimen>
@@ -33,4 +39,10 @@
 
     <!-- Elevations -->
     <dimen name="elevation_medium">4dp</dimen>
+
+    <!-- Scale -->
+    <dimen name="scale_logo">2.8</dimen>
+
+    <!-- EMS -->
+    <dimen name="ems_default">10</dimen>
 </resources>
