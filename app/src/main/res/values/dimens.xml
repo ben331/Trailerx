@@ -18,11 +18,11 @@
 
     <!-- heights and widths -->
     <dimen name="button_height">56dp</dimen>
-    <dimen name="button_max_width">716dp</dimen>
+    <dimen name="button_max_width">320dp</dimen>
 
     <dimen name="edittext_layout_height">76dp</dimen>
     <dimen name="edittext_height">56dp</dimen>
-    <dimen name="edittext_max_width">716dp</dimen>
+    <dimen name="edittext_max_width">488dp</dimen>
     <dimen name="search_edittext_height">62dp</dimen>
     <dimen name="search_edittext_max_width">716dp</dimen>
 
