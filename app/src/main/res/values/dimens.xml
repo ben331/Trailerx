@@ -33,6 +33,8 @@
     <dimen name="icon_layout_height">60dp</dimen>
     <dimen name="icon_width">32dp</dimen>
     <dimen name="icon_height">32dp</dimen>
+    <dimen name="icon_login_with">110dp</dimen>
+    <dimen name="icon_login_height">60dp</dimen>
 
     <!-- radius -->
     <dimen name="button_radius">14dp</dimen>
@@ -44,6 +46,8 @@
 
     <!-- Scale -->
     <dimen name="scale_logo">2.8</dimen>
+    <dimen name="scale_x_logo_login">3.2</dimen>
+    <dimen name="scale_y_logo_login">3.5</dimen>
 
     <!-- EMS -->
     <dimen name="ems_default">10</dimen>

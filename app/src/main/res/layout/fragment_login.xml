@@ -93,7 +93,7 @@
             app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/loginBtn"
+            android:id="@+id/btnLogin"
             style="@style/Widget.IMDb.Button.Secondary"
             android:layout_width="0dp"
             android:layout_height="@dimen/button_height"
@@ -114,7 +114,7 @@
             android:textAppearance="@style/TextAppearance.IMDb.ItalicBody"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
+            app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
         <FrameLayout
             android:id="@+id/facebook_btn"
