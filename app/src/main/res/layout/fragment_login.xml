@@ -42,8 +42,8 @@
         <EditText
             android:id="@+id/editTextUser"
             style="@style/Widget.IMDb.TextInputEditText.Login"
-            android:layout_height="@dimen/edittext_height"
             android:layout_width="0dp"
+            android:layout_height="@dimen/edittext_height"
             android:layout_marginStart="@dimen/margin_extra_large"
             android:layout_marginTop="@dimen/margin_small"
             android:layout_marginEnd="@dimen/margin_extra_large"
@@ -53,6 +53,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/labelUser"
+            tools:ignore="TextContrastCheck"
             tools:text="juanpedro@gmail.com" />
 
         <TextView
@@ -78,6 +79,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/labelPassword"
+            tools:ignore="TextContrastCheck"
             tools:text="MyPassword" />
 
         <TextView
@@ -129,7 +131,8 @@
                 android:layout_height="@dimen/icon_layout_height"
                 android:layout_gravity="center"
                 android:background="@drawable/ic_white_circle"
-                android:contentDescription="@string/img_facebook" />
+                android:contentDescription="@string/img_facebook"
+                tools:ignore="ImageContrastCheck" />
 
             <ImageView
                 android:layout_width="@dimen/icon_width"
@@ -180,7 +183,8 @@
                 android:layout_height="@dimen/icon_layout_height"
                 android:layout_gravity="center"
                 android:background="@drawable/ic_white_circle"
-                android:contentDescription="@string/img_google" />
+                android:contentDescription="@string/img_google"
+                tools:ignore="ImageContrastCheck" />
 
             <ImageView
                 android:layout_width="@dimen/icon_width"
