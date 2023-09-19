@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/yellow_400"
+    tools:context=".ui.LoginFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_large"
+            android:autofillHints="@string/app_name"
+            android:contentDescription="@string/app_name"
+            android:scaleType="fitXY"
+            android:scaleX="@dimen/scale_logo"
+            android:scaleY="@dimen/scale_logo"
+            android:src="@drawable/ic_launcher_foreground"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/labelUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/user"
+            android:textAppearance="@style/TextAppearance.IMDb.LoginLabel"
+            app:layout_constraintStart_toStartOf="@+id/editTextUser"
+            app:layout_constraintTop_toBottomOf="@+id/imgLogo" />
+
+        <EditText
+            android:id="@+id/editTextUser"
+            style="@style/Widget.IMDb.TextInputEditText.Login"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_width="0dp"
+            android:layout_marginStart="@dimen/margin_extra_large"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_extra_large"
+            android:autofillHints=""
+            android:hint="@string/user"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/labelUser"
+            tools:text="juanpedro@gmail.com" />
+
+        <TextView
+            android:id="@+id/labelPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:text="@string/password"
+            android:textAppearance="@style/TextAppearance.IMDb.LoginLabel"
+            app:layout_constraintStart_toStartOf="@+id/editTextPassword"
+            app:layout_constraintTop_toBottomOf="@+id/editTextUser" />
+
+        <EditText
+            android:id="@+id/editTextPassword"
+            style="@style/Widget.IMDb.TextInputEditText.Login"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/edittext_height"
+            android:layout_marginStart="@dimen/margin_extra_large"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_extra_large"
+            android:autofillHints="@string/password"
+            android:inputType="textPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/labelPassword"
+            tools:text="MyPassword" />
+
+        <TextView
+            android:id="@+id/labelForgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:text="@string/forgot_password"
+            android:textAppearance="@style/TextAppearance.IMDb.Caption"
+            app:layout_constraintStart_toStartOf="@+id/editTextPassword"
+            app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/loginBtn"
+            style="@style/Widget.IMDb.Button.Secondary"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginStart="@dimen/margin_extra_large"
+            android:layout_marginTop="@dimen/margin_large"
+            android:layout_marginEnd="@dimen/margin_extra_large"
+            android:text="@string/login"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/labelForgotPassword" />
+
+        <TextView
+            android:id="@+id/labelLoginWith"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_large"
+            android:text="@string/login_with"
+            android:textAppearance="@style/TextAppearance.IMDb.ItalicBody"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
+
+        <FrameLayout
+            android:id="@+id/facebook_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_large"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/labelLoginWith"
+            tools:context=".MainActivity">
+
+            <ImageView
+                android:layout_width="@dimen/icon_layout_width"
+                android:layout_height="@dimen/icon_layout_height"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_white_circle"
+                android:contentDescription="@string/img_facebook" />
+
+            <ImageView
+                android:layout_width="@dimen/icon_width"
+                android:layout_height="@dimen/icon_height"
+                android:layout_gravity="center"
+                android:contentDescription=""
+                android:src="@drawable/ic_facebook"
+                tools:ignore="ContentDescription" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/apple_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_large"
+            app:layout_constraintEnd_toStartOf="@+id/facebook_btn"
+            app:layout_constraintTop_toTopOf="@+id/facebook_btn"
+            tools:context=".MainActivity">
+
+            <ImageView
+                android:layout_width="@dimen/icon_layout_width"
+                android:layout_height="@dimen/icon_layout_height"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_white_circle"
+                android:contentDescription="@string/img_apple"
+                tools:ignore="ImageContrastCheck" />
+
+            <ImageView
+                android:layout_width="@dimen/icon_width"
+                android:layout_height="@dimen/icon_height"
+                android:layout_gravity="center"
+                android:contentDescription=""
+                android:src="@drawable/ic_apple"
+                tools:ignore="ContentDescription" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/google_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_large"
+            app:layout_constraintStart_toEndOf="@+id/facebook_btn"
+            app:layout_constraintTop_toTopOf="@+id/facebook_btn"
+            tools:context=".MainActivity">
+
+            <ImageView
+                android:layout_width="@dimen/icon_layout_width"
+                android:layout_height="@dimen/icon_layout_height"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_white_circle"
+                android:contentDescription="@string/img_google" />
+
+            <ImageView
+                android:layout_width="@dimen/icon_width"
+                android:layout_height="@dimen/icon_height"
+                android:layout_gravity="center"
+                android:contentDescription=""
+                android:src="@drawable/ic_google"
+                tools:ignore="ContentDescription" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/labelHasAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:text="@string/has_account"
+            android:textAppearance="@style/TextAppearance.IMDb.ItalicBody"
+            app:layout_constraintStart_toStartOf="@+id/apple_btn"
+            app:layout_constraintTop_toBottomOf="@+id/apple_btn" />
+
+        <TextView
+            android:id="@+id/labelRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small"
+            android:text="@string/register"
+            android:textAppearance="@style/TextAppearance.IMDb.DarkItalicBody"
+            app:layout_constraintStart_toEndOf="@+id/labelHasAccount"
+            app:layout_constraintTop_toTopOf="@+id/labelHasAccount" />
+
+        <TextView
+            android:id="@+id/labelGuest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:text="@string/guest"
+            android:textAppearance="@style/TextAppearance.IMDb.DarkBody"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/labelHasAccount" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
