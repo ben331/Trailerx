@@ -1,17 +1,18 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
     namespace = "com.globant.imdb"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.globant.imdb"
         minSdk = 24
         //noinspection OldTargetApi
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -41,11 +42,32 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.10.1")
+    implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    dependencies {
+        val navVersion = "2.7.3"
+
+        // Java language implementation
+        implementation("androidx.navigation:navigation-fragment:$navVersion")
+        implementation("androidx.navigation:navigation-ui:$navVersion")
+
+        // Kotlin
+        implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
+        implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
+
+        // Feature module Support
+        implementation("androidx.navigation:navigation-dynamic-features-fragment:$navVersion")
+
+        // Testing Navigation
+        androidTestImplementation("androidx.navigation:navigation-testing:$navVersion")
+
+        // Jetpack Compose Integration
+        implementation("androidx.navigation:navigation-compose:$navVersion")
+    }
 }
