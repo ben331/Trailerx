@@ -71,4 +71,13 @@
         <item name="colorOnSurfaceVariant">@color/white</item>
     </style>
 
+    <style name="Widget.IMDb.Toolbar" parent="@style/Widget.MaterialComponents.Toolbar.Primary">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.IMDb.Toolbar</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="android:elevation">0dp</item>
+    </style>
+    <style name="ThemeOverlay.IMDb.Toolbar" parent="">
+        <item name="colorPrimary">@color/white</item>
+    </style>
+
 </resources>

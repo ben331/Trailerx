@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.IMDb" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
@@ -31,5 +31,9 @@
 
         <!-- Shape Appearances. -->
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.IMDb.SmallComponent.Outlined</item>
+    </style>
+
+    <style name="Theme.IMDb.SplashScreen">
+        <item name="android:windowBackground">@color/yellow_400</item>
     </style>
 </resources>
