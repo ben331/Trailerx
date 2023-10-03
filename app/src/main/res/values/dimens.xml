@@ -13,6 +13,7 @@
     <dimen name="margin_medium">16dp</dimen>
     <dimen name="margin_large">24dp</dimen>
     <dimen name="margin_extra_large">40dp</dimen>
+    <dimen name="margin_home_movie">-80dp</dimen>
     <dimen name="padding_small">8dp</dimen>
     <dimen name="padding_medium">16dp</dimen>
     <dimen name="padding_large">24dp</dimen>
@@ -20,7 +21,6 @@
     <!-- heights and widths -->
     <dimen name="button_height">56dp</dimen>
     <dimen name="button_max_width">320dp</dimen>
-
     <dimen name="edittext_layout_height">76dp</dimen>
     <dimen name="edittext_height">56dp</dimen>
     <dimen name="edittext_max_width">488dp</dimen>
@@ -28,7 +28,6 @@
     <dimen name="search_edittext_max_width">716dp</dimen>
     <dimen name="splash_height">62dp</dimen>
     <dimen name="splash_width">62dp</dimen>
-
     <dimen name="nav_bar_height">72dp</dimen>
     <dimen name="icon_layout_width">60dp</dimen>
     <dimen name="icon_layout_height">60dp</dimen>
@@ -36,6 +35,13 @@
     <dimen name="icon_height">32dp</dimen>
     <dimen name="icon_login_with">110dp</dimen>
     <dimen name="icon_login_height">60dp</dimen>
+    <dimen name="section_home_height">280dp</dimen>
+    <dimen name="video_home_height">200dp</dimen>
+    <dimen name="movie_width">100dp</dimen>
+    <dimen name="movie_height">140dp</dimen>
+    <dimen name="line_width">8dp</dimen>
+    <dimen name="line_height">28dp</dimen>
+    <dimen name="carousel_height">180dp</dimen>
 
     <!-- radius -->
     <dimen name="button_radius">14dp</dimen>
