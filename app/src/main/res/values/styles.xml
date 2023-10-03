@@ -65,6 +65,7 @@
 
     <style name="Widget.IMDb.BottomNavigationView" parent="@style/Widget.MaterialComponents.BottomNavigationView.PrimarySurface">
         <item name="materialThemeOverlay">@style/ThemeOverlay.IMDb.BottomNavigationView</item>
+        <item name="android:elevation">@dimen/elevation_medium</item>
         <item name="android:background">@drawable/ic_navigation_background</item>
     </style>
     <style name="ThemeOverlay.IMDb.BottomNavigationView" parent="">
