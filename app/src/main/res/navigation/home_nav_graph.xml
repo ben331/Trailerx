@@ -16,7 +16,6 @@
             android:id="@+id/action_homeFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
     </fragment>
-    <include app:graph="@navigation/nav_graph" />
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.globant.imdb.ui.SearchFragment"
@@ -49,8 +48,5 @@
         <action
             android:id="@+id/action_profileFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
-        <action
-            android:id="@+id/action_profileFragment_to_nav_graph"
-            app:destination="@id/nav_graph" />
     </fragment>
 </navigation>

@@ -37,7 +37,6 @@ android {
     }
     buildFeatures {
         viewBinding = true
-        dataBinding = true
     }
 }
 
@@ -51,10 +50,6 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     val navVersion = "2.7.3"
-
-    // Java language implementation
-    implementation("androidx.navigation:navigation-fragment:$navVersion")
-    implementation("androidx.navigation:navigation-ui:$navVersion")
 
     // Kotlin
     implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
@@ -70,7 +65,5 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:$navVersion")
 
     //SplashScreen
-    dependencies {
-        implementation("androidx.core:core-splashscreen:1.0.1")
-    }
+    implementation("androidx.core:core-splashscreen:1.0.1")
 }
