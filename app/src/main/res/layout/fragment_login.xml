@@ -212,7 +212,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_small"
             android:text="@string/register"
-            android:textAppearance="@style/TextAppearance.IMDb.DarkItalicBody"
+            android:textAppearance="@style/TextAppearance.IMDb.Body.DarkItalic"
             app:layout_constraintStart_toEndOf="@+id/labelHasAccount"
             app:layout_constraintTop_toTopOf="@+id/labelHasAccount" />
 
@@ -222,7 +222,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_medium"
             android:text="@string/guest"
-            android:textAppearance="@style/TextAppearance.IMDb.DarkBody"
+            android:textAppearance="@style/TextAppearance.IMDb.Body.Dark"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
