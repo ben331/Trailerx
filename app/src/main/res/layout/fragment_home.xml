@@ -12,52 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <include
             android:id="@+id/mainTrailerContainer"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/section_home_height"
-            android:background="@color/white"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <VideoView
-                android:id="@+id/trailerVideoView"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/video_home_height"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-            <ImageView
-                android:id="@+id/trailerImageView"
-                android:layout_width="@dimen/movie_width"
-                android:layout_height="@dimen/movie_height"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/trailerVideoView"
-                android:layout_marginStart="@dimen/margin_extra_large"
-                android:layout_marginTop="@dimen/margin_home_movie"
-                android:contentDescription="@string/img_trailer"
-                tools:background="@color/black"/>
-
-            <TextView
-                android:id="@+id/trailerName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/trailerImageView"
-                app:layout_constraintTop_toBottomOf="@id/trailerVideoView"
-                android:layout_marginStart="@dimen/margin_large"
-                android:layout_marginTop="@dimen/margin_micro"
-                android:elevation="@dimen/elevation_medium"
-                style="@style/TextAppearance.IMDb.Body.Medium"
-                tools:text="@tools:sample/full_names"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/trailerImageView"
-                app:layout_constraintTop_toBottomOf="@id/trailerName"
-                android:layout_marginStart="@dimen/margin_large"
-                android:layout_marginTop="@dimen/margin_micro"
-                style="@style/TextAppearance.IMDb.Body.Small"
-                tools:text="@tools:sample/full_names"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toTopOf="parent"
+            layout="@layout/item_trailer"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/sectionsRecyclerView"

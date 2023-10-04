@@ -20,8 +20,8 @@
 
     <ImageButton
         android:id="@+id/btn_bookmark_add"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="@dimen/icon_small_size"
+        android:layout_height="@dimen/icon_small_size"
         android:layout_marginStart="@dimen/margin_micro"
         android:background="@drawable/ic_bookmark"
         android:contentDescription="@string/btn_bookmark"
@@ -31,8 +31,8 @@
 
     <ImageView
         android:id="@+id/img_star"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_width="@dimen/icon_micro_size"
+        android:layout_height="@dimen/icon_micro_size"
         android:contentDescription="@string/img_star"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/img_movie"
@@ -63,8 +63,8 @@
 
     <ImageView
         android:id="@+id/img_info"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_width="@dimen/icon_micro_size"
+        android:layout_height="@dimen/icon_micro_size"
         android:contentDescription="@string/img_info"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -7,6 +7,7 @@
     <dimen name="text_size_regular">16sp</dimen>
     <dimen name="text_size_medium">18sp</dimen>
     <dimen name="text_size_large">20sp</dimen>
+    <dimen name="text_size_title">22sp</dimen>
     <dimen name="text_size_extra_large">24sp</dimen>
 
     <!-- Margins and paddings -->
@@ -44,6 +45,11 @@
     <dimen name="line_width">8dp</dimen>
     <dimen name="line_height">28dp</dimen>
     <dimen name="card_movie_height">190dp</dimen>
+    <dimen name="icon_small_size">20dp</dimen>
+    <dimen name="icon_micro_size">16dp</dimen>
+    <dimen name="card_result_height">148dp</dimen>
+    <dimen name="img_result_width">90dp</dimen>
+    <dimen name="img_result_height">130dp</dimen>
 
     <!-- radius -->
     <dimen name="button_radius">14dp</dimen>
