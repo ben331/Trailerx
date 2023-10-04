@@ -1,11 +1,11 @@
 package com.globant.imdb.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.globant.imdb.databinding.FragmentLoginBinding
 
@@ -13,6 +13,10 @@ class LoginFragment : Fragment() {
 
     private val binding:FragmentLoginBinding by lazy {
         FragmentLoginBinding.inflate(layoutInflater)
+    }
+
+    private val navController:NavController by lazy {
+        findNavController()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,12 +29,12 @@ class LoginFragment : Fragment() {
     ): View {
         binding.btnLogin.setOnClickListener{
             val action = LoginFragmentDirections.actionLoginFragmentToNavigationFragment()
-            findNavController().navigate(action)
+            navController.navigate(action)
         }
 
         binding.labelRegister.setOnClickListener{
             val action = LoginFragmentDirections.actionLoginFragmentToSignUpFragment()
-            findNavController().navigate(action)
+            navController.navigate(action)
         }
 
         return binding.root
