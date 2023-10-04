@@ -64,6 +64,9 @@
     <string name="img_apple">Apple</string>
     <string name="ic_back">Atrás</string>
     <string name="img_trailer">Imagen del trailer</string>
+    <string name="btn_bookmark">Botón bookmark de agregar</string>
+    <string name="img_star">Puntuación en estrellas</string>
+    <string name="img_info">Botón Información</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

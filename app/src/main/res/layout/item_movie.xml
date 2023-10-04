@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="190dp"
+    android:background="@drawable/ic_footer_movie"
+    android:elevation="@dimen/elevation_medium"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.MovieFragment">
+
+    <ImageView
+        android:id="@+id/img_movie"
+        android:layout_width="@dimen/movie_width"
+        android:layout_height="@dimen/movie_height"
+        android:contentDescription="@string/img_trailer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@color/yellow_400"
+        tools:ignore="ImageContrastCheck" />
+
+    <ImageButton
+        android:id="@+id/btn_bookmark_add"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="@dimen/margin_micro"
+        android:background="@drawable/ic_bookmark"
+        android:contentDescription="@string/btn_bookmark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TouchTargetSizeCheck,ImageContrastCheck" />
+
+    <ImageView
+        android:id="@+id/img_star"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:contentDescription="@string/img_star"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/img_movie"
+        android:layout_marginStart="@dimen/margin_micro"
+        android:layout_marginTop="@dimen/margin_micro"
+        android:src="@drawable/ic_star"
+        tools:ignore="ImageContrastCheck" />
+
+    <TextView
+        android:id="@+id/label_stars"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/img_star"
+        app:layout_constraintBottom_toBottomOf="@id/img_star"
+        app:layout_constraintStart_toEndOf="@id/img_star"
+        android:layout_marginStart="@dimen/margin_micro"
+        android:textAppearance="@style/TextAppearance.IMDb.Body.Micro"
+        tools:text="4.5"/>
+
+    <TextView
+        android:id="@+id/label_movie_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/img_star"
+        app:layout_constraintStart_toStartOf="@id/img_star"
+        android:textAppearance="@style/TextAppearance.IMDb.Body.Pico"
+        tools:text="Dura"/>
+
+    <ImageView
+        android:id="@+id/img_info"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:contentDescription="@string/img_info"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="@dimen/margin_micro"
+        android:layout_marginBottom="@dimen/margin_micro"
+        android:src="@drawable/ic_info"
+        tools:ignore="ImageContrastCheck" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

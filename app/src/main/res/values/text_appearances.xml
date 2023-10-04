@@ -74,6 +74,18 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <style name="TextAppearance.IMDb.Body.Pico" parent="">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">@dimen/text_size_pico</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextAppearance.IMDb.Body.Micro" parent="">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">@dimen/text_size_micro</item>
+        <item name="android:textColor">@color/gray_800</item>
+    </style>
+
     <style name="TextAppearance.IMDb.Body.Medium" parent="">
         <item name="android:fontFamily">@font/roboto_medium</item>
         <item name="android:textSize">@dimen/text_size_medium</item>

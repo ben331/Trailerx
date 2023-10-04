@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Text dimens -->
+    <dimen name="text_size_pico">8sp</dimen>
+    <dimen name="text_size_micro">10sp</dimen>
     <dimen name="text_size_small">14sp</dimen>
     <dimen name="text_size_regular">16sp</dimen>
     <dimen name="text_size_medium">18sp</dimen>
@@ -41,12 +43,13 @@
     <dimen name="movie_height">140dp</dimen>
     <dimen name="line_width">8dp</dimen>
     <dimen name="line_height">28dp</dimen>
-    <dimen name="carousel_height">180dp</dimen>
+    <dimen name="card_movie_height">190dp</dimen>
 
     <!-- radius -->
     <dimen name="button_radius">14dp</dimen>
     <dimen name="text_field_radius">12dp</dimen>
     <dimen name="nav_bar_radius">34dp</dimen>
+    <dimen name="footer_movie_radius">8dp</dimen>
 
     <!-- Elevations -->
     <dimen name="elevation_medium">4dp</dimen>
