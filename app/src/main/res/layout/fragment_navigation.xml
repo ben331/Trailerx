@@ -15,6 +15,7 @@
         app:navGraph="@navigation/home_nav_graph" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/nav_bar_height"
         app:layout_constraintBottom_toBottomOf="parent"

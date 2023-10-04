@@ -17,22 +17,22 @@ class LoginFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("---------------->", "Login: onCreate")
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        Log.d("---------------->", "Login: onCreateView")
-
         binding.btnLogin.setOnClickListener{
+            val action = LoginFragmentDirections.actionLoginFragmentToNavigationFragment()
+            findNavController().navigate(action)
+        }
+
+        binding.labelRegister.setOnClickListener{
             val action = LoginFragmentDirections.actionLoginFragmentToSignUpFragment()
             findNavController().navigate(action)
         }
 
-        // Inflate the layout for this fragment
         return binding.root
     }
 }
