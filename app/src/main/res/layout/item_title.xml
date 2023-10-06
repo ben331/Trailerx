@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingTop="@dimen/margin_medium"
+    android:gravity="center_vertical">
+
+    <View
+        android:id="@+id/lineView"
+        android:layout_width="@dimen/line_width"
+        android:layout_height="@dimen/line_height"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:background="@drawable/ic_background_logo"/>
+
+    <TextView
+        android:id="@+id/sectionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
+        style="@style/TextAppearance.IMDb.Body.Dark"
+        tools:text="Default Section Title"/>
+
+</LinearLayout>

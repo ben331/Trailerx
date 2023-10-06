@@ -6,27 +6,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.CarouselFragment">
 
-
-    <View
-        android:id="@+id/lineView"
-        android:layout_width="@dimen/line_width"
-        android:layout_height="@dimen/line_height"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="@dimen/margin_medium"
-        android:layout_marginStart="@dimen/margin_medium"
-        android:background="@drawable/ic_background_logo"/>
-
-    <TextView
+    <include
         android:id="@+id/sectionTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/lineView"
-        app:layout_constraintStart_toEndOf="@id/lineView"
-        android:layout_marginTop="@dimen/margin_micro"
-        android:layout_marginStart="@dimen/margin_medium"
-        style="@style/TextAppearance.IMDb.Body.Dark"
-        tools:text="@string/best_selections"/>
+        layout="@layout/item_title" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/moviesRecyclerView"

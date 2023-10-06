@@ -2,7 +2,6 @@
 <resources >
 
     <style name="Widget.IMDb.Button.Primary" parent="Widget.MaterialComponents.Button.UnelevatedButton">
-        <item name="layout_constraintWidth_max">@dimen/button_max_width</item>
         <item name="materialThemeOverlay">@style/ThemeOverlay.IMDb.Button.Primary</item>
     </style>
     <style name="ThemeOverlay.IMDb.Button.Primary" parent="">
@@ -76,10 +75,20 @@
     <style name="Widget.IMDb.Toolbar" parent="@style/Widget.MaterialComponents.Toolbar.Primary">
         <item name="materialThemeOverlay">@style/ThemeOverlay.IMDb.Toolbar</item>
         <item name="strokeWidth">0dp</item>
+        <item name="navigationIcon">@drawable/ic_arrow_back</item>
+        <item name="titleCentered">true</item>
         <item name="android:elevation">0dp</item>
     </style>
     <style name="ThemeOverlay.IMDb.Toolbar" parent="">
         <item name="colorPrimary">@color/white</item>
+    </style>
+
+    <style name ="Widget.TextView.Ship" parent="">
+        <item name="android:background">@drawable/ic_background_genre</item>
+        <item name="android:paddingTop">@dimen/padding_small</item>
+        <item name="android:paddingBottom">@dimen/padding_small</item>
+        <item name="android:paddingStart">@dimen/padding_medium</item>
+        <item name="android:paddingEnd">@dimen/padding_medium</item>
     </style>
 
 </resources>

@@ -23,6 +23,7 @@
 
     <!-- heights and widths -->
     <dimen name="button_height">56dp</dimen>
+    <dimen name="button_primary_height">64dp</dimen>
     <dimen name="button_max_width">320dp</dimen>
     <dimen name="edittext_layout_height">76dp</dimen>
     <dimen name="edittext_height">56dp</dimen>
@@ -39,7 +40,7 @@
     <dimen name="icon_login_with">110dp</dimen>
     <dimen name="icon_login_height">60dp</dimen>
     <dimen name="section_home_height">280dp</dimen>
-    <dimen name="video_home_height">200dp</dimen>
+    <dimen name="video_height">200dp</dimen>
     <dimen name="movie_width">100dp</dimen>
     <dimen name="movie_height">140dp</dimen>
     <dimen name="line_width">8dp</dimen>
@@ -50,12 +51,15 @@
     <dimen name="card_result_height">148dp</dimen>
     <dimen name="img_result_width">90dp</dimen>
     <dimen name="img_result_height">130dp</dimen>
+    <dimen name="app_bar_height">40dp</dimen>
+    <dimen name="card_synopsis_height">180dp</dimen>
 
     <!-- radius -->
     <dimen name="button_radius">14dp</dimen>
     <dimen name="text_field_radius">12dp</dimen>
     <dimen name="nav_bar_radius">34dp</dimen>
     <dimen name="footer_movie_radius">8dp</dimen>
+    <dimen name="genre_radius">8dp</dimen>
 
     <!-- Elevations -->
     <dimen name="elevation_medium">4dp</dimen>

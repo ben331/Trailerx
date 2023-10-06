@@ -63,10 +63,21 @@
     <string name="img_google">Google</string>
     <string name="img_apple">Apple</string>
     <string name="ic_back">Atrás</string>
+    <string name="ic_forward">Imagen adelante</string>
     <string name="img_trailer">Imagen del trailer</string>
     <string name="btn_bookmark">Botón bookmark de agregar</string>
     <string name="img_star">Puntuación en estrellas</string>
     <string name="img_info">Botón Información</string>
+    <string name="video_trailer">Video trailer</string>
+
+
+    /*
+    --Examples
+    */
+    <string name="synopsis">
+        Ambientada en la Guerra Fría; una huérfana llamada Beth Harmon con un don para el ajedrez
+        lucha contra las adicciones mientras juega por el campeonato del mundo
+    </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

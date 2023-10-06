@@ -68,6 +68,13 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <style name="TextAppearance.IMDb.Title.Bold" parent="">
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textSize">@dimen/text_size_extra_large</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <style name="TextAppearance.IMDb.Title.Light" parent="">
         <item name="android:fontFamily">@font/roboto_regular</item>
         <item name="android:textSize">@dimen/text_size_title</item>
@@ -104,6 +111,12 @@
         <item name="android:textColor">@color/gray_500</item>
     </style>
 
+    <style name="TextAppearance.IMDb.Body.SmallLight" parent="">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textColor">@color/gray_500</item>
+    </style>
+
     <style name="TextAppearance.IMDb.Body.Medium" parent="">
         <item name="android:fontFamily">@font/roboto_medium</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
@@ -120,6 +133,13 @@
     <style name="TextAppearance.IMDb.Body.Dark" parent="">
         <item name="android:fontFamily">@font/roboto_medium</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/gray_800</item>
+    </style>
+
+    <style name="TextAppearance.IMDb.Button.Raw" parent="">
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/gray_800</item>
     </style>
