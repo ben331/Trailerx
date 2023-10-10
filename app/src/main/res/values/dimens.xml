@@ -11,6 +11,7 @@
     <dimen name="text_size_extra_large">24sp</dimen>
 
     <!-- Margins and paddings -->
+    <dimen name="margin_pico">2dp</dimen>
     <dimen name="margin_micro">4dp</dimen>
     <dimen name="margin_small">8dp</dimen>
     <dimen name="margin_medium">16dp</dimen>
@@ -24,7 +25,7 @@
     <!-- heights and widths -->
     <dimen name="button_height">56dp</dimen>
     <dimen name="button_primary_height">64dp</dimen>
-    <dimen name="button_max_width">320dp</dimen>
+    <dimen name="button_max_width">360dp</dimen>
     <dimen name="edittext_layout_height">76dp</dimen>
     <dimen name="edittext_height">56dp</dimen>
     <dimen name="edittext_max_width">488dp</dimen>
@@ -57,6 +58,8 @@
     <dimen name="card_shortcut_width">180dp</dimen>
     <dimen name="card_shortcut_height">180dp</dimen>
     <dimen name="label_shortcut_height">100dp</dimen>
+    <dimen name="profile_photo_size">50dp</dimen>
+    <dimen name="shortcuts_recycler_height">190dp</dimen>
 
     <!-- radius -->
     <dimen name="button_radius">14dp</dimen>
@@ -64,6 +67,7 @@
     <dimen name="nav_bar_radius">34dp</dimen>
     <dimen name="footer_movie_radius">8dp</dimen>
     <dimen name="genre_radius">8dp</dimen>
+    <dimen name="circle_radius">40dp</dimen>
 
     <!-- Elevations -->
     <dimen name="elevation_medium">4dp</dimen>

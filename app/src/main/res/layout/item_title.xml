@@ -10,7 +10,6 @@
         android:id="@+id/lineView"
         android:layout_width="@dimen/line_width"
         android:layout_height="@dimen/line_height"
-        android:layout_marginStart="@dimen/margin_medium"
         android:background="@drawable/ic_background_logo"/>
 
     <TextView

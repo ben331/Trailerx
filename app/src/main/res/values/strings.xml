@@ -69,6 +69,8 @@
     <string name="img_star">Puntuación en estrellas</string>
     <string name="img_info">Botón Información</string>
     <string name="video_trailer">Video trailer</string>
+    <string name="img_profile">Foto de perfil</string>
+    <string name="img_settings">Ajustes</string>
 
 
     /*
@@ -77,6 +79,9 @@
     <string name="synopsis">
         Ambientada en la Guerra Fría; una huérfana llamada Beth Harmon con un don para el ajedrez
         lucha contra las adicciones mientras juega por el campeonato del mundo
+    </string>
+    <string name="sample_list">
+        Crea una lista de seguimiento para no perderte ninguna película o serie de tv.
     </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
