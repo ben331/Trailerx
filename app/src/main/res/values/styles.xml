@@ -46,6 +46,7 @@
         <item name="shapeAppearanceOverlay">@style/ShapeAppearance.IMDb.SmallComponent.Filled</item>
         <item name="boxStrokeWidth">0dp</item>
         <item name="boxStrokeWidthFocused">0dp</item>
+        <item name="android:gravity">center</item>
         <item name="startIconDrawable">@drawable/ic_search</item>
         <item name="fontFamily">@font/roboto_regular</item>
         <item name="iconTint">@color/gray_800</item>
@@ -58,7 +59,7 @@
         <item name="android:gravity">top</item>
         <item name="android:textColor">@color/gray_500</item>
         <item name="android:textColorHint">@color/gray_500</item>
-        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="fontFamily">@font/roboto_regular</item>
         <item name="android:textSize">@dimen/text_size_large</item>
     </style>
 
