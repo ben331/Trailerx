@@ -77,7 +77,7 @@
     <dimen name="scale_logo">2.8</dimen>
     <dimen name="scale_x_logo_login">3.2</dimen>
     <dimen name="scale_y_logo_login">3.5</dimen>
-    <dimen name="scale_logo_back">2</dimen>
+    <dimen name="scale_logo_back">1.6</dimen>
 
     <!-- EMS -->
     <dimen name="ems_default">10</dimen>

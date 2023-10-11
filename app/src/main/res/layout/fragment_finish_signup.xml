@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.SignUpFragment">
+    tools:context=".ui.FinishSignupFragment">
 
     <ImageButton
         android:id="@+id/backButton"
@@ -13,29 +13,29 @@
         android:layout_marginStart="@dimen/margin_medium"
         android:layout_marginTop="@dimen/margin_small"
         android:background="@color/white"
+        android:contentDescription="@string/ic_back"
         android:scaleX="@dimen/scale_logo_back"
         android:scaleY="@dimen/scale_logo_back"
         android:src="@drawable/ic_arrow_back"
-        android:contentDescription="@string/ic_back"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/backButton"
-        app:layout_constraintVertical_bias="0.2">
+        app:layout_constraintTop_toBottomOf="@id/backButton">
 
         <FrameLayout
             android:id="@+id/imgContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/ic_background_logo"
-            app:layout_constraintStart_toStartOf="@+id/labelTitle"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintStart_toStartOf="@id/text_layout_email"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/margin_small">
 
             <ImageView
                 android:id="@+id/img_header"
@@ -49,37 +49,25 @@
         </FrameLayout>
 
         <TextView
-            android:id="@+id/labelTitle"
+            android:id="@+id/label_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_extra_large"
-            android:text="@string/create_account"
+            android:text="@string/finish_signup"
             android:textAppearance="@style/TextAppearance.IMDb.LoginTitle"
-            app:layout_constraintStart_toStartOf="@+id/textLayoutName"
+            app:layout_constraintStart_toStartOf="@id/text_layout_email"
             app:layout_constraintTop_toBottomOf="@+id/imgContainer" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textLayoutName"
-            style="@style/Widget.IMDb.TextInputLayout.Signup"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/label_connect_google"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_extra_large"
             android:layout_marginTop="@dimen/margin_medium"
-            android:layout_marginEnd="@dimen/margin_extra_large"
-
-            android:hint="@string/name"
-            android:inputType="text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/labelTitle">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextName"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/edittext_height"
-                tools:ignore="TextContrastCheck" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            android:text="@string/connect_to_google"
+            android:textAppearance="@style/TextAppearance.IMDb.Body.SmallLight"
+            app:layout_constraintStart_toStartOf="@id/text_layout_email"
+            app:layout_constraintTop_toBottomOf="@+id/label_title"
+            tools:ignore="TextContrastCheck" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/text_layout_email"
@@ -94,50 +82,16 @@
             android:inputType="text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textLayoutName">
+            app:layout_constraintTop_toBottomOf="@+id/label_connect_google">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_email"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/edittext_height"
-                tools:ignore="TextContrastCheck" />
+                tools:ignore="TextContrastCheck"
+                android:enabled="false"/>
 
         </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textLayoutPassword"
-            style="@style/Widget.IMDb.TextInputLayout.Signup"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_extra_large"
-
-            android:layout_marginTop="@dimen/margin_medium"
-            android:layout_marginEnd="@dimen/margin_extra_large"
-
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            app:endIconMode="password_toggle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_layout_email">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextPassword"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/edittext_height"
-                tools:ignore="TextContrastCheck" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/label_connect_google"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_medium"
-            android:text="@string/password_rule"
-            android:textAppearance="@style/TextAppearance.IMDb.Caption"
-            app:layout_constraintStart_toStartOf="@+id/textLayoutPassword"
-            app:layout_constraintTop_toBottomOf="@+id/textLayoutPassword" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_accept"
@@ -145,14 +99,16 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/button_height"
             android:layout_marginStart="@dimen/margin_extra_large"
-            android:layout_marginTop="@dimen/margin_extra_large"
+            android:layout_marginTop="@dimen/margin_medium"
             android:layout_marginEnd="@dimen/margin_extra_large"
             android:text="@string/accept"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-
-            app:layout_constraintTop_toBottomOf="@+id/label_connect_google" />
+            app:layout_constraintTop_toBottomOf="@+id/text_layout_email"
+            android:enabled="true"
+            tools:ignore="VisualLintButtonSize" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

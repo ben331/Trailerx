@@ -21,7 +21,7 @@
     <string name="email">Correo electrónico</string>
     <string name="password_rule">La contraseña debe contener 8 caracteres</string>
     <string name="accept">Aceptar</string>
-    <string name="finisfh_signup">Finalizar Registro</string>
+    <string name="finish_signup">Finalizar Registro</string>
     <string name="connect_to_google">Conectalo a tu cuenta de google</string>
 
     /*
