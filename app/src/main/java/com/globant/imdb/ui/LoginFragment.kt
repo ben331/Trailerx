@@ -1,5 +1,6 @@
 package com.globant.imdb.ui
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,7 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.globant.imdb.R
 import com.globant.imdb.databinding.FragmentLoginBinding
+import com.google.firebase.auth.FirebaseAuth
+
+private val auth: FirebaseAuth by lazy {
+    FirebaseAuth.getInstance()
+}
 
 class LoginFragment : Fragment() {
 
@@ -19,24 +26,47 @@ class LoginFragment : Fragment() {
         findNavController()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setup()
+    }
+
+    private fun setup(){
         binding.btnLogin.setOnClickListener{
-            val action = LoginFragmentDirections.actionLoginFragmentToNavigationFragment()
-            navController.navigate(action)
+
+            val email = binding.editTextUser.text.toString()
+            val password = binding.editTextPassword.text.toString()
+
+            auth.signInWithEmailAndPassword( email, password )
+                .addOnCompleteListener {
+                    if(it.isSuccessful){
+                        val action = LoginFragmentDirections.actionLoginFragmentToNavigationFragment( email, null )
+                        navController.navigate(action)
+                    }else{
+                        showAlert()
+                    }
+                }
         }
 
         binding.labelRegister.setOnClickListener{
             val action = LoginFragmentDirections.actionLoginFragmentToSignUpFragment()
             navController.navigate(action)
         }
+    }
 
-        return binding.root
+    private fun showAlert(){
+        val builder = AlertDialog.Builder(activity)
+        builder.setTitle("Error")
+        builder.setMessage("Se ha producido un error autenticando al usuario")
+        builder.setPositiveButton(R.string.accept, null)
+        val dialog = builder.create()
+        dialog.show()
     }
 }

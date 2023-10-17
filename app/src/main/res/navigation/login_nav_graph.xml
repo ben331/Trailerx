@@ -43,5 +43,12 @@
             app:launchSingleTop="true"
             app:popUpTo="@+id/nav_graph"
             app:popUpToInclusive="true"/>
+        <argument
+            android:name="email"
+            app:argType="string" />
+        <argument
+            android:name="displayName"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 </navigation>
