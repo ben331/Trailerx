@@ -11,17 +11,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.globant.imdb.R
 import com.globant.imdb.databinding.FragmentLoginBinding
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 
 private val auth: FirebaseAuth by lazy {
     FirebaseAuth.getInstance()
 }
 
 class LoginFragment : Fragment() {
+
+    private val GOOGLE_SIGN_IN = 100
+
+    private val googleLauncher = registerForActivityResult(StartActivityForResult(), ::onGoogleResult)
 
     private val binding:FragmentLoginBinding by lazy {
         FragmentLoginBinding.inflate(layoutInflater)
@@ -59,7 +69,7 @@ class LoginFragment : Fragment() {
             auth.signInWithEmailAndPassword( email, password )
                 .addOnCompleteListener {
                     if(it.isSuccessful){
-                        showHome(email, ProviderType.BASIC)
+                        showHome(email, null, ProviderType.BASIC)
                     }else{
                         showAlert()
                     }
@@ -72,7 +82,40 @@ class LoginFragment : Fragment() {
             navController.navigate(action)
         }
 
+        binding.googleBtn.setOnClickListener {
+            val googleConf = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(com.firebase.ui.auth.R.string.default_web_client_id))
+                .requestEmail()
+                .build()
+
+            val googleClient = GoogleSignIn.getClient(requireActivity(), googleConf)
+            googleClient.signOut()
+            googleLauncher.launch(googleClient.signInIntent)
+        }
+
         setupWatcher()
+    }
+
+    private fun onGoogleResult(result:ActivityResult){
+        if(result.resultCode == Activity.RESULT_OK){
+            val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+
+            try {
+                task.getResult(ApiException::class.java).let { account ->
+                    val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+                    auth.signInWithCredential(credential).addOnCompleteListener { task ->
+                        if(task.isSuccessful){
+                            showHome(account.email ?: "", account.displayName, ProviderType.GOOGLE)
+                        }else{
+                            showAlert()
+                        }
+                    }
+                }
+            }catch (e: ApiException){
+                showAlert()
+            }
+
+        }
     }
 
     private fun hideKeyboard() {
@@ -112,12 +155,12 @@ class LoginFragment : Fragment() {
         val provider = prefs?.getString("provider", null)
 
         if(email!=null && provider!=null){
-            showHome(email, ProviderType.valueOf(provider))
+            showHome(email, null, ProviderType.valueOf(provider))
         }
     }
 
-    private fun showHome(email:String, providerType: ProviderType){
-        val action = LoginFragmentDirections.actionLoginFragmentToNavigationFragment( email, null, providerType )
+    private fun showHome(email:String, displayName:String?, providerType: ProviderType){
+        val action = LoginFragmentDirections.actionLoginFragmentToNavigationFragment( email, displayName, providerType )
         navController.navigate(action)
     }
 
