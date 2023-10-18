@@ -60,7 +60,7 @@ class SignUpFragment : Fragment() {
             auth.createUserWithEmailAndPassword( email, password )
                 .addOnCompleteListener {
                     if(it.isSuccessful){
-                        val action = SignUpFragmentDirections.actionSignUpFragmentToNavigationFragment( email, displayName )
+                        val action = SignUpFragmentDirections.actionSignUpFragmentToNavigationFragment( email, displayName, ProviderType.BASIC )
                         navController.navigate(action)
                     }else{
                         showAlert()

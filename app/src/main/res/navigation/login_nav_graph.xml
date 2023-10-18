@@ -50,5 +50,8 @@
             android:name="displayName"
             app:argType="string"
             app:nullable="true" />
+        <argument
+            android:name="provider"
+            app:argType="com.globant.imdb.ui.ProviderType" />
     </fragment>
 </navigation>

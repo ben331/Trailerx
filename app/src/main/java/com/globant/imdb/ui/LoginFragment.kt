@@ -2,6 +2,7 @@ package com.globant.imdb.ui
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -30,6 +31,11 @@ class LoginFragment : Fragment() {
         findNavController()
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        loadSession()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -53,8 +59,7 @@ class LoginFragment : Fragment() {
             auth.signInWithEmailAndPassword( email, password )
                 .addOnCompleteListener {
                     if(it.isSuccessful){
-                        val action = LoginFragmentDirections.actionLoginFragmentToNavigationFragment( email, null )
-                        navController.navigate(action)
+                        showHome(email, ProviderType.BASIC)
                     }else{
                         showAlert()
                     }
@@ -98,6 +103,22 @@ class LoginFragment : Fragment() {
         val password = binding.editTextPassword.text.toString()
 
         binding.btnLogin.isEnabled = ( email.isNotEmpty() && password.isNotEmpty() )
+    }
+
+    private fun loadSession(){
+        val prefs = activity?.
+        getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
+        val email = prefs?.getString("email", null)
+        val provider = prefs?.getString("provider", null)
+
+        if(email!=null && provider!=null){
+            showHome(email, ProviderType.valueOf(provider))
+        }
+    }
+
+    private fun showHome(email:String, providerType: ProviderType){
+        val action = LoginFragmentDirections.actionLoginFragmentToNavigationFragment( email, null, providerType )
+        navController.navigate(action)
     }
 
     private fun showAlert(){

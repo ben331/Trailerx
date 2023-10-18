@@ -72,6 +72,11 @@
     <string name="img_profile">Foto de perfil</string>
     <string name="img_settings">Ajustes</string>
 
+    /*
+    --File names
+    */
+    <string name="prefs_file">com.globant.imdb.PREFERENCE_FILE_KEY</string>
+
 
     /*
     --Examples

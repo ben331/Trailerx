@@ -1,6 +1,7 @@
 package com.globant.imdb.ui
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,6 +16,13 @@ import com.globant.imdb.databinding.FragmentNavigationBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 
+enum class ProviderType {
+    BASIC,
+    GOOGLE,
+    FACEBOOK,
+    APPLE
+}
+
 class NavigationFragment : Fragment() {
 
     private lateinit var navController: NavController
@@ -27,6 +35,12 @@ class NavigationFragment : Fragment() {
 
     private val auth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        saveSession()
     }
 
     override fun onCreateView(
@@ -69,6 +83,24 @@ class NavigationFragment : Fragment() {
             val profileItem = binding.navBar.menu.findItem(R.id.profileFragment)
             profileItem.title = remoteDisplayName
         }
+    }
+
+    private fun saveSession(){
+        val email = args.email
+        val provider = args.provider
+
+        val prefs = activity?.
+            getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)?.edit()!!
+        prefs.putString("email", email)
+        prefs.putString("provider", provider.name)
+        prefs.apply()
+    }
+
+    private fun cleanSession(){
+        val prefs = activity?.
+            getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)?.edit()!!
+        prefs.clear()
+        prefs.apply()
     }
 
     private fun showAlert(){
