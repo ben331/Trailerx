@@ -15,7 +15,7 @@ import com.globant.imdb.databinding.FragmentNavigationBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 
-class NavigationFragment : Fragment(), ProfileFragment.LogOutListener {
+class NavigationFragment : Fragment() {
 
     private lateinit var navController: NavController
 
@@ -51,7 +51,7 @@ class NavigationFragment : Fragment(), ProfileFragment.LogOutListener {
         setupName()
     }
 
-    private fun setupName(){
+    private fun setupName() {
         args.displayName.let { displayName ->
             val profileUpdates = UserProfileChangeRequest.Builder()
                 .setDisplayName(displayName)
@@ -78,10 +78,5 @@ class NavigationFragment : Fragment(), ProfileFragment.LogOutListener {
         builder.setPositiveButton(R.string.accept, null)
         val dialog = builder.create()
         dialog.show()
-    }
-
-    override fun logOut() {
-        val action = NavigationFragmentDirections.actionNavigationFragmentToLoginFragment()
-        navController.navigate(action)
     }
 }

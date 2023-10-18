@@ -1,5 +1,6 @@
 package com.globant.imdb.ui
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.os.Bundle
 import android.text.Editable
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.globant.imdb.R
@@ -49,6 +51,8 @@ class SignUpFragment : Fragment() {
         }
 
         binding.btnAccept.setOnClickListener {
+            hideKeyboard()
+
             val displayName = binding.editTextName.text.toString()
             val email = binding.editTextEmail.text.toString()
             val password = binding.editTextPassword.text.toString()
@@ -65,6 +69,12 @@ class SignUpFragment : Fragment() {
         }
 
         setupWatcher()
+    }
+
+    private fun hideKeyboard() {
+        val inputMethodManager = requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        val currentView = requireView()
+        inputMethodManager.hideSoftInputFromWindow(currentView.windowToken, 0)
     }
 
     private fun setupWatcher(){

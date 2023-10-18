@@ -1,11 +1,15 @@
 package com.globant.imdb.ui
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.globant.imdb.R
@@ -41,7 +45,9 @@ class LoginFragment : Fragment() {
     private fun setup(){
         binding.btnLogin.setOnClickListener{
 
-            val email = binding.editTextUser.text.toString()
+            hideKeyboard()
+
+            val email = binding.editTextEmail.text.toString()
             val password = binding.editTextPassword.text.toString()
 
             auth.signInWithEmailAndPassword( email, password )
@@ -56,9 +62,42 @@ class LoginFragment : Fragment() {
         }
 
         binding.labelRegister.setOnClickListener{
+            hideKeyboard()
             val action = LoginFragmentDirections.actionLoginFragmentToSignUpFragment()
             navController.navigate(action)
         }
+
+        setupWatcher()
+    }
+
+    private fun hideKeyboard() {
+        val inputMethodManager = requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        val currentView = requireView()
+        inputMethodManager.hideSoftInputFromWindow(currentView.windowToken, 0)
+    }
+
+    private fun setupWatcher(){
+
+        val watcher = object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
+
+            override fun afterTextChanged(s: Editable?) {
+                validateFields()
+            }
+
+        }
+
+        binding.editTextEmail.addTextChangedListener(watcher)
+        binding.editTextPassword.addTextChangedListener(watcher)
+    }
+
+    private fun validateFields(){
+        val email = binding.editTextEmail.text.toString()
+        val password = binding.editTextPassword.text.toString()
+
+        binding.btnLogin.isEnabled = ( email.isNotEmpty() && password.isNotEmpty() )
     }
 
     private fun showAlert(){
