@@ -74,5 +74,5 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:20.7.0")
 
     //Facebook
-    implementation("com.facebook.android:facebook-android-sdk:[4,5)")
+    implementation("com.facebook.android:facebook-android-sdk:[8,9)")
 }
