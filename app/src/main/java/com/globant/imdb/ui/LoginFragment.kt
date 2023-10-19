@@ -15,11 +15,17 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
 import com.globant.imdb.R
 import com.globant.imdb.databinding.FragmentLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 
@@ -29,9 +35,10 @@ private val auth: FirebaseAuth by lazy {
 
 class LoginFragment : Fragment() {
 
-    private val GOOGLE_SIGN_IN = 100
+    private val googleLauncher =
+        registerForActivityResult(StartActivityForResult(), ::onGoogleResult)
 
-    private val googleLauncher = registerForActivityResult(StartActivityForResult(), ::onGoogleResult)
+    private val callbackManager = CallbackManager.Factory.create()
 
     private val binding:FragmentLoginBinding by lazy {
         FragmentLoginBinding.inflate(layoutInflater)
@@ -93,6 +100,35 @@ class LoginFragment : Fragment() {
             googleLauncher.launch(googleClient.signInIntent)
         }
 
+        binding.facebookBtn.setOnClickListener{
+            LoginManager.getInstance().logInWithReadPermissions(requireActivity(), listOf("email"))
+
+            LoginManager.getInstance().registerCallback( callbackManager,
+                object : FacebookCallback<LoginResult>{
+                    override fun onSuccess(result: LoginResult?) {
+                        result?.let {
+                            val token = it.accessToken
+                            val credential = FacebookAuthProvider.getCredential(token.token)
+                            auth.signInWithCredential(credential).addOnCompleteListener { task ->
+                                if(task.isSuccessful){
+                                    showHome( task.result.user?.email ?: "",
+                                        task.result.user?.displayName, ProviderType.FACEBOOK)
+                                }else{
+                                    showAlert()
+                                }
+                            }
+                        }
+                    }
+
+                    override fun onCancel() { }
+
+                    override fun onError(error: FacebookException?) {
+                        showAlert()
+                    }
+                }
+            )
+        }
+
         setupWatcher()
     }
 
@@ -102,10 +138,13 @@ class LoginFragment : Fragment() {
 
             try {
                 task.getResult(ApiException::class.java).let { account ->
-                    val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+                    val credential =
+                        GoogleAuthProvider.getCredential(account.idToken, null)
+
                     auth.signInWithCredential(credential).addOnCompleteListener { task ->
                         if(task.isSuccessful){
-                            showHome(account.email ?: "", account.displayName, ProviderType.GOOGLE)
+                            showHome(account.email ?: "",
+                                account.displayName, ProviderType.GOOGLE)
                         }else{
                             showAlert()
                         }
@@ -119,7 +158,9 @@ class LoginFragment : Fragment() {
     }
 
     private fun hideKeyboard() {
-        val inputMethodManager = requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputMethodManager =
+            requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+
         val currentView = requireView()
         inputMethodManager.hideSoftInputFromWindow(currentView.windowToken, 0)
     }
@@ -160,7 +201,8 @@ class LoginFragment : Fragment() {
     }
 
     private fun showHome(email:String, displayName:String?, providerType: ProviderType){
-        val action = LoginFragmentDirections.actionLoginFragmentToNavigationFragment( email, displayName, providerType )
+        val action = LoginFragmentDirections
+            .actionLoginFragmentToNavigationFragment( email, displayName, providerType )
         navController.navigate(action)
     }
 

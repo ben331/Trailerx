@@ -11,6 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.setupWithNavController
+import com.facebook.login.LoginManager
 import com.globant.imdb.R
 import com.globant.imdb.databinding.FragmentNavigationBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -25,7 +26,11 @@ enum class ProviderType {
 
 class NavigationFragment : Fragment() {
 
-    private lateinit var navController: NavController
+    private val navController: NavController by lazy {
+        val navHostFragment =
+            childFragmentManager.findFragmentById(R.id.home_nav_host) as NavHostFragment
+        navHostFragment.navController
+    }
 
     private val args: NavigationFragmentArgs by navArgs()
 
@@ -52,11 +57,6 @@ class NavigationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val navHostFragment =
-            childFragmentManager.findFragmentById(R.id.home_nav_host) as NavHostFragment
-        navController = navHostFragment.navController
-
         setup()
     }
 
@@ -101,6 +101,12 @@ class NavigationFragment : Fragment() {
             getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)?.edit()!!
         prefs.clear()
         prefs.apply()
+
+        val provider = args.provider
+
+        if(provider == ProviderType.FACEBOOK){
+            LoginManager.getInstance().logOut()
+        }
     }
 
     private fun showAlert(){
