@@ -45,7 +45,11 @@ class SignUpFragment : Fragment() {
 
     private fun setup(){
         setupWatcher()
+        setupButtons()
+        setupForm()
+    }
 
+    private fun setupButtons(){
         binding.backButton.setOnClickListener{
             val action = SignUpFragmentDirections.actionSignUpFragmentToLoginFragment()
             navController.navigate(action)
@@ -66,7 +70,35 @@ class SignUpFragment : Fragment() {
                 ::showAlert
             )
         }
+    }
 
+    private fun setupForm(){
+        with(binding.editTextName) {
+            setOnFocusChangeListener { _, hasFocus ->
+                error = if (!hasFocus && !UserValidator.validateIsNotBlank( text.toString())) {
+                    R.string.required_field.toString()
+                }else{
+                    null
+                }
+            }}
+
+        with(binding.editTextEmail) {
+            setOnFocusChangeListener { _, hasFocus ->
+                error = if (!hasFocus && !UserValidator.validateEmail( text.toString())) {
+                    R.string.invalid_email.toString()
+                }else{
+                    null
+                }
+            }}
+
+        with(binding.editTextPassword) {
+            setOnFocusChangeListener { _, hasFocus ->
+                error = if (!hasFocus && !UserValidator.validatePassword( text.toString())) {
+                    R.string.invalid_password.toString()
+                }else{
+                    null
+                }
+            }}
     }
 
     private fun hideKeyboard() {
@@ -79,30 +111,24 @@ class SignUpFragment : Fragment() {
 
         val watcher = object: TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
-
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
-
             override fun afterTextChanged(s: Editable?) {
-                validateFields()
+                val displayName = binding.editTextName.text.toString()
+                val email = binding.editTextEmail.text.toString()
+                val password = binding.editTextPassword.text.toString()
+                if(UserValidator.validateSignUp(displayName, email, password)){
+                    binding.btnAccept.isEnabled = true
+                    binding.editTextName.error = null
+                    binding.editTextEmail.error = null
+                    binding.editTextPassword.error = null
+                }else{
+                    binding.btnAccept.isEnabled = false
+                }
             }
-
         }
-
         binding.editTextName.addTextChangedListener(watcher)
         binding.editTextEmail.addTextChangedListener(watcher)
         binding.editTextPassword.addTextChangedListener(watcher)
-    }
-
-    private fun validateFields(){
-        val displayName = binding.editTextName.text.toString()
-        val email = binding.editTextEmail.text.toString()
-        val password = binding.editTextPassword.text.toString()
-
-        binding.btnAccept.isEnabled = (
-                        displayName.isNotEmpty()  &&
-                        email.isNotEmpty()        &&
-                        password.isNotEmpty()
-                )
     }
 
     private fun showHome(email:String, provider:ProviderType){

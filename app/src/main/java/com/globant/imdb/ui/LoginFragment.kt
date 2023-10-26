@@ -6,7 +6,6 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -56,13 +55,20 @@ class LoginFragment : Fragment() {
 
     private fun setup(){
         setupWatcher()
+        setupNavBar()
+        setupForm()
+        setupButtons()
+    }
 
+    private fun setupNavBar(){
         binding.labelRegister.setOnClickListener{
             hideKeyboard()
             val action = LoginFragmentDirections.actionLoginFragmentToSignUpFragment()
             navController.navigate(action)
         }
+    }
 
+    private fun setupButtons(){
         binding.btnLogin.setOnClickListener{
             hideKeyboard()
             val email = binding.editTextEmail.text.toString()
@@ -84,6 +90,26 @@ class LoginFragment : Fragment() {
         }
     }
 
+    private fun setupForm(){
+        with(binding.editTextEmail) {
+            setOnFocusChangeListener { _, hasFocus ->
+                error = if (!hasFocus && !UserValidator.validateEmail( text.toString())) {
+                    R.string.invalid_email.toString()
+                }else{
+                    null
+                }
+            }}
+
+        with(binding.editTextPassword) {
+            setOnFocusChangeListener { _, hasFocus ->
+                error = if (!hasFocus && !UserValidator.validatePassword( text.toString())) {
+                    R.string.invalid_password.toString()
+                }else{
+                    null
+                }
+            }}
+    }
+
     private fun onGoogleResult(result:ActivityResult){
         if(result.resultCode == Activity.RESULT_OK){
             authViewModel.onGoogleResult(result.data, ::showHome, ::showAlert)
@@ -103,20 +129,19 @@ class LoginFragment : Fragment() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
             override fun afterTextChanged(s: Editable?) {
-                validateFields()
+                val email = binding.editTextEmail.text.toString()
+                val password = binding.editTextPassword.text.toString()
+                if(UserValidator.validateLogin(email, password)){
+                    binding.btnLogin.isEnabled = true
+                    binding.editTextEmail.error = null
+                    binding.editTextPassword.error = null
+                }else{
+                    binding.btnLogin.isEnabled = false
+                }
             }
         }
         binding.editTextEmail.addTextChangedListener(watcher)
         binding.editTextPassword.addTextChangedListener(watcher)
-    }
-
-    private fun validateFields(){
-        val pattern = Patterns.EMAIL_ADDRESS
-        val email = binding.editTextEmail.text.toString()
-        val password = binding.editTextPassword.text.toString()
-
-        binding.btnLogin.isEnabled = (
-                pattern.matcher(email).matches() && password.isNotEmpty() )
     }
 
     private fun loadSession(){
