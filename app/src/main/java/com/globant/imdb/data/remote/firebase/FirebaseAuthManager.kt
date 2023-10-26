@@ -33,6 +33,12 @@ class FirebaseAuthManager {
 
     private val callbackManager = CallbackManager.Factory.create()
 
+    fun logout(provider:ProviderType){
+        if(provider == ProviderType.FACEBOOK){
+            LoginManager.getInstance().logOut()
+        }
+    }
+
     private fun uploadName(displayName:String, onFailure: (message:String) -> Unit) {
         val profileUpdates = UserProfileChangeRequest.Builder()
             .setDisplayName(displayName)

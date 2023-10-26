@@ -6,14 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.setupWithNavController
-import com.facebook.login.LoginManager
 import com.globant.imdb.R
-import com.globant.imdb.data.remote.firebase.ProviderType
 import com.globant.imdb.databinding.FragmentNavigationBinding
 import com.globant.imdb.ui.viewmodel.AuthViewModel
 
@@ -31,7 +29,7 @@ class NavigationFragment : Fragment() {
         FragmentNavigationBinding.inflate(layoutInflater)
     }
 
-    private val authViewModel:AuthViewModel by viewModels()
+    private val authViewModel:AuthViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,11 +75,6 @@ class NavigationFragment : Fragment() {
             getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)?.edit()!!
         prefs.clear()
         prefs.apply()
-
-        val provider = args.provider
-
-        if(provider == ProviderType.FACEBOOK){
-            LoginManager.getInstance().logOut()
-        }
+        authViewModel.logout(args.provider)
     }
 }

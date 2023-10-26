@@ -16,6 +16,10 @@ class AuthViewModel: ViewModel() {
         authManager.setupName(useName)
     }
 
+    fun logout(provider:ProviderType){
+        authManager.logout(provider)
+    }
+
     fun signUpWithEmailAndPassword(
         email:String,
         password:String,

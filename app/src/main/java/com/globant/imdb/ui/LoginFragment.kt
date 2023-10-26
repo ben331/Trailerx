@@ -13,17 +13,18 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.globant.imdb.R
+import com.globant.imdb.data.local.room.model.UserValidator
 import com.globant.imdb.data.remote.firebase.ProviderType
 import com.globant.imdb.databinding.FragmentLoginBinding
 import com.globant.imdb.ui.viewmodel.AuthViewModel
 
 class LoginFragment : Fragment() {
 
-    private val authViewModel:AuthViewModel by viewModels()
+    private val authViewModel:AuthViewModel by activityViewModels()
 
     private val binding:FragmentLoginBinding by lazy {
         FragmentLoginBinding.inflate(layoutInflater)
