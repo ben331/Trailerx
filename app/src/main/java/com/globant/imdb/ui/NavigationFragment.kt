@@ -1,28 +1,21 @@
 package com.globant.imdb.ui
 
-import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.setupWithNavController
 import com.facebook.login.LoginManager
 import com.globant.imdb.R
+import com.globant.imdb.data.remote.firebase.ProviderType
 import com.globant.imdb.databinding.FragmentNavigationBinding
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.UserProfileChangeRequest
-
-enum class ProviderType {
-    BASIC,
-    GOOGLE,
-    FACEBOOK,
-    APPLE
-}
+import com.globant.imdb.ui.viewmodel.AuthViewModel
 
 class NavigationFragment : Fragment() {
 
@@ -38,9 +31,7 @@ class NavigationFragment : Fragment() {
         FragmentNavigationBinding.inflate(layoutInflater)
     }
 
-    private val auth: FirebaseAuth by lazy {
-        FirebaseAuth.getInstance()
-    }
+    private val authViewModel:AuthViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,27 +53,12 @@ class NavigationFragment : Fragment() {
 
     private fun setup(){
         binding.navBar.setupWithNavController(navController)
-        setupName()
+        authViewModel.setupName(::setupNavBar)
     }
 
-    private fun setupName() {
-        args.displayName.let { displayName ->
-            val profileUpdates = UserProfileChangeRequest.Builder()
-                .setDisplayName(displayName)
-                .build()
-
-            auth.currentUser?.updateProfile(profileUpdates)
-                ?.addOnCompleteListener { task ->
-                    if(!task.isSuccessful){
-                        showAlert()
-                    }
-                }
-        }
-
-        auth.currentUser?.displayName.let { remoteDisplayName ->
-            val profileItem = binding.navBar.menu.findItem(R.id.profileFragment)
-            profileItem.title = remoteDisplayName
-        }
+    private fun setupNavBar(remoteDisplayName: String?){
+        val profileItem = binding.navBar.menu.findItem(R.id.profileFragment)
+        profileItem.title = remoteDisplayName
     }
 
     private fun saveSession(){
@@ -107,14 +83,5 @@ class NavigationFragment : Fragment() {
         if(provider == ProviderType.FACEBOOK){
             LoginManager.getInstance().logOut()
         }
-    }
-
-    private fun showAlert(){
-        val builder = AlertDialog.Builder(activity)
-        builder.setTitle("Error")
-        builder.setMessage("Se ha producido un error actualizando el nombre del usuario")
-        builder.setPositiveButton(R.string.accept, null)
-        val dialog = builder.create()
-        dialog.show()
     }
 }

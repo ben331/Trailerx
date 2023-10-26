@@ -10,20 +10,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.globant.imdb.R
+import com.globant.imdb.data.remote.firebase.ProviderType
 import com.globant.imdb.databinding.FragmentSignUpBinding
-import com.google.firebase.auth.FirebaseAuth
+import com.globant.imdb.ui.viewmodel.AuthViewModel
 
 class SignUpFragment : Fragment() {
 
+    private val authViewModel:AuthViewModel by viewModels()
+
     private val binding:FragmentSignUpBinding by lazy {
         FragmentSignUpBinding.inflate(layoutInflater)
-    }
-
-    private val auth:FirebaseAuth by lazy {
-        FirebaseAuth.getInstance()
     }
 
     private val navController: NavController by lazy {
@@ -44,6 +44,7 @@ class SignUpFragment : Fragment() {
     }
 
     private fun setup(){
+        setupWatcher()
 
         binding.backButton.setOnClickListener{
             val action = SignUpFragmentDirections.actionSignUpFragmentToLoginFragment()
@@ -57,18 +58,15 @@ class SignUpFragment : Fragment() {
             val email = binding.editTextEmail.text.toString()
             val password = binding.editTextPassword.text.toString()
 
-            auth.createUserWithEmailAndPassword( email, password )
-                .addOnCompleteListener {
-                    if(it.isSuccessful){
-                        val action = SignUpFragmentDirections.actionSignUpFragmentToNavigationFragment( email, displayName, ProviderType.BASIC )
-                        navController.navigate(action)
-                    }else{
-                        showAlert()
-                    }
-                }
+            authViewModel.signUpWithEmailAndPassword(
+                email,
+                password,
+                displayName,
+                ::showHome,
+                ::showAlert
+            )
         }
 
-        setupWatcher()
     }
 
     private fun hideKeyboard() {
@@ -107,10 +105,15 @@ class SignUpFragment : Fragment() {
                 )
     }
 
-    private fun showAlert(){
+    private fun showHome(email:String, provider:ProviderType){
+        val action = SignUpFragmentDirections.actionSignUpFragmentToNavigationFragment( email, provider )
+        navController.navigate(action)
+    }
+
+    private fun showAlert(msg:String){
         val builder = AlertDialog.Builder(activity)
-        builder.setTitle("Error")
-        builder.setMessage("Se ha producido un error autenticando al usuario")
+        builder.setTitle(R.string.error)
+        builder.setMessage(msg)
         builder.setPositiveButton(R.string.accept, null)
         val dialog = builder.create()
         dialog.show()

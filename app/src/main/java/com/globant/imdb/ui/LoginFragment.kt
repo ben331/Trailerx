@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,32 +14,17 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import com.facebook.CallbackManager
-import com.facebook.FacebookCallback
-import com.facebook.FacebookException
-import com.facebook.login.LoginManager
-import com.facebook.login.LoginResult
 import com.globant.imdb.R
+import com.globant.imdb.data.remote.firebase.ProviderType
 import com.globant.imdb.databinding.FragmentLoginBinding
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.FacebookAuthProvider
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
-
-private val auth: FirebaseAuth by lazy {
-    FirebaseAuth.getInstance()
-}
+import com.globant.imdb.ui.viewmodel.AuthViewModel
 
 class LoginFragment : Fragment() {
 
-    private val googleLauncher =
-        registerForActivityResult(StartActivityForResult(), ::onGoogleResult)
-
-    private val callbackManager = CallbackManager.Factory.create()
+    private val authViewModel:AuthViewModel by viewModels()
 
     private val binding:FragmentLoginBinding by lazy {
         FragmentLoginBinding.inflate(layoutInflater)
@@ -47,6 +33,9 @@ class LoginFragment : Fragment() {
     private val navController:NavController by lazy {
         findNavController()
     }
+
+    private val googleLauncher =
+        registerForActivityResult(StartActivityForResult(), ::onGoogleResult)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,22 +55,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun setup(){
-        binding.btnLogin.setOnClickListener{
-
-            hideKeyboard()
-
-            val email = binding.editTextEmail.text.toString()
-            val password = binding.editTextPassword.text.toString()
-
-            auth.signInWithEmailAndPassword( email, password )
-                .addOnCompleteListener {
-                    if(it.isSuccessful){
-                        showHome(email, null, ProviderType.BASIC)
-                    }else{
-                        showAlert()
-                    }
-                }
-        }
+        setupWatcher()
 
         binding.labelRegister.setOnClickListener{
             hideKeyboard()
@@ -89,71 +63,30 @@ class LoginFragment : Fragment() {
             navController.navigate(action)
         }
 
-        binding.googleBtn.setOnClickListener {
-            val googleConf = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(com.firebase.ui.auth.R.string.default_web_client_id))
-                .requestEmail()
-                .build()
+        binding.btnLogin.setOnClickListener{
+            hideKeyboard()
+            val email = binding.editTextEmail.text.toString()
+            val password = binding.editTextPassword.text.toString()
+            authViewModel.loginWithEmailAndPassword(email, password, ::showHome, ::showAlert)
+        }
 
-            val googleClient = GoogleSignIn.getClient(requireActivity(), googleConf)
-            googleClient.signOut()
-            googleLauncher.launch(googleClient.signInIntent)
+        binding.googleBtn.setOnClickListener {
+            val googleIntent = authViewModel.loginWithGoogle(requireActivity())
+            googleLauncher.launch(googleIntent)
         }
 
         binding.facebookBtn.setOnClickListener{
-            LoginManager.getInstance().logInWithReadPermissions(requireActivity(), listOf("email"))
-
-            LoginManager.getInstance().registerCallback( callbackManager,
-                object : FacebookCallback<LoginResult>{
-                    override fun onSuccess(result: LoginResult?) {
-                        result?.let {
-                            val token = it.accessToken
-                            val credential = FacebookAuthProvider.getCredential(token.token)
-                            auth.signInWithCredential(credential).addOnCompleteListener { task ->
-                                if(task.isSuccessful){
-                                    showHome( task.result.user?.email ?: "",
-                                        task.result.user?.displayName, ProviderType.FACEBOOK)
-                                }else{
-                                    showAlert()
-                                }
-                            }
-                        }
-                    }
-
-                    override fun onCancel() { }
-
-                    override fun onError(error: FacebookException?) {
-                        showAlert()
-                    }
-                }
-            )
+            authViewModel.loginWithFacebook(requireActivity(), ::showHome, ::showAlert)
         }
 
-        setupWatcher()
+        binding.appleBtn.setOnClickListener{
+            authViewModel.loginWithApple(requireActivity(), ::showHome, ::showAlert)
+        }
     }
 
     private fun onGoogleResult(result:ActivityResult){
         if(result.resultCode == Activity.RESULT_OK){
-            val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-
-            try {
-                task.getResult(ApiException::class.java).let { account ->
-                    val credential =
-                        GoogleAuthProvider.getCredential(account.idToken, null)
-
-                    auth.signInWithCredential(credential).addOnCompleteListener { task ->
-                        if(task.isSuccessful){
-                            showHome(account.email ?: "",
-                                account.displayName, ProviderType.GOOGLE)
-                        }else{
-                            showAlert()
-                        }
-                    }
-                }
-            }catch (e: ApiException){
-                showAlert()
-            }
-
+            authViewModel.onGoogleResult(result.data, ::showHome, ::showAlert)
         }
     }
 
@@ -166,27 +99,24 @@ class LoginFragment : Fragment() {
     }
 
     private fun setupWatcher(){
-
         val watcher = object: TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
-
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
-
             override fun afterTextChanged(s: Editable?) {
                 validateFields()
             }
-
         }
-
         binding.editTextEmail.addTextChangedListener(watcher)
         binding.editTextPassword.addTextChangedListener(watcher)
     }
 
     private fun validateFields(){
+        val pattern = Patterns.EMAIL_ADDRESS
         val email = binding.editTextEmail.text.toString()
         val password = binding.editTextPassword.text.toString()
 
-        binding.btnLogin.isEnabled = ( email.isNotEmpty() && password.isNotEmpty() )
+        binding.btnLogin.isEnabled = (
+                pattern.matcher(email).matches() && password.isNotEmpty() )
     }
 
     private fun loadSession(){
@@ -196,20 +126,20 @@ class LoginFragment : Fragment() {
         val provider = prefs?.getString("provider", null)
 
         if(email!=null && provider!=null){
-            showHome(email, null, ProviderType.valueOf(provider))
+            showHome(email, ProviderType.valueOf(provider))
         }
     }
 
-    private fun showHome(email:String, displayName:String?, providerType: ProviderType){
+    private fun showHome(email:String, providerType: ProviderType){
         val action = LoginFragmentDirections
-            .actionLoginFragmentToNavigationFragment( email, displayName, providerType )
+            .actionLoginFragmentToNavigationFragment( email, providerType )
         navController.navigate(action)
     }
 
-    private fun showAlert(){
+    private fun showAlert(message:String){
         val builder = AlertDialog.Builder(activity)
-        builder.setTitle("Error")
-        builder.setMessage("Se ha producido un error autenticando al usuario")
+        builder.setTitle(R.string.auth_error)
+        builder.setMessage(message)
         builder.setPositiveButton(R.string.accept, null)
         val dialog = builder.create()
         dialog.show()

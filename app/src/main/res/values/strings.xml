@@ -77,6 +77,13 @@
     */
     <string name="prefs_file">com.globant.imdb.PREFERENCE_FILE_KEY</string>
 
+    /*
+    --Errors and Alerts Messages
+    */
+    <string name="error">Error</string>
+    <string name="warning">Advertencia</string>
+    <string name="auth_error">Se ha producido un error autenticando al usuario</string>
+    <string name="upload_username_error">Se ha producido un error actualizando el nombre del usuario</string>
 
     /*
     --Facebook strings

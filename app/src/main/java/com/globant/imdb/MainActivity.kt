@@ -2,7 +2,6 @@ package com.globant.imdb
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import com.globant.imdb.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
