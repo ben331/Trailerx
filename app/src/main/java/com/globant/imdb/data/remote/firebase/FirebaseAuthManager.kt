@@ -2,6 +2,7 @@ package com.globant.imdb.data.remote.firebase
 
 import android.app.Activity
 import android.content.Intent
+import androidx.core.content.ContextCompat
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -158,7 +159,7 @@ class FirebaseAuthManager {
 
     fun loginWithGoogle(activity: Activity): Intent{
         val googleConf = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(com.firebase.ui.auth.R.string.default_web_client_id.toString())
+            .requestIdToken(ContextCompat.getString(activity, com.firebase.ui.auth.R.string.default_web_client_id))
             .requestEmail()
             .build()
 
