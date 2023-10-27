@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/gray_100"
+    android:background="?android:attr/colorBackgroundFloating"
     tools:context=".ui.view.ProfileFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -45,7 +45,7 @@
         <View
             android:id="@+id/divider"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/card_movie_height"
+            android:layout_height="@dimen/blank_space_height"
             app:layout_constraintTop_toBottomOf="@id/favorite_characters_container" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

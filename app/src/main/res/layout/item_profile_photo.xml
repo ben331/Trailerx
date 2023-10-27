@@ -27,7 +27,7 @@
                 android:layout_height="match_parent"
                 android:contentDescription="@string/img_profile"
                 android:scaleType="centerCrop"
-                tools:background="@color/yellow_400"
+                android:background="@color/yellow_400"
                 tools:ignore="ImageContrastCheck" />
 
         </androidx.cardview.widget.CardView>

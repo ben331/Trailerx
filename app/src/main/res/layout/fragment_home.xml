@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:contentDescription="@string/home"
-    android:background="@color/gray_100"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.view.HomeFragment">
 
@@ -44,7 +43,7 @@
         <View
             android:id="@+id/divider"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/card_movie_height"
+            android:layout_height="@dimen/blank_space_height"
             app:layout_constraintTop_toBottomOf="@id/recommended_movies_container" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

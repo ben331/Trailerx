@@ -12,11 +12,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_medium"
         android:layout_marginTop="@dimen/margin_small"
-        android:background="@color/white"
+        android:background="?android:attr/background"
         android:contentDescription="@string/ic_back"
         android:scaleX="@dimen/scale_logo_back"
         android:scaleY="@dimen/scale_logo_back"
         android:src="@drawable/ic_arrow_back"
+        app:tint="?android:attr/colorForeground"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="TouchTargetSizeCheck" />

@@ -89,6 +89,7 @@
             android:layout_marginTop="@dimen/margin_small"
             android:text="@string/forgot_password"
             android:textAppearance="@style/TextAppearance.IMDb.Caption"
+            android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="@+id/editTextPassword"
             app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
 

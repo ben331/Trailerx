@@ -14,11 +14,13 @@
 
         <!-- Backgrounds. -->
         <item name="background">@color/white</item>
+        <item name="android:colorBackgroundFloating">@color/gray_100</item>
         <item name="colorSurface">@color/gray_100</item>
         <item name="colorError">@color/deep_orange_900</item>
 
         <!-- OnBackgrounds. -->
         <item name="colorOnBackground">@color/black</item>
+        <item name="android:colorForeground">@color/black</item>
         <item name="colorOnSurface">@color/gray_500</item>
         <item name="colorOnError">@color/white</item>
 

@@ -4,7 +4,7 @@
     android:layout_height="@dimen/card_shortcut_height"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/ic_editext_login_background"
+    style="@style/Widget.IMDb.Shortcut"
     android:elevation="@dimen/elevation_high">
 
     <TextView
@@ -18,7 +18,6 @@
         android:paddingTop="@dimen/margin_medium"
         android:paddingStart="@dimen/padding_small"
         android:paddingEnd="@dimen/padding_small"
-        android:background="@drawable/ic_editext_search_background"
         android:textAppearance="@style/TextAppearance.IMDb.Body.Small"
         tools:text="Calificar y obtener recomendaciones"/>
 

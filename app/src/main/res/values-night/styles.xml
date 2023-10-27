@@ -12,7 +12,7 @@
     <style name="Widget.IMDb.Button.Secondary" parent="@style/Widget.AppCompat.Button">
         <item name="layout_constraintWidth_max">@dimen/button_max_width</item>
         <item name="android:enabled">false</item>
-        <item name="android:background">@drawable/ic_btn_background_selector</item>
+        <item name="android:background">@drawable/ic_btn_background_selector_night</item>
         <item name="android:textAppearance">@style/TextAppearance.IMDb.Button.Secondary</item>
         <item name="android:paddingEnd">@dimen/padding_large</item>
         <item name="android:paddingStart">@dimen/padding_large</item>
@@ -24,9 +24,9 @@
         <item name="expandedHintEnabled">false</item>
     </style>
     <style name="ThemeOverlay.IMDb.TextInputLayout.SignUp" parent="">
-        <item name="colorPrimary">@color/gray_500</item>
-        <item name="colorOnSurface">@color/gray_800</item>
-        <item name="android:textColorPrimary">@color/gray_500</item>
+        <item name="colorPrimary">@color/gray_100</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="android:textColorPrimary">@color/white</item>
         <item name="textAppearanceSubtitle1">@style/TextAppearance.IMDb.TextField.SignUp</item>
         <item name="textAppearanceCaption">@style/TextAppearance.IMDb.Caption</item>
         <item name="editTextStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
@@ -57,7 +57,7 @@
     <style name="Widget.IMDb.TextInputEditText.Search" parent="">
         <item name="layout_constraintWidth_max">@dimen/edittext_max_width</item>
         <item name="android:gravity">top</item>
-        <item name="android:textColor">@color/gray_500</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:textColorHint">@color/gray_500</item>
         <item name="fontFamily">@font/roboto_regular</item>
         <item name="android:textSize">@dimen/text_size_large</item>
@@ -77,15 +77,17 @@
         <item name="materialThemeOverlay">@style/ThemeOverlay.IMDb.Toolbar</item>
         <item name="strokeWidth">0dp</item>
         <item name="navigationIcon">@drawable/ic_arrow_back</item>
+        <item name="navigationIconTint">@color/white</item>
+        <item name="titleTextColor">@color/white</item>
         <item name="titleCentered">true</item>
         <item name="android:elevation">0dp</item>
     </style>
     <style name="ThemeOverlay.IMDb.Toolbar" parent="">
-        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimary">@color/black</item>
     </style>
 
     <style name ="Widget.TextView.Ship" parent="">
-        <item name="android:background">@drawable/ic_background_genre</item>
+        <item name="android:background">@drawable/ic_background_genre_night</item>
         <item name="android:paddingTop">@dimen/padding_small</item>
         <item name="android:paddingBottom">@dimen/padding_small</item>
         <item name="android:paddingStart">@dimen/padding_medium</item>
@@ -93,11 +95,11 @@
     </style>
 
     <style name="Widget.IMDb.ItemMovie" parent="">
-        <item name="background">@drawable/ic_footer_movie</item>
+        <item name="background">@drawable/ic_footer_movie_night</item>
     </style>
 
-    <style name="Widget.IMDb.Shorcut" parent="">
-        <item name="background">@drawable/ic_editext_login_background_night</item>
+    <style name="Widget.IMDb.Shortcut" parent="">
+        <item name="android:background">@drawable/ic_editext_login_background_night</item>
     </style>
 
 </resources>
