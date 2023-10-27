@@ -70,7 +70,9 @@
         <item name="android:background">@drawable/ic_navigation_background</item>
     </style>
     <style name="ThemeOverlay.IMDb.BottomNavigationView" parent="">
-        <item name="colorOnSurfaceVariant">@color/white</item>
+        <item name="colorOnSurface">@color/black</item>
+        <item name="colorOnSurfaceVariant">@color/black</item>
+        <item name="colorPrimary">@color/black</item>
     </style>
 
     <style name="Widget.IMDb.Toolbar" parent="@style/Widget.MaterialComponents.Toolbar.Primary">

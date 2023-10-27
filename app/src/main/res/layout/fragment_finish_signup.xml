@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_medium"
         android:layout_marginTop="@dimen/margin_small"
-        android:background="?android:attr/background"
+        android:background="?android:attr/colorBackground"
         android:contentDescription="@string/ic_back"
         android:scaleX="@dimen/scale_logo_back"
         android:scaleY="@dimen/scale_logo_back"
