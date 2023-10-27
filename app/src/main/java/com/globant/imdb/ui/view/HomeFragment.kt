@@ -35,14 +35,10 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         movieViewModel.mainMovie.observe(viewLifecycleOwner) { currentMovie ->
-            Log.e("----------->", "In observer")
             with(binding.mainTrailerContainer) {
-                Log.e("----------->", "title: "+currentMovie.title)
                 trailerName.text = currentMovie.title
             }
         }
-        Log.e("----------->", "OnCreated")
         movieViewModel.onCreate()
-        Log.e("----------->", "After fetch fragment")
     }
 }

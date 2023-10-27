@@ -5,9 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/yellow_400"
+    android:id="@+id/loginConstraint"
     tools:context=".ui.view.LoginFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -212,8 +214,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_small"
             android:text="@string/register"
-            android:textColor="@color/gray_800"
             android:textAppearance="@style/TextAppearance.IMDb.Body.DarkItalic"
+            android:textColor="@color/gray_800"
             app:layout_constraintStart_toEndOf="@+id/labelHasAccount"
             app:layout_constraintTop_toTopOf="@+id/labelHasAccount" />
 
@@ -223,12 +225,25 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_medium"
             android:text="@string/guest"
-            android:textColor="@color/gray_800"
             android:textAppearance="@style/TextAppearance.IMDb.Body.Dark"
+            android:textColor="@color/gray_800"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/labelHasAccount" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/progress_component"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray_light_100"
+        android:visibility="gone">
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="@dimen/progress_size"
+            android:layout_height="@dimen/progress_size"
+            style="@style/Widget.IMDb.ProgressBar"/>
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -41,14 +41,25 @@ class SignUpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setup()
-    }
-
-    private fun setup(){
+        //Setup
         setupWatcher()
+        setupLiveData()
         setupButtons()
         setupForm()
     }
+
+    private fun setupLiveData(){
+        authViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            if(isLoading){
+                binding.constraintLayout.isEnabled = false
+                binding.progressComponent.visibility = View.VISIBLE
+            }else{
+                binding.constraintLayout.isEnabled = true
+                binding.progressComponent.visibility = View.GONE
+            }
+        }
+    }
+
 
     private fun setupButtons(){
         binding.backButton.setOnClickListener{

@@ -100,4 +100,10 @@
         <item name="background">@drawable/ic_editext_login_background_night</item>
     </style>
 
+    <style name="Widget.IMDb.ProgressBar" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:indeterminateTint">@color/yellow_700</item>
+        <item name="android:elevation">@dimen/elevation_high</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
 </resources>

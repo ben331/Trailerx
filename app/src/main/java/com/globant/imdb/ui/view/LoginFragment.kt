@@ -52,14 +52,13 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setup()
-    }
 
-    private fun setup(){
-        setupWatcher()
+        //Setup
         setupNavBar()
-        setupForm()
+        setupLiveData()
         setupButtons()
+        setupForm()
+        setupWatcher()
     }
 
     private fun setupNavBar(){
@@ -70,25 +69,47 @@ class LoginFragment : Fragment() {
         }
     }
 
+    private fun setupLiveData(){
+        authViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            if(isLoading){
+                binding.progressComponent.visibility = View.VISIBLE
+                binding.constraintLayout.isEnabled = false
+            }else{
+                binding.progressComponent.visibility = View.GONE
+                binding.constraintLayout.isEnabled = true
+            }
+        }
+    }
+
     private fun setupButtons(){
         binding.btnLogin.setOnClickListener{
             hideKeyboard()
             val email = binding.editTextEmail.text.toString()
             val password = binding.editTextPassword.text.toString()
+            authViewModel.isLoading.postValue(true)
             authViewModel.loginWithEmailAndPassword(email, password, ::showHome, ::showAlert)
         }
 
         binding.googleBtn.setOnClickListener {
-            val googleIntent = authViewModel.loginWithGoogle(requireActivity())
+            val googleIntent = authViewModel.loginWithGoogle(requireContext())
+            authViewModel.isLoading.postValue(true)
             googleLauncher.launch(googleIntent)
         }
 
         binding.facebookBtn.setOnClickListener{
+            authViewModel.isLoading.postValue(true)
             authViewModel.loginWithFacebook(this, ::showHome, ::showAlert)
         }
 
         binding.appleBtn.setOnClickListener{
+            authViewModel.isLoading.postValue(true)
             authViewModel.loginWithApple(requireActivity(), ::showHome, ::showAlert)
+        }
+    }
+
+    private fun onGoogleResult(result:ActivityResult){
+        if(result.resultCode == Activity.RESULT_OK){
+            authViewModel.onGoogleResult(result.data, ::showHome, ::showAlert)
         }
     }
 
@@ -110,12 +131,6 @@ class LoginFragment : Fragment() {
                     null
                 }
             }}
-    }
-
-    private fun onGoogleResult(result:ActivityResult){
-        if(result.resultCode == Activity.RESULT_OK){
-            authViewModel.onGoogleResult(result.data, ::showHome, ::showAlert)
-        }
     }
 
     private fun hideKeyboard() {
@@ -161,15 +176,18 @@ class LoginFragment : Fragment() {
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        authViewModel.isLoading.postValue(false)
         authViewModel.getCallbackManager().onActivityResult(requestCode, resultCode, data)
     }
 
     private fun showHome(email:String, providerType: ProviderType){
+        authViewModel.isLoading.postValue(false)
         val action = LoginFragmentDirections
             .actionLoginFragmentToNavigationFragment( email, providerType )
         navController.navigate(action)
     }
     private fun showAlert(message:String){
+        authViewModel.isLoading.postValue(false)
         val builder = AlertDialog.Builder(activity)
         builder.setTitle(R.string.auth_error)
         builder.setMessage(message)

@@ -84,6 +84,7 @@
     <string name="error">Error</string>
     <string name="warning">Advertencia</string>
     <string name="auth_error">Se ha producido un error autenticando al usuario</string>
+    <string name="auth_cancel">Se ha cancelado el inicio de sesión</string>
     <string name="upload_username_error">Se ha producido un error actualizando el nombre del usuario</string>
     <string name="invalid_email">Formato de correo invalido</string>
     <string name="invalid_password">La contraseña no cumple los criterios</string>

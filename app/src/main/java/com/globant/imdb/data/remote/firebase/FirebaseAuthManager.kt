@@ -1,6 +1,7 @@
 package com.globant.imdb.data.remote.firebase
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -155,7 +156,9 @@ class FirebaseAuthManager {
                     }
                 }
 
-                override fun onCancel() { }
+                override fun onCancel() {
+                    onFailure(R.string.auth_cancel.toString())
+                }
 
                 override fun onError(error: FacebookException?) {
                     onFailure(R.string.auth_error.toString())
@@ -164,13 +167,13 @@ class FirebaseAuthManager {
         )
     }
 
-    fun loginWithGoogle(activity: Activity): Intent{
+    fun loginWithGoogle(context: Context): Intent{
         val googleConf = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(ContextCompat.getString(activity, com.firebase.ui.auth.R.string.default_web_client_id))
+            .requestIdToken(ContextCompat.getString(context, com.firebase.ui.auth.R.string.default_web_client_id))
             .requestEmail()
             .build()
 
-        val googleClient = GoogleSignIn.getClient(activity, googleConf)
+        val googleClient = GoogleSignIn.getClient(context, googleConf)
         googleClient.signOut()
         return googleClient.signInIntent
     }

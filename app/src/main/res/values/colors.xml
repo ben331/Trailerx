@@ -7,6 +7,7 @@
     <color name="gray_800">#FF4B4747</color>
     <color name="gray_500">#FF9D9C9C</color>
     <color name="gray_100">#FFF5F5F5</color>
+    <color name="gray_light_100">#88F5F5F5</color>
     <color name="white">#FFFFFFFF</color>
     <color name="deep_orange_900">#FFC23000</color>
 </resources>

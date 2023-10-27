@@ -60,7 +60,8 @@
     <dimen name="label_shortcut_height">100dp</dimen>
     <dimen name="profile_photo_size">50dp</dimen>
     <dimen name="shortcuts_recycler_height">190dp</dimen>
-    <dimen name="blank_space_height">120dp</dimen>
+    <dimen name="blank_space_height">160dp</dimen>
+    <dimen name="progress_size">160dp</dimen>
 
     <!-- radius -->
     <dimen name="button_radius">14dp</dimen>

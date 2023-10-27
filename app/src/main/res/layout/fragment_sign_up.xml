@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/constraintLayout"
     tools:context=".ui.view.SignUpFragment">
 
     <ImageButton
@@ -156,4 +157,18 @@
             app:layout_constraintTop_toBottomOf="@+id/label_connect_google" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/progress_component"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray_light_100"
+        android:visibility="gone">
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="@dimen/progress_size"
+            android:layout_height="@dimen/progress_size"
+            style="@style/Widget.IMDb.ProgressBar"/>
+    </FrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
