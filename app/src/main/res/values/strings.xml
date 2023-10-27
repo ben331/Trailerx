@@ -55,6 +55,7 @@
     <string name="recently_viewed">Vistas recientes</string>
     <string name="no_recent">No has visitado ninguna página recientemente.</string>
     <string name="favorite_people">Personas favoritas</string>
+    <string name="logout">Cerrar Sesión</string>
 
     /*
     ---Content Description For Images---

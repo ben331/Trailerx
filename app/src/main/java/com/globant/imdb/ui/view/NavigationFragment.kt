@@ -4,18 +4,21 @@ import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.setupWithNavController
 import com.globant.imdb.R
 import com.globant.imdb.databinding.FragmentNavigationBinding
 import com.globant.imdb.ui.viewmodel.AuthViewModel
 
-class NavigationFragment : Fragment() {
+class NavigationFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
 
     private val navController: NavController by lazy {
         val navHostFragment =
@@ -70,9 +73,22 @@ class NavigationFragment : Fragment() {
         prefs.apply()
     }
 
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+        when (item!!.itemId) {
+            R.id.item_logout -> logout()
+        }
+        return true
+    }
+
+    private fun logout(){
+        cleanSession()
+        val action = NavigationFragmentDirections.actionNavigationFragmentToLoginFragment()
+        findNavController().navigate(action)
+    }
+
     private fun cleanSession(){
         val prefs = activity?.
-            getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)?.edit()!!
+        getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)?.edit()!!
         prefs.clear()
         prefs.apply()
         authViewModel.logout(args.provider)
