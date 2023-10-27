@@ -1,4 +1,4 @@
-package com.globant.imdb.ui
+package com.globant.imdb.ui.view
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -17,7 +17,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.globant.imdb.R
-import com.globant.imdb.data.local.room.model.UserValidator
+import com.globant.imdb.core.FormValidator
 import com.globant.imdb.data.remote.firebase.ProviderType
 import com.globant.imdb.databinding.FragmentLoginBinding
 import com.globant.imdb.ui.viewmodel.AuthViewModel
@@ -94,7 +94,7 @@ class LoginFragment : Fragment() {
     private fun setupForm(){
         with(binding.editTextEmail) {
             setOnFocusChangeListener { _, hasFocus ->
-                error = if (!hasFocus && !UserValidator.validateEmail( text.toString())) {
+                error = if (!hasFocus && !FormValidator.validateEmail( text.toString())) {
                     R.string.invalid_email.toString()
                 }else{
                     null
@@ -103,7 +103,7 @@ class LoginFragment : Fragment() {
 
         with(binding.editTextPassword) {
             setOnFocusChangeListener { _, hasFocus ->
-                error = if (!hasFocus && !UserValidator.validatePassword( text.toString())) {
+                error = if (!hasFocus && !FormValidator.validatePassword( text.toString())) {
                     R.string.invalid_password.toString()
                 }else{
                     null
@@ -132,7 +132,7 @@ class LoginFragment : Fragment() {
             override fun afterTextChanged(s: Editable?) {
                 val email = binding.editTextEmail.text.toString()
                 val password = binding.editTextPassword.text.toString()
-                if(UserValidator.validateLogin(email, password)){
+                if(FormValidator.validateLogin(email, password)){
                     binding.btnLogin.isEnabled = true
                     binding.editTextEmail.error = null
                     binding.editTextPassword.error = null

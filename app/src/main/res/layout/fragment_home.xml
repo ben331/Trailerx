@@ -6,7 +6,7 @@
     android:contentDescription="@string/home"
     android:background="@color/gray_100"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.HomeFragment">
+    tools:context=".ui.view.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

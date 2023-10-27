@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="280dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.CarouselFragment">
+    tools:context=".ui.view.CarouselFragment">
 
     <include
         android:id="@+id/sectionTitle"

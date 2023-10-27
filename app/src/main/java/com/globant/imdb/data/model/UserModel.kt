@@ -1,4 +1,4 @@
-package com.globant.imdb.data.local.room.model
+package com.globant.imdb.data.model
 
 data class UserModel (
     val displayName:String,
