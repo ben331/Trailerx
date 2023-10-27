@@ -6,5 +6,7 @@ import com.globant.imdb.data.model.Movie
 class GetTopRatedMoviesUseCase {
     private val repository = IMDbRepository()
 
-    suspend operator fun invoke():List<Movie> = repository.getTopRatedMovies()
+    suspend operator fun invoke():List<Movie> {
+        return repository.getTopRatedMovies()
+    }
 }

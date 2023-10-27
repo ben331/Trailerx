@@ -5,9 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.globant.imdb.R
 import com.globant.imdb.databinding.FragmentCarouselBinding
-import com.globant.imdb.databinding.FragmentFinishSignupBinding
 
 class CarouselFragment : Fragment() {
 

@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 
 class MovieViewModel: ViewModel() {
 
-    private val mainMovie = MutableLiveData<Movie>()
+    val mainMovie = MutableLiveData<Movie>()
 
     val getTopRatedMoviesUseCase = GetTopRatedMoviesUseCase()
 

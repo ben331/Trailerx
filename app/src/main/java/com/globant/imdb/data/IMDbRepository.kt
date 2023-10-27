@@ -1,7 +1,6 @@
 package com.globant.imdb.data
 
 import com.globant.imdb.data.model.Movie
-import com.globant.imdb.data.model.MovieList
 import com.globant.imdb.data.model.MovieProvider
 import com.globant.imdb.data.remote.retrofit.TMDBService
 
