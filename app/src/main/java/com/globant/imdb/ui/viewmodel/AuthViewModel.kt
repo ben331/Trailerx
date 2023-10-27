@@ -2,7 +2,9 @@ package com.globant.imdb.ui.viewmodel
 
 import android.app.Activity
 import android.content.Intent
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
+import com.facebook.CallbackManager
 import com.globant.imdb.data.remote.firebase.FirebaseAuthManager
 import com.globant.imdb.data.remote.firebase.ProviderType
 
@@ -10,6 +12,10 @@ class AuthViewModel: ViewModel() {
 
     private val authManager: FirebaseAuthManager by lazy {
         FirebaseAuthManager()
+    }
+
+    fun getCallbackManager(): CallbackManager{
+        return authManager.callbackManager
     }
 
     fun setupName(useName: (remoteDisplayName:String?) -> Unit) {
@@ -48,11 +54,11 @@ class AuthViewModel: ViewModel() {
     }
 
     fun loginWithFacebook(
-        activity: Activity,
+        fragment: Fragment,
         onSuccess: (email:String, provides: ProviderType)->Unit,
         onFailure:(msg:String)->Unit
     ){
-        authManager.loginWithFacebook(activity, onSuccess, onFailure)
+        authManager.loginWithFacebook(fragment, onSuccess, onFailure)
     }
 
     fun loginWithGoogle(activity: Activity): Intent {

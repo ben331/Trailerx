@@ -3,6 +3,7 @@ package com.globant.imdb.ui.view
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -83,7 +84,7 @@ class LoginFragment : Fragment() {
         }
 
         binding.facebookBtn.setOnClickListener{
-            authViewModel.loginWithFacebook(requireActivity(), ::showHome, ::showAlert)
+            authViewModel.loginWithFacebook(this, ::showHome, ::showAlert)
         }
 
         binding.appleBtn.setOnClickListener{
@@ -156,12 +157,18 @@ class LoginFragment : Fragment() {
         }
     }
 
+    @Suppress("DEPRECATION")
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        authViewModel.getCallbackManager().onActivityResult(requestCode, resultCode, data)
+    }
+
     private fun showHome(email:String, providerType: ProviderType){
         val action = LoginFragmentDirections
             .actionLoginFragmentToNavigationFragment( email, providerType )
         navController.navigate(action)
     }
-
     private fun showAlert(message:String){
         val builder = AlertDialog.Builder(activity)
         builder.setTitle(R.string.auth_error)

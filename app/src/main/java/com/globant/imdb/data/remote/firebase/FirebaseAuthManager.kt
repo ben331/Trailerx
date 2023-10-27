@@ -3,6 +3,7 @@ package com.globant.imdb.data.remote.firebase
 import android.app.Activity
 import android.content.Intent
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -31,7 +32,7 @@ class FirebaseAuthManager {
         FirebaseAuth.getInstance()
     }
 
-    private val callbackManager = CallbackManager.Factory.create()
+    val callbackManager: CallbackManager = CallbackManager.Factory.create()
 
     fun logout(provider:ProviderType){
         if(provider == ProviderType.FACEBOOK){
@@ -127,11 +128,11 @@ class FirebaseAuthManager {
     }
 
     fun loginWithFacebook(
-        activity: Activity,
+        fragment: Fragment,
         onSuccess: (email:String, provides:ProviderType)->Unit,
         onFailure:(msg:String)->Unit
     ){
-        LoginManager.getInstance().logInWithReadPermissions(activity, listOf("email"))
+        LoginManager.getInstance().logInWithReadPermissions(fragment, listOf("email"))
 
         LoginManager.getInstance().registerCallback( callbackManager,
             object : FacebookCallback<LoginResult> {
@@ -148,7 +149,7 @@ class FirebaseAuthManager {
                                 uploadName(displayName, onFailure)
                                 onSuccess( email, ProviderType.FACEBOOK)
                             }else{
-                                onFailure(R.string.auth_error.toString())
+                                onFailure(task.exception?.message.toString())
                             }
                         }
                     }
