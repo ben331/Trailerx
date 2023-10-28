@@ -88,4 +88,7 @@ dependencies {
     //Coroutines
     runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     runtimeOnly("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
+
+    //Picasso
+    implementation("com.squareup.picasso:picasso:2.5.2")
 }

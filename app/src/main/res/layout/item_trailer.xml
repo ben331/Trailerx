@@ -44,5 +44,5 @@
         android:layout_marginStart="@dimen/margin_large"
         android:layout_marginTop="@dimen/margin_micro"
         style="@style/TextAppearance.IMDb.Body.Small"
-        tools:text="@tools:sample/full_names"/>
+        android:text="@string/trailer"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
