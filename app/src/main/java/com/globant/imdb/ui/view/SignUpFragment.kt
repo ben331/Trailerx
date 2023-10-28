@@ -75,6 +75,7 @@ class SignUpFragment : Fragment() {
             val password = binding.editTextPassword.text.toString()
 
             authViewModel.signUpWithEmailAndPassword(
+                requireContext(),
                 email,
                 password,
                 displayName,

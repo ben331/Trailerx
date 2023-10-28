@@ -30,30 +30,33 @@ class AuthViewModel: ViewModel() {
     }
 
     fun signUpWithEmailAndPassword(
+        context: Context,
         email:String,
         password:String,
         displayName:String,
         onSuccess: (email:String)->Unit,
         onFailure:(title:String, msg:String)->Unit
     ){
-        authManager.signUpWithEmailAndPassword(email, password, displayName, onSuccess, onFailure)
+        authManager.signUpWithEmailAndPassword(context, email, password, displayName, onSuccess, onFailure)
     }
 
     fun loginWithEmailAndPassword(
+        context: Context,
         email:String,
         password:String,
         onSuccess: (email:String, provides: ProviderType)->Unit,
         onFailure:(title:String, msg:String)->Unit
     ){
-        authManager.loginWithEmailAndPassword(email, password, onSuccess, onFailure)
+        authManager.loginWithEmailAndPassword(context, email, password, onSuccess, onFailure)
     }
 
     fun sendPasswordResetEmail(
+        context: Context,
         email: String,
         onSuccess: ()->Unit,
         onFailure:(title:String, msg:String)->Unit
     ){
-        authManager.sendPasswordResetEmail(email, onSuccess, onFailure)
+        authManager.sendPasswordResetEmail(context, email, onSuccess, onFailure)
     }
 
     fun loginWithApple(
@@ -77,11 +80,12 @@ class AuthViewModel: ViewModel() {
     }
 
     fun onGoogleResult(
+        context: Context,
         intent:Intent?,
         onSuccess: (email:String, provides:ProviderType)->Unit,
         onFailure:(title:String, msg:String)->Unit
     ){
-        authManager.onGoogleResult(intent, onSuccess, onFailure)
+        authManager.onGoogleResult(context, intent, onSuccess, onFailure)
     }
 
 }

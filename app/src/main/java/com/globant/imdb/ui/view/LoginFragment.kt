@@ -17,7 +17,6 @@ import androidx.activity.result.contract.ActivityResultContracts.StartActivityFo
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.globant.imdb.R
 import com.globant.imdb.core.FormValidator
 import com.globant.imdb.data.remote.firebase.ProviderType
@@ -88,13 +87,13 @@ class LoginFragment : Fragment() {
             val email = binding.editTextEmail.text.toString()
             val password = binding.editTextPassword.text.toString()
             authViewModel.isLoading.postValue(true)
-            authViewModel.loginWithEmailAndPassword(email, password, ::showHome, ::showAlert)
+            authViewModel.loginWithEmailAndPassword(requireContext(), email, password, ::showHome, ::showAlert)
         }
 
         binding.labelForgotPassword.setOnClickListener {
             val email = binding.editTextEmail.text.toString()
             if(FormValidator.validateEmail(email)){
-                authViewModel.sendPasswordResetEmail(email, onSuccess = {
+                authViewModel.sendPasswordResetEmail(requireContext(), email, onSuccess = {
                     showAlert(getString(R.string.success),getString(R.string.password_reset_success))
                 }, ::showAlert)
             }else{
@@ -121,7 +120,7 @@ class LoginFragment : Fragment() {
 
     private fun onGoogleResult(result:ActivityResult){
         if(result.resultCode == Activity.RESULT_OK){
-            authViewModel.onGoogleResult(result.data, ::showHome, ::showAlert)
+            authViewModel.onGoogleResult(requireContext(), result.data, ::showHome, ::showAlert)
         }
     }
 
