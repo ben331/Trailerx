@@ -11,11 +11,12 @@ import com.globant.imdb.databinding.ItemMovieBinding
 import com.globant.imdb.R
 import com.globant.imdb.core.RetrofitHelper
 import com.globant.imdb.data.model.Movie
+import com.globant.imdb.ui.view.HomeFragment
 
 class MovieAdapter: Adapter<MovieViewHolder>() {
 
     lateinit var movieList: MutableLiveData<List<Movie>>
-    lateinit var imageRenderListener: ImageRenderListener
+    lateinit var moviesListener: HomeFragment
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -24,11 +25,14 @@ class MovieAdapter: Adapter<MovieViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        holder.labelName.text = movieList.value?.get(position)?.title ?: "error"
-        holder.labelStars.text = movieList.value?.get(position)?.popularity.toString()
-        val imageUrl =
-            (RetrofitHelper.imageUrl + movieList.value?.get(position)?.backdropPath)
-        imageRenderListener.renderImage(imageUrl, holder.image)
+        holder.listener = moviesListener
+        with(movieList.value?.get(position)!!){
+            holder.id = id
+            holder.labelName.text = title
+            holder.labelStars.text= popularity.toString()
+            val imageUrl = (RetrofitHelper.imageUrl + backdropPath)
+            moviesListener.renderImage(imageUrl, holder.image)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -42,8 +46,25 @@ class MovieAdapter: Adapter<MovieViewHolder>() {
 }
 
 class MovieViewHolder(root:View):ViewHolder(root){
+    lateinit var listener:MovieListener
+    var id:Int = 0
+
     private val binding = ItemMovieBinding.bind(root)
     val image = binding.imgMovie
     val labelName = binding.labelMovieName
     val labelStars = binding.labelStars
+
+    init {
+        binding.imgMovie.setOnClickListener {
+            listener.showDetails(id)
+        }
+        binding.btnBookmarkAdd.setOnClickListener {
+            listener.addToWatchList(id)
+        }
+    }
+
+    interface MovieListener {
+        fun showDetails(id:Int)
+        fun addToWatchList(id:Int)
+    }
 }

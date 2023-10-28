@@ -28,6 +28,7 @@
                 android:contentDescription="@string/img_profile"
                 android:scaleType="centerCrop"
                 android:background="@color/yellow_400"
+                android:src="@drawable/ic_profile"
                 tools:ignore="ImageContrastCheck" />
 
         </androidx.cardview.widget.CardView>

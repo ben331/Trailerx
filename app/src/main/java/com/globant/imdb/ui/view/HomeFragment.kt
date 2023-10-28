@@ -13,11 +13,12 @@ import com.globant.imdb.R
 import com.globant.imdb.core.RetrofitHelper
 import com.globant.imdb.databinding.FragmentHomeBinding
 import com.globant.imdb.ui.view.adapters.MovieAdapter
+import com.globant.imdb.ui.view.adapters.MovieViewHolder
 import com.globant.imdb.ui.viewmodel.MovieViewModel
 import com.squareup.picasso.Picasso
 
 
-class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener {
+class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHolder.MovieListener {
 
     private val binding: FragmentHomeBinding by lazy {
         FragmentHomeBinding.inflate(layoutInflater)
@@ -52,51 +53,6 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener {
         refresh()
     }
 
-    private fun setupRecyclerViews(){
-        nowPlayingMoviesAdapter = MovieAdapter()
-        upcomingMoviesAdapter = MovieAdapter()
-        popularMoviesAdapter = MovieAdapter()
-
-        nowPlayingMoviesAdapter.movieList = movieViewModel.nowPlayingMovies
-        upcomingMoviesAdapter.movieList = movieViewModel.upcomingMovies
-        popularMoviesAdapter.movieList = movieViewModel.popularMovies
-
-        nowPlayingMoviesAdapter.imageRenderListener = this
-        upcomingMoviesAdapter.imageRenderListener = this
-        popularMoviesAdapter.imageRenderListener = this
-
-        with(binding.listMoviesOne){
-            titleContainer.sectionTitle.text = getString(R.string.section_now_playing)
-            listDescription.visibility = View.GONE
-            btnActionList.visibility = View.GONE
-            moviesRecyclerView.adapter = nowPlayingMoviesAdapter
-            moviesRecyclerView.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            moviesRecyclerView.setHasFixedSize(true)
-        }
-
-        with(binding.listMoviesTwo){
-            titleContainer.sectionTitle.text = getString(R.string.section_upcoming)
-            listDescription.visibility = View.GONE
-            btnActionList.visibility = View.GONE
-            moviesRecyclerView.adapter = upcomingMoviesAdapter
-            moviesRecyclerView.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            moviesRecyclerView.setHasFixedSize(true)
-        }
-
-        with(binding.listMoviesTree){
-            titleContainer.sectionTitle.text = getString(R.string.section_popular)
-            listDescription.visibility = View.GONE
-            btnActionList.visibility = View.GONE
-            moviesRecyclerView.adapter = popularMoviesAdapter
-            moviesRecyclerView.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            moviesRecyclerView.setHasFixedSize(true)
-        }
-
-    }
-
     private fun setupButtons(){
         binding.refreshLayout.setOnRefreshListener(::refresh)
     }
@@ -116,6 +72,47 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener {
         }
     }
 
+    private fun setupRecyclerViews(){
+        nowPlayingMoviesAdapter = MovieAdapter()
+        upcomingMoviesAdapter = MovieAdapter()
+        popularMoviesAdapter = MovieAdapter()
+
+        nowPlayingMoviesAdapter.movieList = movieViewModel.nowPlayingMovies
+        upcomingMoviesAdapter.movieList = movieViewModel.upcomingMovies
+        popularMoviesAdapter.movieList = movieViewModel.popularMovies
+
+        nowPlayingMoviesAdapter.moviesListener = this
+        upcomingMoviesAdapter.moviesListener = this
+        popularMoviesAdapter.moviesListener = this
+
+        with(binding.listMoviesOne){
+            titleContainer.sectionTitle.text = getString(R.string.section_now_playing)
+            listDescription.visibility = View.GONE
+            moviesRecyclerView.adapter = nowPlayingMoviesAdapter
+            moviesRecyclerView.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            moviesRecyclerView.setHasFixedSize(true)
+        }
+
+        with(binding.listMoviesTwo){
+            titleContainer.sectionTitle.text = getString(R.string.section_upcoming)
+            listDescription.visibility = View.GONE
+            moviesRecyclerView.adapter = upcomingMoviesAdapter
+            moviesRecyclerView.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            moviesRecyclerView.setHasFixedSize(true)
+        }
+
+        with(binding.listMoviesTree){
+            titleContainer.sectionTitle.text = getString(R.string.section_popular)
+            listDescription.visibility = View.GONE
+            moviesRecyclerView.adapter = popularMoviesAdapter
+            moviesRecyclerView.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            moviesRecyclerView.setHasFixedSize(true)
+        }
+    }
+
     private fun refresh(){
         movieViewModel.onCreate(
             nowPlayingMoviesAdapter,
@@ -124,20 +121,28 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener {
         )
     }
 
-    private fun showAlert(message:String){
-        val builder = AlertDialog.Builder(activity)
-        builder.setTitle(R.string.error)
-        builder.setMessage(message)
-        builder.setPositiveButton(R.string.accept, null)
-        val dialog = builder.create()
-        dialog.show()
-    }
-
     override fun renderImage(url: String, image: ImageView) {
         Picasso.with(requireContext())
             .load(url)
             .fit()
             .centerCrop()
             .into(image)
+    }
+
+    override fun showDetails(id: Int) {
+        showAlert("TODO", "Mostrar detalles de movie: ${id}")
+    }
+
+    override fun addToWatchList(id: Int) {
+        showAlert("TODO", "Agregar a la lista de seguimiento la movie: ${id}")
+    }
+
+    private fun showAlert(title:String, message:String){
+        val builder = AlertDialog.Builder(activity)
+        builder.setTitle(title)
+        builder.setMessage(message)
+        builder.setPositiveButton(R.string.accept, null)
+        val dialog = builder.create()
+        dialog.show()
     }
 }
