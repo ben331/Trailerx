@@ -17,6 +17,7 @@ import androidx.activity.result.contract.ActivityResultContracts.StartActivityFo
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.globant.imdb.R
 import com.globant.imdb.core.FormValidator
 import com.globant.imdb.data.remote.firebase.ProviderType

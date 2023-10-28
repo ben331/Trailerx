@@ -15,7 +15,6 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.globant.imdb.R
 import com.globant.imdb.core.FormValidator
-import com.globant.imdb.data.remote.firebase.ProviderType
 import com.globant.imdb.databinding.FragmentSignUpBinding
 import com.globant.imdb.ui.viewmodel.AuthViewModel
 
@@ -68,6 +67,7 @@ class SignUpFragment : Fragment() {
         }
 
         binding.btnAccept.setOnClickListener {
+            authViewModel.isLoading.postValue(true)
             hideKeyboard()
 
             val displayName = binding.editTextName.text.toString()
@@ -78,7 +78,7 @@ class SignUpFragment : Fragment() {
                 email,
                 password,
                 displayName,
-                ::showHome,
+                ::showLogin,
                 ::showAlert
             )
         }
@@ -143,12 +143,20 @@ class SignUpFragment : Fragment() {
         binding.editTextPassword.addTextChangedListener(watcher)
     }
 
-    private fun showHome(email:String, provider:ProviderType){
-        val action = SignUpFragmentDirections.actionSignUpFragmentToNavigationFragment( email, provider )
+    private fun showLogin(string: String?){
+        authViewModel.isLoading.postValue(false)
+        string?.let {
+            showAlert(
+                getString(R.string.success),
+                getString(R.string.account_created_success)
+            )
+        }
+        val action = SignUpFragmentDirections.actionSignUpFragmentToLoginFragment()
         navController.navigate(action)
     }
 
     private fun showAlert(title:String, msg:String){
+        authViewModel.isLoading.postValue(false)
         val builder = AlertDialog.Builder(activity)
         builder.setTitle(title)
         builder.setMessage(msg)

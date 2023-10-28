@@ -76,16 +76,25 @@ class FirebaseAuthManager {
         email:String,
         password: String,
         displayName: String,
-        onSuccess: (email: String, provides: ProviderType) -> Unit,
+        onSuccess: (email: String) -> Unit,
         onFailure: (title:String, msg: String) -> Unit
     ){
         auth.createUserWithEmailAndPassword( email, password )
-            .addOnCompleteListener {
-                if(it.isSuccessful){
-                    uploadName(displayName, onFailure)
-                    onSuccess(email, ProviderType.BASIC)
-                }else{
-                    onFailure(R.string.error.toString(),R.string.auth_error.toString())
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val user = auth.currentUser
+
+                    user?.sendEmailVerification()
+                        ?.addOnCompleteListener { verificationTask ->
+                            if (verificationTask.isSuccessful) {
+                                uploadName(displayName, onFailure)
+                                onSuccess(email)
+                            } else {
+                                onFailure(R.string.error.toString(), R.string.auth_error.toString())
+                            }
+                        }
+                } else {
+                    onFailure(R.string.error.toString(), R.string.auth_error.toString())
                 }
             }
     }

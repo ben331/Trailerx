@@ -33,7 +33,7 @@ class AuthViewModel: ViewModel() {
         email:String,
         password:String,
         displayName:String,
-        onSuccess: (email:String, provides: ProviderType)->Unit,
+        onSuccess: (email:String)->Unit,
         onFailure:(title:String, msg:String)->Unit
     ){
         authManager.signUpWithEmailAndPassword(email, password, displayName, onSuccess, onFailure)

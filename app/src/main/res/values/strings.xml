@@ -95,6 +95,9 @@
     <string name="password_reset_success">
         Correo enviado exitosamente, revisa tanto tu bandeja de entrada como el correo no deseado (spam).
     </string>
+    <string name="account_created_success">
+        Antes de continuar, necesitas verificar tu cuenta. Revisa tu bandeja de entrada y el correo no deseado.
+    </string>
 
     /*
     --Facebook strings
