@@ -43,7 +43,7 @@
                 android:id="@+id/container_sypnosis"
                 layout="@layout/item_card_synopsis"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/card_synopsis_height"
+                android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/container_frontage"
                 tools:layout_editor_absoluteX="73dp" />
 

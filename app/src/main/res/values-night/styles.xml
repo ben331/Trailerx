@@ -86,7 +86,7 @@
     </style>
     <style name="ThemeOverlay.IMDb.Toolbar" parent="">
         <item name="colorPrimary">@color/black</item>
-        <item name="android:colorControlNormal">@color/white</item>
+        <item name="colorOnPrimary">@color/white</item>
     </style>
 
     <style name ="Widget.TextView.Ship" parent="">

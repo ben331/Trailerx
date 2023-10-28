@@ -54,7 +54,7 @@
     <dimen name="img_result_width">90dp</dimen>
     <dimen name="img_result_height">130dp</dimen>
     <dimen name="app_bar_height">40dp</dimen>
-    <dimen name="card_synopsis_height">180dp</dimen>
+    <dimen name="card_synopsis_height">280dp</dimen>
     <dimen name="header_search_height">100dp</dimen>
     <dimen name="card_shortcut_width">180dp</dimen>
     <dimen name="card_shortcut_height">180dp</dimen>
