@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.globant.imdb.data.model.Movie
 import com.globant.imdb.domain.GetNowPlayingMoviesUseCase
 import com.globant.imdb.domain.GetPopularMoviesUseCase
+import com.globant.imdb.domain.GetRandomTopMovieUseCase
 import com.globant.imdb.domain.GetUpcomingMoviesUseCase
 import com.globant.imdb.ui.view.adapters.MovieViewHolder
 import kotlinx.coroutines.launch
@@ -21,6 +22,7 @@ class MovieViewModel: ViewModel() {
     val popularMovies = MutableLiveData<List<Movie>>()
 
     // Use Cases
+    val getRandomTopMovieUseCase = GetRandomTopMovieUseCase()
     val getNowPlayingMoviesUseCase = GetNowPlayingMoviesUseCase()
     val getUpcomingMovies = GetUpcomingMoviesUseCase()
     val getPopularMoviesUseCase = GetPopularMoviesUseCase()
@@ -32,9 +34,14 @@ class MovieViewModel: ViewModel() {
         popularMoviesAdapter:Adapter<MovieViewHolder>
     ) {
         viewModelScope.launch {
+            val result = getRandomTopMovieUseCase()
+            result?.let {
+                mainMovie.postValue(it)
+            }
+        }
+        viewModelScope.launch {
             val result = getNowPlayingMoviesUseCase()
             if(result.isNotEmpty()){
-                mainMovie.postValue(result[0])
                 nowPlayingMovies.postValue(result)
                 nowPlayingMoviesAdapter.notifyDataSetChanged()
             }

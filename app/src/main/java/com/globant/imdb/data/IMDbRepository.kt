@@ -7,9 +7,11 @@ import com.globant.imdb.data.remote.retrofit.TMDBService
 class IMDbRepository {
     private val api = TMDBService()
     suspend fun getNowPlayingMovies():List<Movie>{
-        val response = api.getNowPlayingMovies()?.results ?: emptyList()
-        MovieProvider.movies = response
-        return response
+        if(MovieProvider.movies.isEmpty()){
+            val response = api.getNowPlayingMovies()?.results ?: emptyList()
+            MovieProvider.movies = response
+        }
+        return MovieProvider.movies
     }
     suspend fun getUpcomingMovies():List<Movie>{
         val response = api.getUpcomingMovies()?.results ?: emptyList()

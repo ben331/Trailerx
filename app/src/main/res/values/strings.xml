@@ -35,7 +35,7 @@
     /*
     ---HomeFragment---
     */
-    <string name="section_now_playing">En cartelera</string>
+    <string name="section_now_playing">Tendencia ahora</string>
     <string name="section_upcoming">Proximamente</string>
     <string name="section_popular">Populares</string>
     <string name="best_selections">Las mejores selecciones</string>
