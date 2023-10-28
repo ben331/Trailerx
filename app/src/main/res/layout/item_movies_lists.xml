@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_medium"
         app:layout_constraintTop_toBottomOf="@id/list_description"
-        app:layout_constraintStart_toStartOf="@id/list_description" />
+        app:layout_constraintStart_toStartOf="@id/title_container" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_action_list"

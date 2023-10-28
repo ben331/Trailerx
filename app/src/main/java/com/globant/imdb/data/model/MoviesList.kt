@@ -2,7 +2,7 @@ package com.globant.imdb.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class MovieList(
+data class MoviesList(
     @SerializedName("page")             val page:Int,
     @SerializedName("results")          var results:List<Movie>,
     @SerializedName("total_pages")      val totalPages: Int,

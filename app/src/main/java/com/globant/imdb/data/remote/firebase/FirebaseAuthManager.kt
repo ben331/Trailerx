@@ -209,18 +209,27 @@ class FirebaseAuthManager {
                                 uploadName(fragment.requireContext(), displayName, onFailure)
                                 onSuccess( email, ProviderType.FACEBOOK)
                             }else{
-                                onFailure(R.string.error.toString(), task.exception?.message.toString())
+                                onFailure(
+                                    fragment.requireContext().getString(R.string.error),
+                                    task.exception?.message.toString(),
+                                )
                             }
                         }
                     }
                 }
 
                 override fun onCancel() {
-                    onFailure(R.string.error.toString(), R.string.auth_cancel.toString())
+                    onFailure(
+                        fragment.requireContext().getString(R.string.error),
+                        fragment.requireContext().getString(R.string.auth_error),
+                    )
                 }
 
                 override fun onError(error: FacebookException?) {
-                    onFailure(R.string.error.toString(), R.string.auth_error.toString())
+                    onFailure(
+                        fragment.requireContext().getString(R.string.error),
+                        fragment.requireContext().getString(R.string.auth_error),
+                    )
                 }
             }
         )
@@ -258,12 +267,18 @@ class FirebaseAuthManager {
                         uploadName(context, displayName, onFailure)
                         onSuccess(email, ProviderType.GOOGLE)
                     }else{
-                        onFailure(R.string.error.toString(), R.string.auth_error.toString())
+                        onFailure(
+                            ContextCompat.getString(context, R.string.error),
+                            ContextCompat.getString(context, R.string.auth_error),
+                        )
                     }
                 }
             }
         }catch (e: ApiException){
-            onFailure(R.string.error.toString(), R.string.auth_error.toString())
+            onFailure(
+                ContextCompat.getString(context, R.string.error),
+                ContextCompat.getString(context, R.string.auth_error)
+            )
         }
     }
 

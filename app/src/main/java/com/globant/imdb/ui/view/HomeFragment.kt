@@ -5,22 +5,29 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.globant.imdb.R
 import com.globant.imdb.core.RetrofitHelper
 import com.globant.imdb.databinding.FragmentHomeBinding
+import com.globant.imdb.ui.view.adapters.MovieAdapter
 import com.globant.imdb.ui.viewmodel.MovieViewModel
 import com.squareup.picasso.Picasso
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener {
 
     private val binding: FragmentHomeBinding by lazy {
         FragmentHomeBinding.inflate(layoutInflater)
     }
 
     private val movieViewModel: MovieViewModel by viewModels()
+
+    private lateinit var nowPlayingMoviesAdapter: MovieAdapter
+    private lateinit var upcomingMoviesAdapter: MovieAdapter
+    private lateinit var popularMoviesAdapter: MovieAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +47,54 @@ class HomeFragment : Fragment() {
         //Setup
         setupButtons()
         setupLiveData()
+        setupRecyclerViews()
 
-        movieViewModel.onCreate()
+        refresh()
+    }
+
+    private fun setupRecyclerViews(){
+        nowPlayingMoviesAdapter = MovieAdapter()
+        upcomingMoviesAdapter = MovieAdapter()
+        popularMoviesAdapter = MovieAdapter()
+
+        nowPlayingMoviesAdapter.movieList = movieViewModel.nowPlayingMovies
+        upcomingMoviesAdapter.movieList = movieViewModel.upcomingMovies
+        popularMoviesAdapter.movieList = movieViewModel.popularMovies
+
+        nowPlayingMoviesAdapter.imageRenderListener = this
+        upcomingMoviesAdapter.imageRenderListener = this
+        popularMoviesAdapter.imageRenderListener = this
+
+        with(binding.listMoviesOne){
+            titleContainer.sectionTitle.text = getString(R.string.section_now_playing)
+            listDescription.visibility = View.GONE
+            btnActionList.visibility = View.GONE
+            moviesRecyclerView.adapter = nowPlayingMoviesAdapter
+            moviesRecyclerView.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            moviesRecyclerView.setHasFixedSize(true)
+        }
+
+        with(binding.listMoviesTwo){
+            titleContainer.sectionTitle.text = getString(R.string.section_upcoming)
+            listDescription.visibility = View.GONE
+            btnActionList.visibility = View.GONE
+            moviesRecyclerView.adapter = upcomingMoviesAdapter
+            moviesRecyclerView.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            moviesRecyclerView.setHasFixedSize(true)
+        }
+
+        with(binding.listMoviesTree){
+            titleContainer.sectionTitle.text = getString(R.string.section_popular)
+            listDescription.visibility = View.GONE
+            btnActionList.visibility = View.GONE
+            moviesRecyclerView.adapter = popularMoviesAdapter
+            moviesRecyclerView.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            moviesRecyclerView.setHasFixedSize(true)
+        }
+
     }
 
     private fun setupButtons(){
@@ -64,7 +117,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun refresh(){
-        movieViewModel.onCreate()
+        movieViewModel.onCreate(
+            nowPlayingMoviesAdapter,
+            upcomingMoviesAdapter,
+            popularMoviesAdapter
+        )
     }
 
     private fun showAlert(message:String){
@@ -74,5 +131,13 @@ class HomeFragment : Fragment() {
         builder.setPositiveButton(R.string.accept, null)
         val dialog = builder.create()
         dialog.show()
+    }
+
+    override fun renderImage(url: String, image: ImageView) {
+        Picasso.with(requireContext())
+            .load(url)
+            .fit()
+            .centerCrop()
+            .into(image)
     }
 }

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="190dp"
+    android:layout_marginEnd="@dimen/recycler_view_item_margin"
     style="@style/Widget.IMDb.ItemMovie"
     android:elevation="@dimen/elevation_medium"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -54,12 +55,16 @@
 
     <TextView
         android:id="@+id/label_movie_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/img_star"
-        app:layout_constraintStart_toStartOf="@id/img_star"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:ellipsize="end"
+        android:maxLines="2"
         android:textAppearance="@style/TextAppearance.IMDb.Body.Pico"
-        tools:text="Dura"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/img_info"
+        app:layout_constraintStart_toStartOf="@id/img_star"
+        app:layout_constraintTop_toBottomOf="@id/img_star"
+        tools:text="Dura" />
 
     <ImageView
         android:id="@+id/img_info"
