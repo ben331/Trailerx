@@ -1,9 +1,11 @@
 package com.globant.imdb.data.remote.retrofit
 
+import com.globant.imdb.data.model.MovieDetail
 import com.globant.imdb.data.model.MoviesList
 import com.globant.imdb.data.model.MoviesListDates
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface TMDBApiClient {
@@ -25,5 +27,11 @@ interface TMDBApiClient {
         @Query("language") language: String,
         @Query("page") page: Int
     ):Response<MoviesList?>
+
+    @GET("movie/{movieId}")
+    suspend fun getMovieById(
+        @Path("movieId") movieId:Int,
+        @Query("language") language: String,
+    ):Response<MovieDetail?>
 
 }

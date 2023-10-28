@@ -1,6 +1,7 @@
 package com.globant.imdb.data.remote.retrofit
 
 import com.globant.imdb.core.RetrofitHelper
+import com.globant.imdb.data.model.MovieDetail
 import com.globant.imdb.data.model.MoviesList
 import com.globant.imdb.data.model.MoviesListDates
 import kotlinx.coroutines.Dispatchers
@@ -30,6 +31,14 @@ class TMDBService {
             val languageCode = Locale.getDefault().language
             val response = retrofit
                 .create(TMDBApiClient::class.java).getPopularMovies( languageCode,1 )
+            response.body()
+        }
+    }
+    suspend fun getMovieById(movieId: Int):MovieDetail?{
+        return withContext(Dispatchers.IO){
+            val languageCode = Locale.getDefault().language
+            val response = retrofit
+                .create(TMDBApiClient::class.java).getMovieById( movieId, languageCode )
             response.body()
         }
     }

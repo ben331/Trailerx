@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.globant.imdb.data.model.Movie
+import com.globant.imdb.domain.GetMovieByIdUseCase
 import com.globant.imdb.domain.GetNowPlayingMoviesUseCase
 import com.globant.imdb.domain.GetPopularMoviesUseCase
 import com.globant.imdb.domain.GetRandomTopMovieUseCase

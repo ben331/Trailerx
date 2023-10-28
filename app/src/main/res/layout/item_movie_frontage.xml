@@ -36,15 +36,34 @@
         app:layout_constraintStart_toEndOf="@id/lineView"
         app:layout_constraintTop_toBottomOf="@id/sectionTitle"
         tools:ignore="TextContrastCheck"
-        tools:text="The queens Gambit (título original)" />
+        tools:text="The queens Gambit" />
+
+    <TextView
+        style="@style/TextAppearance.IMDb.Body.SmallLight"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_marginTop="@dimen/margin_micro"
+        android:text="@string/origin_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/origin_title"
+        app:layout_constraintTop_toBottomOf="@id/sectionTitle"
+        tools:ignore="TextContrastCheck" />
 
     <TextView
         android:id="@+id/detail_movie"
         style="@style/TextAppearance.IMDb.TextField.SignUp"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_medium"
         android:layout_marginTop="@dimen/margin_micro"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:ellipsize="end"
+        android:maxLines="2"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/lineView"
         app:layout_constraintTop_toBottomOf="@id/origin_title"
         tools:ignore="TextContrastCheck"

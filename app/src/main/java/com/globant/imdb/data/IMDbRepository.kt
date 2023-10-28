@@ -1,6 +1,7 @@
 package com.globant.imdb.data
 
 import com.globant.imdb.data.model.Movie
+import com.globant.imdb.data.model.MovieDetail
 import com.globant.imdb.data.model.MovieProvider
 import com.globant.imdb.data.remote.retrofit.TMDBService
 
@@ -19,6 +20,10 @@ class IMDbRepository {
     }
     suspend fun getPopularMovies():List<Movie>{
         val response = api.getPopularMovies()?.results ?: emptyList()
+        return response
+    }
+    suspend fun getMovieById(movieId:Int):MovieDetail?{
+        val response = api.getMovieById(movieId)
         return response
     }
 }

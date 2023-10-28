@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.globant.imdb.R
 import com.globant.imdb.core.RetrofitHelper
@@ -130,11 +131,12 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
     }
 
     override fun showDetails(id: Int) {
-        showAlert("TODO", "Mostrar detalles de movie: ${id}")
+        val action = HomeFragmentDirections.actionHomeFragmentToMovieFragment(id)
+        findNavController().navigate(action)
     }
 
     override fun addToWatchList(id: Int) {
-        showAlert("TODO", "Agregar a la lista de seguimiento la movie: ${id}")
+        showAlert("TODO", "Agregar a la lista de seguimiento la movie: $id")
     }
 
     private fun showAlert(title:String, message:String){

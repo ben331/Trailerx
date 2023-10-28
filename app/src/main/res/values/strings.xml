@@ -41,6 +41,11 @@
     <string name="best_selections">Las mejores selecciones</string>
 
     /*
+    ---MovieFragment---
+    */
+    <string name="origin_title">(Título original)</string>
+
+    /*
     ---SearchFragment---
     */
     <string name="search_hint">Buscar IMDb</string>

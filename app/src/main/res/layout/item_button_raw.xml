@@ -21,7 +21,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="@dimen/margin_large"
         android:textAppearance="@style/TextAppearance.IMDb.Button.Raw"
-        tools:text="Guía de episodios"/>
+        android:text="@string/chapters_guide"/>
 
     <TextView
         android:id="@+id/label_caption"

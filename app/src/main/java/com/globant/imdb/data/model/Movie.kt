@@ -3,7 +3,7 @@ package com.globant.imdb.data.model
 import com.google.gson.annotations.SerializedName
 
 data class Movie(
-    @SerializedName("adult")            val adult: Boolean,
+    @SerializedName("adult")                val adult: Boolean,
     @SerializedName("backdrop_path")        val backdropPath: String,
     @SerializedName("genre_ids")            val genreIds: List<Int>,
     @SerializedName("id")                   val id: Int,
