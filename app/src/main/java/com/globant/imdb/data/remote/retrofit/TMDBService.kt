@@ -42,4 +42,12 @@ class TMDBService {
             response.body()
         }
     }
+    suspend fun searchMovie(query: String):MoviesList?{
+        return withContext(Dispatchers.IO){
+            val languageCode = Locale.getDefault().language
+            val response = retrofit
+                .create(TMDBApiClient::class.java).searchMovie( query, languageCode, 1 )
+            response.body()
+        }
+    }
 }

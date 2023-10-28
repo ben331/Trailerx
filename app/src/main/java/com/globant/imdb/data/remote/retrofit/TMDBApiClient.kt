@@ -34,4 +34,11 @@ interface TMDBApiClient {
         @Query("language") language: String,
     ):Response<MovieDetail?>
 
+    @GET("search/movie")
+    suspend fun searchMovie(
+        @Query("query") query: String,
+        @Query("language") language: String,
+        @Query("page") page: Int
+    ):Response<MoviesList?>
+
 }

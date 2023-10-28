@@ -61,7 +61,10 @@ class MovieFragment : Fragment() {
                     TextTransforms.createDescription(movieDetail.tagline, movieDetail.releaseDate)
             }
             with(binding.containerSypnosis){
-                labelGenre.text = movieDetail.genres[0].name
+                labelGenre.text =
+                    if(movieDetail.genres.isNotEmpty()){
+                        movieDetail.genres[0].name
+                    }else{ "- - - -" }
                 labelStars.text = movieDetail.popularity.toString()
                 textBoxSynopsis.text = movieDetail.overview
                 val url = RetrofitHelper.imageUrl + movieDetail.backdropPath
