@@ -82,6 +82,10 @@ class LoginFragment : Fragment() {
     }
 
     private fun setupButtons(){
+        binding.labelGuest.setOnClickListener {
+            showHome(null, ProviderType.GUEST)
+        }
+
         binding.btnLogin.setOnClickListener{
             hideKeyboard()
             val email = binding.editTextEmail.text.toString()
@@ -191,7 +195,7 @@ class LoginFragment : Fragment() {
         authViewModel.getCallbackManager().onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun showHome(email:String, providerType: ProviderType){
+    private fun showHome(email:String?, providerType: ProviderType){
         authViewModel.isLoading.postValue(false)
         val action = LoginFragmentDirections
             .actionLoginFragmentToNavigationFragment( email, providerType )

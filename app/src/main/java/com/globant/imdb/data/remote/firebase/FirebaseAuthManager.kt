@@ -21,6 +21,7 @@ import com.google.firebase.auth.OAuthProvider
 import com.google.firebase.auth.UserProfileChangeRequest
 
 enum class ProviderType {
+    GUEST,
     BASIC,
     GOOGLE,
     FACEBOOK,
@@ -36,6 +37,7 @@ class FirebaseAuthManager {
     val callbackManager: CallbackManager = CallbackManager.Factory.create()
 
     fun logout(provider:ProviderType){
+        auth.signOut()
         if(provider == ProviderType.FACEBOOK){
             LoginManager.getInstance().logOut()
         }

@@ -45,7 +45,8 @@
             app:popUpToInclusive="true"/>
         <argument
             android:name="email"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="true" />
         <argument
             android:name="provider"
             app:argType="com.globant.imdb.data.remote.firebase.ProviderType" />
