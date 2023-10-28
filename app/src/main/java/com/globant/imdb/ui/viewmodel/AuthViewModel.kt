@@ -34,7 +34,7 @@ class AuthViewModel: ViewModel() {
         password:String,
         displayName:String,
         onSuccess: (email:String, provides: ProviderType)->Unit,
-        onFailure:(msg:String)->Unit
+        onFailure:(title:String, msg:String)->Unit
     ){
         authManager.signUpWithEmailAndPassword(email, password, displayName, onSuccess, onFailure)
     }
@@ -43,15 +43,23 @@ class AuthViewModel: ViewModel() {
         email:String,
         password:String,
         onSuccess: (email:String, provides: ProviderType)->Unit,
-        onFailure:(msg:String)->Unit
+        onFailure:(title:String, msg:String)->Unit
     ){
         authManager.loginWithEmailAndPassword(email, password, onSuccess, onFailure)
+    }
+
+    fun sendPasswordResetEmail(
+        email: String,
+        onSuccess: ()->Unit,
+        onFailure:(title:String, msg:String)->Unit
+    ){
+        authManager.sendPasswordResetEmail(email, onSuccess, onFailure)
     }
 
     fun loginWithApple(
         activity: Activity,
         onSuccess: (email:String, provides: ProviderType)->Unit,
-        onFailure:(msg:String)->Unit
+        onFailure:(title:String, msg:String)->Unit
     ){
         authManager.loginWithApple(activity, onSuccess, onFailure)
     }
@@ -59,7 +67,7 @@ class AuthViewModel: ViewModel() {
     fun loginWithFacebook(
         fragment: Fragment,
         onSuccess: (email:String, provides: ProviderType)->Unit,
-        onFailure:(msg:String)->Unit
+        onFailure:(title:String, msg:String)->Unit
     ){
         authManager.loginWithFacebook(fragment, onSuccess, onFailure)
     }
@@ -71,7 +79,7 @@ class AuthViewModel: ViewModel() {
     fun onGoogleResult(
         intent:Intent?,
         onSuccess: (email:String, provides:ProviderType)->Unit,
-        onFailure:(msg:String)->Unit
+        onFailure:(title:String, msg:String)->Unit
     ){
         authManager.onGoogleResult(intent, onSuccess, onFailure)
     }

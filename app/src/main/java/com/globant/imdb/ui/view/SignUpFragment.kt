@@ -88,7 +88,7 @@ class SignUpFragment : Fragment() {
         with(binding.editTextName) {
             setOnFocusChangeListener { _, hasFocus ->
                 error = if (!hasFocus && !FormValidator.validateIsNotBlank( text.toString())) {
-                    R.string.required_field.toString()
+                    getString(R.string.required_field)
                 }else{
                     null
                 }
@@ -97,7 +97,7 @@ class SignUpFragment : Fragment() {
         with(binding.editTextEmail) {
             setOnFocusChangeListener { _, hasFocus ->
                 error = if (!hasFocus && !FormValidator.validateEmail( text.toString())) {
-                    R.string.invalid_email.toString()
+                    getString(R.string.invalid_email)
                 }else{
                     null
                 }
@@ -106,7 +106,7 @@ class SignUpFragment : Fragment() {
         with(binding.editTextPassword) {
             setOnFocusChangeListener { _, hasFocus ->
                 error = if (!hasFocus && !FormValidator.validatePassword( text.toString())) {
-                    R.string.invalid_password.toString()
+                    getString(R.string.invalid_password)
                 }else{
                     null
                 }
@@ -148,9 +148,9 @@ class SignUpFragment : Fragment() {
         navController.navigate(action)
     }
 
-    private fun showAlert(msg:String){
+    private fun showAlert(title:String, msg:String){
         val builder = AlertDialog.Builder(activity)
-        builder.setTitle(R.string.error)
+        builder.setTitle(title)
         builder.setMessage(msg)
         builder.setPositiveButton(R.string.accept, null)
         val dialog = builder.create()

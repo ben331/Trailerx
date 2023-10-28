@@ -90,6 +90,17 @@ class LoginFragment : Fragment() {
             authViewModel.loginWithEmailAndPassword(email, password, ::showHome, ::showAlert)
         }
 
+        binding.labelForgotPassword.setOnClickListener {
+            val email = binding.editTextEmail.text.toString()
+            if(FormValidator.validateEmail(email)){
+                authViewModel.sendPasswordResetEmail(email, onSuccess = {
+                    showAlert(getString(R.string.success),getString(R.string.password_reset_success))
+                }, ::showAlert)
+            }else{
+                showAlert(getString(R.string.error), getString(R.string.invalid_email))
+            }
+        }
+
         binding.googleBtn.setOnClickListener {
             val googleIntent = authViewModel.loginWithGoogle(requireContext())
             authViewModel.isLoading.postValue(true)
@@ -117,7 +128,7 @@ class LoginFragment : Fragment() {
         with(binding.editTextEmail) {
             setOnFocusChangeListener { _, hasFocus ->
                 error = if (!hasFocus && !FormValidator.validateEmail( text.toString())) {
-                    R.string.invalid_email.toString()
+                    getString(R.string.invalid_email)
                 }else{
                     null
                 }
@@ -126,7 +137,7 @@ class LoginFragment : Fragment() {
         with(binding.editTextPassword) {
             setOnFocusChangeListener { _, hasFocus ->
                 error = if (!hasFocus && !FormValidator.validatePassword( text.toString())) {
-                    R.string.invalid_password.toString()
+                    getString(R.string.invalid_password)
                 }else{
                     null
                 }
@@ -186,10 +197,10 @@ class LoginFragment : Fragment() {
             .actionLoginFragmentToNavigationFragment( email, providerType )
         navController.navigate(action)
     }
-    private fun showAlert(message:String){
+    private fun showAlert(title:String, message:String){
         authViewModel.isLoading.postValue(false)
         val builder = AlertDialog.Builder(activity)
-        builder.setTitle(R.string.auth_error)
+        builder.setTitle(title)
         builder.setMessage(message)
         builder.setPositiveButton(R.string.accept, null)
         val dialog = builder.create()

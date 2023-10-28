@@ -41,7 +41,19 @@ class FirebaseAuthManager {
         }
     }
 
-    private fun uploadName(displayName:String, onFailure: (message:String) -> Unit) {
+    fun sendPasswordResetEmail(
+        email: String,
+        onSuccess: ()->Unit,
+        onFailure:(title:String, msg:String)->Unit
+        ){
+        auth.sendPasswordResetEmail(email).addOnCompleteListener {
+            onSuccess()
+        }.addOnCanceledListener {
+            onFailure(R.string.error.toString(), R.string.password_reset_error.toString())
+        }
+    }
+
+    private fun uploadName(displayName:String, onFailure: (title:String, message:String) -> Unit) {
         val profileUpdates = UserProfileChangeRequest.Builder()
             .setDisplayName(displayName)
             .build()
@@ -49,7 +61,7 @@ class FirebaseAuthManager {
         auth.currentUser?.updateProfile(profileUpdates)
             ?.addOnCompleteListener { task ->
                 if(!task.isSuccessful){
-                    onFailure(R.string.upload_username_error.toString())
+                    onFailure(R.string.error.toString(), R.string.upload_username_error.toString())
                 }
             }
     }
@@ -65,7 +77,7 @@ class FirebaseAuthManager {
         password: String,
         displayName: String,
         onSuccess: (email: String, provides: ProviderType) -> Unit,
-        onFailure: (msg: String) -> Unit
+        onFailure: (title:String, msg: String) -> Unit
     ){
         auth.createUserWithEmailAndPassword( email, password )
             .addOnCompleteListener {
@@ -73,7 +85,7 @@ class FirebaseAuthManager {
                     uploadName(displayName, onFailure)
                     onSuccess(email, ProviderType.BASIC)
                 }else{
-                    onFailure(R.string.auth_error.toString())
+                    onFailure(R.string.error.toString(),R.string.auth_error.toString())
                 }
             }
     }
@@ -82,13 +94,13 @@ class FirebaseAuthManager {
         email:String,
         password:String,
         onSuccess: (email:String, provides:ProviderType)->Unit,
-        onFailure:(msg:String)->Unit){
+        onFailure:(title:String, msg:String)->Unit){
 
         auth.signInWithEmailAndPassword( email, password ).addOnCompleteListener {
             if (it.isSuccessful) {
                 onSuccess(email, ProviderType.BASIC)
             } else {
-                onFailure(R.string.auth_error.toString())
+                onFailure(R.string.error.toString(), R.string.auth_error.toString())
             }
         }
     }
@@ -96,7 +108,7 @@ class FirebaseAuthManager {
     fun loginWithApple(
         activity: Activity,
         onSuccess: (email:String, provides:ProviderType)->Unit,
-        onFailure:(msg:String)->Unit
+        onFailure:(title:String, msg:String)->Unit
     ){
         val provider = OAuthProvider.newBuilder("apple.com")
         provider.scopes = listOf("email", "name")
@@ -111,7 +123,7 @@ class FirebaseAuthManager {
                 uploadName(displayName, onFailure)
                 onSuccess(email, ProviderType.APPLE)
             }.addOnFailureListener {
-                onFailure(R.string.auth_error.toString())
+                onFailure(R.string.error.toString(), R.string.auth_error.toString())
             }
         } else {
             auth.startActivityForSignInWithProvider( activity, provider.build())
@@ -123,7 +135,7 @@ class FirebaseAuthManager {
                     onSuccess(email, ProviderType.APPLE)
                 }
                 .addOnFailureListener {
-                    onFailure(R.string.auth_error.toString())
+                    onFailure(R.string.error.toString(),R.string.auth_error.toString())
                 }
         }
     }
@@ -131,7 +143,7 @@ class FirebaseAuthManager {
     fun loginWithFacebook(
         fragment: Fragment,
         onSuccess: (email:String, provides:ProviderType)->Unit,
-        onFailure:(msg:String)->Unit
+        onFailure:(title:String, msg:String)->Unit
     ){
         LoginManager.getInstance().logInWithReadPermissions(fragment, listOf("email"))
 
@@ -150,18 +162,18 @@ class FirebaseAuthManager {
                                 uploadName(displayName, onFailure)
                                 onSuccess( email, ProviderType.FACEBOOK)
                             }else{
-                                onFailure(task.exception?.message.toString())
+                                onFailure(R.string.error.toString(), task.exception?.message.toString())
                             }
                         }
                     }
                 }
 
                 override fun onCancel() {
-                    onFailure(R.string.auth_cancel.toString())
+                    onFailure(R.string.error.toString(), R.string.auth_cancel.toString())
                 }
 
                 override fun onError(error: FacebookException?) {
-                    onFailure(R.string.auth_error.toString())
+                    onFailure(R.string.error.toString(), R.string.auth_error.toString())
                 }
             }
         )
@@ -181,7 +193,7 @@ class FirebaseAuthManager {
     fun onGoogleResult(
         intent:Intent?,
         onSuccess: (email:String, provides:ProviderType)->Unit,
-        onFailure:(msg:String)->Unit
+        onFailure:(title:String, msg:String)->Unit
     ){
         val task = GoogleSignIn.getSignedInAccountFromIntent(intent)
 
@@ -198,12 +210,12 @@ class FirebaseAuthManager {
                         uploadName(displayName, onFailure)
                         onSuccess(email, ProviderType.GOOGLE)
                     }else{
-                        onFailure(R.string.auth_error.toString())
+                        onFailure(R.string.error.toString(), R.string.auth_error.toString())
                     }
                 }
             }
         }catch (e: ApiException){
-            onFailure(R.string.auth_error.toString())
+            onFailure(R.string.error.toString(), R.string.auth_error.toString())
         }
     }
 
