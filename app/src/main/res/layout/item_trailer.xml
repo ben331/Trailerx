@@ -7,10 +7,11 @@
     android:background="?android:attr/colorBackground"
     app:layout_constraintTop_toTopOf="parent">
 
-    <VideoView
-        android:id="@+id/trailerVideoView"
+    <WebView
+        android:id="@+id/trailerWebView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/video_height"
+        android:background="?android:attr/colorBackground"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageView
@@ -18,7 +19,7 @@
         android:layout_width="@dimen/movie_width"
         android:layout_height="@dimen/movie_height"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trailerVideoView"
+        app:layout_constraintTop_toBottomOf="@+id/trailerWebView"
         android:layout_marginStart="@dimen/margin_extra_large"
         android:layout_marginTop="@dimen/margin_home_movie"
         android:contentDescription="@string/img_trailer"
@@ -29,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/trailerImageView"
-        app:layout_constraintTop_toBottomOf="@id/trailerVideoView"
+        app:layout_constraintTop_toBottomOf="@id/trailerWebView"
         android:layout_marginStart="@dimen/margin_large"
         android:layout_marginTop="@dimen/margin_micro"
         android:elevation="@dimen/elevation_medium"

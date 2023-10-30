@@ -30,7 +30,7 @@ class MovieResultAdapter: Adapter<MovieResultViewHolder>() {
             holder.id = id
             holder.title.text = title
             holder.labelYear.text = if(releaseDate.length >= 4) releaseDate.subSequence(0,4) else "----"
-            val imageUrl = (RetrofitHelper.imageUrl + backdropPath)
+            val imageUrl = (RetrofitHelper.IMAGES_BASE_URL + backdropPath)
             moviesListener.renderImage(imageUrl, holder.image)
         }
     }

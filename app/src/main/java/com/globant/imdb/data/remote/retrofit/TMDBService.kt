@@ -4,6 +4,7 @@ import com.globant.imdb.core.RetrofitHelper
 import com.globant.imdb.data.model.MovieDetail
 import com.globant.imdb.data.model.MoviesList
 import com.globant.imdb.data.model.MoviesListDates
+import com.globant.imdb.data.model.VideoList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.Locale
@@ -47,6 +48,14 @@ class TMDBService {
             val languageCode = Locale.getDefault().language
             val response = retrofit
                 .create(TMDBApiClient::class.java).searchMovie( query, languageCode, 1 )
+            response.body()
+        }
+    }
+    suspend fun getTrailers(movieId: Int): VideoList?{
+        return withContext(Dispatchers.IO){
+            val languageCode = Locale.getDefault().language
+            val response = retrofit
+                .create(TMDBApiClient::class.java).getTrailers( movieId, languageCode)
             response.body()
         }
     }

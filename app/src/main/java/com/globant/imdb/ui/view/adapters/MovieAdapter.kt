@@ -30,7 +30,7 @@ class MovieAdapter: Adapter<MovieViewHolder>() {
             holder.id = id
             holder.labelName.text = title
             holder.labelStars.text= popularity.toString()
-            val imageUrl = (RetrofitHelper.imageUrl + backdropPath)
+            val imageUrl = (RetrofitHelper.IMAGES_BASE_URL + backdropPath)
             moviesListener.renderImage(imageUrl, holder.image)
         }
     }

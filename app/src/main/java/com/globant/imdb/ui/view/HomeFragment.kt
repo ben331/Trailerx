@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebChromeClient
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -63,12 +64,24 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
             binding.refreshLayout.isRefreshing = false
             with(binding.mainTrailerContainer) {
                 trailerName.text = currentMovie.title
-                val imageUrl = RetrofitHelper.imageUrl + currentMovie.backdropPath
+                val imageUrl = RetrofitHelper.IMAGES_BASE_URL + currentMovie.backdropPath
                 Picasso.with(requireContext())
                     .load(imageUrl)
                     .fit()
                     .centerCrop()
                     .into(trailerImageView)
+
+                movieViewModel.getTrailerOfMovie(currentMovie.id)
+            }
+        }
+
+        movieViewModel.videoIframe.observe(viewLifecycleOwner) { videoIframe ->
+            videoIframe?.let {
+                with(binding.mainTrailerContainer.trailerWebView){
+                    loadData(it, "text/html", "utf-8")
+                    settings.javaScriptEnabled = true
+                    webChromeClient = WebChromeClient()
+                }
             }
         }
     }

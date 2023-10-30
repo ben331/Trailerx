@@ -3,7 +3,7 @@ package com.globant.imdb.data
 import com.globant.imdb.data.model.Movie
 import com.globant.imdb.data.model.MovieDetail
 import com.globant.imdb.data.model.MovieProvider
-import com.globant.imdb.data.model.MoviesList
+import com.globant.imdb.data.model.Video
 import com.globant.imdb.data.remote.retrofit.TMDBService
 
 class IMDbRepository {
@@ -29,6 +29,10 @@ class IMDbRepository {
     }
     suspend fun searchMovie(query:String):List<Movie>{
         val response = api.searchMovie(query)?.results ?: emptyList()
+        return response
+    }
+    suspend fun getTrailers(movieId:Int):List<Video>{
+        val response = api.getTrailers(movieId)?.results ?: emptyList()
         return response
     }
 }

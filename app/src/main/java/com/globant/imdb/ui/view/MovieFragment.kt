@@ -67,7 +67,7 @@ class MovieFragment : Fragment() {
                     }else{ "- - - -" }
                 labelStars.text = movieDetail.popularity.toString()
                 textBoxSynopsis.text = movieDetail.overview
-                val url = RetrofitHelper.imageUrl + movieDetail.backdropPath
+                val url = RetrofitHelper.IMAGES_BASE_URL + movieDetail.backdropPath
                 Picasso.with(requireContext())
                     .load(url)
                     .fit()
