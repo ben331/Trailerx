@@ -69,7 +69,7 @@
         tools:ignore="TextContrastCheck"
         tools:text="Miniserie de TV 2020 - 2020 16" />
 
-    <VideoView
+    <WebView
         android:id="@+id/video_movie"
         android:layout_width="match_parent"
         android:layout_height="@dimen/video_height"

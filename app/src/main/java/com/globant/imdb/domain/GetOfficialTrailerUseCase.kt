@@ -14,7 +14,10 @@ class GetOfficialTrailerUseCase {
             officialTrailer = videoList.find {
                     it.official
                 &&  it.site == RetrofitHelper.YOUTUBE_SITE
-                &&  it.name == RetrofitHelper.OFFICIAL_NAME
+                &&  it.name.contains(RetrofitHelper.OFFICIAL_NAME)
+            }
+            if(officialTrailer==null && videoList[0].site==RetrofitHelper.YOUTUBE_SITE){
+                officialTrailer = videoList[0]
             }
         }
         return if(officialTrailer!=null){

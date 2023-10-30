@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebChromeClient
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -73,6 +74,18 @@ class MovieFragment : Fragment() {
                     .fit()
                     .centerCrop()
                     .into(imgMovie)
+            }
+        }
+
+        movieDetailViewModel.videoIframe.observe(viewLifecycleOwner){
+            movieDetailViewModel.videoIframe.observe(viewLifecycleOwner) { videoIframe ->
+                videoIframe?.let {
+                    with(binding.containerFrontage.videoMovie){
+                        loadData(it, "text/html", "utf-8")
+                        settings.javaScriptEnabled = true
+                        webChromeClient = WebChromeClient()
+                    }
+                }
             }
         }
     }
