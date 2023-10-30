@@ -6,10 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.fragment.app.viewModels
 import com.globant.imdb.databinding.FragmentProfileBinding
 import com.globant.imdb.R
+import com.globant.imdb.ui.viewmodel.ProfileViewModel
+import com.squareup.picasso.Picasso
 
 class ProfileFragment : Fragment() {
+
+    private val profileViewModel:ProfileViewModel by viewModels()
 
     private val binding: FragmentProfileBinding by lazy {
         FragmentProfileBinding.inflate(layoutInflater)
@@ -24,10 +29,22 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setup()
+        setupLiveData()
+        setupButtons()
+        profileViewModel.onCreate()
     }
 
-    private fun setup(){
+    private fun setupLiveData(){
+        profileViewModel.photoUri.observe(viewLifecycleOwner){
+            Picasso.with(requireContext())
+                .load(it)
+                .fit()
+                .centerCrop()
+                .into(binding.profileHeaderContainer.profilePhotoContainer.profileImage)
+        }
+    }
+
+    private fun setupButtons(){
         binding.profileHeaderContainer.btnSettings.setOnClickListener(::showPopup)
     }
 

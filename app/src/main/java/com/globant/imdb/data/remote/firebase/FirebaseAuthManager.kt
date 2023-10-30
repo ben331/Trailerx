@@ -3,6 +3,7 @@ package com.globant.imdb.data.remote.firebase
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.facebook.CallbackManager
@@ -35,6 +36,29 @@ class FirebaseAuthManager {
     }
 
     val callbackManager: CallbackManager = CallbackManager.Factory.create()
+
+    fun updateProfilePhotoURL(
+        url: Uri?,
+        handleSuccess: () -> Unit,
+        handleFailure: () -> Unit
+    ){
+        val profileUpdates = UserProfileChangeRequest.Builder()
+            .setPhotoUri(url)
+            .build()
+
+        auth.currentUser?.updateProfile(profileUpdates)
+            ?.addOnCompleteListener { task ->
+                if(task.isSuccessful){
+                    handleSuccess()
+                }else{
+                    handleFailure()
+                }
+            }
+    }
+
+    fun getProfilePhotoURL():Uri?{
+        return auth.currentUser?.photoUrl
+    }
 
     fun logout(provider:ProviderType){
         auth.signOut()
