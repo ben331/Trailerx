@@ -26,7 +26,7 @@ class MovieDetailViewModel: ViewModel() {
             }
         }
         viewModelScope.launch {
-            val result = getTrailerUseCase(movieId)
+            val result = getTrailerUseCase(movieId, true)
             result?.let {
                 videoIframe.postValue(result)
             }

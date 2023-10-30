@@ -7,7 +7,7 @@ import com.globant.imdb.data.model.Video
 class GetOfficialTrailerUseCase {
     private val repository = IMDbRepository()
 
-    suspend operator fun invoke(movieId:Int):String? {
+    suspend operator fun invoke(movieId:Int, withControls:Boolean):String? {
         var officialTrailer:Video? = null
         val videoList = repository.getTrailers(movieId)
         if(videoList.isNotEmpty()){
@@ -21,7 +21,7 @@ class GetOfficialTrailerUseCase {
             }
         }
         return if(officialTrailer!=null){
-            RetrofitHelper.getYoutubeIframe(officialTrailer.key)
+            RetrofitHelper.getYoutubeIframe(officialTrailer.key, withControls)
         }else{
             null
         }
