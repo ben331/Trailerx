@@ -1,4 +1,4 @@
-package com.globant.imdb.data.model
+package com.globant.imdb.data.model.movies
 
 import com.google.gson.annotations.SerializedName
 

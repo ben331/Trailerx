@@ -75,6 +75,10 @@ dependencies {
     implementation("com.firebaseui:firebase-ui-auth:8.0.2")
     implementation("com.google.firebase:firebase-analytics-ktx")
     implementation("com.google.firebase:firebase-storage-ktx")
+    implementation("com.google.firebase:firebase-firestore-ktx")
+
+    //Gson
+    implementation("com.google.code.gson:gson:2.10.1")
 
     //Google
     implementation("com.google.android.gms:play-services-auth:20.7.0")

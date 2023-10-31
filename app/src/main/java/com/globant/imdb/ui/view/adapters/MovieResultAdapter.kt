@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.globant.imdb.R
 import com.globant.imdb.core.RetrofitHelper
-import com.globant.imdb.data.model.Movie
+import com.globant.imdb.data.model.movies.Movie
 import com.globant.imdb.databinding.ItemMovieResultBinding
 import com.globant.imdb.ui.view.SearchFragment
 

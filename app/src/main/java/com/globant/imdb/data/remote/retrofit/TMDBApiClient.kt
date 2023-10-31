@@ -1,9 +1,9 @@
 package com.globant.imdb.data.remote.retrofit
 
-import com.globant.imdb.data.model.MovieDetail
-import com.globant.imdb.data.model.MoviesList
-import com.globant.imdb.data.model.MoviesListDates
-import com.globant.imdb.data.model.VideoList
+import com.globant.imdb.data.model.movies.MovieDetail
+import com.globant.imdb.data.model.movies.MoviesList
+import com.globant.imdb.data.model.movies.MoviesListDates
+import com.globant.imdb.data.model.movies.VideoList
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

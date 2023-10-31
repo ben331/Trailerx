@@ -59,6 +59,9 @@ class FirebaseAuthManager {
     fun getProfilePhotoURL():Uri?{
         return auth.currentUser?.photoUrl
     }
+    fun getEmail():String{
+        return auth.currentUser?.email ?: ""
+    }
 
     fun logout(provider:ProviderType){
         auth.signOut()

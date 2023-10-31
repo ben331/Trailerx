@@ -1,7 +1,7 @@
-package com.globant.imdb.domain
+package com.globant.imdb.domain.movies
 
 import com.globant.imdb.data.IMDbRepository
-import com.globant.imdb.data.model.Movie
+import com.globant.imdb.data.model.movies.Movie
 
 class GetNowPlayingMoviesUseCase {
     private val repository = IMDbRepository()

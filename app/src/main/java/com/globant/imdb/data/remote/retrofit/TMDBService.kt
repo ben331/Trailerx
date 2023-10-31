@@ -1,17 +1,17 @@
 package com.globant.imdb.data.remote.retrofit
 
 import com.globant.imdb.core.RetrofitHelper
-import com.globant.imdb.data.model.MovieDetail
-import com.globant.imdb.data.model.MoviesList
-import com.globant.imdb.data.model.MoviesListDates
-import com.globant.imdb.data.model.VideoList
+import com.globant.imdb.data.model.movies.MovieDetail
+import com.globant.imdb.data.model.movies.MoviesList
+import com.globant.imdb.data.model.movies.MoviesListDates
+import com.globant.imdb.data.model.movies.VideoList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.Locale
 
 class TMDBService {
     private val retrofit = RetrofitHelper.getRetrofit()
-    suspend fun getNowPlayingMovies():MoviesListDates?{
+    suspend fun getNowPlayingMovies(): MoviesListDates?{
         return withContext(Dispatchers.IO){
             val languageCode = Locale.getDefault().language
             val response = retrofit
@@ -19,7 +19,7 @@ class TMDBService {
             response.body()
         }
     }
-    suspend fun getUpcomingMovies():MoviesListDates?{
+    suspend fun getUpcomingMovies(): MoviesListDates?{
         return withContext(Dispatchers.IO){
             val languageCode = Locale.getDefault().language
             val response = retrofit
@@ -27,7 +27,7 @@ class TMDBService {
             response.body()
         }
     }
-    suspend fun getPopularMovies():MoviesList?{
+    suspend fun getPopularMovies(): MoviesList?{
         return withContext(Dispatchers.IO){
             val languageCode = Locale.getDefault().language
             val response = retrofit
@@ -35,7 +35,7 @@ class TMDBService {
             response.body()
         }
     }
-    suspend fun getMovieById(movieId: Int):MovieDetail?{
+    suspend fun getMovieById(movieId: Int): MovieDetail?{
         return withContext(Dispatchers.IO){
             val languageCode = Locale.getDefault().language
             val response = retrofit
@@ -43,7 +43,7 @@ class TMDBService {
             response.body()
         }
     }
-    suspend fun searchMovie(query: String):MoviesList?{
+    suspend fun searchMovie(query: String): MoviesList?{
         return withContext(Dispatchers.IO){
             val languageCode = Locale.getDefault().language
             val response = retrofit

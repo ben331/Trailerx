@@ -1,4 +1,4 @@
-package com.globant.imdb.data.model
+package com.globant.imdb.data.model.movies
 
 class MovieProvider {
     companion object{

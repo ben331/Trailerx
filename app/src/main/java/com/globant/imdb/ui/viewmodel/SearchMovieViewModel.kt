@@ -4,9 +4,8 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.recyclerview.widget.RecyclerView.Adapter
-import com.globant.imdb.data.model.Movie
-import com.globant.imdb.domain.SearchMovieUseCase
+import com.globant.imdb.data.model.movies.Movie
+import com.globant.imdb.domain.movies.SearchMovieUseCase
 import com.globant.imdb.ui.view.adapters.MovieResultAdapter
 import kotlinx.coroutines.launch
 

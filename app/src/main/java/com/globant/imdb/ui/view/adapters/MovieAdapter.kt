@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.globant.imdb.databinding.ItemMovieBinding
 import com.globant.imdb.R
 import com.globant.imdb.core.RetrofitHelper
-import com.globant.imdb.data.model.Movie
+import com.globant.imdb.data.model.movies.Movie
 import com.globant.imdb.ui.view.HomeFragment
 
 class MovieAdapter: Adapter<MovieViewHolder>() {

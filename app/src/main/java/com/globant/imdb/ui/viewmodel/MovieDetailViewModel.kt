@@ -3,9 +3,9 @@ package com.globant.imdb.ui.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.globant.imdb.data.model.MovieDetail
-import com.globant.imdb.domain.GetMovieByIdUseCase
-import com.globant.imdb.domain.GetOfficialTrailerUseCase
+import com.globant.imdb.data.model.movies.MovieDetail
+import com.globant.imdb.domain.movies.GetMovieByIdUseCase
+import com.globant.imdb.domain.movies.GetOfficialTrailerUseCase
 import kotlinx.coroutines.launch
 
 class MovieDetailViewModel: ViewModel() {
