@@ -38,9 +38,10 @@ class FirebaseAuthManager {
     val callbackManager: CallbackManager = CallbackManager.Factory.create()
 
     fun updateProfilePhotoURL(
+        context: Context,
         url: Uri?,
         handleSuccess: () -> Unit,
-        handleFailure: () -> Unit
+        handleAlert: (title:String, msg:String) -> Unit,
     ){
         val profileUpdates = UserProfileChangeRequest.Builder()
             .setPhotoUri(url)
@@ -51,13 +52,20 @@ class FirebaseAuthManager {
                 if(task.isSuccessful){
                     handleSuccess()
                 }else{
-                    handleFailure()
+                    handleAlert(
+                        context.getString(R.string.error),
+                        context.getString(R.string.fail_new_photo)
+                    )
                 }
             }
     }
 
     fun getProfilePhotoURL():Uri?{
         return auth.currentUser?.photoUrl
+    }
+
+    fun getProfileEmail():String?{
+        return auth.currentUser?.email
     }
 
     fun logout(provider:ProviderType){
