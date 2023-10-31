@@ -1,10 +1,11 @@
 package com.globant.imdb.domain.user
 
+import android.content.Context
 import com.globant.imdb.data.IMDbRepository
 import com.globant.imdb.data.model.movies.Movie
 
 class GetWatchListUseCase {
     private val repository = IMDbRepository()
 
-    operator fun invoke() = repository.getWatchList()
+    operator fun invoke(context:Context) = repository.getWatchList(context)
 }

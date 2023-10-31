@@ -9,8 +9,12 @@ import com.globant.imdb.data.remote.firebase.FirestoreManager
 import com.globant.imdb.data.remote.retrofit.TMDBService
 
 class IMDbRepository {
+    companion object {
+        lateinit var firestoreManager: FirestoreManager
+    }
+
     private val api = TMDBService()
-    private lateinit var firestoreManager: FirestoreManager
+
     suspend fun getNowPlayingMovies():List<Movie>{
         if(MovieProvider.movies.isEmpty()){
             val response = api.getNowPlayingMovies()?.results ?: emptyList()
@@ -41,24 +45,22 @@ class IMDbRepository {
 
     // Firestore
     fun setupUserRepository(
-        context: Context,
         handleSuccessGetMovies:(movies:ArrayList<Movie>)->Unit,
         handleSuccessAddMovie:(movie:Movie)->Unit,
         handleFailure:(title:String, msg:String)->Unit
     ){
         firestoreManager = FirestoreManager.Builder()
-            .setContext(context)
             .setHandleSuccessGetMovies(handleSuccessGetMovies)
             .setHandleSuccessAddMovie(handleSuccessAddMovie)
             .setHandleFailure(handleFailure)
             .build()
     }
 
-    fun getWatchList(){
-        return firestoreManager.getWatchList()
+    fun getWatchList(context: Context){
+        return firestoreManager.getWatchList(context)
     }
 
-    fun addMovieToWatchList(movie:Movie){
-        return firestoreManager.addMovieToWatchList(movie)
+    fun addMovieToWatchList(context: Context, movie:Movie){
+        return firestoreManager.addMovieToWatchList(context, movie)
     }
 }

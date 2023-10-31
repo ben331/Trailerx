@@ -1,53 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/refreshLayout"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="?android:attr/colorBackgroundFloating"
     tools:context=".ui.view.ProfileFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <include
-            android:id="@+id/profile_header_container"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            layout="@layout/item_profile_header"/>
+            android:layout_height="wrap_content">
 
-        <include
-            android:id="@+id/watch_list_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/profile_header_container"
-            android:layout_marginTop="@dimen/margin_medium"
-            layout="@layout/item_movies_lists"/>
+            <include
+                android:id="@+id/profile_header_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                layout="@layout/item_profile_header"/>
 
-        <include
-            android:id="@+id/recent_list_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/watch_list_container"
-            android:layout_marginTop="@dimen/margin_medium"
-            layout="@layout/item_movies_lists"/>
+            <include
+                android:id="@+id/list_movies_one"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/profile_header_container"
+                android:layout_marginTop="@dimen/margin_medium"
+                layout="@layout/item_movies_lists"/>
 
-        <include
-            android:id="@+id/favorite_characters_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/recent_list_container"
-            android:layout_marginTop="@dimen/margin_medium"
-            layout="@layout/item_movies_lists"/>
+            <include
+                android:id="@+id/list_movies_two"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/list_movies_one"
+                android:layout_marginTop="@dimen/margin_medium"
+                layout="@layout/item_movies_lists"/>
 
-        <View
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/blank_space_height"
-            app:layout_constraintTop_toBottomOf="@id/favorite_characters_container" />
+            <include
+                android:id="@+id/list_movies_three"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/list_movies_two"
+                android:layout_marginTop="@dimen/margin_medium"
+                layout="@layout/item_movies_lists"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/blank_space_height"
+                app:layout_constraintTop_toBottomOf="@id/list_movies_three" />
 
-</ScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -4,7 +4,6 @@ import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.globant.imdb.data.model.movies.Movie
 import com.globant.imdb.data.remote.firebase.FirebaseAuthManager
 import com.globant.imdb.domain.user.AddMovieToWatchListUseCase
@@ -21,7 +20,8 @@ class ProfileViewModel: ViewModel() {
     private val getWatchListUseCase = GetWatchListUseCase()
     private val addMovieToWatchListUseCase = AddMovieToWatchListUseCase()
 
-    val watchList = MutableLiveData<ArrayList<Movie>>()
+    val watchList = MutableLiveData<List<Movie>>()
+    val isLoading = MutableLiveData(false)
 
     private val authManager: FirebaseAuthManager by lazy {
         FirebaseAuthManager()
@@ -30,29 +30,31 @@ class ProfileViewModel: ViewModel() {
     lateinit var adapter: MovieAdapter
 
     fun setupProfileRepository(
-        context: Context,
         handleFailure:(title:String, msg:String)->Unit
     ){
-        setupUserRepositoryUseCase(
-            context,
-            { movies-> watchList.postValue(movies) },
+        setupUserRepositoryUseCase({ movies->
+                watchList.postValue(movies)
+                isLoading.postValue(false)
+            },
             { movie ->
-                watchList.value?.add(movie)
+                watchList.postValue(watchList.value!!.plus(movie))
                 adapter.notifyItemInserted(adapter.itemCount)
+                isLoading.postValue(false)
             },
             handleFailure
         )
     }
 
-    fun onCreate() {
+    fun refresh(context:Context) {
+        isLoading.postValue(true)
         val uri = authManager.getProfilePhotoURL()
         if(uri!=null){
             photoUri.postValue(uri)
         }
-        getWatchListUseCase()
+        getWatchListUseCase(context)
     }
 
-    fun addMovieToWatchList(movie:Movie){
-        addMovieToWatchListUseCase(movie)
+    fun addMovieToWatchList(context:Context, movie:Movie){
+        addMovieToWatchListUseCase(context, movie)
     }
 }

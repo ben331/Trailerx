@@ -61,7 +61,6 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
 
     private fun setupLiveData(){
         movieViewModel.mainMovie.observe(viewLifecycleOwner) { currentMovie ->
-            binding.refreshLayout.isRefreshing = false
             with(binding.mainTrailerContainer) {
                 trailerName.text = currentMovie.title
                 val imageUrl = RetrofitHelper.IMAGES_BASE_URL + currentMovie.backdropPath
@@ -77,12 +76,17 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
 
         movieViewModel.videoIframe.observe(viewLifecycleOwner) { videoIframe ->
             videoIframe?.let {
+                movieViewModel.isLoading.postValue(false)
                 with(binding.mainTrailerContainer.trailerWebView){
                     loadData(it, "text/html", "utf-8")
                     settings.javaScriptEnabled = true
                     webChromeClient = WebChromeClient()
                 }
             }
+        }
+
+        movieViewModel.isLoading.observe(viewLifecycleOwner){
+            binding.refreshLayout.isRefreshing = it
         }
     }
 
@@ -149,7 +153,7 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
     }
 
     override fun addToWatchList(id: Int) {
-        showAlert("TODO", "Agregar a la lista de seguimiento la movie: $id")
+        movieViewModel.addMovieToWatchList(id, requireContext())
     }
 
     private fun showAlert(title:String, message:String){

@@ -9,7 +9,6 @@ import com.globant.imdb.data.model.movies.Movie
 
 
 class FirestoreManager private constructor(
-    val context:Context?,
     val handleSuccessGetMovies:(movies:ArrayList<Movie>)->Unit,
     val handleSuccessAddMovie:(movie:Movie)->Unit,
     val handleFailure:(title:String, msg:String)->Unit
@@ -23,15 +22,9 @@ class FirestoreManager private constructor(
     }
 
     class Builder {
-        private var context: Context? = null
         private var handleSuccessGetMovies: (movies:ArrayList<Movie>)->Unit= {}
         private var handleSuccessAddMovie: (movie:Movie)->Unit = {}
         private var handleFailure: (title:String, msg:String)->Unit = { _: String, _: String -> }
-
-        fun setContext(context:Context): Builder {
-            this.context = context
-            return this
-        }
 
         fun setHandleSuccessGetMovies(handleSuccessGetMovies: (movies:ArrayList<Movie>)->Unit): Builder {
             this.handleSuccessGetMovies = handleSuccessGetMovies
@@ -48,11 +41,11 @@ class FirestoreManager private constructor(
         }
 
         fun build(): FirestoreManager {
-            return FirestoreManager(context, handleSuccessGetMovies, handleSuccessAddMovie, handleFailure)
+            return FirestoreManager(handleSuccessGetMovies, handleSuccessAddMovie, handleFailure)
         }
     }
 
-    fun getWatchList() {
+    fun getWatchList(context:Context) {
         db.collection("users").document(email).collection("watchList").get()
             .addOnCompleteListener {
                 val result:ArrayList<Movie> = ArrayList()
@@ -61,24 +54,29 @@ class FirestoreManager private constructor(
                         val movie = document.toObject(Movie::class.java)!!
                         result.add(movie)
                     }
+                    handleSuccessGetMovies(result)
+                }else{
+                    handleFailure(
+                        context.getString(R.string.error),
+                        context.getString(R.string.error)
+                    )
                 }
-                handleSuccessGetMovies(result)
             }.addOnFailureListener {
                 handleFailure(
-                    context!!.getString(R.string.error),
+                    context.getString(R.string.error),
                     context.getString(R.string.error)
                 )
             }
     }
 
-    fun addMovieToWatchList(movie:Movie){
+    fun addMovieToWatchList(context:Context, movie:Movie){
         db.collection("users")
             .document(email).collection("watchList").add(movie)
             .addOnCompleteListener {
                 handleSuccessAddMovie(movie)
             }.addOnFailureListener {
                 handleFailure(
-                    context!!.getString(R.string.error),
+                    context.getString(R.string.error),
                     context.getString(R.string.error)
                 )
             }

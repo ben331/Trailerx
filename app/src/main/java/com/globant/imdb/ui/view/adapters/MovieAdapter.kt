@@ -16,7 +16,7 @@ import com.globant.imdb.ui.view.HomeFragment
 class MovieAdapter: Adapter<MovieViewHolder>() {
 
     lateinit var movieList: MutableLiveData<List<Movie>>
-    lateinit var moviesListener: HomeFragment
+    lateinit var moviesListener: ImageRenderListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -25,7 +25,7 @@ class MovieAdapter: Adapter<MovieViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        holder.listener = moviesListener
+        holder.listener = moviesListener as MovieViewHolder.MovieListener
         with(movieList.value?.get(position)!!){
             holder.id = id
             holder.labelName.text = title

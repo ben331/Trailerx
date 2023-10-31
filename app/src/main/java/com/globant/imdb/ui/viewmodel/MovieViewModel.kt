@@ -1,6 +1,7 @@
 package com.globant.imdb.ui.viewmodel
 
 import android.annotation.SuppressLint
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,9 +12,9 @@ import com.globant.imdb.domain.movies.GetPopularMoviesUseCase
 import com.globant.imdb.domain.movies.GetRandomTopMovieUseCase
 import com.globant.imdb.domain.movies.GetOfficialTrailerUseCase
 import com.globant.imdb.domain.movies.GetUpcomingMoviesUseCase
+import com.globant.imdb.domain.user.AddMovieToWatchListUseCase
 import com.globant.imdb.ui.view.adapters.MovieViewHolder
 import kotlinx.coroutines.launch
-
 class MovieViewModel: ViewModel() {
 
     // Live data
@@ -22,13 +23,15 @@ class MovieViewModel: ViewModel() {
     val nowPlayingMovies = MutableLiveData<List<Movie>>()
     val upcomingMovies = MutableLiveData<List<Movie>>()
     val popularMovies = MutableLiveData<List<Movie>>()
+    val isLoading = MutableLiveData(false)
 
     // Use Cases
-    val getRandomTopMovieUseCase = GetRandomTopMovieUseCase()
-    val getNowPlayingMoviesUseCase = GetNowPlayingMoviesUseCase()
-    val getUpcomingMovies = GetUpcomingMoviesUseCase()
-    val getPopularMoviesUseCase = GetPopularMoviesUseCase()
-    val getTrailerUseCase = GetOfficialTrailerUseCase()
+    private val getRandomTopMovieUseCase = GetRandomTopMovieUseCase()
+    private val getNowPlayingMoviesUseCase = GetNowPlayingMoviesUseCase()
+    private val getUpcomingMovies = GetUpcomingMoviesUseCase()
+    private val getPopularMoviesUseCase = GetPopularMoviesUseCase()
+    private val getTrailerUseCase = GetOfficialTrailerUseCase()
+    private val addMovieToWatchListUseCase = AddMovieToWatchListUseCase()
 
     @SuppressLint("NotifyDataSetChanged")
     fun onCreate(
@@ -36,6 +39,7 @@ class MovieViewModel: ViewModel() {
         upcomingMoviesAdapter:Adapter<MovieViewHolder>,
         popularMoviesAdapter:Adapter<MovieViewHolder>
     ) {
+        isLoading.postValue(true)
         viewModelScope.launch {
             val result = getRandomTopMovieUseCase()
             result?.let {
@@ -66,11 +70,24 @@ class MovieViewModel: ViewModel() {
     }
 
     fun getTrailerOfMovie(movieId:Int){
+        isLoading.postValue(true)
         viewModelScope.launch {
             val result = getTrailerUseCase(movieId, false)
             result?.let {
                 videoIframe.postValue(result)
             }
+        }
+    }
+
+    fun addMovieToWatchList(movieId:Int, context: Context){
+        isLoading.postValue(true)
+        val homeMovies =
+            nowPlayingMovies.value?.plus(upcomingMovies.value)?.plus(popularMovies.value) as List<Movie>
+        val movie = homeMovies.find {
+            it.id == movieId
+        }
+        if(movie!=null){
+            addMovieToWatchListUseCase(context, movie)
         }
     }
 }
