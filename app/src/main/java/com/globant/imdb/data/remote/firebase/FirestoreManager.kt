@@ -21,7 +21,7 @@ class FirestoreManager {
     }
 
     fun createUser(user: User, handleSuccess: (user: User?) -> Unit) {
-        db.collection("users").add(user)
+        db.collection("users").document(user.email).set(user)
             .addOnCompleteListener {
                 handleSuccess(user)
             }
@@ -73,7 +73,7 @@ class FirestoreManager {
 
     fun addMovieToWatchList(context:Context, movie:Movie, handleSuccess:(movie:Movie)->Unit){
         db.collection("users")
-            .document(email).collection("watchList").add(movie)
+            .document(email).collection("watchList").document(movie.id.toString()).set(movie)
             .addOnCompleteListener {
                 handleSuccess(movie)
             }.addOnFailureListener {
