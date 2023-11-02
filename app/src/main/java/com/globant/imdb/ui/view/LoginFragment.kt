@@ -19,6 +19,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.globant.imdb.R
 import com.globant.imdb.core.FormValidator
+import com.globant.imdb.data.model.user.User
 import com.globant.imdb.data.remote.firebase.ProviderType
 import com.globant.imdb.databinding.FragmentLoginBinding
 import com.globant.imdb.ui.viewmodel.AuthViewModel
@@ -40,6 +41,7 @@ class LoginFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        authViewModel.setHandleFailure(::showAlert)
         loadSession()
     }
 
@@ -71,12 +73,11 @@ class LoginFragment : Fragment() {
 
     private fun setupLiveData(){
         authViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            enableButtons(!isLoading)
             if(isLoading){
                 binding.progressComponent.visibility = View.VISIBLE
-                binding.constraintLayout.isEnabled = false
             }else{
                 binding.progressComponent.visibility = View.GONE
-                binding.constraintLayout.isEnabled = true
             }
         }
     }
@@ -91,7 +92,7 @@ class LoginFragment : Fragment() {
             val email = binding.editTextEmail.text.toString()
             val password = binding.editTextPassword.text.toString()
             authViewModel.isLoading.postValue(true)
-            authViewModel.loginWithEmailAndPassword(requireContext(), email, password, ::showHome, ::showAlert)
+            authViewModel.loginWithEmailAndPassword(requireContext(), email, password, ::createUser, ::showAlert)
         }
 
         binding.labelForgotPassword.setOnClickListener {
@@ -113,18 +114,18 @@ class LoginFragment : Fragment() {
 
         binding.facebookBtn.setOnClickListener{
             authViewModel.isLoading.postValue(true)
-            authViewModel.loginWithFacebook(this, ::showHome, ::showAlert)
+            authViewModel.loginWithFacebook(this, ::createUser, ::showAlert)
         }
 
         binding.appleBtn.setOnClickListener{
             authViewModel.isLoading.postValue(true)
-            authViewModel.loginWithApple(requireActivity(), ::showHome, ::showAlert)
+            authViewModel.loginWithApple(requireActivity(), ::createUser, ::showAlert)
         }
     }
 
     private fun onGoogleResult(result:ActivityResult){
         if(result.resultCode == Activity.RESULT_OK){
-            authViewModel.onGoogleResult(requireContext(), result.data, ::showHome, ::showAlert)
+            authViewModel.onGoogleResult(requireContext(), result.data, ::createUser, ::showAlert)
         }
     }
 
@@ -201,9 +202,39 @@ class LoginFragment : Fragment() {
             .actionLoginFragmentToNavigationFragment( email, providerType )
         navController.navigate(action)
     }
+    private fun createUser(email:String, providerType: ProviderType){
+        val user = User(email, authViewModel.getDisplayName())
+        authViewModel.createUser(requireContext(), user) {
+            if(it!=null){
+                showHome(email, providerType)
+            }else{
+                authViewModel.logout(providerType)
+                showAlert(
+                    getString(R.string.error),
+                    getString(R.string.create_user_error)
+                )
+            }
+        }
+    }
+    private fun enableButtons(enable:Boolean){
+        with(binding){
+            val email =  binding.editTextEmail.text.toString()
+            val password = binding.editTextPassword.text.toString()
+            editTextEmail.isEnabled = enable
+            editTextPassword.isEnabled = enable
+            labelForgotPassword.isEnabled = enable
+            btnLogin.isEnabled = enable && FormValidator.validateLogin(email, password)
+            appleBtn.isEnabled = enable
+            facebookBtn.isEnabled = enable
+            googleBtn.isEnabled = enable
+            labelRegister.isEnabled = enable
+            labelGuest.isEnabled = enable
+        }
+    }
+
     private fun showAlert(title:String, message:String){
         authViewModel.isLoading.postValue(false)
-        val builder = AlertDialog.Builder(activity)
+        val builder = AlertDialog.Builder(requireContext())
         builder.setTitle(title)
         builder.setMessage(message)
         builder.setPositiveButton(R.string.accept, null)

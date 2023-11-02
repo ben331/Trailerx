@@ -63,6 +63,10 @@ class FirebaseAuthManager {
         return auth.currentUser?.email ?: ""
     }
 
+    fun getDisplayName():String{
+        return auth.currentUser?.displayName ?: ""
+    }
+
     fun logout(provider:ProviderType){
         auth.signOut()
         if(provider == ProviderType.FACEBOOK){

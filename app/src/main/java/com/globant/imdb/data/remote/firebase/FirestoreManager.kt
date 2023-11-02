@@ -6,13 +6,12 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.globant.imdb.R
 import com.globant.imdb.data.model.movies.Movie
+import com.globant.imdb.data.model.user.User
 
 
-class FirestoreManager private constructor(
-    val handleSuccessGetMovies:(movies:ArrayList<Movie>)->Unit,
-    val handleSuccessAddMovie:(movie:Movie)->Unit,
-    val handleFailure:(title:String, msg:String)->Unit
-){
+class FirestoreManager {
+    var handleFailure: (title:String, msg:String)->Unit = { _: String, _: String -> }
+
     private val db: FirebaseFirestore by lazy {
         Firebase.firestore
     }
@@ -21,31 +20,36 @@ class FirestoreManager private constructor(
         FirebaseAuthManager().getEmail()
     }
 
-    class Builder {
-        private var handleSuccessGetMovies: (movies:ArrayList<Movie>)->Unit= {}
-        private var handleSuccessAddMovie: (movie:Movie)->Unit = {}
-        private var handleFailure: (title:String, msg:String)->Unit = { _: String, _: String -> }
-
-        fun setHandleSuccessGetMovies(handleSuccessGetMovies: (movies:ArrayList<Movie>)->Unit): Builder {
-            this.handleSuccessGetMovies = handleSuccessGetMovies
-            return this
-        }
-        fun setHandleSuccessAddMovie(handleSuccessAddMovie: (movie:Movie)->Unit): Builder {
-            this.handleSuccessAddMovie = handleSuccessAddMovie
-            return this
-        }
-
-        fun setHandleFailure(handleFailure: (title:String, msg:String)->Unit): Builder {
-            this.handleFailure = handleFailure
-            return this
-        }
-
-        fun build(): FirestoreManager {
-            return FirestoreManager(handleSuccessGetMovies, handleSuccessAddMovie, handleFailure)
-        }
+    fun createUser(user: User, handleSuccess: (user: User?) -> Unit) {
+        db.collection("users").add(user)
+            .addOnCompleteListener {
+                handleSuccess(user)
+            }
+            .addOnFailureListener {
+                it.printStackTrace()
+                handleSuccess(null)
+            }
     }
 
-    fun getWatchList(context:Context) {
+    fun getUser(context: Context, localEmail:String, handleSuccess:(user:User?)->Unit) {
+        db.collection("users").document(localEmail).get()
+            .addOnSuccessListener {
+                if(it.exists()){
+                    val user = it.toObject(User::class.java)
+                    handleSuccess(user)
+                }else{
+                    handleSuccess(null)
+                }
+            }.addOnFailureListener {
+                it.printStackTrace()
+                handleFailure(
+                    context.getString(R.string.error),
+                    context.getString(R.string.create_user_error)
+                )
+            }
+    }
+
+    fun getWatchList(context:Context, handleSuccess: (movies:ArrayList<Movie>)->Unit) {
         db.collection("users").document(email).collection("watchList").get()
             .addOnCompleteListener {
                 val result:ArrayList<Movie> = ArrayList()
@@ -54,7 +58,7 @@ class FirestoreManager private constructor(
                         val movie = document.toObject(Movie::class.java)!!
                         result.add(movie)
                     }
-                    handleSuccessGetMovies(result)
+                    handleSuccess(result)
                 }else{
                     handleFailure(
                         context.getString(R.string.error),
@@ -62,6 +66,7 @@ class FirestoreManager private constructor(
                     )
                 }
             }.addOnFailureListener {
+                it.printStackTrace()
                 handleFailure(
                     context.getString(R.string.error),
                     context.getString(R.string.error)
@@ -69,12 +74,13 @@ class FirestoreManager private constructor(
             }
     }
 
-    fun addMovieToWatchList(context:Context, movie:Movie){
+    fun addMovieToWatchList(context:Context, movie:Movie, handleSuccess:(movie:Movie)->Unit){
         db.collection("users")
             .document(email).collection("watchList").add(movie)
             .addOnCompleteListener {
-                handleSuccessAddMovie(movie)
+                handleSuccess(movie)
             }.addOnFailureListener {
+                it.printStackTrace()
                 handleFailure(
                     context.getString(R.string.error),
                     context.getString(R.string.error)

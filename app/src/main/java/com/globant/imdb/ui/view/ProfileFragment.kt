@@ -33,9 +33,6 @@ class ProfileFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewH
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        profileViewModel.setupProfileRepository(
-            ::showAlert
-        )
         return binding.root
     }
 

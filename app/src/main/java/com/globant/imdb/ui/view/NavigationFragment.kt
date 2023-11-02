@@ -59,7 +59,7 @@ class NavigationFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
 
     private fun setupNavBar(remoteDisplayName: String?){
         val profileItem = binding.navBar.menu.findItem(R.id.profileFragment)
-        profileItem.title = remoteDisplayName
+        profileItem.title = remoteDisplayName ?: getString(R.string.guest_name)
     }
 
     private fun saveSession(){

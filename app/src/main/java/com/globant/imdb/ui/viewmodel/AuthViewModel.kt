@@ -7,8 +7,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.facebook.CallbackManager
+import com.globant.imdb.data.model.user.User
 import com.globant.imdb.data.remote.firebase.FirebaseAuthManager
 import com.globant.imdb.data.remote.firebase.ProviderType
+import com.globant.imdb.domain.user.CreateUserUseCase
+import com.globant.imdb.domain.user.SetHandleFailureUseCase
 
 class AuthViewModel: ViewModel() {
     val isLoading = MutableLiveData(false)
@@ -17,12 +20,30 @@ class AuthViewModel: ViewModel() {
         FirebaseAuthManager()
     }
 
+    private val setHandleFailureUseCase = SetHandleFailureUseCase()
+    private val createUserUseCase = CreateUserUseCase()
+    fun createUser(
+        context:Context,
+        localUser: User,
+        handleSuccess:(user: User?)->Unit
+    ){
+        createUserUseCase(context, localUser, handleSuccess)
+    }
+
+    fun getDisplayName():String{
+        return authManager.getDisplayName()
+    }
+
     fun getCallbackManager(): CallbackManager{
         return authManager.callbackManager
     }
 
     fun setupName(useName: (remoteDisplayName:String?) -> Unit) {
         authManager.setupName(useName)
+    }
+
+    fun setHandleFailure( handleFailure:(title:String, msg:String)->Unit ){
+        setHandleFailureUseCase(handleFailure)
     }
 
     fun logout(provider:ProviderType){

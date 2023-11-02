@@ -89,7 +89,7 @@ class SignUpFragment : Fragment() {
         with(binding.editTextName) {
             setOnFocusChangeListener { _, hasFocus ->
                 if (!hasFocus && !FormValidator.validateIsNotBlank( text.toString())) {
-                    binding.textLayoutPassword.error = getString(R.string.required_field)
+                    binding.textLayoutName.error = getString(R.string.required_field)
                     binding.textLayoutName.isErrorEnabled = true
                 }else{
                     binding.textLayoutName.isErrorEnabled = false
@@ -99,7 +99,7 @@ class SignUpFragment : Fragment() {
         with(binding.editTextEmail) {
             setOnFocusChangeListener { _, hasFocus ->
                 if (!hasFocus && !FormValidator.validateEmail( text.toString())) {
-                    binding.textLayoutPassword.error = getString(R.string.invalid_email)
+                    binding.textLayoutEmail.error = getString(R.string.invalid_email)
                     binding.textLayoutEmail.isErrorEnabled = true
                 }else{
                     binding.textLayoutEmail.isErrorEnabled = false

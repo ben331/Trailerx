@@ -5,12 +5,13 @@ import com.globant.imdb.data.model.movies.Movie
 import com.globant.imdb.data.model.movies.MovieDetail
 import com.globant.imdb.data.model.movies.MovieProvider
 import com.globant.imdb.data.model.movies.Video
+import com.globant.imdb.data.model.user.User
 import com.globant.imdb.data.remote.firebase.FirestoreManager
 import com.globant.imdb.data.remote.retrofit.TMDBService
 
 class IMDbRepository {
     companion object {
-        lateinit var firestoreManager: FirestoreManager
+        val firestoreManager = FirestoreManager()
     }
 
     private val api = TMDBService()
@@ -44,23 +45,25 @@ class IMDbRepository {
     }
 
     // Firestore
-    fun setupUserRepository(
-        handleSuccessGetMovies:(movies:ArrayList<Movie>)->Unit,
-        handleSuccessAddMovie:(movie:Movie)->Unit,
+    fun setHandleFailure(
         handleFailure:(title:String, msg:String)->Unit
     ){
-        firestoreManager = FirestoreManager.Builder()
-            .setHandleSuccessGetMovies(handleSuccessGetMovies)
-            .setHandleSuccessAddMovie(handleSuccessAddMovie)
-            .setHandleFailure(handleFailure)
-            .build()
+        firestoreManager.handleFailure = handleFailure
     }
 
-    fun getWatchList(context: Context){
-        return firestoreManager.getWatchList(context)
+    fun createUser(user:User, handleSuccess:(user:User?)->Unit){
+        firestoreManager.createUser(user, handleSuccess)
     }
 
-    fun addMovieToWatchList(context: Context, movie:Movie){
-        return firestoreManager.addMovieToWatchList(context, movie)
+    fun getUser(context: Context, localEmail:String, handleSuccess:(user:User?)->Unit){
+        firestoreManager.getUser(context, localEmail , handleSuccess)
+    }
+
+    fun getWatchList(context: Context, handleSuccess:(ArrayList<Movie>)->Unit){
+        return firestoreManager.getWatchList(context, handleSuccess)
+    }
+
+    fun addMovieToWatchList(context: Context, movie:Movie, handleSuccess:(Movie)->Unit){
+        return firestoreManager.addMovieToWatchList(context, movie, handleSuccess)
     }
 }

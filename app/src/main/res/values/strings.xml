@@ -65,6 +65,7 @@
     <string name="no_recent">No has visitado ninguna página recientemente.</string>
     <string name="favorite_people">Personas favoritas</string>
     <string name="logout">Cerrar Sesión</string>
+    <string name="guest_name">Invitado</string>
 
     /*
     ---Content Description For Images---
@@ -100,12 +101,9 @@
     <string name="invalid_password">La contraseña no cumple los criterios</string>
     <string name="required_field">Campo requerido</string>
     <string name="password_reset_error">No se pudo enviar el correo de recuperación</string>
-    <string name="password_reset_success">
-        Correo enviado exitosamente, revisa tanto tu bandeja de entrada como el correo no deseado (spam).
-    </string>
-    <string name="account_created_success">
-        Antes de continuar, necesitas verificar tu cuenta. Revisa tu bandeja de entrada y el correo no deseado.
-    </string>
+    <string name="password_reset_success"> Correo enviado exitosamente, revisa tanto tu bandeja de entrada como el correo no deseado (spam).</string>
+    <string name="account_created_success"> Antes de continuar, necesitas verificar tu cuenta. Revisa tu bandeja de entrada y el correo no deseado. </string>
+    <string name="create_user_error">Lo sentimos, no logramos iniciar sesión. Reintenta de nuevo mas tarde.</string>
 
     /*
     --Facebook strings

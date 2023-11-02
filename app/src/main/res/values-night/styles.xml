@@ -40,7 +40,7 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:paddingStart">@dimen/padding_large</item>
         <item name="android:paddingEnd">@dimen/padding_large</item>
-        <item name="android:textColorHint">@color/white</item>
+        <item name="android:textColorHint">@color/gray_800</item>
         <item name="android:textAppearance">@style/TextAppearance.IMDb.TextField.Login</item>
     </style>
 

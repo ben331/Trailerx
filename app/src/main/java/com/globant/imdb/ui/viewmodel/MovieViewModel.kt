@@ -13,6 +13,8 @@ import com.globant.imdb.domain.movies.GetRandomTopMovieUseCase
 import com.globant.imdb.domain.movies.GetOfficialTrailerUseCase
 import com.globant.imdb.domain.movies.GetUpcomingMoviesUseCase
 import com.globant.imdb.domain.user.AddMovieToWatchListUseCase
+import com.globant.imdb.domain.user.CreateUserUseCase
+import com.globant.imdb.domain.user.SetHandleFailureUseCase
 import com.globant.imdb.ui.view.adapters.MovieViewHolder
 import kotlinx.coroutines.launch
 class MovieViewModel: ViewModel() {
@@ -32,6 +34,7 @@ class MovieViewModel: ViewModel() {
     private val getPopularMoviesUseCase = GetPopularMoviesUseCase()
     private val getTrailerUseCase = GetOfficialTrailerUseCase()
     private val addMovieToWatchListUseCase = AddMovieToWatchListUseCase()
+    private val setHandleFailureUseCase = SetHandleFailureUseCase()
 
     @SuppressLint("NotifyDataSetChanged")
     fun onCreate(
@@ -69,6 +72,10 @@ class MovieViewModel: ViewModel() {
         }
     }
 
+    fun setHandleFailure(handleAlert: (title:String, msg:String) -> Unit){
+        setHandleFailureUseCase(handleAlert)
+    }
+
     fun getTrailerOfMovie(movieId:Int){
         isLoading.postValue(true)
         viewModelScope.launch {
@@ -79,7 +86,7 @@ class MovieViewModel: ViewModel() {
         }
     }
 
-    fun addMovieToWatchList(movieId:Int, context: Context){
+    fun addMovieToWatchList(movieId:Int, context: Context, handleSuccess:(movie:Movie)->Unit){
         isLoading.postValue(true)
         val homeMovies =
             nowPlayingMovies.value?.plus(upcomingMovies.value)?.plus(popularMovies.value) as List<Movie>
@@ -87,7 +94,7 @@ class MovieViewModel: ViewModel() {
             it.id == movieId
         }
         if(movie!=null){
-            addMovieToWatchListUseCase(context, movie)
+            addMovieToWatchListUseCase(context, movie, handleSuccess)
         }
     }
 }

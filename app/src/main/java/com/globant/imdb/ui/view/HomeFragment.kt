@@ -34,6 +34,7 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        movieViewModel.setHandleFailure(::showAlert)
         RetrofitHelper.authToken = getString(R.string.TMDB_api_token)
     }
 
@@ -153,7 +154,12 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
     }
 
     override fun addToWatchList(id: Int) {
-        movieViewModel.addMovieToWatchList(id, requireContext())
+        movieViewModel.addMovieToWatchList(id, requireContext()) {
+            showAlert(
+                getString(R.string.success),
+                "Movie ${it.title} added successfully"
+            )
+        }
     }
 
     private fun showAlert(title:String, message:String){
