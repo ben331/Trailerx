@@ -1,5 +1,6 @@
 package com.globant.imdb.ui.view
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -29,6 +30,11 @@ class ProfileFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewH
     private lateinit var recentMoviesAdapter: MovieAdapter
     private lateinit var favoritePeopleAdapter: MovieAdapter
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        profileViewModel.setHandleFailure(::showAlert)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,6 +57,9 @@ class ProfileFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewH
 
         with(binding.listMoviesOne){
             titleContainer.sectionTitle.text = getString(R.string.watch_list)
+            listDescription.text = getString(R.string.create_watch_list)
+            btnActionList.text = getString(R.string.start_watch_list)
+
             moviesRecyclerView.adapter = watchListAdapter
             moviesRecyclerView.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -58,16 +67,17 @@ class ProfileFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewH
         }
 
         with(binding.listMoviesTwo){
-            titleContainer.sectionTitle.text = getString(R.string.section_upcoming)
-            listDescription.visibility = View.GONE
+            titleContainer.sectionTitle.text = getString(R.string.recently_viewed)
+            listDescription.text = getString(R.string.content_recently_viewed)
         }
 
         with(binding.listMoviesThree){
-            titleContainer.sectionTitle.text = getString(R.string.section_popular)
-            listDescription.visibility = View.GONE
+            titleContainer.sectionTitle.text = getString(R.string.favorite_people)
+            listDescription.text = getString(R.string.content_favorite_people)
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun setupLiveData(){
         profileViewModel.photoUri.observe(viewLifecycleOwner){
             Picasso.with(requireContext())
@@ -79,6 +89,21 @@ class ProfileFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewH
 
         profileViewModel.isLoading.observe(viewLifecycleOwner){
             binding.refreshLayout.isRefreshing = it
+        }
+
+        profileViewModel.watchList.observe(viewLifecycleOwner){ watchList ->
+            watchListAdapter.notifyDataSetChanged()
+            if(watchList.isEmpty()){
+                with(binding.listMoviesOne) {
+                    listDescription.visibility = View.VISIBLE
+                    btnActionList.visibility = View.VISIBLE
+                }
+            }else{
+                with(binding.listMoviesOne) {
+                    listDescription.visibility = View.GONE
+                    btnActionList.visibility = View.GONE
+                }
+            }
         }
     }
 
@@ -98,6 +123,7 @@ class ProfileFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewH
     }
 
     private fun showAlert(title:String, message:String){
+        profileViewModel.isLoading.postValue(false)
         val builder = AlertDialog.Builder(activity)
         builder.setTitle(title)
         builder.setMessage(message)

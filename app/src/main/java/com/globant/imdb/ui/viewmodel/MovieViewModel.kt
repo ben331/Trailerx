@@ -37,11 +37,7 @@ class MovieViewModel: ViewModel() {
     private val setHandleFailureUseCase = SetHandleFailureUseCase()
 
     @SuppressLint("NotifyDataSetChanged")
-    fun onCreate(
-        nowPlayingMoviesAdapter:Adapter<MovieViewHolder>,
-        upcomingMoviesAdapter:Adapter<MovieViewHolder>,
-        popularMoviesAdapter:Adapter<MovieViewHolder>
-    ) {
+    fun onCreate() {
         isLoading.postValue(true)
         viewModelScope.launch {
             val result = getRandomTopMovieUseCase()
@@ -53,21 +49,18 @@ class MovieViewModel: ViewModel() {
             val result = getNowPlayingMoviesUseCase()
             if(result.isNotEmpty()){
                 nowPlayingMovies.postValue(result)
-                nowPlayingMoviesAdapter.notifyDataSetChanged()
             }
         }
         viewModelScope.launch {
             val result = getUpcomingMovies()
             if(result.isNotEmpty()){
                 upcomingMovies.postValue(result)
-                upcomingMoviesAdapter.notifyDataSetChanged()
             }
         }
         viewModelScope.launch {
             val result = getPopularMoviesUseCase()
             if(result.isNotEmpty()){
                 popularMovies.postValue(result)
-                popularMoviesAdapter.notifyDataSetChanged()
             }
         }
     }

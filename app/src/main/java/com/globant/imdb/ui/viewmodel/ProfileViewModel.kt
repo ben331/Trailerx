@@ -1,13 +1,14 @@
 package com.globant.imdb.ui.viewmodel
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.globant.imdb.data.model.movies.Movie
 import com.globant.imdb.data.remote.firebase.FirebaseAuthManager
-import com.globant.imdb.domain.user.AddMovieToWatchListUseCase
 import com.globant.imdb.domain.user.GetWatchListUseCase
+import com.globant.imdb.domain.user.SetHandleFailureUseCase
 import com.globant.imdb.ui.view.adapters.MovieAdapter
 
 class ProfileViewModel: ViewModel() {
@@ -16,7 +17,7 @@ class ProfileViewModel: ViewModel() {
     val photoUri = MutableLiveData<Uri?>()
 
     private val getWatchListUseCase = GetWatchListUseCase()
-    private val addMovieToWatchListUseCase = AddMovieToWatchListUseCase()
+    private val setHandleFailureUseCase = SetHandleFailureUseCase()
 
     val watchList = MutableLiveData<List<Movie>>()
     val isLoading = MutableLiveData(false)
@@ -24,8 +25,6 @@ class ProfileViewModel: ViewModel() {
     private val authManager: FirebaseAuthManager by lazy {
         FirebaseAuthManager()
     }
-
-    lateinit var adapter: MovieAdapter
 
     fun refresh(context:Context) {
         isLoading.postValue(true)
@@ -36,14 +35,8 @@ class ProfileViewModel: ViewModel() {
         getWatchListUseCase(context, ::onSuccessGetMovies)
     }
 
-    fun addMovieToWatchList(context:Context, movie:Movie){
-        addMovieToWatchListUseCase(context, movie, ::onSuccessAddMovie)
-    }
-
-    private fun onSuccessAddMovie(movie:Movie){
-        watchList.postValue(watchList.value!!.plus(movie))
-        adapter.notifyItemInserted(adapter.itemCount)
-        isLoading.postValue(false)
+    fun setHandleFailure(handleAlert: (title:String, msg:String) -> Unit){
+        setHandleFailureUseCase(handleAlert)
     }
 
     private fun onSuccessGetMovies(movies:ArrayList<Movie>){

@@ -1,5 +1,6 @@
 package com.globant.imdb.ui.view
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -60,6 +61,7 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
         binding.refreshLayout.setOnRefreshListener(::refresh)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun setupLiveData(){
         movieViewModel.mainMovie.observe(viewLifecycleOwner) { currentMovie ->
             with(binding.mainTrailerContainer) {
@@ -88,6 +90,16 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
 
         movieViewModel.isLoading.observe(viewLifecycleOwner){
             binding.refreshLayout.isRefreshing = it
+        }
+
+        movieViewModel.nowPlayingMovies.observe(viewLifecycleOwner){
+            nowPlayingMoviesAdapter.notifyDataSetChanged()
+        }
+        movieViewModel.upcomingMovies.observe(viewLifecycleOwner){
+            upcomingMoviesAdapter.notifyDataSetChanged()
+        }
+        movieViewModel.nowPlayingMovies.observe(viewLifecycleOwner){
+            popularMoviesAdapter.notifyDataSetChanged()
         }
     }
 
@@ -133,11 +145,7 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
     }
 
     private fun refresh(){
-        movieViewModel.onCreate(
-            nowPlayingMoviesAdapter,
-            upcomingMoviesAdapter,
-            popularMoviesAdapter
-        )
+        movieViewModel.onCreate()
     }
 
     override fun renderImage(url: String, image: ImageView) {

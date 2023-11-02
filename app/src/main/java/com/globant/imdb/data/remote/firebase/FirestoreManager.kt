@@ -51,25 +51,22 @@ class FirestoreManager {
 
     fun getWatchList(context:Context, handleSuccess: (movies:ArrayList<Movie>)->Unit) {
         db.collection("users").document(email).collection("watchList").get()
-            .addOnCompleteListener {
+            .addOnSuccessListener {
                 val result:ArrayList<Movie> = ArrayList()
-                if(it.isSuccessful && !it.result.isEmpty){
-                    for( document in it.result.documents ){
+                if(!it.isEmpty){
+                    for( document in it.documents ){
                         val movie = document.toObject(Movie::class.java)!!
                         result.add(movie)
                     }
                     handleSuccess(result)
                 }else{
-                    handleFailure(
-                        context.getString(R.string.error),
-                        context.getString(R.string.error)
-                    )
+                    handleSuccess(ArrayList())
                 }
             }.addOnFailureListener {
                 it.printStackTrace()
                 handleFailure(
                     context.getString(R.string.error),
-                    context.getString(R.string.error)
+                    context.getString(R.string.fetch_movies_error)
                 )
             }
     }
