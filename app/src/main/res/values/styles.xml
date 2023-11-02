@@ -34,6 +34,7 @@
 
     <style name="Widget.IMDb.TextInputEditText.Login" parent="">
         <item name="layout_constraintWidth_max">@dimen/edittext_max_width</item>
+        <item name="helperTextEnabled">true</item>
         <item name="android:background">@drawable/ic_editext_login_background</item>
         <item name="android:textColor">@color/gray_500</item>
         <item name="android:paddingStart">@dimen/padding_large</item>
@@ -47,6 +48,8 @@
         <item name="boxStrokeWidth">0dp</item>
         <item name="boxStrokeWidthFocused">0dp</item>
         <item name="android:gravity">center</item>
+        <item name="endIconMode">clear_text</item>
+        <item name="endIconDrawable">@drawable/ic_cancel</item>
         <item name="startIconDrawable">@drawable/ic_search</item>
         <item name="fontFamily">@font/roboto_regular</item>
         <item name="iconTint">@color/gray_800</item>

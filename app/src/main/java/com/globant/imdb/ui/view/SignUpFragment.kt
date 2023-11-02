@@ -88,28 +88,31 @@ class SignUpFragment : Fragment() {
     private fun setupForm(){
         with(binding.editTextName) {
             setOnFocusChangeListener { _, hasFocus ->
-                error = if (!hasFocus && !FormValidator.validateIsNotBlank( text.toString())) {
-                    getString(R.string.required_field)
+                if (!hasFocus && !FormValidator.validateIsNotBlank( text.toString())) {
+                    binding.textLayoutPassword.error = getString(R.string.required_field)
+                    binding.textLayoutName.isErrorEnabled = true
                 }else{
-                    null
+                    binding.textLayoutName.isErrorEnabled = false
                 }
             }}
 
         with(binding.editTextEmail) {
             setOnFocusChangeListener { _, hasFocus ->
-                error = if (!hasFocus && !FormValidator.validateEmail( text.toString())) {
-                    getString(R.string.invalid_email)
+                if (!hasFocus && !FormValidator.validateEmail( text.toString())) {
+                    binding.textLayoutPassword.error = getString(R.string.invalid_email)
+                    binding.textLayoutEmail.isErrorEnabled = true
                 }else{
-                    null
+                    binding.textLayoutEmail.isErrorEnabled = false
                 }
             }}
 
         with(binding.editTextPassword) {
             setOnFocusChangeListener { _, hasFocus ->
-                error = if (!hasFocus && !FormValidator.validatePassword( text.toString())) {
-                    getString(R.string.invalid_password)
+                if (!hasFocus && !FormValidator.validatePassword( text.toString())) {
+                    binding.textLayoutPassword.error = getString(R.string.invalid_password)
+                    binding.textLayoutPassword.isErrorEnabled = true
                 }else{
-                    null
+                    binding.textLayoutPassword.isErrorEnabled = false
                 }
             }}
     }

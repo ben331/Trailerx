@@ -30,6 +30,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/search_text_field"
                 style="@style/Widget.IMDb.TextInputEditText.Search"
+                app:endIconMode="clear_text"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/edittext_height"
                 android:hint="@string/search_hint"

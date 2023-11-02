@@ -40,6 +40,7 @@ class SearchFragment : Fragment(), MovieResultAdapter.ImageRenderListener, Movie
         setupLiveData()
         setupRecyclerView()
         setupWatcher()
+        setupButtons()
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -75,6 +76,12 @@ class SearchFragment : Fragment(), MovieResultAdapter.ImageRenderListener, Movie
             }
         }
         binding.searchTextField.addTextChangedListener(watcher)
+    }
+
+    private fun setupButtons(){
+        binding.searchLayout.setEndIconOnClickListener {
+            binding.searchTextField.setText("")
+        }
     }
 
     override fun renderImage(url: String, image: ImageView) {
