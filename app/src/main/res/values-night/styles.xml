@@ -102,11 +102,14 @@
     </style>
 
     <style name="Widget.IMDb.ItemMovie" parent="">
-        <item name="background">@drawable/ic_footer_movie_night</item>
+        <item name="android:background">@drawable/ic_footer_movie_night</item>
     </style>
 
     <style name="Widget.IMDb.Shortcut" parent="">
-        <item name="android:background">@drawable/ic_editext_login_background_night</item>
+        <item name="android:background">@drawable/ic_background_shortcut_night</item>
+    </style>
+    <style name="Widget.IMDb.Shortcut.Small" parent="">
+        <item name="android:background">@drawable/ic_background_shortcut_small_night</item>
     </style>
 
 </resources>

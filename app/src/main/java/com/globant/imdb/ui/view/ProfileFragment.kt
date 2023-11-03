@@ -17,6 +17,7 @@ import com.globant.imdb.databinding.FragmentProfileBinding
 import com.globant.imdb.R
 import com.globant.imdb.ui.view.adapters.MovieProfileAdapter
 import com.globant.imdb.ui.view.adapters.MovieProfileViewHolder
+import com.globant.imdb.ui.view.adapters.ShortcutAdapter
 import com.globant.imdb.ui.viewmodel.ProfileViewModel
 import com.squareup.picasso.Picasso
 
@@ -31,6 +32,8 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
     private val navController: NavController by lazy {
         findNavController()
     }
+
+    private lateinit var shortcutAdapter: ShortcutAdapter
 
     private lateinit var watchListAdapter: MovieProfileAdapter
     private lateinit var recentMoviesAdapter: MovieProfileAdapter
@@ -51,6 +54,7 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupLiveData()
+        setupTopRecyclerView()
         setupRecyclerViews()
         setupButtons()
     }
@@ -59,6 +63,17 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
         super.onResume()
         profileViewModel.refresh(requireContext())
     }
+
+    private fun setupTopRecyclerView(){
+        shortcutAdapter = ShortcutAdapter()
+        with(binding.profileHeaderContainer.shortcutsRecyclerView){
+            adapter = shortcutAdapter
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            setHasFixedSize(true)
+        }
+    }
+
     private fun setupRecyclerViews(){
         watchListAdapter = MovieProfileAdapter()
         recentMoviesAdapter = MovieProfileAdapter()
