@@ -15,7 +15,7 @@ import com.globant.imdb.ui.view.ProfileFragment
 
 class MovieProfileAdapter: Adapter<MovieProfileViewHolder>() {
 
-    lateinit var movieList: MutableLiveData<List<Movie>>
+    var movieList: List<Movie> = emptyList()
     lateinit var moviesListener: ProfileFragment
     var listNumber:Int=-1
 
@@ -28,7 +28,7 @@ class MovieProfileAdapter: Adapter<MovieProfileViewHolder>() {
     override fun onBindViewHolder(holder: MovieProfileViewHolder, position: Int) {
         holder.listNumber = listNumber
         holder.listener = moviesListener
-        with(movieList.value?.get(position)!!){
+        with(movieList[position]){
             holder.id = id
             holder.labelName.text = title
             holder.labelStars.text= popularity.toString()
@@ -38,7 +38,7 @@ class MovieProfileAdapter: Adapter<MovieProfileViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        return movieList.value?.size ?: 0
+        return movieList.size
     }
 
     interface ImageRenderListener {

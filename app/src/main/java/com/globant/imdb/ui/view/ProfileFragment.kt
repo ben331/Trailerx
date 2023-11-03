@@ -2,7 +2,6 @@ package com.globant.imdb.ui.view
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -59,7 +58,6 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
 
     private fun setupRecyclerViews(){
         watchListAdapter = MovieProfileAdapter()
-        watchListAdapter.movieList = profileViewModel.watchList
         watchListAdapter.listNumber = 1
         watchListAdapter.moviesListener = this
 
@@ -75,7 +73,6 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
         }
 
         recentMoviesAdapter = MovieProfileAdapter()
-        recentMoviesAdapter.movieList = profileViewModel.recentViewed
         recentMoviesAdapter.listNumber = 2
         recentMoviesAdapter.moviesListener = this
         with(binding.listMoviesTwo){
@@ -83,10 +80,9 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
             listDescription.text = getString(R.string.content_recently_viewed)
         }
 
-        watchListAdapter = MovieProfileAdapter()
-        watchListAdapter.movieList = profileViewModel.favoritePeople
-        watchListAdapter.listNumber = 3
-        watchListAdapter.moviesListener = this
+        favoritePeopleAdapter = MovieProfileAdapter()
+        favoritePeopleAdapter.listNumber = 3
+        favoritePeopleAdapter.moviesListener = this
         with(binding.listMoviesThree){
             titleContainer.sectionTitle.text = getString(R.string.favorite_people)
             listDescription.text = getString(R.string.content_favorite_people)
@@ -108,7 +104,6 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
         }
 
         profileViewModel.watchList.observe(viewLifecycleOwner){ watchList ->
-            watchListAdapter.notifyDataSetChanged()
             if(watchList.isEmpty()){
                 with(binding.listMoviesOne) {
                     listDescription.visibility = View.VISIBLE
@@ -120,6 +115,8 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
                     btnActionList.visibility = View.GONE
                 }
             }
+            watchListAdapter.movieList = watchList
+            watchListAdapter.notifyDataSetChanged()
         }
     }
 

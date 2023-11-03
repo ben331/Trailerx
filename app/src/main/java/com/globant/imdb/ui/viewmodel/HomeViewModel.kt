@@ -83,11 +83,20 @@ class HomeViewModel: ViewModel() {
         }
     }
 
-    fun addMovieToWatchList(movieId:Int, context: Context, handleSuccess:(movie:Movie)->Unit){
+    fun addMovieToWatchList(
+        movieId:Int,
+        numberList:Int,
+        context: Context,
+        handleSuccess:(movie:Movie)->Unit
+    ){
         isLoading.postValue(true)
-        val homeMovies =
-            nowPlayingMovies.value?.plus(upcomingMovies.value)?.plus(popularMovies.value) as List<Movie>
-        val movie = homeMovies.find {
+        val homeMovies = when(numberList){
+            1 -> nowPlayingMovies.value
+            2 -> upcomingMovies.value
+            3 -> popularMovies.value
+            else -> emptyList()
+        }
+        val movie = homeMovies?.find {
             it.id == movieId
         }
         if(movie!=null){

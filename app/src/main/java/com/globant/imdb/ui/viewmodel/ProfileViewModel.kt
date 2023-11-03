@@ -1,6 +1,5 @@
 package com.globant.imdb.ui.viewmodel
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
@@ -10,7 +9,7 @@ import com.globant.imdb.data.remote.firebase.FirebaseAuthManager
 import com.globant.imdb.domain.user.DeleteMovieFromListUseCase
 import com.globant.imdb.domain.user.GetWatchListUseCase
 import com.globant.imdb.domain.user.SetHandleFailureUseCase
-import com.globant.imdb.ui.view.adapters.MovieAdapter
+import com.globant.imdb.ui.view.adapters.MovieProfileAdapter
 
 class ProfileViewModel: ViewModel() {
 

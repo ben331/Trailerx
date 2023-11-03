@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.globant.imdb.databinding.ItemMovieBinding
@@ -16,8 +15,9 @@ import com.globant.imdb.ui.view.HomeFragment
 
 class MovieAdapter: Adapter<MovieViewHolder>() {
 
-    lateinit var movieList: MutableLiveData<List<Movie>>
+    var movieList: List<Movie> = emptyList()
     lateinit var moviesListener: HomeFragment
+    var numberList:Int = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -27,7 +27,8 @@ class MovieAdapter: Adapter<MovieViewHolder>() {
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.listener = moviesListener
-        with(movieList.value?.get(position)!!){
+        with(movieList[position]){
+            holder.numberList = numberList
             holder.id = id
             holder.labelName.text = title
             holder.labelStars.text= popularity.toString()
@@ -37,7 +38,7 @@ class MovieAdapter: Adapter<MovieViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        return movieList.value?.size ?: 0
+        return movieList.size
     }
 
     interface ImageRenderListener {
@@ -49,6 +50,7 @@ class MovieAdapter: Adapter<MovieViewHolder>() {
 class MovieViewHolder(root:View):ViewHolder(root){
     lateinit var listener:MovieListener
     var id:Int = 0
+    var numberList:Int = 0
 
     private val binding = ItemMovieBinding.bind(root)
     val image = binding.imgMovie
@@ -60,12 +62,12 @@ class MovieViewHolder(root:View):ViewHolder(root){
             listener.showDetails(id)
         }
         binding.btnBookmarkAdd.setOnClickListener {
-            listener.addToList(id)
+            listener.addToList(id, numberList)
         }
     }
 
     interface MovieListener {
         fun showDetails(id:Int)
-        fun addToList(id:Int)
+        fun addToList(id:Int, numberList: Int)
     }
 }

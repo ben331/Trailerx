@@ -93,12 +93,15 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
         }
 
         homeViewModel.nowPlayingMovies.observe(viewLifecycleOwner){
+            nowPlayingMoviesAdapter.movieList = it
             nowPlayingMoviesAdapter.notifyDataSetChanged()
         }
         homeViewModel.upcomingMovies.observe(viewLifecycleOwner){
+            upcomingMoviesAdapter.movieList = it
             upcomingMoviesAdapter.notifyDataSetChanged()
         }
-        homeViewModel.nowPlayingMovies.observe(viewLifecycleOwner){
+        homeViewModel.popularMovies.observe(viewLifecycleOwner){
+            popularMoviesAdapter.movieList = it
             popularMoviesAdapter.notifyDataSetChanged()
         }
     }
@@ -108,9 +111,9 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
         upcomingMoviesAdapter = MovieAdapter()
         popularMoviesAdapter = MovieAdapter()
 
-        nowPlayingMoviesAdapter.movieList = homeViewModel.nowPlayingMovies
-        upcomingMoviesAdapter.movieList = homeViewModel.upcomingMovies
-        popularMoviesAdapter.movieList = homeViewModel.popularMovies
+        nowPlayingMoviesAdapter.numberList = 1
+        upcomingMoviesAdapter.numberList = 2
+        popularMoviesAdapter.numberList = 3
 
         nowPlayingMoviesAdapter.moviesListener = this
         upcomingMoviesAdapter.moviesListener = this
@@ -161,8 +164,8 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
         findNavController().navigate(action)
     }
 
-    override fun addToList(id: Int) {
-        homeViewModel.addMovieToWatchList(id, requireContext()) {
+    override fun addToList(id: Int, numberList:Int) {
+        homeViewModel.addMovieToWatchList(id, numberList, requireContext()) {
             showAlert(
                 getString(R.string.success),
                 "Movie ${it.title} added successfully"
