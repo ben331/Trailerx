@@ -5,17 +5,14 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.globant.imdb.data.model.movies.Movie
 import com.globant.imdb.domain.movies.GetNowPlayingMoviesUseCase
 import com.globant.imdb.domain.movies.GetPopularMoviesUseCase
 import com.globant.imdb.domain.movies.GetRandomTopMovieUseCase
 import com.globant.imdb.domain.movies.GetOfficialTrailerUseCase
 import com.globant.imdb.domain.movies.GetUpcomingMoviesUseCase
-import com.globant.imdb.domain.user.AddMovieToWatchListUseCase
-import com.globant.imdb.domain.user.CreateUserUseCase
+import com.globant.imdb.domain.user.AddMovieToListUseCase
 import com.globant.imdb.domain.user.SetHandleFailureUseCase
-import com.globant.imdb.ui.view.adapters.MovieViewHolder
 import kotlinx.coroutines.launch
 class MovieViewModel: ViewModel() {
 
@@ -33,7 +30,7 @@ class MovieViewModel: ViewModel() {
     private val getUpcomingMovies = GetUpcomingMoviesUseCase()
     private val getPopularMoviesUseCase = GetPopularMoviesUseCase()
     private val getTrailerUseCase = GetOfficialTrailerUseCase()
-    private val addMovieToWatchListUseCase = AddMovieToWatchListUseCase()
+    private val addMovieToWatchListUseCase = AddMovieToListUseCase()
     private val setHandleFailureUseCase = SetHandleFailureUseCase()
 
     @SuppressLint("NotifyDataSetChanged")
@@ -87,7 +84,7 @@ class MovieViewModel: ViewModel() {
             it.id == movieId
         }
         if(movie!=null){
-            addMovieToWatchListUseCase(context, movie, handleSuccess)
+            addMovieToWatchListUseCase(context, movie, 1, handleSuccess)
         }
     }
 }

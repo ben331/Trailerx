@@ -161,7 +161,7 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
         findNavController().navigate(action)
     }
 
-    override fun addToWatchList(id: Int) {
+    override fun addToList(id: Int) {
         movieViewModel.addMovieToWatchList(id, requireContext()) {
             showAlert(
                 getString(R.string.success),
@@ -171,6 +171,7 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
     }
 
     private fun showAlert(title:String, message:String){
+        movieViewModel.isLoading.postValue(false)
         val builder = AlertDialog.Builder(activity)
         builder.setTitle(title)
         builder.setMessage(message)

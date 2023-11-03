@@ -49,7 +49,7 @@ class FirestoreManager {
             }
     }
 
-    fun getWatchList(context:Context, handleSuccess: (movies:ArrayList<Movie>)->Unit) {
+    fun getWatchList(context:Context, handleSuccess: (movies:List<Movie>)->Unit) {
         db.collection("users").document(email).collection("watchList").get()
             .addOnSuccessListener {
                 val result:ArrayList<Movie> = ArrayList()
@@ -60,7 +60,7 @@ class FirestoreManager {
                     }
                     handleSuccess(result)
                 }else{
-                    handleSuccess(ArrayList())
+                    handleSuccess(emptyList())
                 }
             }.addOnFailureListener {
                 it.printStackTrace()
@@ -71,18 +71,55 @@ class FirestoreManager {
             }
     }
 
-    fun addMovieToWatchList(context:Context, movie:Movie, handleSuccess:(movie:Movie)->Unit){
-        db.collection("users")
-            .document(email).collection("watchList").document(movie.id.toString()).set(movie)
-            .addOnCompleteListener {
-                handleSuccess(movie)
-            }.addOnFailureListener {
-                it.printStackTrace()
-                handleFailure(
-                    context.getString(R.string.error),
-                    context.getString(R.string.error)
-                )
-            }
+    fun addMovieToList(context:Context, movie:Movie, listNumber: Int, handleSuccess:(movie:Movie)->Unit){
+        val collection = when(listNumber){
+            1 -> "watchList"
+            2 -> "recentlyViewed"
+            3 -> "favoritePeople"
+            else -> null
+        }
+
+        collection?.let {
+            db.collection("users")
+                .document(email).collection(it).document(movie.id.toString()).set(movie)
+                .addOnCompleteListener {
+                    handleSuccess(movie)
+                }.addOnFailureListener { e ->
+                    e.printStackTrace()
+                    handleFailure(
+                        context.getString(R.string.error),
+                        context.getString(R.string.error)
+                    )
+                }
+        }
+    }
+
+    fun deleteMovieFromList(
+        context:Context,
+        movieId:Int,
+        listNumber:Int,
+        handleSuccess:()->Unit
+    ){
+        val collection = when(listNumber){
+            1 -> "watchList"
+            2 -> "recentlyViewed"
+            3 -> "favoritePeople"
+            else -> null
+        }
+
+        collection?.let {
+            db.collection("users")
+                .document(email).collection(it).document(movieId.toString()).delete()
+                .addOnSuccessListener {
+                    handleSuccess()
+                }.addOnFailureListener {
+                    handleFailure(
+                        context.getString(R.string.error),
+                        context.getString(R.string.delete_movie_error)
+                    )
+                }
+        }
+
     }
 
 }

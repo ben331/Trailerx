@@ -106,6 +106,7 @@
     <string name="account_created_success"> Antes de continuar, necesitas verificar tu cuenta. Revisa tu bandeja de entrada y el correo no deseado. </string>
     <string name="create_user_error">Lo sentimos, no logramos iniciar sesión. Revisa tu conexión o reintenta de nuevo mas tarde.</string>
     <string name="fetch_movies_error">Lo sentimos, no logramos cargar tus listas. Revisa tu conexión o reintenta mas tarde.</string>
+    <string name="delete_movie_error">Lo sentimos, la película o serie no pudo ser eliminada.</string>
 
     /*
     --Facebook strings

@@ -7,25 +7,26 @@ import android.widget.ImageView
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.globant.imdb.databinding.ItemMovieBinding
 import com.globant.imdb.R
 import com.globant.imdb.core.RetrofitHelper
 import com.globant.imdb.data.model.movies.Movie
-import com.globant.imdb.ui.view.HomeFragment
+import com.globant.imdb.databinding.ItemMovieProfileBinding
+import com.globant.imdb.ui.view.ProfileFragment
 
-
-class MovieAdapter: Adapter<MovieViewHolder>() {
+class MovieProfileAdapter: Adapter<MovieProfileViewHolder>() {
 
     lateinit var movieList: MutableLiveData<List<Movie>>
-    lateinit var moviesListener: HomeFragment
+    lateinit var moviesListener: ProfileFragment
+    var listNumber:Int=-1
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieProfileViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(R.layout.item_movie, parent, false)
-        return MovieViewHolder(view)
+        val view = layoutInflater.inflate(R.layout.item_movie_profile, parent, false)
+        return MovieProfileViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MovieProfileViewHolder, position: Int) {
+        holder.listNumber = listNumber
         holder.listener = moviesListener
         with(movieList.value?.get(position)!!){
             holder.id = id
@@ -46,11 +47,12 @@ class MovieAdapter: Adapter<MovieViewHolder>() {
 
 }
 
-class MovieViewHolder(root:View):ViewHolder(root){
+class MovieProfileViewHolder(root:View):ViewHolder(root){
     lateinit var listener:MovieListener
     var id:Int = 0
+    var listNumber:Int=-1
 
-    private val binding = ItemMovieBinding.bind(root)
+    private val binding = ItemMovieProfileBinding.bind(root)
     val image = binding.imgMovie
     val labelName = binding.labelMovieName
     val labelStars = binding.labelStars
@@ -59,13 +61,13 @@ class MovieViewHolder(root:View):ViewHolder(root){
         binding.imgMovie.setOnClickListener {
             listener.showDetails(id)
         }
-        binding.btnBookmarkAdd.setOnClickListener {
-            listener.addToList(id)
+        binding.btnBookmarkDelete.setOnClickListener {
+            listener.deleteFromList(id, listNumber)
         }
     }
 
     interface MovieListener {
         fun showDetails(id:Int)
-        fun addToList(id:Int)
+        fun deleteFromList(id:Int, listNumber:Int)
     }
 }

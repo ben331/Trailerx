@@ -2,6 +2,7 @@ package com.globant.imdb.ui.view
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,15 +11,17 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.PopupMenu
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.globant.imdb.databinding.FragmentProfileBinding
 import com.globant.imdb.R
-import com.globant.imdb.ui.view.adapters.MovieAdapter
-import com.globant.imdb.ui.view.adapters.MovieViewHolder
+import com.globant.imdb.ui.view.adapters.MovieProfileAdapter
+import com.globant.imdb.ui.view.adapters.MovieProfileViewHolder
 import com.globant.imdb.ui.viewmodel.ProfileViewModel
 import com.squareup.picasso.Picasso
 
-class ProfileFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHolder.MovieListener {
+class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, MovieProfileViewHolder.MovieListener {
 
     private val profileViewModel:ProfileViewModel by viewModels()
 
@@ -26,9 +29,13 @@ class ProfileFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewH
         FragmentProfileBinding.inflate(layoutInflater)
     }
 
-    private lateinit var watchListAdapter: MovieAdapter
-    private lateinit var recentMoviesAdapter: MovieAdapter
-    private lateinit var favoritePeopleAdapter: MovieAdapter
+    private val navController: NavController by lazy {
+        findNavController()
+    }
+
+    private lateinit var watchListAdapter: MovieProfileAdapter
+    private lateinit var recentMoviesAdapter: MovieProfileAdapter
+    private lateinit var favoritePeopleAdapter: MovieProfileAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,8 +58,9 @@ class ProfileFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewH
     }
 
     private fun setupRecyclerViews(){
-        watchListAdapter = MovieAdapter()
+        watchListAdapter = MovieProfileAdapter()
         watchListAdapter.movieList = profileViewModel.watchList
+        watchListAdapter.listNumber = 1
         watchListAdapter.moviesListener = this
 
         with(binding.listMoviesOne){
@@ -66,11 +74,19 @@ class ProfileFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewH
             moviesRecyclerView.setHasFixedSize(true)
         }
 
+        recentMoviesAdapter = MovieProfileAdapter()
+        recentMoviesAdapter.movieList = profileViewModel.recentViewed
+        recentMoviesAdapter.listNumber = 2
+        recentMoviesAdapter.moviesListener = this
         with(binding.listMoviesTwo){
             titleContainer.sectionTitle.text = getString(R.string.recently_viewed)
             listDescription.text = getString(R.string.content_recently_viewed)
         }
 
+        watchListAdapter = MovieProfileAdapter()
+        watchListAdapter.movieList = profileViewModel.favoritePeople
+        watchListAdapter.listNumber = 3
+        watchListAdapter.moviesListener = this
         with(binding.listMoviesThree){
             titleContainer.sectionTitle.text = getString(R.string.favorite_people)
             listDescription.text = getString(R.string.content_favorite_people)
@@ -141,10 +157,11 @@ class ProfileFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewH
     }
 
     override fun showDetails(id: Int) {
-        TODO("Not yet implemented")
+        val action = ProfileFragmentDirections.actionProfileFragmentToMovieFragment(id)
+        navController.navigate(action)
     }
 
-    override fun addToWatchList(id: Int) {
-        TODO("Not yet implemented")
+    override fun deleteFromList(id: Int, listNumber: Int) {
+        profileViewModel.deleteMovieFromList(requireContext(), id, listNumber)
     }
 }

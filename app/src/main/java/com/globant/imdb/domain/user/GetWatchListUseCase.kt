@@ -7,6 +7,6 @@ import com.globant.imdb.data.model.movies.Movie
 class GetWatchListUseCase {
     private val repository = IMDbRepository()
 
-    operator fun invoke(context:Context, handleSuccess:(movies:ArrayList<Movie>)->Unit) =
+    operator fun invoke(context:Context, handleSuccess:(movies:List<Movie>)->Unit) =
         repository.getWatchList(context, handleSuccess)
 }

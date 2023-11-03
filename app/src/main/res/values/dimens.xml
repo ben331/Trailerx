@@ -48,7 +48,7 @@
     <dimen name="line_width">8dp</dimen>
     <dimen name="line_height">28dp</dimen>
     <dimen name="card_movie_height">190dp</dimen>
-    <dimen name="icon_small_size">20dp</dimen>
+    <dimen name="icon_small_size">30dp</dimen>
     <dimen name="icon_micro_size">16dp</dimen>
     <dimen name="card_result_height">148dp</dimen>
     <dimen name="img_result_width">90dp</dimen>

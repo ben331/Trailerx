@@ -59,11 +59,20 @@ class IMDbRepository {
         firestoreManager.getUser(context, localEmail , handleSuccess)
     }
 
-    fun getWatchList(context: Context, handleSuccess:(ArrayList<Movie>)->Unit){
+    fun getWatchList(context: Context, handleSuccess:(List<Movie>)->Unit){
         return firestoreManager.getWatchList(context, handleSuccess)
     }
 
-    fun addMovieToWatchList(context: Context, movie:Movie, handleSuccess:(Movie)->Unit){
-        return firestoreManager.addMovieToWatchList(context, movie, handleSuccess)
+    fun addMovieToList(context: Context, movie:Movie, listNumber: Int, handleSuccess:(Movie)->Unit){
+        return firestoreManager.addMovieToList(context, movie, listNumber, handleSuccess)
+    }
+
+    fun deleteMovieFromList(
+        context: Context,
+        movieId:Int,
+        listNumber:Int,
+        handleSuccess:()->Unit
+    ){
+        firestoreManager.deleteMovieFromList(context, movieId, listNumber, handleSuccess)
     }
 }

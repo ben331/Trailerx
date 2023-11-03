@@ -35,7 +35,11 @@
         android:id="@+id/profileFragment"
         android:name="com.globant.imdb.ui.view.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_movieFragment"
+            app:destination="@id/movieFragment" />
+    </fragment>
     <fragment
         android:id="@+id/playFragment"
         android:name="com.globant.imdb.ui.view.PlayFragment"
