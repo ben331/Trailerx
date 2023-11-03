@@ -13,6 +13,7 @@ import com.globant.imdb.domain.movies.GetOfficialTrailerUseCase
 import com.globant.imdb.domain.movies.GetUpcomingMoviesUseCase
 import com.globant.imdb.domain.user.AddMovieToListUseCase
 import com.globant.imdb.domain.user.SetHandleFailureUseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 class MovieViewModel: ViewModel() {
 
@@ -36,29 +37,36 @@ class MovieViewModel: ViewModel() {
     @SuppressLint("NotifyDataSetChanged")
     fun onCreate() {
         isLoading.postValue(true)
-        viewModelScope.launch {
+        val coroutineA = viewModelScope.launch {
             val result = getRandomTopMovieUseCase()
             result?.let {
                 mainMovie.postValue(it)
             }
         }
-        viewModelScope.launch {
+        val coroutineB = viewModelScope.launch {
             val result = getNowPlayingMoviesUseCase()
             if(result.isNotEmpty()){
                 nowPlayingMovies.postValue(result)
             }
         }
-        viewModelScope.launch {
+        val coroutineC = viewModelScope.launch {
             val result = getUpcomingMovies()
             if(result.isNotEmpty()){
                 upcomingMovies.postValue(result)
             }
         }
-        viewModelScope.launch {
+        val coroutineD = viewModelScope.launch {
             val result = getPopularMoviesUseCase()
             if(result.isNotEmpty()){
                 popularMovies.postValue(result)
             }
+        }
+        viewModelScope.launch {
+            coroutineA.join()
+            coroutineB.join()
+            coroutineC.join()
+            coroutineD.join()
+            isLoading.postValue(false)
         }
     }
 

@@ -1,5 +1,6 @@
 package com.globant.imdb.ui.view
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.globant.imdb.R
 import com.globant.imdb.core.RetrofitHelper
 import com.globant.imdb.core.TextTransforms
 import com.globant.imdb.databinding.FragmentMovieBinding
@@ -44,6 +46,7 @@ class MovieFragment : Fragment() {
         //Setup
         setupTopAppBar()
         setupLiveData()
+        setupButtons()
         loadData()
     }
 
@@ -86,7 +89,26 @@ class MovieFragment : Fragment() {
                         webChromeClient = WebChromeClient()
                     }
                 }
+                movieDetailViewModel.isLoading.postValue(false)
             }
+        }
+
+        movieDetailViewModel.isLoading.observe(viewLifecycleOwner){
+            binding.refreshLayout.isRefreshing = it
+        }
+    }
+
+    private fun setupButtons(){
+        binding.btnActionList.setOnClickListener{
+            movieDetailViewModel.addMovieToWatchList(requireContext()) {
+                showAlert(
+                    getString(R.string.success),
+                    "Movie ${it.title} added successfully"
+                )
+            }
+        }
+        binding.refreshLayout.setOnRefreshListener {
+            movieDetailViewModel.onCreate(args.movieId)
         }
     }
 
@@ -94,5 +116,15 @@ class MovieFragment : Fragment() {
         args.movieId.let {  movieId ->
             movieDetailViewModel.onCreate(movieId)
         }
+    }
+
+    private fun showAlert(title:String, message:String){
+        movieDetailViewModel.isLoading.postValue(false)
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(title)
+        builder.setMessage(message)
+        builder.setPositiveButton(R.string.accept, null)
+        val dialog = builder.create()
+        dialog.show()
     }
 }

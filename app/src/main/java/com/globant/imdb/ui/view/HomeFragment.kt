@@ -79,12 +79,12 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
 
         movieViewModel.videoIframe.observe(viewLifecycleOwner) { videoIframe ->
             videoIframe?.let {
-                movieViewModel.isLoading.postValue(false)
                 with(binding.mainTrailerContainer.trailerWebView){
                     loadData(it, "text/html", "utf-8")
                     settings.javaScriptEnabled = true
                     webChromeClient = WebChromeClient()
                 }
+                movieViewModel.isLoading.postValue(false)
             }
         }
 
