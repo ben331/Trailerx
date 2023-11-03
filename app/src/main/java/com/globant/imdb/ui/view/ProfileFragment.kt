@@ -53,13 +53,24 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
         setupLiveData()
         setupRecyclerViews()
         setupButtons()
-        profileViewModel.refresh(requireContext())
     }
 
+    override fun onResume() {
+        super.onResume()
+        profileViewModel.refresh(requireContext())
+    }
     private fun setupRecyclerViews(){
         watchListAdapter = MovieProfileAdapter()
+        recentMoviesAdapter = MovieProfileAdapter()
+        favoritePeopleAdapter = MovieProfileAdapter()
+
         watchListAdapter.listNumber = 1
+        recentMoviesAdapter.listNumber = 2
+        favoritePeopleAdapter.listNumber = 3
+
         watchListAdapter.moviesListener = this
+        recentMoviesAdapter.moviesListener = this
+        favoritePeopleAdapter.moviesListener = this
 
         with(binding.listMoviesOne){
             titleContainer.sectionTitle.text = getString(R.string.watch_list)
@@ -72,20 +83,24 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
             moviesRecyclerView.setHasFixedSize(true)
         }
 
-        recentMoviesAdapter = MovieProfileAdapter()
-        recentMoviesAdapter.listNumber = 2
-        recentMoviesAdapter.moviesListener = this
         with(binding.listMoviesTwo){
             titleContainer.sectionTitle.text = getString(R.string.recently_viewed)
             listDescription.text = getString(R.string.content_recently_viewed)
+
+            moviesRecyclerView.adapter = recentMoviesAdapter
+            moviesRecyclerView.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            moviesRecyclerView.setHasFixedSize(true)
         }
 
-        favoritePeopleAdapter = MovieProfileAdapter()
-        favoritePeopleAdapter.listNumber = 3
-        favoritePeopleAdapter.moviesListener = this
         with(binding.listMoviesThree){
             titleContainer.sectionTitle.text = getString(R.string.favorite_people)
             listDescription.text = getString(R.string.content_favorite_people)
+
+            moviesRecyclerView.adapter = favoritePeopleAdapter
+            moviesRecyclerView.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            moviesRecyclerView.setHasFixedSize(true)
         }
     }
 
@@ -103,8 +118,8 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
             binding.refreshLayout.isRefreshing = it
         }
 
-        profileViewModel.watchList.observe(viewLifecycleOwner){ watchList ->
-            if(watchList.isEmpty()){
+        profileViewModel.watchList.observe(viewLifecycleOwner){ movies ->
+            if(movies.isEmpty()){
                 with(binding.listMoviesOne) {
                     listDescription.visibility = View.VISIBLE
                     btnActionList.visibility = View.VISIBLE
@@ -115,8 +130,28 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
                     btnActionList.visibility = View.GONE
                 }
             }
-            watchListAdapter.movieList = watchList
+            watchListAdapter.movieList = movies
             watchListAdapter.notifyDataSetChanged()
+        }
+
+        profileViewModel.recentViewed.observe(viewLifecycleOwner){ movies ->
+            if(movies.isEmpty()){
+                binding.listMoviesTwo.listDescription.visibility = View.VISIBLE
+            }else{
+                binding.listMoviesTwo.listDescription.visibility = View.GONE
+            }
+            recentMoviesAdapter.movieList = movies
+            recentMoviesAdapter.notifyDataSetChanged()
+        }
+
+        profileViewModel.favoritePeople.observe(viewLifecycleOwner){ movies ->
+            if(movies.isEmpty()){
+                binding.listMoviesThree.listDescription.visibility = View.VISIBLE
+            }else{
+                binding.listMoviesThree.listDescription.visibility = View.GONE
+            }
+            favoritePeopleAdapter.movieList = movies
+            favoritePeopleAdapter.notifyDataSetChanged()
         }
     }
 

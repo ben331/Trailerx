@@ -9,7 +9,7 @@ import com.globant.imdb.domain.movies.SearchMovieUseCase
 import com.globant.imdb.ui.view.adapters.MovieResultAdapter
 import kotlinx.coroutines.launch
 
-class SearchMovieViewModel: ViewModel() {
+class SearchViewModel: ViewModel() {
 
     // Live data
     val resultMovies = MutableLiveData<List<Movie>>()

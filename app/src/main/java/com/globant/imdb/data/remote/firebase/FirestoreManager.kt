@@ -49,26 +49,34 @@ class FirestoreManager {
             }
     }
 
-    fun getWatchList(context:Context, handleSuccess: (movies:List<Movie>)->Unit) {
-        db.collection("users").document(email).collection("watchList").get()
-            .addOnSuccessListener {
-                val result:ArrayList<Movie> = ArrayList()
-                if(!it.isEmpty){
-                    for( document in it.documents ){
-                        val movie = document.toObject(Movie::class.java)!!
-                        result.add(movie)
+    fun getUserMoviesList(context:Context, numberList:Int, handleSuccess: (movies:List<Movie>)->Unit) {
+        val collection = when(numberList){
+            1 -> "watchList"
+            2 -> "recentlyViewed"
+            3 -> "favoritePeople"
+            else -> null
+        }
+        collection?.let {
+            db.collection("users").document(email).collection(collection).get()
+                .addOnSuccessListener {
+                    val result:ArrayList<Movie> = ArrayList()
+                    if(!it.isEmpty){
+                        for( document in it.documents ){
+                            val movie = document.toObject(Movie::class.java)!!
+                            result.add(movie)
+                        }
+                        handleSuccess(result)
+                    }else{
+                        handleSuccess(emptyList())
                     }
-                    handleSuccess(result)
-                }else{
-                    handleSuccess(emptyList())
+                }.addOnFailureListener {
+                    it.printStackTrace()
+                    handleFailure(
+                        context.getString(R.string.error),
+                        context.getString(R.string.fetch_movies_error)
+                    )
                 }
-            }.addOnFailureListener {
-                it.printStackTrace()
-                handleFailure(
-                    context.getString(R.string.error),
-                    context.getString(R.string.fetch_movies_error)
-                )
-            }
+        }
     }
 
     fun addMovieToList(context:Context, movie:Movie, listNumber: Int, handleSuccess:(movie:Movie)->Unit){

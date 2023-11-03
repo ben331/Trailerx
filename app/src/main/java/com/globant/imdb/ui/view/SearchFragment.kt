@@ -15,12 +15,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.globant.imdb.databinding.FragmentSearchBinding
 import com.globant.imdb.ui.view.adapters.MovieResultAdapter
 import com.globant.imdb.ui.view.adapters.MovieResultViewHolder
-import com.globant.imdb.ui.viewmodel.SearchMovieViewModel
+import com.globant.imdb.ui.viewmodel.SearchViewModel
 import com.squareup.picasso.Picasso
 
 class SearchFragment : Fragment(), MovieResultAdapter.ImageRenderListener, MovieResultViewHolder.MovieResultListener {
 
-    private val searchMovieViewModel: SearchMovieViewModel by viewModels()
+    private val searchViewModel: SearchViewModel by viewModels()
 
     private val binding: FragmentSearchBinding by lazy {
         FragmentSearchBinding.inflate(layoutInflater)
@@ -45,16 +45,16 @@ class SearchFragment : Fragment(), MovieResultAdapter.ImageRenderListener, Movie
 
     @SuppressLint("NotifyDataSetChanged")
     private fun setupLiveData(){
-        searchMovieViewModel.resultMovies.observe(viewLifecycleOwner){
+        searchViewModel.resultMovies.observe(viewLifecycleOwner){
             moviesResultAdapter.notifyDataSetChanged()
         }
     }
 
     private fun setupRecyclerView(){
         moviesResultAdapter = MovieResultAdapter()
-        moviesResultAdapter.movieList = searchMovieViewModel.resultMovies
+        moviesResultAdapter.movieList = searchViewModel.resultMovies
         moviesResultAdapter.moviesListener = this
-        searchMovieViewModel.adapter = moviesResultAdapter
+        searchViewModel.adapter = moviesResultAdapter
         with(binding.recyclerMoviesResult){
             adapter = moviesResultAdapter
             layoutManager = LinearLayoutManager(requireContext())
@@ -69,9 +69,9 @@ class SearchFragment : Fragment(), MovieResultAdapter.ImageRenderListener, Movie
             override fun afterTextChanged(s: Editable?) {
                 val query = binding.searchTextField.text.toString()
                 if(query.isNotBlank()){
-                    searchMovieViewModel.search(query)
+                    searchViewModel.search(query)
                 }else{
-                    searchMovieViewModel.resultMovies.postValue(emptyList())
+                    searchViewModel.resultMovies.postValue(emptyList())
                 }
             }
         }

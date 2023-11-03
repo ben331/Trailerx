@@ -47,7 +47,11 @@ class MovieFragment : Fragment() {
         setupTopAppBar()
         setupLiveData()
         setupButtons()
-        loadData()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        movieViewModel.onCreate(args.movieId)
     }
 
     private fun setupTopAppBar(){
@@ -57,6 +61,7 @@ class MovieFragment : Fragment() {
 
     private fun setupLiveData(){
         movieViewModel.currentMovie.observe(viewLifecycleOwner){ movieDetail ->
+            movieViewModel.recordHistory(requireContext())
             binding.topAppBar.title = movieDetail.title
             with(binding.containerFrontage){
                 sectionTitle.text = movieDetail.title
@@ -78,6 +83,7 @@ class MovieFragment : Fragment() {
                     .centerCrop()
                     .into(imgMovie)
             }
+            movieViewModel.isLoading.postValue(false)
         }
 
         movieViewModel.videoIframe.observe(viewLifecycleOwner){
@@ -109,12 +115,6 @@ class MovieFragment : Fragment() {
         }
         binding.refreshLayout.setOnRefreshListener {
             movieViewModel.onCreate(args.movieId)
-        }
-    }
-
-    private fun loadData(){
-        args.movieId.let {  movieId ->
-            movieViewModel.onCreate(movieId)
         }
     }
 

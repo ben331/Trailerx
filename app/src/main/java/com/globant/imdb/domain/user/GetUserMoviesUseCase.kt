@@ -4,9 +4,9 @@ import android.content.Context
 import com.globant.imdb.data.IMDbRepository
 import com.globant.imdb.data.model.movies.Movie
 
-class GetWatchListUseCase {
+class GetUserMoviesUseCase {
     private val repository = IMDbRepository()
 
-    operator fun invoke(context:Context, handleSuccess:(movies:List<Movie>)->Unit) =
-        repository.getWatchList(context, handleSuccess)
+    operator fun invoke(context:Context, numberList:Int, handleSuccess:(movies:List<Movie>)->Unit) =
+        repository.getUserMoviesList(context, numberList, handleSuccess)
 }

@@ -22,25 +22,20 @@ class MovieViewModel: ViewModel() {
     // Use Cases
     val getMovieByIdUseCase = GetMovieByIdUseCase()
     val getTrailerUseCase = GetOfficialTrailerUseCase()
-    val addMovieToWatchListUseCase = AddMovieToListUseCase()
+    val addMovieToListUseCase = AddMovieToListUseCase()
 
     fun onCreate(movieId:Int){
-        val coroutineA = viewModelScope.launch {
+        viewModelScope.launch {
             val result = getMovieByIdUseCase(movieId)
             result?.let {
                 currentMovie.postValue(it)
             }
         }
-        val coroutineB = viewModelScope.launch {
+        viewModelScope.launch {
             val result = getTrailerUseCase(movieId, true)
             result?.let {
                 videoIframe.postValue(result)
             }
-        }
-        viewModelScope.launch {
-            coroutineA.join()
-            coroutineB.join()
-            isLoading.postValue(false)
         }
     }
 
@@ -48,7 +43,15 @@ class MovieViewModel: ViewModel() {
         isLoading.postValue(true)
         currentMovie.value?.let {
             val movie = MovieConverter.movieDetailToMovie(it)
-            addMovieToWatchListUseCase(context, movie, 1, handleSuccess)
+            addMovieToListUseCase(context, movie, 1, handleSuccess)
+        }
+    }
+
+    fun recordHistory(context: Context){
+        isLoading.postValue(true)
+        currentMovie.value?.let {
+            val movie = MovieConverter.movieDetailToMovie(it)
+            addMovieToListUseCase(context, movie, 2) { }
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.globant.imdb.core
 
-import android.util.Log
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import retrofit2.Retrofit
@@ -21,7 +20,6 @@ object RetrofitHelper {
             val newRequest: Request = chain.request().newBuilder()
                 .addHeader("Authorization", "Bearer $authToken")
                 .build()
-            Log.e("----->", newRequest.toString())
             chain.proceed(newRequest)
         }.build()
 

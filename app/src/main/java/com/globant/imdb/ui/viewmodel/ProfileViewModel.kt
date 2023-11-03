@@ -7,16 +7,15 @@ import androidx.lifecycle.ViewModel
 import com.globant.imdb.data.model.movies.Movie
 import com.globant.imdb.data.remote.firebase.FirebaseAuthManager
 import com.globant.imdb.domain.user.DeleteMovieFromListUseCase
-import com.globant.imdb.domain.user.GetWatchListUseCase
+import com.globant.imdb.domain.user.GetUserMoviesUseCase
 import com.globant.imdb.domain.user.SetHandleFailureUseCase
-import com.globant.imdb.ui.view.adapters.MovieProfileAdapter
 
 class ProfileViewModel: ViewModel() {
 
     // Live data
     val photoUri = MutableLiveData<Uri?>()
 
-    private val getWatchListUseCase = GetWatchListUseCase()
+    private val getUserMoviesUseCase = GetUserMoviesUseCase()
     private val setHandleFailureUseCase = SetHandleFailureUseCase()
     private val deleteMovieFromListUseCase = DeleteMovieFromListUseCase()
 
@@ -35,16 +34,22 @@ class ProfileViewModel: ViewModel() {
         if(uri!=null){
             photoUri.postValue(uri)
         }
-        getWatchListUseCase(context, ::onSuccessGetMovies)
+        getUserMoviesUseCase(context, 1){ movies ->
+            watchList.postValue(movies)
+            isLoading.postValue(false)
+        }
+        getUserMoviesUseCase(context, 2){ movies ->
+            recentViewed.postValue(movies)
+            isLoading.postValue(false)
+        }
+        getUserMoviesUseCase(context, 3){ movies ->
+            favoritePeople.postValue(movies)
+            isLoading.postValue(false)
+        }
     }
 
     fun setHandleFailure(handleAlert: (title:String, msg:String) -> Unit){
         setHandleFailureUseCase(handleAlert)
-    }
-
-    private fun onSuccessGetMovies(movies:List<Movie>){
-        watchList.postValue(movies)
-        isLoading.postValue(false)
     }
 
     fun deleteMovieFromList(context: Context, movieId:Int, listNumber:Int){
