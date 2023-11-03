@@ -16,7 +16,7 @@ class CreateUserUseCase {
             if (user == null) {
                 repository.createUser(localUser, handleSuccess)
             } else {
-                handleSuccess(null)
+                handleSuccess(user)
             }
         }
     }
