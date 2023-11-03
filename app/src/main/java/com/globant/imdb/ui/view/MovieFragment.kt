@@ -16,12 +16,12 @@ import com.globant.imdb.R
 import com.globant.imdb.core.RetrofitHelper
 import com.globant.imdb.core.TextTransforms
 import com.globant.imdb.databinding.FragmentMovieBinding
-import com.globant.imdb.ui.viewmodel.MovieDetailViewModel
+import com.globant.imdb.ui.viewmodel.MovieViewModel
 import com.squareup.picasso.Picasso
 
 class MovieFragment : Fragment() {
 
-    private val movieDetailViewModel: MovieDetailViewModel by viewModels()
+    private val movieViewModel: MovieViewModel by viewModels()
 
     private val args: MovieFragmentArgs by navArgs()
 
@@ -56,7 +56,7 @@ class MovieFragment : Fragment() {
     }
 
     private fun setupLiveData(){
-        movieDetailViewModel.currentMovie.observe(viewLifecycleOwner){ movieDetail ->
+        movieViewModel.currentMovie.observe(viewLifecycleOwner){ movieDetail ->
             binding.topAppBar.title = movieDetail.title
             with(binding.containerFrontage){
                 sectionTitle.text = movieDetail.title
@@ -80,8 +80,8 @@ class MovieFragment : Fragment() {
             }
         }
 
-        movieDetailViewModel.videoIframe.observe(viewLifecycleOwner){
-            movieDetailViewModel.videoIframe.observe(viewLifecycleOwner) { videoIframe ->
+        movieViewModel.videoIframe.observe(viewLifecycleOwner){
+            movieViewModel.videoIframe.observe(viewLifecycleOwner) { videoIframe ->
                 videoIframe?.let {
                     with(binding.containerFrontage.videoMovie){
                         loadData(it, "text/html", "utf-8")
@@ -89,18 +89,18 @@ class MovieFragment : Fragment() {
                         webChromeClient = WebChromeClient()
                     }
                 }
-                movieDetailViewModel.isLoading.postValue(false)
+                movieViewModel.isLoading.postValue(false)
             }
         }
 
-        movieDetailViewModel.isLoading.observe(viewLifecycleOwner){
+        movieViewModel.isLoading.observe(viewLifecycleOwner){
             binding.refreshLayout.isRefreshing = it
         }
     }
 
     private fun setupButtons(){
         binding.btnActionList.setOnClickListener{
-            movieDetailViewModel.addMovieToWatchList(requireContext()) {
+            movieViewModel.addMovieToWatchList(requireContext()) {
                 showAlert(
                     getString(R.string.success),
                     "Movie ${it.title} added successfully"
@@ -108,18 +108,18 @@ class MovieFragment : Fragment() {
             }
         }
         binding.refreshLayout.setOnRefreshListener {
-            movieDetailViewModel.onCreate(args.movieId)
+            movieViewModel.onCreate(args.movieId)
         }
     }
 
     private fun loadData(){
         args.movieId.let {  movieId ->
-            movieDetailViewModel.onCreate(movieId)
+            movieViewModel.onCreate(movieId)
         }
     }
 
     private fun showAlert(title:String, message:String){
-        movieDetailViewModel.isLoading.postValue(false)
+        movieViewModel.isLoading.postValue(false)
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle(title)
         builder.setMessage(message)

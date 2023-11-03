@@ -17,7 +17,7 @@ import com.globant.imdb.core.RetrofitHelper
 import com.globant.imdb.databinding.FragmentHomeBinding
 import com.globant.imdb.ui.view.adapters.MovieAdapter
 import com.globant.imdb.ui.view.adapters.MovieViewHolder
-import com.globant.imdb.ui.viewmodel.MovieViewModel
+import com.globant.imdb.ui.viewmodel.HomeViewModel
 import com.squareup.picasso.Picasso
 
 
@@ -27,7 +27,7 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
         FragmentHomeBinding.inflate(layoutInflater)
     }
 
-    private val movieViewModel: MovieViewModel by viewModels()
+    private val homeViewModel: HomeViewModel by viewModels()
 
     private lateinit var nowPlayingMoviesAdapter: MovieAdapter
     private lateinit var upcomingMoviesAdapter: MovieAdapter
@@ -35,7 +35,7 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        movieViewModel.setHandleFailure(::showAlert)
+        homeViewModel.setHandleFailure(::showAlert)
         RetrofitHelper.authToken = getString(R.string.TMDB_api_token)
     }
 
@@ -63,7 +63,7 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
 
     @SuppressLint("NotifyDataSetChanged")
     private fun setupLiveData(){
-        movieViewModel.mainMovie.observe(viewLifecycleOwner) { currentMovie ->
+        homeViewModel.mainMovie.observe(viewLifecycleOwner) { currentMovie ->
             with(binding.mainTrailerContainer) {
                 trailerName.text = currentMovie.title
                 val imageUrl = RetrofitHelper.IMAGES_BASE_URL + currentMovie.backdropPath
@@ -73,32 +73,32 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
                     .centerCrop()
                     .into(trailerImageView)
 
-                movieViewModel.getTrailerOfMovie(currentMovie.id)
+                homeViewModel.getTrailerOfMovie(currentMovie.id)
             }
         }
 
-        movieViewModel.videoIframe.observe(viewLifecycleOwner) { videoIframe ->
+        homeViewModel.videoIframe.observe(viewLifecycleOwner) { videoIframe ->
             videoIframe?.let {
                 with(binding.mainTrailerContainer.trailerWebView){
                     loadData(it, "text/html", "utf-8")
                     settings.javaScriptEnabled = true
                     webChromeClient = WebChromeClient()
                 }
-                movieViewModel.isLoading.postValue(false)
+                homeViewModel.isLoading.postValue(false)
             }
         }
 
-        movieViewModel.isLoading.observe(viewLifecycleOwner){
+        homeViewModel.isLoading.observe(viewLifecycleOwner){
             binding.refreshLayout.isRefreshing = it
         }
 
-        movieViewModel.nowPlayingMovies.observe(viewLifecycleOwner){
+        homeViewModel.nowPlayingMovies.observe(viewLifecycleOwner){
             nowPlayingMoviesAdapter.notifyDataSetChanged()
         }
-        movieViewModel.upcomingMovies.observe(viewLifecycleOwner){
+        homeViewModel.upcomingMovies.observe(viewLifecycleOwner){
             upcomingMoviesAdapter.notifyDataSetChanged()
         }
-        movieViewModel.nowPlayingMovies.observe(viewLifecycleOwner){
+        homeViewModel.nowPlayingMovies.observe(viewLifecycleOwner){
             popularMoviesAdapter.notifyDataSetChanged()
         }
     }
@@ -108,9 +108,9 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
         upcomingMoviesAdapter = MovieAdapter()
         popularMoviesAdapter = MovieAdapter()
 
-        nowPlayingMoviesAdapter.movieList = movieViewModel.nowPlayingMovies
-        upcomingMoviesAdapter.movieList = movieViewModel.upcomingMovies
-        popularMoviesAdapter.movieList = movieViewModel.popularMovies
+        nowPlayingMoviesAdapter.movieList = homeViewModel.nowPlayingMovies
+        upcomingMoviesAdapter.movieList = homeViewModel.upcomingMovies
+        popularMoviesAdapter.movieList = homeViewModel.popularMovies
 
         nowPlayingMoviesAdapter.moviesListener = this
         upcomingMoviesAdapter.moviesListener = this
@@ -145,7 +145,7 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
     }
 
     private fun refresh(){
-        movieViewModel.onCreate()
+        homeViewModel.onCreate()
     }
 
     override fun renderImage(url: String, image: ImageView) {
@@ -162,7 +162,7 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
     }
 
     override fun addToList(id: Int) {
-        movieViewModel.addMovieToWatchList(id, requireContext()) {
+        homeViewModel.addMovieToWatchList(id, requireContext()) {
             showAlert(
                 getString(R.string.success),
                 "Movie ${it.title} added successfully"
@@ -171,7 +171,7 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
     }
 
     private fun showAlert(title:String, message:String){
-        movieViewModel.isLoading.postValue(false)
+        homeViewModel.isLoading.postValue(false)
         val builder = AlertDialog.Builder(activity)
         builder.setTitle(title)
         builder.setMessage(message)
