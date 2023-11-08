@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.OAuthProvider
 import com.google.firebase.auth.UserProfileChangeRequest
+import javax.inject.Inject
 
 enum class ProviderType {
     GUEST,
@@ -29,13 +30,10 @@ enum class ProviderType {
     APPLE
 }
 
-class FirebaseAuthManager {
-
-    private val auth: FirebaseAuth by lazy {
-        FirebaseAuth.getInstance()
-    }
-
-    val callbackManager: CallbackManager = CallbackManager.Factory.create()
+class FirebaseAuthManager @Inject constructor(
+    private val auth: FirebaseAuth,
+    val callbackManager: CallbackManager
+) {
 
     fun updateProfilePhotoURL(
         url: Uri?,

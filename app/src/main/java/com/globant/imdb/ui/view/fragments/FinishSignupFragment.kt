@@ -1,16 +1,17 @@
-package com.globant.imdb.ui.view
+package com.globant.imdb.ui.view.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.globant.imdb.databinding.FragmentCarouselBinding
+import com.globant.imdb.databinding.FragmentFinishSignupBinding
 
-class CarouselFragment : Fragment() {
 
-    private val binding: FragmentCarouselBinding by lazy {
-        FragmentCarouselBinding.inflate(layoutInflater)
+class FinishSignupFragment : Fragment() {
+
+    private val binding:FragmentFinishSignupBinding by lazy {
+        FragmentFinishSignupBinding.inflate(layoutInflater)
     }
 
     override fun onCreateView(
@@ -19,4 +20,5 @@ class CarouselFragment : Fragment() {
     ): View {
         return binding.root
     }
+
 }

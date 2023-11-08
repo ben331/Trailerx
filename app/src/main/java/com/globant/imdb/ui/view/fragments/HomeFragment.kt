@@ -1,4 +1,4 @@
-package com.globant.imdb.ui.view
+package com.globant.imdb.ui.view.fragments
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -13,7 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.globant.imdb.R
-import com.globant.imdb.core.RetrofitHelper
+import com.globant.imdb.core.Constants
 import com.globant.imdb.databinding.FragmentHomeBinding
 import com.globant.imdb.ui.view.adapters.MovieAdapter
 import com.globant.imdb.ui.view.adapters.MovieViewHolder
@@ -36,7 +36,6 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         homeViewModel.setHandleFailure(::showAlert)
-        RetrofitHelper.authToken = getString(R.string.TMDB_api_token)
     }
 
     override fun onCreateView(
@@ -66,7 +65,7 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
         homeViewModel.mainMovie.observe(viewLifecycleOwner) { currentMovie ->
             with(binding.mainTrailerContainer) {
                 trailerName.text = currentMovie.title
-                val imageUrl = RetrofitHelper.IMAGES_BASE_URL + currentMovie.backdropPath
+                val imageUrl = Constants.TMDB_IMAGES_URL + currentMovie.backdropPath
                 Picasso.with(requireContext())
                     .load(imageUrl)
                     .fit()

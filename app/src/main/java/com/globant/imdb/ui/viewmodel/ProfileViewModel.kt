@@ -9,24 +9,22 @@ import com.globant.imdb.data.remote.firebase.FirebaseAuthManager
 import com.globant.imdb.domain.user.DeleteMovieFromListUseCase
 import com.globant.imdb.domain.user.GetUserMoviesUseCase
 import com.globant.imdb.domain.user.SetHandleFailureUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
+@HiltViewModel
+class ProfileViewModel @Inject constructor(
+    private val getUserMoviesUseCase:GetUserMoviesUseCase,
+    private val setHandleFailureUseCase:SetHandleFailureUseCase,
+    private val deleteMovieFromListUseCase:DeleteMovieFromListUseCase,
+    // TODO: Create use cases to replace auth manager
+    private val authManager: FirebaseAuthManager
+): ViewModel() {
 
-class ProfileViewModel: ViewModel() {
-
-    // Live data
     val photoUri = MutableLiveData<Uri?>()
-
-    private val getUserMoviesUseCase = GetUserMoviesUseCase()
-    private val setHandleFailureUseCase = SetHandleFailureUseCase()
-    private val deleteMovieFromListUseCase = DeleteMovieFromListUseCase()
-
     val watchList = MutableLiveData<List<Movie>>()
     val recentViewed = MutableLiveData<List<Movie>>()
     val favoritePeople = MutableLiveData<List<Movie>>()
     val isLoading = MutableLiveData(false)
-
-    private val authManager: FirebaseAuthManager by lazy {
-        FirebaseAuthManager()
-    }
 
     fun refresh(context:Context) {
         isLoading.postValue(true)

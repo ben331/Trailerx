@@ -4,6 +4,8 @@ plugins {
     id("kotlin-kapt")
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.gms.google-services")
+    id("com.google.dagger.hilt.android")
+    id("com.google.secrets_gradle_plugin") version("0.4")
 }
 
 android {
@@ -77,9 +79,6 @@ dependencies {
     implementation("com.google.firebase:firebase-storage-ktx")
     implementation("com.google.firebase:firebase-firestore-ktx")
 
-    //Gson
-    implementation("com.google.code.gson:gson:2.10.1")
-
     //Google
     implementation("com.google.android.gms:play-services-auth:20.7.0")
 
@@ -96,4 +95,14 @@ dependencies {
 
     //Picasso
     implementation("com.squareup.picasso:picasso:2.5.2")
+
+    //Dagger hilt
+    dependencies {
+        implementation("com.google.dagger:hilt-android:2.44")
+        kapt("com.google.dagger:hilt-android-compiler:2.44")
+    }
+}
+
+kapt {
+    correctErrorTypes = true
 }

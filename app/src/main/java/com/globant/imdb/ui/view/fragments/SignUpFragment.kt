@@ -1,4 +1,4 @@
-package com.globant.imdb.ui.view
+package com.globant.imdb.ui.view.fragments
 
 import android.app.Activity
 import android.app.AlertDialog
