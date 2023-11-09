@@ -7,9 +7,10 @@ import com.google.firebase.ktx.Firebase
 import com.globant.imdb.R
 import com.globant.imdb.data.model.movies.Movie
 import com.globant.imdb.data.model.user.User
+import javax.inject.Inject
 
 
-class FirestoreManager {
+class FirestoreManager @Inject constructor() {
     var handleFailure: (title:String, msg:String)->Unit = { _: String, _: String -> }
 
     private val db: FirebaseFirestore by lazy {

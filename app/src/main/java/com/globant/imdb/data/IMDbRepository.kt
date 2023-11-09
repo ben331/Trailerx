@@ -10,11 +10,10 @@ import com.globant.imdb.data.remote.firebase.FirestoreManager
 import com.globant.imdb.data.remote.retrofit.TMDBService
 import javax.inject.Inject
 
-class IMDbRepository @Inject constructor( private val api:TMDBService ) {
-    companion object {
-        val firestoreManager = FirestoreManager()
-    }
-
+class IMDbRepository @Inject constructor(
+    private val api:TMDBService,
+    private val firestoreManager:FirestoreManager
+) {
     suspend fun getNowPlayingMovies():List<Movie>{
         if(MovieProvider.movies.isEmpty()){
             val response = api.getNowPlayingMovies()?.results ?: emptyList()
