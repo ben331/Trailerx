@@ -1,4 +1,4 @@
-package com.globant.imdb.ui.view.fragments
+package com.globant.imdb.ui.view
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -13,6 +13,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.globant.imdb.R
+import com.globant.imdb.core.RetrofitHelper
 import com.globant.imdb.core.TextTransforms
 import com.globant.imdb.databinding.FragmentMovieBinding
 import com.globant.imdb.ui.viewmodel.MovieViewModel

@@ -1,4 +1,4 @@
-package com.globant.imdb.ui.view.fragments
+package com.globant.imdb.ui.view
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog

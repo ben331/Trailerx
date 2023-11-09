@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/constraintLayout"
-    tools:context=".ui.view.fragments.SignUpFragment">
+    tools:context=".ui.view.SignUpFragment">
 
     <ImageButton
         android:id="@+id/backButton"

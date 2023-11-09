@@ -2,8 +2,9 @@ package com.globant.imdb.domain.movies
 
 import com.globant.imdb.data.IMDbRepository
 import com.globant.imdb.data.model.movies.Movie
-import javax.inject.Inject
 
-class GetPopularMoviesUseCase @Inject constructor( private val repository:IMDbRepository ) {
+class GetPopularMoviesUseCase {
+    private val repository = IMDbRepository()
+
     suspend operator fun invoke():List<Movie> = repository.getPopularMovies()
 }

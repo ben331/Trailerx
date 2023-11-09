@@ -2,21 +2,22 @@ package com.globant.imdb.data.remote.firebase
 
 import android.content.Context
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.globant.imdb.R
 import com.globant.imdb.data.model.movies.Movie
 import com.globant.imdb.data.model.user.User
-import javax.inject.Inject
 
 
-class FirestoreManager @Inject constructor(
-    private val db: FirebaseFirestore,
-    private val authManager:FirebaseAuthManager
-) {
-    var handleFailure: (title:String, msg:String)->Unit =
-        { _: String, _: String -> }
+class FirestoreManager {
+    var handleFailure: (title:String, msg:String)->Unit = { _: String, _: String -> }
+
+    private val db: FirebaseFirestore by lazy {
+        Firebase.firestore
+    }
 
     private val email: String by lazy {
-        authManager.getEmail()
+        FirebaseAuthManager().getEmail()
     }
 
     fun createUser(user: User, handleSuccess: (user: User?) -> Unit) {

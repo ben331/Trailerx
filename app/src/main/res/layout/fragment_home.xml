@@ -11,7 +11,7 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
-    tools:context=".ui.view.fragments.HomeFragment">
+    tools:context=".ui.view.HomeFragment">
 
     <ScrollView
         android:layout_width="match_parent"

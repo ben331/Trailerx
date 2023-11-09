@@ -1,4 +1,4 @@
-package com.globant.imdb.ui.view.fragments
+package com.globant.imdb.ui.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

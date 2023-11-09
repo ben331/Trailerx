@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.globant.imdb.ui.view.fragments.LoginFragment"
+        android:name="com.globant.imdb.ui.view.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.globant.imdb.ui.view.fragments.SignUpFragment"
+        android:name="com.globant.imdb.ui.view.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" >
         <action
@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/navigationFragment"
-        android:name="com.globant.imdb.ui.view.fragments.NavigationFragment"
+        android:name="com.globant.imdb.ui.view.NavigationFragment"
         android:label="fragment_navigation"
         tools:layout="@layout/fragment_navigation" >
         <action

@@ -13,26 +13,25 @@ import com.globant.imdb.domain.movies.GetOfficialTrailerUseCase
 import com.globant.imdb.domain.movies.GetUpcomingMoviesUseCase
 import com.globant.imdb.domain.user.AddMovieToListUseCase
 import com.globant.imdb.domain.user.SetHandleFailureUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import javax.inject.Inject
-@HiltViewModel
-class HomeViewModel  @Inject constructor(
-    private val getRandomTopMovieUseCase:GetRandomTopMovieUseCase,
-    private val getNowPlayingMoviesUseCase:GetNowPlayingMoviesUseCase,
-    private val getUpcomingMovies:GetUpcomingMoviesUseCase,
-    private val getPopularMoviesUseCase:GetPopularMoviesUseCase,
-    private val getTrailerUseCase:GetOfficialTrailerUseCase,
-    private val addMovieToWatchListUseCase:AddMovieToListUseCase,
-    private val setHandleFailureUseCase:SetHandleFailureUseCase
-) : ViewModel() {
+class HomeViewModel: ViewModel() {
 
+    // Live data
     val mainMovie = MutableLiveData<Movie>()
     val videoIframe = MutableLiveData<String?>()
     val nowPlayingMovies = MutableLiveData<List<Movie>>()
     val upcomingMovies = MutableLiveData<List<Movie>>()
     val popularMovies = MutableLiveData<List<Movie>>()
     val isLoading = MutableLiveData(false)
+
+    // Use Cases
+    private val getRandomTopMovieUseCase = GetRandomTopMovieUseCase()
+    private val getNowPlayingMoviesUseCase = GetNowPlayingMoviesUseCase()
+    private val getUpcomingMovies = GetUpcomingMoviesUseCase()
+    private val getPopularMoviesUseCase = GetPopularMoviesUseCase()
+    private val getTrailerUseCase = GetOfficialTrailerUseCase()
+    private val addMovieToWatchListUseCase = AddMovieToListUseCase()
+    private val setHandleFailureUseCase = SetHandleFailureUseCase()
 
     @SuppressLint("NotifyDataSetChanged")
     fun onCreate() {

@@ -7,7 +7,7 @@
     style="@style/Widget.IMDb.ItemMovie"
     android:elevation="@dimen/elevation_medium"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.view.fragments.MovieFragment">
+    tools:context=".ui.view.MovieFragment">
 
     <ImageView
         android:id="@+id/img_movie"

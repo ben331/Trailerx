@@ -12,17 +12,16 @@ import com.globant.imdb.data.remote.firebase.FirebaseAuthManager
 import com.globant.imdb.data.remote.firebase.ProviderType
 import com.globant.imdb.domain.user.CreateUserUseCase
 import com.globant.imdb.domain.user.SetHandleFailureUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
-@HiltViewModel
-class AuthViewModel @Inject constructor(
-    private val setHandleFailureUseCase:SetHandleFailureUseCase,
-    private val createUserUseCase:CreateUserUseCase,
-    private val authManager: FirebaseAuthManager,
-): ViewModel() {
 
+class AuthViewModel: ViewModel() {
     val isLoading = MutableLiveData(false)
 
+    private val authManager: FirebaseAuthManager by lazy {
+        FirebaseAuthManager()
+    }
+
+    private val setHandleFailureUseCase = SetHandleFailureUseCase()
+    private val createUserUseCase = CreateUserUseCase()
     fun createUser(
         context:Context,
         localUser: User,
@@ -59,14 +58,7 @@ class AuthViewModel @Inject constructor(
         onSuccess: (email:String)->Unit,
         onFailure:(title:String, msg:String)->Unit
     ){
-        authManager.signUpWithEmailAndPassword(
-            context,
-            email,
-            password,
-            displayName,
-            onSuccess,
-            onFailure
-        )
+        authManager.signUpWithEmailAndPassword(context, email, password, displayName, onSuccess, onFailure)
     }
 
     fun loginWithEmailAndPassword(
