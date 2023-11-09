@@ -8,8 +8,9 @@ import com.globant.imdb.data.model.movies.Video
 import com.globant.imdb.data.model.user.User
 import com.globant.imdb.data.remote.firebase.FirestoreManager
 import com.globant.imdb.data.remote.retrofit.TMDBService
+import javax.inject.Inject
 
-class IMDbRepository {
+class IMDbRepository @Inject constructor() {
     companion object {
         val firestoreManager = FirestoreManager()
     }
