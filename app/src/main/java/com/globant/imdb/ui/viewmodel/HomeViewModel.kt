@@ -13,8 +13,12 @@ import com.globant.imdb.domain.movies.GetOfficialTrailerUseCase
 import com.globant.imdb.domain.movies.GetUpcomingMoviesUseCase
 import com.globant.imdb.domain.user.AddMovieToListUseCase
 import com.globant.imdb.domain.user.SetHandleFailureUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-class HomeViewModel: ViewModel() {
+import javax.inject.Inject
+
+@HiltViewModel
+class HomeViewModel @Inject constructor(): ViewModel() {
 
     // Live data
     val mainMovie = MutableLiveData<Movie>()

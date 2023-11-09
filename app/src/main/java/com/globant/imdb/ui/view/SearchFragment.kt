@@ -17,7 +17,9 @@ import com.globant.imdb.ui.view.adapters.MovieResultAdapter
 import com.globant.imdb.ui.view.adapters.MovieResultViewHolder
 import com.globant.imdb.ui.viewmodel.SearchViewModel
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SearchFragment : Fragment(), MovieResultAdapter.ImageRenderListener, MovieResultViewHolder.MovieResultListener {
 
     private val searchViewModel: SearchViewModel by viewModels()

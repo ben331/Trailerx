@@ -19,8 +19,9 @@ import com.globant.imdb.ui.view.adapters.MovieAdapter
 import com.globant.imdb.ui.view.adapters.MovieViewHolder
 import com.globant.imdb.ui.viewmodel.HomeViewModel
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHolder.MovieListener {
 
     private val binding: FragmentHomeBinding by lazy {

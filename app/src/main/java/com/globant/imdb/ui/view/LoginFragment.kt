@@ -23,7 +23,9 @@ import com.globant.imdb.data.model.user.User
 import com.globant.imdb.data.remote.firebase.ProviderType
 import com.globant.imdb.databinding.FragmentLoginBinding
 import com.globant.imdb.ui.viewmodel.AuthViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
 
     private val authViewModel:AuthViewModel by activityViewModels()

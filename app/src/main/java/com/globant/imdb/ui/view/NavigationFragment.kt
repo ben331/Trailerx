@@ -17,7 +17,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.globant.imdb.R
 import com.globant.imdb.databinding.FragmentNavigationBinding
 import com.globant.imdb.ui.viewmodel.AuthViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NavigationFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
 
     private val navController: NavController by lazy {

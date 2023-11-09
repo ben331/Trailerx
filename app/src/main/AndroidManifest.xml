@@ -8,6 +8,7 @@
 
     <application
         android:allowBackup="true"
+        android:name=".IMDbApp"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -17,7 +18,7 @@
         android:theme="@style/Theme.IMDb"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.view.MainActivity"
             android:windowSoftInputMode="adjustPan"
             android:theme="@style/Theme.IMDb.SplashScreen"
             android:exported="true">

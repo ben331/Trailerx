@@ -17,7 +17,9 @@ import com.globant.imdb.R
 import com.globant.imdb.core.FormValidator
 import com.globant.imdb.databinding.FragmentSignUpBinding
 import com.globant.imdb.ui.viewmodel.AuthViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SignUpFragment : Fragment() {
 
     private val authViewModel:AuthViewModel by activityViewModels()

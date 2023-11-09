@@ -1,12 +1,15 @@
-package com.globant.imdb
+package com.globant.imdb.ui.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import com.globant.imdb.R
 import com.globant.imdb.databinding.ActivityMainBinding
 import com.globant.imdb.ui.viewmodel.AuthViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val binding:ActivityMainBinding by lazy {

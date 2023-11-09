@@ -20,7 +20,9 @@ import com.globant.imdb.ui.view.adapters.MovieProfileViewHolder
 import com.globant.imdb.ui.view.adapters.ShortcutAdapter
 import com.globant.imdb.ui.viewmodel.ProfileViewModel
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, MovieProfileViewHolder.MovieListener {
 
     private val profileViewModel:ProfileViewModel by viewModels()

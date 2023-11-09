@@ -18,7 +18,9 @@ import com.globant.imdb.core.TextTransforms
 import com.globant.imdb.databinding.FragmentMovieBinding
 import com.globant.imdb.ui.viewmodel.MovieViewModel
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MovieFragment : Fragment() {
 
     private val movieViewModel: MovieViewModel by viewModels()

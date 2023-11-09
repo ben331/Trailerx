@@ -7,9 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.globant.imdb.data.model.movies.Movie
 import com.globant.imdb.domain.movies.SearchMovieUseCase
 import com.globant.imdb.ui.view.adapters.MovieResultAdapter
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SearchViewModel: ViewModel() {
+@HiltViewModel
+class SearchViewModel @Inject constructor(): ViewModel() {
 
     // Live data
     val resultMovies = MutableLiveData<List<Movie>>()

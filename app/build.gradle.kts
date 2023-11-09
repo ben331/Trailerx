@@ -1,9 +1,10 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt")
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.gms.google-services")
+    id("com.google.dagger.hilt.android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -96,4 +97,12 @@ dependencies {
 
     //Picasso
     implementation("com.squareup.picasso:picasso:2.5.2")
+
+    //Dagger Hilt
+    implementation("com.google.dagger:hilt-android:2.44")
+    kapt("com.google.dagger:hilt-android-compiler:2.44")
+}
+
+kapt {
+    correctErrorTypes = true
 }

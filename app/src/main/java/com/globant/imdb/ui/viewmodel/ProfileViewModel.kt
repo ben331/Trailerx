@@ -9,10 +9,12 @@ import com.globant.imdb.data.remote.firebase.FirebaseAuthManager
 import com.globant.imdb.domain.user.DeleteMovieFromListUseCase
 import com.globant.imdb.domain.user.GetUserMoviesUseCase
 import com.globant.imdb.domain.user.SetHandleFailureUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class ProfileViewModel: ViewModel() {
+@HiltViewModel
+class ProfileViewModel @Inject constructor(): ViewModel() {
 
-    // Live data
     val photoUri = MutableLiveData<Uri?>()
 
     private val getUserMoviesUseCase = GetUserMoviesUseCase()

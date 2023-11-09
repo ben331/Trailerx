@@ -10,11 +10,13 @@ import com.globant.imdb.data.model.movies.MovieDetail
 import com.globant.imdb.domain.movies.GetMovieByIdUseCase
 import com.globant.imdb.domain.movies.GetOfficialTrailerUseCase
 import com.globant.imdb.domain.user.AddMovieToListUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MovieViewModel: ViewModel() {
+@HiltViewModel
+class MovieViewModel @Inject constructor(): ViewModel() {
 
-    // Live data
     val isLoading = MutableLiveData(false)
     val currentMovie = MutableLiveData<MovieDetail>()
     val videoIframe = MutableLiveData<String?>()

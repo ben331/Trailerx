@@ -12,8 +12,11 @@ import com.globant.imdb.data.remote.firebase.FirebaseAuthManager
 import com.globant.imdb.data.remote.firebase.ProviderType
 import com.globant.imdb.domain.user.CreateUserUseCase
 import com.globant.imdb.domain.user.SetHandleFailureUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class AuthViewModel: ViewModel() {
+@HiltViewModel
+class AuthViewModel @Inject constructor(): ViewModel() {
     val isLoading = MutableLiveData(false)
 
     private val authManager: FirebaseAuthManager by lazy {
