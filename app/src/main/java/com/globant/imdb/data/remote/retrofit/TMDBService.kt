@@ -8,8 +8,9 @@ import com.globant.imdb.data.model.movies.VideoList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.Locale
+import javax.inject.Inject
 
-class TMDBService {
+class TMDBService @Inject constructor() {
     private val retrofit = RetrofitHelper.getRetrofit()
     suspend fun getNowPlayingMovies(): MoviesListDates?{
         return withContext(Dispatchers.IO){
