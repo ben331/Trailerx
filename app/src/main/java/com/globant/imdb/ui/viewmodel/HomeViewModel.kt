@@ -18,24 +18,22 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(): ViewModel() {
+class HomeViewModel @Inject constructor(
+    private val getNowPlayingMoviesUseCase:GetNowPlayingMoviesUseCase,
+    private val getTrailerUseCase:GetOfficialTrailerUseCase,
+    private val getPopularMoviesUseCase:GetPopularMoviesUseCase,
+    private val getRandomTopMovieUseCase:GetRandomTopMovieUseCase,
+    private val getUpcomingMovies:GetUpcomingMoviesUseCase,
+    private val addMovieToListUseCase:AddMovieToListUseCase,
+    private val setHandleFailureUseCase:SetHandleFailureUseCase
+): ViewModel() {
 
-    // Live data
     val mainMovie = MutableLiveData<Movie>()
     val videoIframe = MutableLiveData<String?>()
     val nowPlayingMovies = MutableLiveData<List<Movie>>()
     val upcomingMovies = MutableLiveData<List<Movie>>()
     val popularMovies = MutableLiveData<List<Movie>>()
     val isLoading = MutableLiveData(false)
-
-    // Use Cases
-    private val getRandomTopMovieUseCase = GetRandomTopMovieUseCase()
-    private val getNowPlayingMoviesUseCase = GetNowPlayingMoviesUseCase()
-    private val getUpcomingMovies = GetUpcomingMoviesUseCase()
-    private val getPopularMoviesUseCase = GetPopularMoviesUseCase()
-    private val getTrailerUseCase = GetOfficialTrailerUseCase()
-    private val addMovieToWatchListUseCase = AddMovieToListUseCase()
-    private val setHandleFailureUseCase = SetHandleFailureUseCase()
 
     @SuppressLint("NotifyDataSetChanged")
     fun onCreate() {
@@ -104,7 +102,7 @@ class HomeViewModel @Inject constructor(): ViewModel() {
             it.id == movieId
         }
         if(movie!=null){
-            addMovieToWatchListUseCase(context, movie, 1, handleSuccess)
+            addMovieToListUseCase(context, movie, 1, handleSuccess)
         }
     }
 }

@@ -13,14 +13,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ProfileViewModel @Inject constructor(): ViewModel() {
+class ProfileViewModel @Inject constructor(
+    private val setHandleFailureUseCase:SetHandleFailureUseCase,
+    private val getUserMoviesUseCase:GetUserMoviesUseCase,
+    private val deleteMovieFromListUseCase:DeleteMovieFromListUseCase,
+): ViewModel() {
 
     val photoUri = MutableLiveData<Uri?>()
-
-    private val getUserMoviesUseCase = GetUserMoviesUseCase()
-    private val setHandleFailureUseCase = SetHandleFailureUseCase()
-    private val deleteMovieFromListUseCase = DeleteMovieFromListUseCase()
-
     val watchList = MutableLiveData<List<Movie>>()
     val recentViewed = MutableLiveData<List<Movie>>()
     val favoritePeople = MutableLiveData<List<Movie>>()

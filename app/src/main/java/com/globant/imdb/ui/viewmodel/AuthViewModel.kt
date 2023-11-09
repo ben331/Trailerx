@@ -16,15 +16,16 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class AuthViewModel @Inject constructor(): ViewModel() {
+class AuthViewModel @Inject constructor(
+    private val setHandleFailureUseCase:SetHandleFailureUseCase,
+    private val createUserUseCase:CreateUserUseCase,
+): ViewModel() {
     val isLoading = MutableLiveData(false)
 
     private val authManager: FirebaseAuthManager by lazy {
         FirebaseAuthManager()
     }
 
-    private val setHandleFailureUseCase = SetHandleFailureUseCase()
-    private val createUserUseCase = CreateUserUseCase()
     fun createUser(
         context:Context,
         localUser: User,

@@ -15,16 +15,15 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieViewModel @Inject constructor(): ViewModel() {
+class MovieViewModel @Inject constructor(
+    private val getMovieByIdUseCase:GetMovieByIdUseCase,
+    private val getTrailerUseCase:GetOfficialTrailerUseCase,
+    private val addMovieToListUseCase:AddMovieToListUseCase
+): ViewModel() {
 
     val isLoading = MutableLiveData(false)
     val currentMovie = MutableLiveData<MovieDetail>()
     val videoIframe = MutableLiveData<String?>()
-
-    // Use Cases
-    val getMovieByIdUseCase = GetMovieByIdUseCase()
-    val getTrailerUseCase = GetOfficialTrailerUseCase()
-    val addMovieToListUseCase = AddMovieToListUseCase()
 
     fun onCreate(movieId:Int){
         viewModelScope.launch {

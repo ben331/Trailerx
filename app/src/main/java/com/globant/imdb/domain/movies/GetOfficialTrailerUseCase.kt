@@ -3,8 +3,9 @@ package com.globant.imdb.domain.movies
 import com.globant.imdb.core.RetrofitHelper
 import com.globant.imdb.data.IMDbRepository
 import com.globant.imdb.data.model.movies.Video
+import javax.inject.Inject
 
-class GetOfficialTrailerUseCase {
+class GetOfficialTrailerUseCase @Inject constructor(){
     private val repository = IMDbRepository()
 
     suspend operator fun invoke(movieId:Int, withControls:Boolean):String? {

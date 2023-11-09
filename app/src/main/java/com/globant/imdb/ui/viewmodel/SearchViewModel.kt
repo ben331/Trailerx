@@ -12,13 +12,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(): ViewModel() {
+class SearchViewModel @Inject constructor(
+    private val searchMovieUseCase:SearchMovieUseCase
+): ViewModel() {
 
     // Live data
     val resultMovies = MutableLiveData<List<Movie>>()
 
     // Use Cases
-    val searchMovieUseCase = SearchMovieUseCase()
 
     lateinit var adapter: MovieResultAdapter
 
