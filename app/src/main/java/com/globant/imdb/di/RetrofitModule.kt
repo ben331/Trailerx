@@ -18,14 +18,18 @@ object RetrofitModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(): Retrofit{
-        val client = OkHttpClient.Builder().addInterceptor { chain ->
+    fun provideAuthInterceptor(): OkHttpClient {
+        return OkHttpClient.Builder().addInterceptor { chain ->
             val newRequest: Request = chain.request().newBuilder()
                 .addHeader("Authorization", "Bearer ${RetrofitHelper.authToken}")
                 .build()
             chain.proceed(newRequest)
         }.build()
+    }
 
+    @Singleton
+    @Provides
+    fun provideRetrofit(client:OkHttpClient): Retrofit{
         return Retrofit.Builder()
             .baseUrl(RetrofitHelper.BASE_URL)
             .client(client)
