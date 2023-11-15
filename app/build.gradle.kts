@@ -44,6 +44,9 @@ android {
 }
 
 dependencies {
+    //  Kotlin
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.0")
+
     //Android
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -99,8 +102,8 @@ dependencies {
     implementation("com.squareup.picasso:picasso:2.5.2")
 
     //Dagger Hilt
-    implementation("com.google.dagger:hilt-android:2.44")
-    kapt("com.google.dagger:hilt-android-compiler:2.44")
+    implementation("com.google.dagger:hilt-android:2.48.1")
+    kapt("com.google.dagger:hilt-android-compiler:2.48.1")
 }
 
 kapt {
