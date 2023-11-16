@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.globant.imdb.R
-import com.globant.imdb.core.RetrofitHelper
+import com.globant.imdb.core.Constants
 import com.globant.imdb.data.model.movies.Movie
 import com.globant.imdb.databinding.ItemMovieResultBinding
 import com.globant.imdb.ui.view.SearchFragment
@@ -30,7 +30,7 @@ class MovieResultAdapter: Adapter<MovieResultViewHolder>() {
             holder.id = id
             holder.title.text = title
             holder.labelYear.text = if(releaseDate.length >= 4) releaseDate.subSequence(0,4) else "----"
-            val imageUrl = (RetrofitHelper.IMAGES_BASE_URL + backdropPath)
+            val imageUrl = (Constants.IMAGES_BASE_URL + backdropPath)
             moviesListener.renderImage(imageUrl, holder.image)
         }
     }

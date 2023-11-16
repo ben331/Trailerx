@@ -1,10 +1,13 @@
 package com.globant.imdb.di
 
-import com.globant.imdb.core.RetrofitHelper
+import android.content.Context
+import com.globant.imdb.R
+import com.globant.imdb.core.Constants
 import com.globant.imdb.data.remote.retrofit.TMDBApiClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -18,10 +21,13 @@ object RetrofitModule {
 
     @Singleton
     @Provides
-    fun provideAuthInterceptor(): OkHttpClient {
+    fun provideAuthInterceptor(
+        @ApplicationContext context: Context,
+    ): OkHttpClient {
+        val authToken = context.getString(R.string.TMDB_api_token)
         return OkHttpClient.Builder().addInterceptor { chain ->
             val newRequest: Request = chain.request().newBuilder()
-                .addHeader("Authorization", "Bearer ${RetrofitHelper.authToken}")
+                .addHeader("Authorization", "Bearer $authToken")
                 .build()
             chain.proceed(newRequest)
         }.build()
@@ -31,7 +37,7 @@ object RetrofitModule {
     @Provides
     fun provideRetrofit(client:OkHttpClient): Retrofit{
         return Retrofit.Builder()
-            .baseUrl(RetrofitHelper.BASE_URL)
+            .baseUrl(Constants.BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

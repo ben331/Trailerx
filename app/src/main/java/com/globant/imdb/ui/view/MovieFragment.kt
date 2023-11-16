@@ -13,7 +13,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.globant.imdb.R
-import com.globant.imdb.core.RetrofitHelper
+import com.globant.imdb.core.Constants
 import com.globant.imdb.core.TextTransforms
 import com.globant.imdb.databinding.FragmentMovieBinding
 import com.globant.imdb.ui.viewmodel.MovieViewModel
@@ -78,7 +78,7 @@ class MovieFragment : Fragment() {
                     }else{ "- - - -" }
                 labelStars.text = movieDetail.popularity.toString()
                 textBoxSynopsis.text = movieDetail.overview
-                val url = RetrofitHelper.IMAGES_BASE_URL + movieDetail.backdropPath
+                val url = Constants.IMAGES_BASE_URL + movieDetail.backdropPath
                 Picasso.with(requireContext())
                     .load(url)
                     .fit()
