@@ -1,6 +1,5 @@
-package com.globant.imdb.ui.view
+package com.globant.imdb.ui.view.fragments
 
-import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,14 +13,19 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.globant.imdb.R
 import com.globant.imdb.core.Constants
+import com.globant.imdb.core.DialogManager
 import com.globant.imdb.core.TextTransforms
 import com.globant.imdb.databinding.FragmentMovieBinding
 import com.globant.imdb.ui.viewmodel.MovieViewModel
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MovieFragment : Fragment() {
+
+    @Inject
+    lateinit var dialogManager:DialogManager
 
     private val movieViewModel: MovieViewModel by viewModels()
 
@@ -63,7 +67,7 @@ class MovieFragment : Fragment() {
 
     private fun setupLiveData(){
         movieViewModel.currentMovie.observe(viewLifecycleOwner){ movieDetail ->
-            movieViewModel.recordHistory(requireContext())
+            movieViewModel.recordHistory()
             binding.topAppBar.title = movieDetail.title
             with(binding.containerFrontage){
                 sectionTitle.text = movieDetail.title
@@ -108,25 +112,15 @@ class MovieFragment : Fragment() {
 
     private fun setupButtons(){
         binding.btnActionList.setOnClickListener{
-            movieViewModel.addMovieToWatchList(requireContext()) {
-                showAlert(
+            movieViewModel.addMovieToWatchList {
+                dialogManager.showAlert(
                     getString(R.string.success),
-                    "Movie ${it.title} added successfully"
+                    getString(R.string.success_movie_added, it.title)
                 )
             }
         }
         binding.refreshLayout.setOnRefreshListener {
             movieViewModel.onCreate(args.movieId)
         }
-    }
-
-    private fun showAlert(title:String, message:String){
-        movieViewModel.isLoading.postValue(false)
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle(title)
-        builder.setMessage(message)
-        builder.setPositiveButton(R.string.accept, null)
-        val dialog = builder.create()
-        dialog.show()
     }
 }

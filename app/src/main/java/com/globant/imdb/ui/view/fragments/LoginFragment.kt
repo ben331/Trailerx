@@ -1,7 +1,6 @@
-package com.globant.imdb.ui.view
+package com.globant.imdb.ui.view.fragments
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -17,18 +16,26 @@ import androidx.activity.result.contract.ActivityResultContracts.StartActivityFo
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.facebook.CallbackManager
 import com.globant.imdb.R
+import com.globant.imdb.core.DialogManager
 import com.globant.imdb.core.FormValidator
 import com.globant.imdb.data.model.user.User
 import com.globant.imdb.data.remote.firebase.ProviderType
 import com.globant.imdb.databinding.FragmentLoginBinding
 import com.globant.imdb.ui.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
 
     private val authViewModel:AuthViewModel by activityViewModels()
+
+    @Inject
+    lateinit var callbackManager:CallbackManager
+    @Inject
+    lateinit var dialogManager:DialogManager
 
     private val binding:FragmentLoginBinding by lazy {
         FragmentLoginBinding.inflate(layoutInflater)
@@ -43,7 +50,6 @@ class LoginFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        authViewModel.setHandleFailure(::showAlert)
         loadSession()
     }
 
@@ -94,40 +100,40 @@ class LoginFragment : Fragment() {
             val email = binding.editTextEmail.text.toString()
             val password = binding.editTextPassword.text.toString()
             authViewModel.isLoading.postValue(true)
-            authViewModel.loginWithEmailAndPassword(requireContext(), email, password, ::createUser, ::showAlert)
+            authViewModel.loginWithEmailAndPassword(email, password, ::createUser)
         }
 
         binding.labelForgotPassword.setOnClickListener {
             val email = binding.editTextEmail.text.toString()
             if(FormValidator.validateEmail(email)){
-                authViewModel.sendPasswordResetEmail(requireContext(), email, onSuccess = {
-                    showAlert(getString(R.string.success),getString(R.string.password_reset_success))
-                }, ::showAlert)
+                authViewModel.sendPasswordResetEmail(email) {
+                    dialogManager.showAlert(getString(R.string.success),getString(R.string.password_reset_success))
+                }
             }else{
-                showAlert(getString(R.string.error), getString(R.string.invalid_email))
+                dialogManager.showAlert(getString(R.string.error), getString(R.string.invalid_email))
             }
         }
 
         binding.googleBtn.setOnClickListener {
-            val googleIntent = authViewModel.loginWithGoogle(requireContext())
+            val googleIntent = authViewModel.loginWithGoogle(requireActivity())
             authViewModel.isLoading.postValue(true)
             googleLauncher.launch(googleIntent)
         }
 
         binding.facebookBtn.setOnClickListener{
             authViewModel.isLoading.postValue(true)
-            authViewModel.loginWithFacebook(this, ::createUser, ::showAlert)
+            authViewModel.loginWithFacebook(requireActivity(), ::createUser)
         }
 
         binding.appleBtn.setOnClickListener{
             authViewModel.isLoading.postValue(true)
-            authViewModel.loginWithApple(requireActivity(), ::createUser, ::showAlert)
+            authViewModel.loginWithApple(requireActivity(), ::createUser)
         }
     }
 
     private fun onGoogleResult(result:ActivityResult){
         if(result.resultCode == Activity.RESULT_OK){
-            authViewModel.onGoogleResult(requireContext(), result.data, ::createUser, ::showAlert)
+            authViewModel.onGoogleResult(result.data, ::createUser)
         }
     }
 
@@ -195,7 +201,7 @@ class LoginFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         authViewModel.isLoading.postValue(false)
-        authViewModel.getCallbackManager().onActivityResult(requestCode, resultCode, data)
+        callbackManager.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun showHome(email:String?, providerType: ProviderType){
@@ -206,12 +212,12 @@ class LoginFragment : Fragment() {
     }
     private fun createUser(email:String, providerType: ProviderType){
         val user = User(email, authViewModel.getDisplayName())
-        authViewModel.createUser(requireContext(), user) {
+        authViewModel.createUser(user) {
             if(it!=null){
                 showHome(email, providerType)
             }else{
                 authViewModel.logout(providerType)
-                showAlert(
+                dialogManager.showAlert(
                     getString(R.string.error),
                     getString(R.string.create_user_error)
                 )
@@ -232,15 +238,5 @@ class LoginFragment : Fragment() {
             labelRegister.isEnabled = enable
             labelGuest.isEnabled = enable
         }
-    }
-
-    private fun showAlert(title:String, message:String){
-        authViewModel.isLoading.postValue(false)
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle(title)
-        builder.setMessage(message)
-        builder.setPositiveButton(R.string.accept, null)
-        val dialog = builder.create()
-        dialog.show()
     }
 }

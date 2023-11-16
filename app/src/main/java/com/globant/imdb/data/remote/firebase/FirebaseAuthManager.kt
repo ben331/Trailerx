@@ -1,11 +1,8 @@
 package com.globant.imdb.data.remote.firebase
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -20,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.OAuthProvider
 import com.google.firebase.auth.UserProfileChangeRequest
+import javax.inject.Inject
 
 enum class ProviderType {
     GUEST,
@@ -29,14 +27,11 @@ enum class ProviderType {
     APPLE
 }
 
-class FirebaseAuthManager {
-
-    private val auth: FirebaseAuth by lazy {
-        FirebaseAuth.getInstance()
-    }
-
-    val callbackManager: CallbackManager = CallbackManager.Factory.create()
-
+class FirebaseAuthManager @Inject constructor(
+    private val auth: FirebaseAuth,
+    private val callbackManager: CallbackManager,
+    private val googleConf: GoogleSignInOptions
+){
     fun updateProfilePhotoURL(
         url: Uri?,
         handleSuccess: () -> Unit,
@@ -75,25 +70,23 @@ class FirebaseAuthManager {
     }
 
     fun sendPasswordResetEmail(
-        context: Context,
         email: String,
         onSuccess: ()->Unit,
-        onFailure:(title:String, msg:String)->Unit
+        onFailure:(title:Int, msg:Int)->Unit
         ){
         auth.sendPasswordResetEmail(email).addOnCompleteListener {
             onSuccess()
         }.addOnCanceledListener {
             onFailure(
-                ContextCompat.getString(context, R.string.error ),
-                ContextCompat.getString(context, R.string.password_reset_error )
+                R.string.error,
+                R.string.password_reset_error
             )
         }
     }
 
     private fun uploadName(
-        context: Context,
         displayName:String,
-        onFailure: (title:String, message:String) -> Unit
+        onFailure: (title:Int, message:Int) -> Unit
     ) {
         val profileUpdates = UserProfileChangeRequest.Builder()
             .setDisplayName(displayName)
@@ -103,8 +96,8 @@ class FirebaseAuthManager {
             ?.addOnCompleteListener { task ->
                 if(!task.isSuccessful){
                     onFailure(
-                        ContextCompat.getString(context,R.string.error),
-                        ContextCompat.getString(context, R.string.upload_username_error)
+                        R.string.error,
+                        R.string.upload_username_error
                     )
                 }
             }
@@ -117,12 +110,11 @@ class FirebaseAuthManager {
     }
 
     fun signUpWithEmailAndPassword(
-        context: Context,
         email:String,
         password: String,
         displayName: String,
         onSuccess: (email: String) -> Unit,
-        onFailure: (title:String, msg: String) -> Unit
+        onFailure: (title:Int, msg: Int) -> Unit
     ){
         auth.createUserWithEmailAndPassword( email, password )
             .addOnCompleteListener { task ->
@@ -132,30 +124,29 @@ class FirebaseAuthManager {
                     user?.sendEmailVerification()
                         ?.addOnCompleteListener { verificationTask ->
                             if (verificationTask.isSuccessful) {
-                                uploadName(context, displayName, onFailure)
+                                uploadName(displayName, onFailure)
                                 onSuccess(email)
                             } else {
                                 onFailure(
-                                    ContextCompat.getString(context, R.string.error),
-                                    ContextCompat.getString(context, R.string.auth_error),
+                                    R.string.error,
+                                    R.string.auth_error,
                                 )
                             }
                         }
                 } else {
                     onFailure(
-                        ContextCompat.getString(context, R.string.error),
-                        ContextCompat.getString(context, R.string.auth_error),
+                        R.string.error,
+                        R.string.auth_error,
                     )
                 }
             }
     }
 
     fun loginWithEmailAndPassword(
-        context: Context,
         email:String,
         password:String,
         onSuccess: (email:String, provides:ProviderType)->Unit,
-        onFailure:(title:String, msg:String)->Unit){
+        onFailure:(title:Int, msg:Int)->Unit){
 
         auth.signInWithEmailAndPassword( email, password ).addOnCompleteListener {
             if (it.isSuccessful) {
@@ -164,14 +155,14 @@ class FirebaseAuthManager {
                     onSuccess(email, ProviderType.BASIC)
                 }else{
                     onFailure(
-                        ContextCompat.getString(context, R.string.error),
-                        ContextCompat.getString(context, R.string.account_created_success)
+                        R.string.error,
+                        R.string.account_created_success
                     )
                 }
             } else {
                 onFailure(
-                    ContextCompat.getString(context, R.string.error),
-                    ContextCompat.getString(context, R.string.auth_error),
+                    R.string.error,
+                    R.string.auth_error,
                 )
             }
         }
@@ -180,7 +171,7 @@ class FirebaseAuthManager {
     fun loginWithApple(
         activity: Activity,
         onSuccess: (email:String, provides:ProviderType)->Unit,
-        onFailure:(title:String, msg:String)->Unit
+        onFailure:(title:Int, msg:Int)->Unit
     ){
         val provider = OAuthProvider.newBuilder("apple.com")
         provider.scopes = listOf("email", "name")
@@ -192,12 +183,12 @@ class FirebaseAuthManager {
                 val email = authResult.user?.email ?: ""
                 val displayName = authResult.user?.displayName ?: ""
 
-                uploadName(activity, displayName, onFailure)
+                uploadName(displayName, onFailure)
                 onSuccess(email, ProviderType.APPLE)
             }.addOnFailureListener {
                 onFailure(
-                    ContextCompat.getString(activity, R.string.error),
-                    ContextCompat.getString(activity, R.string.auth_error),
+                    R.string.error,
+                    R.string.auth_error,
                 )
             }
         } else {
@@ -206,24 +197,24 @@ class FirebaseAuthManager {
                     val email = authResult.user?.email ?: ""
                     val displayName = authResult.user?.displayName ?: ""
 
-                    uploadName(activity, displayName, onFailure)
+                    uploadName(displayName, onFailure)
                     onSuccess(email, ProviderType.APPLE)
                 }
                 .addOnFailureListener {
                     onFailure(
-                        ContextCompat.getString(activity, R.string.error),
-                        ContextCompat.getString(activity, R.string.auth_error),
+                        R.string.error,
+                        R.string.auth_error,
                     )
                 }
         }
     }
 
     fun loginWithFacebook(
-        fragment: Fragment,
+        activity:Activity,
         onSuccess: (email:String, provides:ProviderType)->Unit,
-        onFailure:(title:String, msg:String)->Unit
+        onFailure:(title:Int, msg:Int)->Unit
     ){
-        LoginManager.getInstance().logInWithReadPermissions(fragment, listOf("email"))
+        LoginManager.getInstance().logInWithReadPermissions(activity, listOf("email"))
 
         LoginManager.getInstance().registerCallback( callbackManager,
             object : FacebookCallback<LoginResult> {
@@ -237,12 +228,13 @@ class FirebaseAuthManager {
                                 val email = task.result.user?.email ?: ""
                                 val displayName = task.result.user?.displayName ?:""
 
-                                uploadName(fragment.requireContext(), displayName, onFailure)
+                                uploadName(displayName, onFailure)
                                 onSuccess( email, ProviderType.FACEBOOK)
                             }else{
+                                task.exception?.printStackTrace()
                                 onFailure(
-                                    fragment.requireContext().getString(R.string.error),
-                                    task.exception?.message.toString(),
+                                    R.string.error,
+                                    R.string.error,
                                 )
                             }
                         }
@@ -251,37 +243,31 @@ class FirebaseAuthManager {
 
                 override fun onCancel() {
                     onFailure(
-                        fragment.requireContext().getString(R.string.error),
-                        fragment.requireContext().getString(R.string.auth_error),
+                        R.string.error,
+                        R.string.auth_error,
                     )
                 }
 
                 override fun onError(error: FacebookException?) {
                     onFailure(
-                        fragment.requireContext().getString(R.string.error),
-                        fragment.requireContext().getString(R.string.auth_error),
+                        R.string.error,
+                        R.string.auth_error,
                     )
                 }
             }
         )
     }
 
-    fun loginWithGoogle(context: Context): Intent{
-        val googleConf = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(ContextCompat.getString(context, com.firebase.ui.auth.R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-
-        val googleClient = GoogleSignIn.getClient(context, googleConf)
+    fun loginWithGoogle( activity: Activity ): Intent{
+        val googleClient = GoogleSignIn.getClient(activity, googleConf)
         googleClient.signOut()
         return googleClient.signInIntent
     }
 
     fun onGoogleResult(
-        context: Context,
         intent:Intent?,
         onSuccess: (email:String, provides:ProviderType)->Unit,
-        onFailure:(title:String, msg:String)->Unit
+        onFailure:(title:Int, msg:Int)->Unit
     ){
         val task = GoogleSignIn.getSignedInAccountFromIntent(intent)
 
@@ -295,22 +281,21 @@ class FirebaseAuthManager {
                         val email = account.email ?: ""
                         val displayName = account.displayName ?: ""
 
-                        uploadName(context, displayName, onFailure)
+                        uploadName(displayName, onFailure)
                         onSuccess(email, ProviderType.GOOGLE)
                     }else{
                         onFailure(
-                            ContextCompat.getString(context, R.string.error),
-                            ContextCompat.getString(context, R.string.auth_error),
+                            R.string.error,
+                            R.string.auth_error,
                         )
                     }
                 }
             }
         }catch (e: ApiException){
             onFailure(
-                ContextCompat.getString(context, R.string.error),
-                ContextCompat.getString(context, R.string.auth_error)
+                R.string.error,
+                R.string.auth_error
             )
         }
     }
-
 }

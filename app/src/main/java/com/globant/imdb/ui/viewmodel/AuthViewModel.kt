@@ -1,53 +1,43 @@
 package com.globant.imdb.ui.viewmodel
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.facebook.CallbackManager
+import com.globant.imdb.core.DialogManager
 import com.globant.imdb.data.model.user.User
 import com.globant.imdb.data.remote.firebase.FirebaseAuthManager
 import com.globant.imdb.data.remote.firebase.ProviderType
 import com.globant.imdb.domain.user.CreateUserUseCase
-import com.globant.imdb.domain.user.SetHandleFailureUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val setHandleFailureUseCase:SetHandleFailureUseCase,
     private val createUserUseCase:CreateUserUseCase,
+    private val authManager: FirebaseAuthManager,
+    private val dialogManager: DialogManager
 ): ViewModel() {
     val isLoading = MutableLiveData(false)
 
-    private val authManager: FirebaseAuthManager by lazy {
-        FirebaseAuthManager()
+    private fun handleFailure(title:Int, msg:Int){
+        isLoading.postValue(false)
+        dialogManager.showAlert(title, msg)
     }
 
     fun createUser(
-        context:Context,
         localUser: User,
         handleSuccess:(user: User?)->Unit
     ){
-        createUserUseCase(context, localUser, handleSuccess)
+        createUserUseCase(localUser, handleSuccess, ::handleFailure)
     }
 
     fun getDisplayName():String{
         return authManager.getDisplayName()
     }
 
-    fun getCallbackManager(): CallbackManager{
-        return authManager.callbackManager
-    }
-
     fun setupName(useName: (remoteDisplayName:String?) -> Unit) {
         authManager.setupName(useName)
-    }
-
-    fun setHandleFailure( handleFailure:(title:String, msg:String)->Unit ){
-        setHandleFailureUseCase(handleFailure)
     }
 
     fun logout(provider:ProviderType){
@@ -55,62 +45,63 @@ class AuthViewModel @Inject constructor(
     }
 
     fun signUpWithEmailAndPassword(
-        context: Context,
         email:String,
         password:String,
         displayName:String,
         onSuccess: (email:String)->Unit,
-        onFailure:(title:String, msg:String)->Unit
     ){
-        authManager.signUpWithEmailAndPassword(context, email, password, displayName, onSuccess, onFailure)
+        authManager.signUpWithEmailAndPassword(
+            email,
+            password,
+            displayName,
+            onSuccess,
+            ::handleFailure
+        )
     }
 
     fun loginWithEmailAndPassword(
-        context: Context,
         email:String,
         password:String,
         onSuccess: (email:String, provides: ProviderType)->Unit,
-        onFailure:(title:String, msg:String)->Unit
     ){
-        authManager.loginWithEmailAndPassword(context, email, password, onSuccess, onFailure)
+        authManager.loginWithEmailAndPassword(
+            email,
+            password,
+            onSuccess,
+            ::handleFailure
+        )
     }
 
     fun sendPasswordResetEmail(
-        context: Context,
         email: String,
         onSuccess: ()->Unit,
-        onFailure:(title:String, msg:String)->Unit
     ){
-        authManager.sendPasswordResetEmail(context, email, onSuccess, onFailure)
+        authManager.sendPasswordResetEmail(email, onSuccess, ::handleFailure)
     }
 
     fun loginWithApple(
-        activity: Activity,
+        activity:Activity,
         onSuccess: (email:String, provides: ProviderType)->Unit,
-        onFailure:(title:String, msg:String)->Unit
     ){
-        authManager.loginWithApple(activity, onSuccess, onFailure)
+        authManager.loginWithApple(activity, onSuccess, ::handleFailure)
     }
 
     fun loginWithFacebook(
-        fragment: Fragment,
+        activity:Activity,
         onSuccess: (email:String, provides: ProviderType)->Unit,
-        onFailure:(title:String, msg:String)->Unit
     ){
-        authManager.loginWithFacebook(fragment, onSuccess, onFailure)
+        authManager.loginWithFacebook(activity, onSuccess, ::handleFailure)
     }
 
-    fun loginWithGoogle(context: Context): Intent {
-        return authManager.loginWithGoogle(context)
+    fun loginWithGoogle(activity:Activity): Intent {
+        return authManager.loginWithGoogle(activity)
     }
 
     fun onGoogleResult(
-        context: Context,
         intent:Intent?,
         onSuccess: (email:String, provides:ProviderType)->Unit,
-        onFailure:(title:String, msg:String)->Unit
     ){
-        authManager.onGoogleResult(context, intent, onSuccess, onFailure)
+        authManager.onGoogleResult(intent, onSuccess, ::handleFailure)
     }
 
 }

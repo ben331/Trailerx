@@ -1,7 +1,6 @@
-package com.globant.imdb.ui.view
+package com.globant.imdb.ui.view.fragments
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -14,14 +13,17 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.globant.imdb.R
+import com.globant.imdb.core.DialogManager
 import com.globant.imdb.core.FormValidator
 import com.globant.imdb.databinding.FragmentSignUpBinding
 import com.globant.imdb.ui.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SignUpFragment : Fragment() {
-
+    @Inject
+    lateinit var dialogManager:DialogManager
     private val authViewModel:AuthViewModel by activityViewModels()
 
     private val binding:FragmentSignUpBinding by lazy {
@@ -77,12 +79,10 @@ class SignUpFragment : Fragment() {
             val password = binding.editTextPassword.text.toString()
 
             authViewModel.signUpWithEmailAndPassword(
-                requireContext(),
                 email,
                 password,
                 displayName,
                 ::showLogin,
-                ::showAlert
             )
         }
     }
@@ -152,7 +152,7 @@ class SignUpFragment : Fragment() {
     private fun showLogin(string: String?){
         authViewModel.isLoading.postValue(false)
         string?.let {
-            showAlert(
+            dialogManager.showAlert(
                 getString(R.string.success),
                 getString(R.string.account_created_success)
             )
@@ -160,15 +160,4 @@ class SignUpFragment : Fragment() {
         val action = SignUpFragmentDirections.actionSignUpFragmentToLoginFragment()
         navController.navigate(action)
     }
-
-    private fun showAlert(title:String, msg:String){
-        authViewModel.isLoading.postValue(false)
-        val builder = AlertDialog.Builder(activity)
-        builder.setTitle(title)
-        builder.setMessage(msg)
-        builder.setPositiveButton(R.string.accept, null)
-        val dialog = builder.create()
-        dialog.show()
-    }
-
 }

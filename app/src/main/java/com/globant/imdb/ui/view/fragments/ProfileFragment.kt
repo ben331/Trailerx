@@ -1,7 +1,6 @@
-package com.globant.imdb.ui.view
+package com.globant.imdb.ui.view.fragments
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -41,11 +40,6 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
     private lateinit var recentMoviesAdapter: MovieProfileAdapter
     private lateinit var favoritePeopleAdapter: MovieProfileAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        profileViewModel.setHandleFailure(::showAlert)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -63,7 +57,7 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
 
     override fun onResume() {
         super.onResume()
-        profileViewModel.refresh(requireContext())
+        profileViewModel.refresh()
     }
 
     private fun setupTopRecyclerView(){
@@ -175,7 +169,7 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
     private fun setupButtons(){
         binding.profileHeaderContainer.btnSettings.setOnClickListener(::showPopup)
         binding.refreshLayout.setOnRefreshListener {
-            profileViewModel.refresh(requireContext())
+            profileViewModel.refresh()
         }
     }
 
@@ -185,16 +179,6 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
         popup.setOnMenuItemClickListener(parent)
         popup.inflate(R.menu.profile_popup_menu)
         popup.show()
-    }
-
-    private fun showAlert(title:String, message:String){
-        profileViewModel.isLoading.postValue(false)
-        val builder = AlertDialog.Builder(activity)
-        builder.setTitle(title)
-        builder.setMessage(message)
-        builder.setPositiveButton(R.string.accept, null)
-        val dialog = builder.create()
-        dialog.show()
     }
 
     override fun renderImage(url: String, image: ImageView) {
@@ -211,6 +195,6 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
     }
 
     override fun deleteFromList(id: Int, listNumber: Int) {
-        profileViewModel.deleteMovieFromList(requireContext(), id, listNumber)
+        profileViewModel.deleteMovieFromList(id, listNumber)
     }
 }

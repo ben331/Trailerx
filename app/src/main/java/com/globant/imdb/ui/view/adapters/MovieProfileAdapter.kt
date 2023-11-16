@@ -10,7 +10,7 @@ import com.globant.imdb.R
 import com.globant.imdb.core.Constants
 import com.globant.imdb.data.model.movies.Movie
 import com.globant.imdb.databinding.ItemMovieProfileBinding
-import com.globant.imdb.ui.view.ProfileFragment
+import com.globant.imdb.ui.view.fragments.ProfileFragment
 
 class MovieProfileAdapter: Adapter<MovieProfileViewHolder>() {
 

@@ -1,24 +1,19 @@
 package com.globant.imdb.data.remote.firebase
 
-import android.content.Context
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import com.globant.imdb.R
 import com.globant.imdb.data.model.movies.Movie
 import com.globant.imdb.data.model.user.User
 import javax.inject.Inject
 
 
-class FirestoreManager @Inject constructor() {
-    var handleFailure: (title:String, msg:String)->Unit = { _: String, _: String -> }
-
-    private val db: FirebaseFirestore by lazy {
-        Firebase.firestore
-    }
+class FirestoreManager @Inject constructor(
+    private val db:FirebaseFirestore,
+    private val auth:FirebaseAuthManager
+) {
 
     private val email: String by lazy {
-        FirebaseAuthManager().getEmail()
+        auth.getEmail()
     }
 
     fun createUser(user: User, handleSuccess: (user: User?) -> Unit) {
@@ -32,7 +27,11 @@ class FirestoreManager @Inject constructor() {
             }
     }
 
-    fun getUser(context: Context, localEmail:String, handleSuccess:(user:User?)->Unit) {
+    fun getUser(
+        localEmail:String,
+        handleSuccess:(user:User?)->Unit,
+        handleFailure:(title:Int, msg:Int)->Unit
+    ) {
         db.collection("users").document(localEmail).get()
             .addOnSuccessListener {
                 if(it.exists()){
@@ -44,13 +43,17 @@ class FirestoreManager @Inject constructor() {
             }.addOnFailureListener {
                 it.printStackTrace()
                 handleFailure(
-                    context.getString(R.string.error),
-                    context.getString(R.string.create_user_error)
+                    R.string.error,
+                    R.string.create_user_error
                 )
             }
     }
 
-    fun getUserMoviesList(context:Context, numberList:Int, handleSuccess: (movies:List<Movie>)->Unit) {
+    fun getUserMoviesList(
+        numberList:Int,
+        handleSuccess: (movies:List<Movie>)->Unit,
+        handleFailure:(title:Int, msg:Int)->Unit
+    ) {
         val collection = when(numberList){
             1 -> "watchList"
             2 -> "recentlyViewed"
@@ -73,14 +76,18 @@ class FirestoreManager @Inject constructor() {
                 }.addOnFailureListener {
                     it.printStackTrace()
                     handleFailure(
-                        context.getString(R.string.error),
-                        context.getString(R.string.fetch_movies_error)
+                        R.string.error,
+                        R.string.fetch_movies_error
                     )
                 }
         }
     }
 
-    fun addMovieToList(context:Context, movie:Movie, listNumber: Int, handleSuccess:(movie:Movie)->Unit){
+    fun addMovieToList(
+        movie:Movie, listNumber: Int,
+        handleSuccess:(movie:Movie)->Unit,
+        handleFailure:(title:Int, msg:Int)->Unit
+    ){
         val collection = when(listNumber){
             1 -> "watchList"
             2 -> "recentlyViewed"
@@ -96,18 +103,18 @@ class FirestoreManager @Inject constructor() {
                 }.addOnFailureListener { e ->
                     e.printStackTrace()
                     handleFailure(
-                        context.getString(R.string.error),
-                        context.getString(R.string.error)
+                        R.string.error,
+                        R.string.error
                     )
                 }
         }
     }
 
     fun deleteMovieFromList(
-        context:Context,
         movieId:Int,
         listNumber:Int,
-        handleSuccess:()->Unit
+        handleSuccess:()->Unit,
+        handleFailure:(title:Int, msg:Int)->Unit
     ){
         val collection = when(listNumber){
             1 -> "watchList"
@@ -123,12 +130,10 @@ class FirestoreManager @Inject constructor() {
                     handleSuccess()
                 }.addOnFailureListener {
                     handleFailure(
-                        context.getString(R.string.error),
-                        context.getString(R.string.delete_movie_error)
+                        R.string.error,
+                        R.string.delete_movie_error
                     )
                 }
         }
-
     }
-
 }

@@ -1,6 +1,5 @@
 package com.globant.imdb.data
 
-import android.content.Context
 import com.globant.imdb.data.model.movies.Movie
 import com.globant.imdb.data.model.movies.MovieDetail
 import com.globant.imdb.data.model.movies.MovieProvider
@@ -43,34 +42,41 @@ class IMDbRepository @Inject constructor(
     }
 
     // Firestore
-    fun setHandleFailure(
-        handleFailure:(title:String, msg:String)->Unit
-    ){
-        firestoreManager.handleFailure = handleFailure
-    }
-
     fun createUser(user:User, handleSuccess:(user:User?)->Unit){
         firestoreManager.createUser(user, handleSuccess)
     }
 
-    fun getUser(context: Context, localEmail:String, handleSuccess:(user:User?)->Unit){
-        firestoreManager.getUser(context, localEmail , handleSuccess)
+    fun getUser(
+        localEmail:String,
+        handleSuccess:(user:User?)->Unit,
+        handleFailure:(title:Int, msg:Int)->Unit
+    ){
+        firestoreManager.getUser(localEmail , handleSuccess, handleFailure)
     }
 
-    fun getUserMoviesList(context: Context, numberList:Int, handleSuccess:(List<Movie>)->Unit){
-        return firestoreManager.getUserMoviesList(context, numberList, handleSuccess)
+    fun getUserMoviesList(
+        numberList:Int,
+        handleSuccess:(List<Movie>)->Unit,
+        handleFailure:(title:Int, msg:Int)->Unit)
+    {
+        return firestoreManager.getUserMoviesList(numberList, handleSuccess, handleFailure)
     }
 
-    fun addMovieToList(context: Context, movie:Movie, listNumber: Int, handleSuccess:(Movie)->Unit){
-        return firestoreManager.addMovieToList(context, movie, listNumber, handleSuccess)
+    fun addMovieToList(
+        movie:Movie,
+        listNumber: Int,
+        handleSuccess:(Movie)->Unit,
+        handleFailure:(title:Int, msg:Int)->Unit)
+    {
+        return firestoreManager.addMovieToList(movie, listNumber, handleSuccess, handleFailure)
     }
 
     fun deleteMovieFromList(
-        context: Context,
         movieId:Int,
         listNumber:Int,
-        handleSuccess:()->Unit
+        handleSuccess:()->Unit,
+        handleFailure:(title:Int, msg:Int)->Unit
     ){
-        firestoreManager.deleteMovieFromList(context, movieId, listNumber, handleSuccess)
+        firestoreManager.deleteMovieFromList(movieId, listNumber, handleSuccess, handleFailure)
     }
 }

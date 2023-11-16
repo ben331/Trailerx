@@ -1,22 +1,16 @@
 package com.globant.imdb.data.remote.firebase
 
 import android.net.Uri
-import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.File
+import javax.inject.Inject
 
 private const val PROFILE_PATH = "images/profiles/"
 
-class FirebaseStorageManager {
-
-    private val storage: StorageReference by lazy {
-        FirebaseStorage.getInstance().reference
-    }
-
-    private val authManager: FirebaseAuthManager by lazy {
-        FirebaseAuthManager()
-    }
-
+class FirebaseStorageManager @Inject constructor(
+    private val storage:StorageReference,
+    private val authManager: FirebaseAuthManager,
+) {
     fun uploadPhoto(
         path:String,
         handleSuccess: () -> Unit,

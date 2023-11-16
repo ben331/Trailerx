@@ -1,7 +1,6 @@
-package com.globant.imdb.ui.view
+package com.globant.imdb.ui.view.fragments
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,15 +13,20 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.globant.imdb.R
 import com.globant.imdb.core.Constants
+import com.globant.imdb.core.DialogManager
 import com.globant.imdb.databinding.FragmentHomeBinding
 import com.globant.imdb.ui.view.adapters.MovieAdapter
 import com.globant.imdb.ui.view.adapters.MovieViewHolder
 import com.globant.imdb.ui.viewmodel.HomeViewModel
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHolder.MovieListener {
+
+    @Inject
+    lateinit var dialogManager: DialogManager
 
     private val binding: FragmentHomeBinding by lazy {
         FragmentHomeBinding.inflate(layoutInflater)
@@ -33,11 +37,6 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
     private lateinit var nowPlayingMoviesAdapter: MovieAdapter
     private lateinit var upcomingMoviesAdapter: MovieAdapter
     private lateinit var popularMoviesAdapter: MovieAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        homeViewModel.setHandleFailure(::showAlert)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -165,21 +164,12 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
     }
 
     override fun addToList(id: Int, numberList:Int) {
-        homeViewModel.addMovieToWatchList(id, numberList, requireContext()) {
-            showAlert(
+        homeViewModel.addMovieToWatchList(id, numberList){
+            homeViewModel.isLoading.postValue(false)
+            dialogManager.showAlert(
                 getString(R.string.success),
-                "Movie ${it.title} added successfully"
+                getString(R.string.success_movie_added, it.title)
             )
         }
-    }
-
-    private fun showAlert(title:String, message:String){
-        homeViewModel.isLoading.postValue(false)
-        val builder = AlertDialog.Builder(activity)
-        builder.setTitle(title)
-        builder.setMessage(message)
-        builder.setPositiveButton(R.string.accept, null)
-        val dialog = builder.create()
-        dialog.show()
     }
 }

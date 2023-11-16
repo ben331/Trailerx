@@ -1,17 +1,15 @@
-package com.globant.imdb.ui.view
+package com.globant.imdb.ui.view.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.globant.imdb.databinding.FragmentFinishSignupBinding
+import com.globant.imdb.databinding.FragmentPlayBinding
 
-
-class FinishSignupFragment : Fragment() {
-
-    private val binding:FragmentFinishSignupBinding by lazy {
-        FragmentFinishSignupBinding.inflate(layoutInflater)
+class PlayFragment : Fragment() {
+    private val binding: FragmentPlayBinding by lazy {
+        FragmentPlayBinding.inflate(layoutInflater)
     }
 
     override fun onCreateView(
@@ -20,5 +18,4 @@ class FinishSignupFragment : Fragment() {
     ): View {
         return binding.root
     }
-
 }

@@ -1,20 +1,20 @@
 package com.globant.imdb.ui.viewmodel
 
-import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.globant.imdb.core.DialogManager
 import com.globant.imdb.data.model.movies.Movie
 import com.globant.imdb.data.remote.firebase.FirebaseAuthManager
 import com.globant.imdb.domain.user.DeleteMovieFromListUseCase
 import com.globant.imdb.domain.user.GetUserMoviesUseCase
-import com.globant.imdb.domain.user.SetHandleFailureUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val setHandleFailureUseCase:SetHandleFailureUseCase,
+    private val dialogManager: DialogManager,
+    private val authManager: FirebaseAuthManager,
     private val getUserMoviesUseCase:GetUserMoviesUseCase,
     private val deleteMovieFromListUseCase:DeleteMovieFromListUseCase,
 ): ViewModel() {
@@ -25,38 +25,38 @@ class ProfileViewModel @Inject constructor(
     val favoritePeople = MutableLiveData<List<Movie>>()
     val isLoading = MutableLiveData(false)
 
-    private val authManager: FirebaseAuthManager by lazy {
-        FirebaseAuthManager()
+    private fun handleFailure(title:Int, msg:Int){
+        isLoading.postValue(false)
+        dialogManager.showAlert(title, msg)
     }
 
-    fun refresh(context:Context) {
+    fun refresh() {
         isLoading.postValue(true)
         val uri = authManager.getProfilePhotoURL()
         if(uri!=null){
             photoUri.postValue(uri)
         }
-        getUserMoviesUseCase(context, 1){ movies ->
+
+        getUserMoviesUseCase(1,{ movies ->
             watchList.postValue(movies)
             isLoading.postValue(false)
-        }
-        getUserMoviesUseCase(context, 2){ movies ->
+        }, ::handleFailure)
+
+        getUserMoviesUseCase(2,{ movies ->
             recentViewed.postValue(movies)
             isLoading.postValue(false)
-        }
-        getUserMoviesUseCase(context, 3){ movies ->
+        }, ::handleFailure)
+
+        getUserMoviesUseCase(3,{ movies ->
             favoritePeople.postValue(movies)
             isLoading.postValue(false)
-        }
+        }, ::handleFailure)
     }
 
-    fun setHandleFailure(handleAlert: (title:String, msg:String) -> Unit){
-        setHandleFailureUseCase(handleAlert)
-    }
-
-    fun deleteMovieFromList(context: Context, movieId:Int, listNumber:Int){
+    fun deleteMovieFromList(movieId:Int, listNumber:Int){
         isLoading.postValue(true)
-        deleteMovieFromListUseCase(context, movieId, listNumber){
-            refresh(context)
-        }
+        deleteMovieFromListUseCase(movieId, listNumber,{
+            refresh()
+        }, ::handleFailure)
     }
 }

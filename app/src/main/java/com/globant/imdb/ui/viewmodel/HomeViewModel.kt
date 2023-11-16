@@ -1,10 +1,10 @@
 package com.globant.imdb.ui.viewmodel
 
 import android.annotation.SuppressLint
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.globant.imdb.core.DialogManager
 import com.globant.imdb.data.model.movies.Movie
 import com.globant.imdb.domain.movies.GetNowPlayingMoviesUseCase
 import com.globant.imdb.domain.movies.GetPopularMoviesUseCase
@@ -12,20 +12,19 @@ import com.globant.imdb.domain.movies.GetRandomTopMovieUseCase
 import com.globant.imdb.domain.movies.GetOfficialTrailerUseCase
 import com.globant.imdb.domain.movies.GetUpcomingMoviesUseCase
 import com.globant.imdb.domain.user.AddMovieToListUseCase
-import com.globant.imdb.domain.user.SetHandleFailureUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
+    private val dialogManager: DialogManager,
     private val getNowPlayingMoviesUseCase:GetNowPlayingMoviesUseCase,
     private val getTrailerUseCase:GetOfficialTrailerUseCase,
     private val getPopularMoviesUseCase:GetPopularMoviesUseCase,
     private val getRandomTopMovieUseCase:GetRandomTopMovieUseCase,
     private val getUpcomingMovies:GetUpcomingMoviesUseCase,
     private val addMovieToListUseCase:AddMovieToListUseCase,
-    private val setHandleFailureUseCase:SetHandleFailureUseCase
 ): ViewModel() {
 
     val mainMovie = MutableLiveData<Movie>()
@@ -71,10 +70,6 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun setHandleFailure(handleAlert: (title:String, msg:String) -> Unit){
-        setHandleFailureUseCase(handleAlert)
-    }
-
     fun getTrailerOfMovie(movieId:Int){
         isLoading.postValue(true)
         viewModelScope.launch {
@@ -88,8 +83,7 @@ class HomeViewModel @Inject constructor(
     fun addMovieToWatchList(
         movieId:Int,
         numberList:Int,
-        context: Context,
-        handleSuccess:(movie:Movie)->Unit
+        onSuccess:(Movie)->Unit
     ){
         isLoading.postValue(true)
         val homeMovies = when(numberList){
@@ -102,7 +96,10 @@ class HomeViewModel @Inject constructor(
             it.id == movieId
         }
         if(movie!=null){
-            addMovieToListUseCase(context, movie, 1, handleSuccess)
+            addMovieToListUseCase(movie, 1, onSuccess){ title, msg ->
+                isLoading.postValue(false)
+                dialogManager.showAlert(title, msg)
+            }
         }
     }
 }

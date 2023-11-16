@@ -6,7 +6,7 @@
     app:startDestination="@id/homeFragment">
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.globant.imdb.ui.view.HomeFragment"
+        android:name="com.globant.imdb.ui.view.fragments.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.globant.imdb.ui.view.SearchFragment"
+        android:name="com.globant.imdb.ui.view.fragments.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
         <action
@@ -24,7 +24,7 @@
     </fragment>
     <fragment
         android:id="@+id/movieFragment"
-        android:name="com.globant.imdb.ui.view.MovieFragment"
+        android:name="com.globant.imdb.ui.view.fragments.MovieFragment"
         android:label="fragment_movie"
         tools:layout="@layout/fragment_movie" >
         <argument
@@ -33,7 +33,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.globant.imdb.ui.view.ProfileFragment"
+        android:name="com.globant.imdb.ui.view.fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -42,7 +42,7 @@
     </fragment>
     <fragment
         android:id="@+id/playFragment"
-        android:name="com.globant.imdb.ui.view.PlayFragment"
+        android:name="com.globant.imdb.ui.view.fragments.PlayFragment"
         android:label="fragment_play"
         tools:layout="@layout/fragment_play" />
 </navigation>

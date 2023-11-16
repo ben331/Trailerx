@@ -39,6 +39,7 @@
     <string name="section_upcoming">Proximamente</string>
     <string name="section_popular">Populares</string>
     <string name="best_selections">Las mejores selecciones</string>
+    <string name="success_movie_added">%1$s se agregó correctamente a tu lista.</string>
 
     /*
     ---MovieFragment---

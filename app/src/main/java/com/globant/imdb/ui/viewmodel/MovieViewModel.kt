@@ -1,9 +1,10 @@
 package com.globant.imdb.ui.viewmodel
 
-import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.globant.imdb.core.DialogManager
 import com.globant.imdb.data.model.movies.Movie
 import com.globant.imdb.data.model.movies.MovieConverter
 import com.globant.imdb.data.model.movies.MovieDetail
@@ -16,6 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MovieViewModel @Inject constructor(
+    private val dialogManager: DialogManager,
     private val getMovieByIdUseCase:GetMovieByIdUseCase,
     private val getTrailerUseCase:GetOfficialTrailerUseCase,
     private val addMovieToListUseCase:AddMovieToListUseCase
@@ -40,19 +42,27 @@ class MovieViewModel @Inject constructor(
         }
     }
 
-    fun addMovieToWatchList(context: Context, handleSuccess:(movie: Movie)->Unit){
+    fun addMovieToWatchList(handleSuccess:(movie: Movie)->Unit){
         isLoading.postValue(true)
         currentMovie.value?.let {
             val movie = MovieConverter.movieDetailToMovie(it)
-            addMovieToListUseCase(context, movie, 1, handleSuccess)
+            addMovieToListUseCase(movie, 1, handleSuccess, ::handleFailure)
         }
     }
 
-    fun recordHistory(context: Context){
+    fun recordHistory(){
         isLoading.postValue(true)
         currentMovie.value?.let {
             val movie = MovieConverter.movieDetailToMovie(it)
-            addMovieToListUseCase(context, movie, 2) { }
+            addMovieToListUseCase(
+                movie, 2,
+                { Log.i("INFO", "Movie ${movie.title}, id:${movie.id} saved in history") },
+                ::handleFailure)
         }
+    }
+
+    private fun handleFailure(title:Int, msg:Int){
+        isLoading.postValue(false)
+        dialogManager.showAlert(title, msg)
     }
 }

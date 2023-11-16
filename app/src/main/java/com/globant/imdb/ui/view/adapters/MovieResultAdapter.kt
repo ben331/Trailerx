@@ -11,7 +11,7 @@ import com.globant.imdb.R
 import com.globant.imdb.core.Constants
 import com.globant.imdb.data.model.movies.Movie
 import com.globant.imdb.databinding.ItemMovieResultBinding
-import com.globant.imdb.ui.view.SearchFragment
+import com.globant.imdb.ui.view.fragments.SearchFragment
 
 class MovieResultAdapter: Adapter<MovieResultViewHolder>() {
 
