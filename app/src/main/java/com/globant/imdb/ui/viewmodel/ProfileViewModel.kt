@@ -4,7 +4,7 @@ import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.globant.imdb.core.DialogManager
-import com.globant.imdb.data.model.movies.Movie
+import com.globant.imdb.data.model.movies.MovieModel
 import com.globant.imdb.data.remote.firebase.FirebaseAuthManager
 import com.globant.imdb.domain.user.DeleteMovieFromListUseCase
 import com.globant.imdb.domain.user.GetUserMoviesUseCase
@@ -20,9 +20,9 @@ class ProfileViewModel @Inject constructor(
 ): ViewModel() {
 
     val photoUri = MutableLiveData<Uri?>()
-    val watchList = MutableLiveData<List<Movie>>()
-    val recentViewed = MutableLiveData<List<Movie>>()
-    val favoritePeople = MutableLiveData<List<Movie>>()
+    val watchList = MutableLiveData<List<MovieModel>>()
+    val recentViewed = MutableLiveData<List<MovieModel>>()
+    val favoritePeople = MutableLiveData<List<MovieModel>>()
     val isLoading = MutableLiveData(false)
 
     private fun handleFailure(title:Int, msg:Int){

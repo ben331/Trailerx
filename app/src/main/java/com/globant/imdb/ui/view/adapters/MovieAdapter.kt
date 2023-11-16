@@ -9,13 +9,13 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.globant.imdb.databinding.ItemMovieBinding
 import com.globant.imdb.R
 import com.globant.imdb.core.Constants
-import com.globant.imdb.data.model.movies.Movie
+import com.globant.imdb.data.model.movies.MovieModel
 import com.globant.imdb.ui.view.fragments.HomeFragment
 
 
 class MovieAdapter: Adapter<MovieViewHolder>() {
 
-    var movieList: List<Movie> = emptyList()
+    var movieList: List<MovieModel> = emptyList()
     lateinit var moviesListener: HomeFragment
     var numberList:Int = 0
 

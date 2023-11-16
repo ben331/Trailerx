@@ -2,7 +2,7 @@ package com.globant.imdb.data.model.movies
 
 import com.google.gson.annotations.SerializedName
 
-data class ProductionCompany(
+data class ProductionCompanyModel(
     @SerializedName("id")               val id:Int,
     @SerializedName("logo_path")        val logoPath:String?,
     @SerializedName("name")             val name:String,

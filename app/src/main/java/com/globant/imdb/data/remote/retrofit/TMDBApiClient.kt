@@ -1,9 +1,9 @@
 package com.globant.imdb.data.remote.retrofit
 
-import com.globant.imdb.data.model.movies.MovieDetail
-import com.globant.imdb.data.model.movies.MoviesList
-import com.globant.imdb.data.model.movies.MoviesListDates
-import com.globant.imdb.data.model.movies.VideoList
+import com.globant.imdb.data.model.movies.MovieDetailModel
+import com.globant.imdb.data.model.movies.MoviesListModel
+import com.globant.imdb.data.model.movies.MoviesListDatesModel
+import com.globant.imdb.data.model.movies.VideoListModel
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -15,36 +15,36 @@ interface TMDBApiClient {
     suspend fun getNowPlayingMovies(
         @Query("language") language: String,
         @Query("page") page: Int
-    ):Response<MoviesListDates?>
+    ):Response<MoviesListDatesModel?>
 
     @GET("movie/upcoming")
     suspend fun getUpcomingMovies(
         @Query("language") language: String,
         @Query("page") page: Int
-    ):Response<MoviesListDates?>
+    ):Response<MoviesListDatesModel?>
 
     @GET("movie/popular")
     suspend fun getPopularMovies(
         @Query("language") language: String,
         @Query("page") page: Int
-    ):Response<MoviesList?>
+    ):Response<MoviesListModel?>
 
     @GET("movie/{movieId}")
     suspend fun getMovieById(
         @Path("movieId") movieId:Int,
         @Query("language") language: String,
-    ):Response<MovieDetail?>
+    ):Response<MovieDetailModel?>
 
     @GET("search/movie")
     suspend fun searchMovie(
         @Query("query") query: String,
         @Query("language") language: String,
         @Query("page") page: Int
-    ):Response<MoviesList?>
+    ):Response<MoviesListModel?>
 
     @GET("movie/{movieId}/videos")
     suspend fun getTrailers(
         @Path("movieId") movieId:Int,
         @Query("language") language: String,
-    ):Response<VideoList?>
+    ):Response<VideoListModel?>
 }

@@ -5,7 +5,7 @@ import android.content.Intent
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.globant.imdb.core.DialogManager
-import com.globant.imdb.data.model.user.User
+import com.globant.imdb.data.model.user.UserModel
 import com.globant.imdb.data.remote.firebase.FirebaseAuthManager
 import com.globant.imdb.data.remote.firebase.ProviderType
 import com.globant.imdb.domain.user.CreateUserUseCase
@@ -26,8 +26,8 @@ class AuthViewModel @Inject constructor(
     }
 
     fun createUser(
-        localUser: User,
-        handleSuccess:(user: User?)->Unit
+        localUser: UserModel,
+        handleSuccess:(user: UserModel?)->Unit
     ){
         createUserUseCase(localUser, handleSuccess, ::handleFailure)
     }

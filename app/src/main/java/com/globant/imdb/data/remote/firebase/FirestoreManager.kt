@@ -2,8 +2,8 @@ package com.globant.imdb.data.remote.firebase
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.globant.imdb.R
-import com.globant.imdb.data.model.movies.Movie
-import com.globant.imdb.data.model.user.User
+import com.globant.imdb.data.model.movies.MovieModel
+import com.globant.imdb.data.model.user.UserModel
 import javax.inject.Inject
 
 
@@ -16,7 +16,7 @@ class FirestoreManager @Inject constructor(
         auth.getEmail()
     }
 
-    fun createUser(user: User, handleSuccess: (user: User?) -> Unit) {
+    fun createUser(user: UserModel, handleSuccess: (user: UserModel?) -> Unit) {
         db.collection("users").document(user.email).set(user)
             .addOnCompleteListener {
                 handleSuccess(user)
@@ -29,13 +29,13 @@ class FirestoreManager @Inject constructor(
 
     fun getUser(
         localEmail:String,
-        handleSuccess:(user:User?)->Unit,
+        handleSuccess:(user:UserModel?)->Unit,
         handleFailure:(title:Int, msg:Int)->Unit
     ) {
         db.collection("users").document(localEmail).get()
             .addOnSuccessListener {
                 if(it.exists()){
-                    val user = it.toObject(User::class.java)
+                    val user = it.toObject(UserModel::class.java)
                     handleSuccess(user)
                 }else{
                     handleSuccess(null)
@@ -51,7 +51,7 @@ class FirestoreManager @Inject constructor(
 
     fun getUserMoviesList(
         numberList:Int,
-        handleSuccess: (movies:List<Movie>)->Unit,
+        handleSuccess: (movies:List<MovieModel>)->Unit,
         handleFailure:(title:Int, msg:Int)->Unit
     ) {
         val collection = when(numberList){
@@ -63,10 +63,10 @@ class FirestoreManager @Inject constructor(
         collection?.let {
             db.collection("users").document(email).collection(collection).get()
                 .addOnSuccessListener {
-                    val result:ArrayList<Movie> = ArrayList()
+                    val result:ArrayList<MovieModel> = ArrayList()
                     if(!it.isEmpty){
                         for( document in it.documents ){
-                            val movie = document.toObject(Movie::class.java)!!
+                            val movie = document.toObject(MovieModel::class.java)!!
                             result.add(movie)
                         }
                         handleSuccess(result)
@@ -84,8 +84,8 @@ class FirestoreManager @Inject constructor(
     }
 
     fun addMovieToList(
-        movie:Movie, listNumber: Int,
-        handleSuccess:(movie:Movie)->Unit,
+        movie:MovieModel, listNumber: Int,
+        handleSuccess:(movie:MovieModel)->Unit,
         handleFailure:(title:Int, msg:Int)->Unit
     ){
         val collection = when(listNumber){

@@ -1,10 +1,10 @@
 package com.globant.imdb.data
 
-import com.globant.imdb.data.model.movies.Movie
-import com.globant.imdb.data.model.movies.MovieDetail
+import com.globant.imdb.data.model.movies.MovieModel
+import com.globant.imdb.data.model.movies.MovieDetailModel
 import com.globant.imdb.data.model.movies.MovieProvider
-import com.globant.imdb.data.model.movies.Video
-import com.globant.imdb.data.model.user.User
+import com.globant.imdb.data.model.movies.VideoModel
+import com.globant.imdb.data.model.user.UserModel
 import com.globant.imdb.data.remote.firebase.FirestoreManager
 import com.globant.imdb.data.remote.retrofit.TMDBService
 import javax.inject.Inject
@@ -13,42 +13,42 @@ class IMDbRepository @Inject constructor(
     private val api:TMDBService,
     private val firestoreManager:FirestoreManager
 ) {
-    suspend fun getNowPlayingMovies():List<Movie>{
+    suspend fun getNowPlayingMovies():List<MovieModel>{
         if(MovieProvider.movies.isEmpty()){
             val response = api.getNowPlayingMovies()?.results ?: emptyList()
             MovieProvider.movies = response
         }
         return MovieProvider.movies
     }
-    suspend fun getUpcomingMovies():List<Movie>{
+    suspend fun getUpcomingMovies():List<MovieModel>{
         val response = api.getUpcomingMovies()?.results ?: emptyList()
         return response
     }
-    suspend fun getPopularMovies():List<Movie>{
+    suspend fun getPopularMovies():List<MovieModel>{
         val response = api.getPopularMovies()?.results ?: emptyList()
         return response
     }
-    suspend fun getMovieById(movieId:Int): MovieDetail?{
+    suspend fun getMovieById(movieId:Int): MovieDetailModel?{
         val response = api.getMovieById(movieId)
         return response
     }
-    suspend fun searchMovie(query:String):List<Movie>{
+    suspend fun searchMovie(query:String):List<MovieModel>{
         val response = api.searchMovie(query)?.results ?: emptyList()
         return response
     }
-    suspend fun getTrailers(movieId:Int):List<Video>{
+    suspend fun getTrailers(movieId:Int):List<VideoModel>{
         val response = api.getTrailers(movieId)?.results ?: emptyList()
         return response
     }
 
     // Firestore
-    fun createUser(user:User, handleSuccess:(user:User?)->Unit){
+    fun createUser(user:UserModel, handleSuccess:(user:UserModel?)->Unit){
         firestoreManager.createUser(user, handleSuccess)
     }
 
     fun getUser(
         localEmail:String,
-        handleSuccess:(user:User?)->Unit,
+        handleSuccess:(user:UserModel?)->Unit,
         handleFailure:(title:Int, msg:Int)->Unit
     ){
         firestoreManager.getUser(localEmail , handleSuccess, handleFailure)
@@ -56,16 +56,16 @@ class IMDbRepository @Inject constructor(
 
     fun getUserMoviesList(
         numberList:Int,
-        handleSuccess:(List<Movie>)->Unit,
+        handleSuccess:(List<MovieModel>)->Unit,
         handleFailure:(title:Int, msg:Int)->Unit)
     {
         return firestoreManager.getUserMoviesList(numberList, handleSuccess, handleFailure)
     }
 
     fun addMovieToList(
-        movie:Movie,
+        movie:MovieModel,
         listNumber: Int,
-        handleSuccess:(Movie)->Unit,
+        handleSuccess:(MovieModel)->Unit,
         handleFailure:(title:Int, msg:Int)->Unit)
     {
         return firestoreManager.addMovieToList(movie, listNumber, handleSuccess, handleFailure)

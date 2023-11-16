@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.globant.imdb.core.DialogManager
-import com.globant.imdb.data.model.movies.Movie
+import com.globant.imdb.data.model.movies.MovieModel
 import com.globant.imdb.data.model.movies.MovieConverter
-import com.globant.imdb.data.model.movies.MovieDetail
+import com.globant.imdb.data.model.movies.MovieDetailModel
 import com.globant.imdb.domain.movies.GetMovieByIdUseCase
 import com.globant.imdb.domain.movies.GetOfficialTrailerUseCase
 import com.globant.imdb.domain.user.AddMovieToListUseCase
@@ -24,7 +24,7 @@ class MovieViewModel @Inject constructor(
 ): ViewModel() {
 
     val isLoading = MutableLiveData(false)
-    val currentMovie = MutableLiveData<MovieDetail>()
+    val currentMovie = MutableLiveData<MovieDetailModel>()
     val videoIframe = MutableLiveData<String?>()
 
     fun onCreate(movieId:Int){
@@ -42,7 +42,7 @@ class MovieViewModel @Inject constructor(
         }
     }
 
-    fun addMovieToWatchList(handleSuccess:(movie: Movie)->Unit){
+    fun addMovieToWatchList(handleSuccess:(movie: MovieModel)->Unit){
         isLoading.postValue(true)
         currentMovie.value?.let {
             val movie = MovieConverter.movieDetailToMovie(it)

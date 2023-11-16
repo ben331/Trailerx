@@ -2,12 +2,12 @@ package com.globant.imdb.domain.movies
 
 import com.globant.imdb.core.Constants
 import com.globant.imdb.data.IMDbRepository
-import com.globant.imdb.data.model.movies.Video
+import com.globant.imdb.data.model.movies.VideoModel
 import javax.inject.Inject
 
 class GetOfficialTrailerUseCase @Inject constructor( private val repository:IMDbRepository ){
     suspend operator fun invoke(movieId:Int, withControls:Boolean):String? {
-        var officialTrailer: Video? = null
+        var officialTrailer: VideoModel? = null
         val videoList = repository.getTrailers(movieId)
         if(videoList.isNotEmpty()){
             officialTrailer = videoList.find {

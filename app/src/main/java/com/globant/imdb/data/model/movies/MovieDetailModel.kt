@@ -2,12 +2,12 @@ package com.globant.imdb.data.model.movies
 
 import com.google.gson.annotations.SerializedName
 
-data class MovieDetail (
+data class MovieDetailModel (
     @SerializedName("adult")                    val adult: Boolean,
-    @SerializedName("belongs_to_collection")    val belongsToCollection: Collection?,
+    @SerializedName("belongs_to_collection")    val belongsToCollection: CollectionModel?,
     @SerializedName("backdrop_path")            val backdropPath: String,
     @SerializedName("budget")                   val budget: Int,
-    @SerializedName("genres")                   val genres: List<Genre>,
+    @SerializedName("genres")                   val genres: List<GenreModel>,
     @SerializedName("homepage")                 val homepage:String,
     @SerializedName("id")                       val id: Int,
     @SerializedName("imdb_id")                  val imdbId:String,
@@ -16,12 +16,12 @@ data class MovieDetail (
     @SerializedName("overview")                 val overview: String,
     @SerializedName("popularity")               val popularity: Double,
     @SerializedName("poster_path")              val posterPath: String,
-    @SerializedName("production_companies")     val productionCompanies: List<ProductionCompany>,
-    @SerializedName("production_countries")     val productionCountries: List<ProductionCountry>,
+    @SerializedName("production_companies")     val productionCompanies: List<ProductionCompanyModel>,
+    @SerializedName("production_countries")     val productionCountries: List<ProductionCountryModel>,
     @SerializedName("release_date")             val releaseDate: String,
     @SerializedName("revenue")                  val revenue: Int,
     @SerializedName("runtime")                  val runtime:Int,
-    @SerializedName("spoken_languages")         val spokenLanguages: List<SpokenLanguage>,
+    @SerializedName("spoken_languages")         val spokenLanguages: List<SpokenLanguageModel>,
     @SerializedName("status")                   val status: String,
     @SerializedName("tagline")                  val tagline:String,
     @SerializedName("title")                    val title: String,

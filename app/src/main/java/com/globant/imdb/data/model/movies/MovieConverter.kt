@@ -1,10 +1,11 @@
 package com.globant.imdb.data.model.movies
 
 class MovieConverter {
+    //TODO: CHANGE TO MAPPER
     companion object{
-        fun movieDetailToMovie(movieDetail: MovieDetail): Movie {
+        fun movieDetailToMovie(movieDetail: MovieDetailModel): MovieModel {
             val genreIds = movieDetail.genres.map { it.id }
-            return Movie(
+            return MovieModel(
                 movieDetail.adult,
                 movieDetail.backdropPath,
                 genreIds,

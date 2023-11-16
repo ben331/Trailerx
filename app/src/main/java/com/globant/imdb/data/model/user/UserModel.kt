@@ -1,6 +1,6 @@
 package com.globant.imdb.data.model.user
 
-data class User(
+data class UserModel(
     val email:String = "",
     val displayName:String = "",
 )

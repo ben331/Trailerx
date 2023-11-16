@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.globant.imdb.core.DialogManager
-import com.globant.imdb.data.model.movies.Movie
+import com.globant.imdb.data.model.movies.MovieModel
 import com.globant.imdb.domain.movies.GetNowPlayingMoviesUseCase
 import com.globant.imdb.domain.movies.GetPopularMoviesUseCase
 import com.globant.imdb.domain.movies.GetRandomTopMovieUseCase
@@ -27,11 +27,11 @@ class HomeViewModel @Inject constructor(
     private val addMovieToListUseCase:AddMovieToListUseCase,
 ): ViewModel() {
 
-    val mainMovie = MutableLiveData<Movie>()
+    val mainMovie = MutableLiveData<MovieModel>()
     val videoIframe = MutableLiveData<String?>()
-    val nowPlayingMovies = MutableLiveData<List<Movie>>()
-    val upcomingMovies = MutableLiveData<List<Movie>>()
-    val popularMovies = MutableLiveData<List<Movie>>()
+    val nowPlayingMovies = MutableLiveData<List<MovieModel>>()
+    val upcomingMovies = MutableLiveData<List<MovieModel>>()
+    val popularMovies = MutableLiveData<List<MovieModel>>()
     val isLoading = MutableLiveData(false)
 
     @SuppressLint("NotifyDataSetChanged")
@@ -83,7 +83,7 @@ class HomeViewModel @Inject constructor(
     fun addMovieToWatchList(
         movieId:Int,
         numberList:Int,
-        onSuccess:(Movie)->Unit
+        onSuccess:(MovieModel)->Unit
     ){
         isLoading.postValue(true)
         val homeMovies = when(numberList){

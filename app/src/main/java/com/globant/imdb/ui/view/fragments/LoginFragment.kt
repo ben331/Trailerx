@@ -20,7 +20,7 @@ import com.facebook.CallbackManager
 import com.globant.imdb.R
 import com.globant.imdb.core.DialogManager
 import com.globant.imdb.core.FormValidator
-import com.globant.imdb.data.model.user.User
+import com.globant.imdb.data.model.user.UserModel
 import com.globant.imdb.data.remote.firebase.ProviderType
 import com.globant.imdb.databinding.FragmentLoginBinding
 import com.globant.imdb.ui.viewmodel.AuthViewModel
@@ -211,7 +211,7 @@ class LoginFragment : Fragment() {
         navController.navigate(action)
     }
     private fun createUser(email:String, providerType: ProviderType){
-        val user = User(email, authViewModel.getDisplayName())
+        val user = UserModel(email, authViewModel.getDisplayName())
         authViewModel.createUser(user) {
             if(it!=null){
                 showHome(email, providerType)

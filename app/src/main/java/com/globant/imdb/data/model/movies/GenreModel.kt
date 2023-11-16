@@ -1,6 +1,6 @@
 package com.globant.imdb.data.model.movies
 
-data class Genre(
+data class GenreModel(
     val id:Int,
     val name:String
 )

@@ -6,13 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.globant.imdb.R
-import com.globant.imdb.data.model.user.Shortcut
+import com.globant.imdb.data.model.user.StatsModel
 import com.globant.imdb.databinding.ItemShortcutBinding
 
 
 class ShortcutAdapter: Adapter<ShortcutViewHolder>() {
 
-    var shortcutList: List<Shortcut> = init()
+    var statsList: List<StatsModel> = init()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShortcutViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -21,7 +21,7 @@ class ShortcutAdapter: Adapter<ShortcutViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ShortcutViewHolder, position: Int) {
-        with(shortcutList[position]){
+        with(statsList[position]){
             holder.id = position
             holder.title.text = title
             holder.textBox.text = content
@@ -29,14 +29,14 @@ class ShortcutAdapter: Adapter<ShortcutViewHolder>() {
         }
     }
     override fun getItemCount(): Int {
-        return shortcutList.size
+        return statsList.size
     }
 
-    private fun init(): List<Shortcut>{
+    private fun init(): List<StatsModel>{
         return listOf(
-            Shortcut("Calificar y obtener recomendaciones", "Calificaciones", 0),
-            Shortcut("Agregar a listas", "Listas", 0),
-            Shortcut("Agregar a favoritos", "Favoritos", 0),
+            StatsModel("Calificar y obtener recomendaciones", "Calificaciones", 0),
+            StatsModel("Agregar a listas", "Listas", 0),
+            StatsModel("Agregar a favoritos", "Favoritos", 0),
         )
     }
 }
