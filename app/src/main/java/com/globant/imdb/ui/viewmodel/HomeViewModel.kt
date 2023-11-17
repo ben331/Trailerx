@@ -5,13 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.globant.imdb.core.DialogManager
-import com.globant.imdb.data.model.movies.MovieModel
-import com.globant.imdb.domain.movies.GetNowPlayingMoviesUseCase
-import com.globant.imdb.domain.movies.GetPopularMoviesUseCase
-import com.globant.imdb.domain.movies.GetRandomTopMovieUseCase
-import com.globant.imdb.domain.movies.GetOfficialTrailerUseCase
-import com.globant.imdb.domain.movies.GetUpcomingMoviesUseCase
-import com.globant.imdb.domain.user.AddMovieToListUseCase
+import com.globant.imdb.domain.model.MovieItem
+import com.globant.imdb.domain.movies_use_cases.GetNowPlayingMoviesUseCase
+import com.globant.imdb.domain.movies_use_cases.GetPopularMoviesUseCase
+import com.globant.imdb.domain.movies_use_cases.GetRandomTopMovieUseCase
+import com.globant.imdb.domain.movies_use_cases.GetOfficialTrailerUseCase
+import com.globant.imdb.domain.movies_use_cases.GetUpcomingMoviesUseCase
+import com.globant.imdb.domain.user_use_cases.AddMovieToListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,11 +27,11 @@ class HomeViewModel @Inject constructor(
     private val addMovieToListUseCase:AddMovieToListUseCase,
 ): ViewModel() {
 
-    val mainMovie = MutableLiveData<MovieModel>()
+    val mainMovie = MutableLiveData<MovieItem>()
     val videoIframe = MutableLiveData<String?>()
-    val nowPlayingMovies = MutableLiveData<List<MovieModel>>()
-    val upcomingMovies = MutableLiveData<List<MovieModel>>()
-    val popularMovies = MutableLiveData<List<MovieModel>>()
+    val nowPlayingMovies = MutableLiveData<List<MovieItem>>()
+    val upcomingMovies = MutableLiveData<List<MovieItem>>()
+    val popularMovies = MutableLiveData<List<MovieItem>>()
     val isLoading = MutableLiveData(false)
 
     @SuppressLint("NotifyDataSetChanged")
@@ -83,7 +83,7 @@ class HomeViewModel @Inject constructor(
     fun addMovieToWatchList(
         movieId:Int,
         numberList:Int,
-        onSuccess:(MovieModel)->Unit
+        onSuccess:(MovieItem)->Unit
     ){
         isLoading.postValue(true)
         val homeMovies = when(numberList){

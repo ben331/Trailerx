@@ -55,6 +55,6 @@
             app:nullable="true" />
         <argument
             android:name="provider"
-            app:argType="com.globant.imdb.data.remote.firebase.ProviderType" />
+            app:argType="com.globant.imdb.data.network.firebase.ProviderType" />
     </fragment>
 </navigation>

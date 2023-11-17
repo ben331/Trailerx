@@ -5,12 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.globant.imdb.core.DialogManager
-import com.globant.imdb.data.model.movies.MovieModel
-import com.globant.imdb.data.model.movies.MovieConverter
-import com.globant.imdb.data.model.movies.MovieDetailModel
-import com.globant.imdb.domain.movies.GetMovieByIdUseCase
-import com.globant.imdb.domain.movies.GetOfficialTrailerUseCase
-import com.globant.imdb.domain.user.AddMovieToListUseCase
+import com.globant.imdb.domain.model.MovieItem
+import com.globant.imdb.domain.movies_use_cases.GetMovieByIdUseCase
+import com.globant.imdb.domain.movies_use_cases.GetOfficialTrailerUseCase
+import com.globant.imdb.domain.user_use_cases.AddMovieToListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,7 +22,7 @@ class MovieViewModel @Inject constructor(
 ): ViewModel() {
 
     val isLoading = MutableLiveData(false)
-    val currentMovie = MutableLiveData<MovieDetailModel>()
+    val currentMovie = MutableLiveData<MovieItem>()
     val videoIframe = MutableLiveData<String?>()
 
     fun onCreate(movieId:Int){
@@ -42,21 +40,21 @@ class MovieViewModel @Inject constructor(
         }
     }
 
-    fun addMovieToWatchList(handleSuccess:(movie: MovieModel)->Unit){
+    fun addMovieToWatchList(handleSuccess:(movie: MovieItem)->Unit){
         isLoading.postValue(true)
         currentMovie.value?.let {
-            val movie = MovieConverter.movieDetailToMovie(it)
-            addMovieToListUseCase(movie, 1, handleSuccess, ::handleFailure)
+            addMovieToListUseCase(it, 1, handleSuccess, ::handleFailure)
         }
     }
 
     fun recordHistory(){
         isLoading.postValue(true)
         currentMovie.value?.let {
-            val movie = MovieConverter.movieDetailToMovie(it)
             addMovieToListUseCase(
-                movie, 2,
-                { Log.i("INFO", "Movie ${movie.title}, id:${movie.id} saved in history") },
+                it, 2,
+                { movieItem ->
+                    Log.i("INFO", "Movie ${movieItem.title},id:${movieItem.id} recorded in history")
+                },
                 ::handleFailure)
         }
     }

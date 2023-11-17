@@ -21,7 +21,7 @@ import com.globant.imdb.R
 import com.globant.imdb.core.DialogManager
 import com.globant.imdb.core.FormValidator
 import com.globant.imdb.data.model.user.UserModel
-import com.globant.imdb.data.remote.firebase.ProviderType
+import com.globant.imdb.data.network.firebase.ProviderType
 import com.globant.imdb.databinding.FragmentLoginBinding
 import com.globant.imdb.ui.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint

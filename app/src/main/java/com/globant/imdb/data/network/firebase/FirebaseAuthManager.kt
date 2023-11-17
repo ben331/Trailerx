@@ -1,4 +1,4 @@
-package com.globant.imdb.data.remote.firebase
+package com.globant.imdb.data.network.firebase
 
 import android.app.Activity
 import android.content.Intent

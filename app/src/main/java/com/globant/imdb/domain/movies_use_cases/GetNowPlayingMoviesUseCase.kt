@@ -1,9 +1,10 @@
-package com.globant.imdb.domain.movies
+package com.globant.imdb.domain.movies_use_cases
 
 import com.globant.imdb.data.IMDbRepository
 import com.globant.imdb.data.model.movies.MovieModel
+import com.globant.imdb.domain.model.MovieItem
 import javax.inject.Inject
 
 class GetNowPlayingMoviesUseCase @Inject constructor( private val repository:IMDbRepository ) {
-    suspend operator fun invoke():List<MovieModel> = repository.getNowPlayingMovies()
+    suspend operator fun invoke():List<MovieItem> = repository.getNowPlayingMovies()
 }

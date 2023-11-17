@@ -1,9 +1,10 @@
-package com.globant.imdb.data.remote.firebase
+package com.globant.imdb.data.network.firebase
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.globant.imdb.R
 import com.globant.imdb.data.model.movies.MovieModel
 import com.globant.imdb.data.model.user.UserModel
+import com.globant.imdb.domain.model.MovieItem
 import javax.inject.Inject
 
 
@@ -84,8 +85,8 @@ class FirestoreManager @Inject constructor(
     }
 
     fun addMovieToList(
-        movie:MovieModel, listNumber: Int,
-        handleSuccess:(movie:MovieModel)->Unit,
+        movie:MovieItem, listNumber: Int,
+        handleSuccess:(movie:MovieItem)->Unit,
         handleFailure:(title:Int, msg:Int)->Unit
     ){
         val collection = when(listNumber){

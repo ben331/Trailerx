@@ -6,9 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.globant.imdb.core.DialogManager
 import com.globant.imdb.data.model.user.UserModel
-import com.globant.imdb.data.remote.firebase.FirebaseAuthManager
-import com.globant.imdb.data.remote.firebase.ProviderType
-import com.globant.imdb.domain.user.CreateUserUseCase
+import com.globant.imdb.data.network.firebase.FirebaseAuthManager
+import com.globant.imdb.data.network.firebase.ProviderType
+import com.globant.imdb.domain.user_use_cases.CreateUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

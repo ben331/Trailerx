@@ -1,13 +1,13 @@
-package com.globant.imdb.domain.movies
+package com.globant.imdb.domain.movies_use_cases
 
 import com.globant.imdb.core.Constants
 import com.globant.imdb.data.IMDbRepository
-import com.globant.imdb.data.model.movies.VideoModel
+import com.globant.imdb.domain.model.VideoItem
 import javax.inject.Inject
 
 class GetOfficialTrailerUseCase @Inject constructor( private val repository:IMDbRepository ){
     suspend operator fun invoke(movieId:Int, withControls:Boolean):String? {
-        var officialTrailer: VideoModel? = null
+        var officialTrailer: VideoItem? = null
         val videoList = repository.getTrailers(movieId)
         if(videoList.isNotEmpty()){
             officialTrailer = videoList.find {

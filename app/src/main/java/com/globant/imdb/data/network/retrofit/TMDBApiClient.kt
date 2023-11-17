@@ -1,4 +1,4 @@
-package com.globant.imdb.data.remote.retrofit
+package com.globant.imdb.data.network.retrofit
 
 import com.globant.imdb.data.model.movies.MovieDetailModel
 import com.globant.imdb.data.model.movies.MoviesListModel

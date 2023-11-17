@@ -3,7 +3,7 @@ package com.globant.imdb.di
 import android.content.Context
 import com.globant.imdb.R
 import com.globant.imdb.core.Constants
-import com.globant.imdb.data.remote.retrofit.TMDBApiClient
+import com.globant.imdb.data.network.retrofit.TMDBApiClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
