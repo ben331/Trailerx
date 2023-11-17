@@ -1,6 +1,5 @@
 package com.globant.imdb.data
 
-import com.globant.imdb.data.model.movies.MovieModel
 import com.globant.imdb.data.model.user.UserModel
 import com.globant.imdb.data.network.firebase.FirestoreManager
 import com.globant.imdb.data.network.retrofit.TMDBService
@@ -60,7 +59,7 @@ class IMDbRepository @Inject constructor(
 
     fun getUserMoviesList(
         numberList:Int,
-        handleSuccess:(List<MovieModel>)->Unit,
+        handleSuccess:(List<MovieItem>)->Unit,
         handleFailure:(title:Int, msg:Int)->Unit)
     {
         return firestoreManager.getUserMoviesList(numberList, handleSuccess, handleFailure)

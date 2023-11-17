@@ -10,7 +10,7 @@ import com.globant.imdb.data.model.user.StatsModel
 import com.globant.imdb.databinding.ItemShortcutBinding
 
 
-class ShortcutAdapter: Adapter<ShortcutViewHolder>() {
+class StatsAdapter: Adapter<ShortcutViewHolder>() {
 
     var statsList: List<StatsModel> = init()
 

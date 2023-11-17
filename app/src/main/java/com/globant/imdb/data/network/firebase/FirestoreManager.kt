@@ -2,7 +2,6 @@ package com.globant.imdb.data.network.firebase
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.globant.imdb.R
-import com.globant.imdb.data.model.movies.MovieModel
 import com.globant.imdb.data.model.user.UserModel
 import com.globant.imdb.domain.model.MovieItem
 import javax.inject.Inject
@@ -52,7 +51,7 @@ class FirestoreManager @Inject constructor(
 
     fun getUserMoviesList(
         numberList:Int,
-        handleSuccess: (movies:List<MovieModel>)->Unit,
+        handleSuccess: (movies:List<MovieItem>)->Unit,
         handleFailure:(title:Int, msg:Int)->Unit
     ) {
         val collection = when(numberList){
@@ -64,10 +63,10 @@ class FirestoreManager @Inject constructor(
         collection?.let {
             db.collection("users").document(email).collection(collection).get()
                 .addOnSuccessListener {
-                    val result:ArrayList<MovieModel> = ArrayList()
+                    val result:ArrayList<MovieItem> = ArrayList()
                     if(!it.isEmpty){
                         for( document in it.documents ){
-                            val movie = document.toObject(MovieModel::class.java)!!
+                            val movie = document.toObject(MovieItem::class.java)!!
                             result.add(movie)
                         }
                         handleSuccess(result)

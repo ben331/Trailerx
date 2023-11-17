@@ -66,23 +66,23 @@ class MovieFragment : Fragment() {
     }
 
     private fun setupLiveData(){
-        movieViewModel.currentMovie.observe(viewLifecycleOwner){ movieDetail ->
+        movieViewModel.currentMovie.observe(viewLifecycleOwner){ movieItem ->
             movieViewModel.recordHistory()
-            binding.topAppBar.title = movieDetail.title
+            binding.topAppBar.title = movieItem.title
             with(binding.containerFrontage){
-                sectionTitle.text = movieDetail.title
-                originTitle.text = movieDetail.originalTitle
+                sectionTitle.text = movieItem.title
+                originTitle.text = movieItem.originalTitle
                 detailMovie.text =
-                    TextTransforms.createDescription(movieDetail.tagline, movieDetail.releaseDate)
+                    TextTransforms.createDescription(movieItem.tagline, movieItem.releaseDate)
             }
             with(binding.containerSypnosis){
                 labelGenre.text =
-                    if(movieDetail.genres.isNotEmpty()){
-                        movieDetail.genres[0].name
+                    if(movieItem.genreNames.isNotEmpty()){
+                        movieItem.genreNames[0]
                     }else{ "- - - -" }
-                labelStars.text = movieDetail.popularity.toString()
-                textBoxSynopsis.text = movieDetail.overview
-                val url = Constants.IMAGES_BASE_URL + movieDetail.backdropPath
+                labelStars.text = movieItem.popularity.toString()
+                textBoxSynopsis.text = movieItem.overview
+                val url = Constants.IMAGES_BASE_URL + movieItem.backdropPath
                 Picasso.with(requireContext())
                     .load(url)
                     .fit()

@@ -16,7 +16,7 @@ import com.globant.imdb.databinding.FragmentProfileBinding
 import com.globant.imdb.R
 import com.globant.imdb.ui.view.adapters.MovieProfileAdapter
 import com.globant.imdb.ui.view.adapters.MovieProfileViewHolder
-import com.globant.imdb.ui.view.adapters.ShortcutAdapter
+import com.globant.imdb.ui.view.adapters.StatsAdapter
 import com.globant.imdb.ui.viewmodel.ProfileViewModel
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,7 +34,7 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
         findNavController()
     }
 
-    private lateinit var shortcutAdapter: ShortcutAdapter
+    private lateinit var statsAdapter: StatsAdapter
 
     private lateinit var watchListAdapter: MovieProfileAdapter
     private lateinit var recentMoviesAdapter: MovieProfileAdapter
@@ -61,9 +61,9 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
     }
 
     private fun setupTopRecyclerView(){
-        shortcutAdapter = ShortcutAdapter()
+        statsAdapter = StatsAdapter()
         with(binding.profileHeaderContainer.shortcutsRecyclerView){
-            adapter = shortcutAdapter
+            adapter = statsAdapter
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             setHasFixedSize(true)

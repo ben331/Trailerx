@@ -19,7 +19,7 @@ data class MovieEntity(
     @ColumnInfo("listId")               val listId:Int = 0,
     @ColumnInfo("adult")                val adult: Boolean = false,
     @ColumnInfo("backdrop_path")        val backdropPath: String = "",
-    @ColumnInfo("genre_ids")            val genreIds: List<Int> = emptyList(),
+    @ColumnInfo("genre_names")          val genreNames: List<String> = emptyList(),
     @ColumnInfo("original_language")    val originalLanguage: String = "",
     @ColumnInfo("original_title")       val originalTitle: String = "",
     @ColumnInfo("overview")             val overview: String = "",
@@ -29,5 +29,6 @@ data class MovieEntity(
     @ColumnInfo("title")                val title: String = "",
     @ColumnInfo("video")                val video: Boolean = false,
     @ColumnInfo("vote_average")         val voteAverage: Double = 0.0,
-    @ColumnInfo("vote_count")           val voteCount: Int = 0
+    @ColumnInfo("vote_count")           val voteCount: Int = 0,
+    @ColumnInfo("tagline")              val tagline:String,
 )

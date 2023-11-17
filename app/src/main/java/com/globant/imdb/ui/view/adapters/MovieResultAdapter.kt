@@ -11,11 +11,12 @@ import com.globant.imdb.R
 import com.globant.imdb.core.Constants
 import com.globant.imdb.data.model.movies.MovieModel
 import com.globant.imdb.databinding.ItemMovieResultBinding
+import com.globant.imdb.domain.model.MovieItem
 import com.globant.imdb.ui.view.fragments.SearchFragment
 
 class MovieResultAdapter: Adapter<MovieResultViewHolder>() {
 
-    lateinit var movieList: MutableLiveData<List<MovieModel>>
+    lateinit var movieList: MutableLiveData<List<MovieItem>>
     lateinit var moviesListener: SearchFragment
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieResultViewHolder {
