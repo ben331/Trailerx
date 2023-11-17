@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import com.globant.imdb.core.DialogManager
 import com.globant.imdb.data.network.firebase.FirebaseAuthManager
 import com.globant.imdb.domain.model.MovieItem
-import com.globant.imdb.domain.user_use_cases.DeleteMovieFromListUseCase
-import com.globant.imdb.domain.user_use_cases.GetUserMoviesUseCase
+import com.globant.imdb.domain.userUseCases.DeleteMovieFromListUseCase
+import com.globant.imdb.domain.userUseCases.GetUserMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

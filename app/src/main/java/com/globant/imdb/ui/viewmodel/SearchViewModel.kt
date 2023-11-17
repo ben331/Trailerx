@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.globant.imdb.domain.model.MovieItem
-import com.globant.imdb.domain.movies_use_cases.SearchMovieUseCase
+import com.globant.imdb.domain.moviesUseCases.SearchMovieUseCase
 import com.globant.imdb.ui.view.adapters.MovieResultAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

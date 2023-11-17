@@ -20,6 +20,15 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += mapOf(
+                    "room.schemaLocation" to "$projectDir/schemas",
+                    "room.incremental" to "true"
+                )
+            }
+        }
     }
 
     buildTypes {
@@ -107,6 +116,7 @@ dependencies {
 
     //Room
     val roomVersion = "2.6.0"
+    implementation("androidx.room:room-ktx:$roomVersion")
     implementation("androidx.room:room-runtime:$roomVersion")
     //It is not time to migrate: https://medium.com/@callmeryan/migrate-from-kapt-to-kotlin-ksp-not-the-best-time-yet-b30f8869da17
     //noinspection KaptUsageInsteadOfKsp

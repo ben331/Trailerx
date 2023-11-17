@@ -4,6 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.globant.imdb.data.database.typeConverters.StringListConverter
 
 @Entity(
     tableName = "movies",
@@ -16,9 +18,10 @@ import androidx.room.PrimaryKey
 data class MovieEntity(
     @PrimaryKey
     @ColumnInfo("id")                   val id: Int = 0,
-    @ColumnInfo("listId")               val listId:Int = 0,
+    @ColumnInfo(index = true)                 val listId:Int = 0,
     @ColumnInfo("adult")                val adult: Boolean = false,
     @ColumnInfo("backdrop_path")        val backdropPath: String = "",
+    @TypeConverters(StringListConverter::class)
     @ColumnInfo("genre_names")          val genreNames: List<String> = emptyList(),
     @ColumnInfo("original_language")    val originalLanguage: String = "",
     @ColumnInfo("original_title")       val originalTitle: String = "",

@@ -1,4 +1,4 @@
-package com.globant.imdb.domain.movies_use_cases
+package com.globant.imdb.domain.moviesUseCases
 
 import com.globant.imdb.data.IMDbRepository
 import com.globant.imdb.domain.model.MovieItem

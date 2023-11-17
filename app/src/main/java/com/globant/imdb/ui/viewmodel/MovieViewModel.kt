@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.globant.imdb.core.DialogManager
 import com.globant.imdb.domain.model.MovieItem
-import com.globant.imdb.domain.movies_use_cases.GetMovieByIdUseCase
-import com.globant.imdb.domain.movies_use_cases.GetOfficialTrailerUseCase
-import com.globant.imdb.domain.user_use_cases.AddMovieToListUseCase
+import com.globant.imdb.domain.moviesUseCases.GetMovieByIdUseCase
+import com.globant.imdb.domain.moviesUseCases.GetOfficialTrailerUseCase
+import com.globant.imdb.domain.userUseCases.AddMovieToListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

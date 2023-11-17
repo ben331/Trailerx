@@ -1,7 +1,6 @@
-package com.globant.imdb.domain.movies_use_cases
+package com.globant.imdb.domain.moviesUseCases
 
 import com.globant.imdb.data.IMDbRepository
-import com.globant.imdb.data.model.movies.MovieModel
 import com.globant.imdb.domain.model.MovieItem
 import javax.inject.Inject
 

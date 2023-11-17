@@ -1,4 +1,4 @@
-package com.globant.imdb.domain.user_use_cases
+package com.globant.imdb.domain.userUseCases
 
 import com.globant.imdb.data.IMDbRepository
 import javax.inject.Inject
