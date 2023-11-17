@@ -4,7 +4,7 @@ import com.globant.imdb.data.IMDbRepository
 import com.globant.imdb.domain.model.MovieItem
 import javax.inject.Inject
 
-class AddMovieToListUseCase @Inject constructor( private val repository:IMDbRepository ) {
+class AddMovieToUserListUseCase @Inject constructor(private val repository:IMDbRepository ) {
     operator fun invoke(
         movie:MovieItem,
         listNumber: Int,

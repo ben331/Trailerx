@@ -18,8 +18,8 @@ object RoomModule {
 
     @Provides
     @Singleton
-    fun provideRoom(@ApplicationContext context:Context) =
-        Room.databaseBuilder(context, IMDbDatabase::class.java, IMDb_DATABASE_NAME)
+    fun provideRoom(@ApplicationContext context:Context):IMDbDatabase =
+        Room.databaseBuilder(context, IMDbDatabase::class.java, IMDb_DATABASE_NAME).build()
 
     @Provides
     @Singleton

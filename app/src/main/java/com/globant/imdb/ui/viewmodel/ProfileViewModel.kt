@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.globant.imdb.data.network.firebase.FirebaseAuthManager
 import com.globant.imdb.domain.model.MovieItem
-import com.globant.imdb.domain.userUseCases.DeleteMovieFromListUseCase
+import com.globant.imdb.domain.userUseCases.DeleteMovieFromUserListUseCase
 import com.globant.imdb.domain.userUseCases.GetUserMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -14,7 +14,7 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     private val authManager: FirebaseAuthManager,
     private val getUserMoviesUseCase:GetUserMoviesUseCase,
-    private val deleteMovieFromListUseCase:DeleteMovieFromListUseCase,
+    private val deleteMovieFromUserListUseCase:DeleteMovieFromUserListUseCase,
 ): ViewModel() {
 
     val photoUri = MutableLiveData<Uri?>()
@@ -53,7 +53,7 @@ class ProfileViewModel @Inject constructor(
         handleFailure:(title:Int, msg:Int)->Unit
     ){
         isLoading.postValue(true)
-        deleteMovieFromListUseCase(movieId, listNumber,{
+        deleteMovieFromUserListUseCase(movieId, listNumber,{
             refresh(handleFailure)
         }, handleFailure)
     }

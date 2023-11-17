@@ -1,12 +1,12 @@
 package com.globant.imdb.domain.model
 
 import com.globant.imdb.data.database.entities.movie.MovieListEntity
+import com.globant.imdb.data.database.entities.movie.MovieListType
 
 data class MovieListItem(
-    val id: Int,
-    val listName:Int
+    val id: MovieListType,
 )
 
 fun MovieListEntity.toDomain():MovieListItem {
-    return MovieListItem(id, listName)
+    return MovieListItem(id)
 }

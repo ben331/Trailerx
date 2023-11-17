@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.globant.imdb.domain.model.MovieItem
 import com.globant.imdb.domain.moviesUseCases.GetMovieByIdUseCase
 import com.globant.imdb.domain.moviesUseCases.GetOfficialTrailerUseCase
-import com.globant.imdb.domain.userUseCases.AddMovieToListUseCase
+import com.globant.imdb.domain.userUseCases.AddMovieToUserListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,7 +16,7 @@ import javax.inject.Inject
 class MovieViewModel @Inject constructor(
     private val getMovieByIdUseCase:GetMovieByIdUseCase,
     private val getTrailerUseCase:GetOfficialTrailerUseCase,
-    private val addMovieToListUseCase:AddMovieToListUseCase
+    private val addMovieToUserListUseCase:AddMovieToUserListUseCase
 ): ViewModel() {
 
     val isLoading = MutableLiveData(false)
@@ -43,14 +43,14 @@ class MovieViewModel @Inject constructor(
         handleFailure:(title:Int, msg:Int)->Unit){
         isLoading.postValue(true)
         currentMovie.value?.let {
-            addMovieToListUseCase(it, 1, handleSuccess, handleFailure)
+            addMovieToUserListUseCase(it, 1, handleSuccess, handleFailure)
         }
     }
 
     fun recordHistory(handleFailure:(title:Int, msg:Int)->Unit){
         isLoading.postValue(true)
         currentMovie.value?.let {
-            addMovieToListUseCase(
+            addMovieToUserListUseCase(
                 it, 2,
                 { movieItem ->
                     Log.i("INFO", "Movie ${movieItem.title},id:${movieItem.id} recorded in history")

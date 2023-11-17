@@ -8,7 +8,7 @@ import javax.inject.Inject
 class GetOfficialTrailerUseCase @Inject constructor( private val repository:IMDbRepository ){
     suspend operator fun invoke(movieId:Int, withControls:Boolean):String? {
         var officialTrailer: VideoItem? = null
-        val videoList = repository.getTrailers(movieId)
+        val videoList = repository.getTrailersFromApi(movieId)
         if(videoList.isNotEmpty()){
             officialTrailer = videoList.find {
                     it.official

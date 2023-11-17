@@ -10,7 +10,7 @@ import com.globant.imdb.domain.moviesUseCases.GetPopularMoviesUseCase
 import com.globant.imdb.domain.moviesUseCases.GetRandomTopMovieUseCase
 import com.globant.imdb.domain.moviesUseCases.GetOfficialTrailerUseCase
 import com.globant.imdb.domain.moviesUseCases.GetUpcomingMoviesUseCase
-import com.globant.imdb.domain.userUseCases.AddMovieToListUseCase
+import com.globant.imdb.domain.userUseCases.AddMovieToUserListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,7 +22,7 @@ class HomeViewModel @Inject constructor(
     private val getPopularMoviesUseCase:GetPopularMoviesUseCase,
     private val getRandomTopMovieUseCase:GetRandomTopMovieUseCase,
     private val getUpcomingMovies:GetUpcomingMoviesUseCase,
-    private val addMovieToListUseCase:AddMovieToListUseCase,
+    private val addMovieToUserListUseCase:AddMovieToUserListUseCase,
 ): ViewModel() {
 
     val mainMovie = MutableLiveData<MovieItem>()
@@ -36,24 +36,18 @@ class HomeViewModel @Inject constructor(
     fun onCreate() {
         isLoading.postValue(true)
         val coroutineA = viewModelScope.launch {
-            val result = getRandomTopMovieUseCase()
-            result?.let {
-                mainMovie.postValue(it)
-            }
-        }
-        val coroutineB = viewModelScope.launch {
             val result = getNowPlayingMoviesUseCase()
             if(result.isNotEmpty()){
                 nowPlayingMovies.postValue(result)
             }
         }
-        val coroutineC = viewModelScope.launch {
+        val coroutineB = viewModelScope.launch {
             val result = getUpcomingMovies()
             if(result.isNotEmpty()){
                 upcomingMovies.postValue(result)
             }
         }
-        val coroutineD = viewModelScope.launch {
+        val coroutineC = viewModelScope.launch {
             val result = getPopularMoviesUseCase()
             if(result.isNotEmpty()){
                 popularMovies.postValue(result)
@@ -61,6 +55,14 @@ class HomeViewModel @Inject constructor(
         }
         viewModelScope.launch {
             coroutineA.join()
+
+            val coroutineD = viewModelScope.launch {
+                val result = getRandomTopMovieUseCase()
+                result?.let {
+                    mainMovie.postValue(it)
+                }
+            }
+
             coroutineB.join()
             coroutineC.join()
             coroutineD.join()
@@ -95,7 +97,7 @@ class HomeViewModel @Inject constructor(
             it.id == movieId
         }
         if(movie!=null){
-            addMovieToListUseCase(movie, 1, onSuccess, onFailure)
+            addMovieToUserListUseCase(movie, 1, onSuccess, onFailure)
         }
     }
 }

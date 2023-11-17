@@ -6,6 +6,7 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.globant.imdb.data.database.typeConverters.StringListConverter
+import com.globant.imdb.domain.model.MovieItem
 
 @Entity(
     tableName = "movies",
@@ -18,7 +19,7 @@ import com.globant.imdb.data.database.typeConverters.StringListConverter
 data class MovieEntity(
     @PrimaryKey
     @ColumnInfo("id")                   val id: Int = 0,
-    @ColumnInfo(index = true)                 val listId:Int = 0,
+    @ColumnInfo(index = true)                 val listId:String = "",
     @ColumnInfo("adult")                val adult: Boolean = false,
     @ColumnInfo("backdrop_path")        val backdropPath: String = "",
     @TypeConverters(StringListConverter::class)
@@ -35,3 +36,23 @@ data class MovieEntity(
     @ColumnInfo("vote_count")           val voteCount: Int = 0,
     @ColumnInfo("tagline")              val tagline:String,
 )
+
+fun MovieItem.toDatabase(listId:String): MovieEntity =
+    MovieEntity(
+        id,
+        listId,
+        adult,
+        backdropPath,
+        genreNames,
+        originalLanguage,
+        originalTitle,
+        overview,
+        popularity,
+        posterPath,
+        releaseDate,
+        title,
+        video,
+        voteAverage,
+        voteCount,
+        tagline
+    )
