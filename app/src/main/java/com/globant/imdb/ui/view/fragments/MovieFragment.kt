@@ -67,7 +67,7 @@ class MovieFragment : Fragment() {
 
     private fun setupLiveData(){
         movieViewModel.currentMovie.observe(viewLifecycleOwner){ movieItem ->
-            movieViewModel.recordHistory()
+            movieViewModel.recordHistory(::handleFailure)
             binding.topAppBar.title = movieItem.title
             with(binding.containerFrontage){
                 sectionTitle.text = movieItem.title
@@ -112,15 +112,21 @@ class MovieFragment : Fragment() {
 
     private fun setupButtons(){
         binding.btnActionList.setOnClickListener{
-            movieViewModel.addMovieToWatchList {
+            movieViewModel.addMovieToWatchList({
                 dialogManager.showAlert(
+                    requireContext(),
                     getString(R.string.success),
                     getString(R.string.success_movie_added, it.title)
                 )
-            }
+            }, ::handleFailure)
         }
         binding.refreshLayout.setOnRefreshListener {
             movieViewModel.onCreate(args.movieId)
         }
+    }
+
+    private fun handleFailure(title:Int, msg:Int){
+        movieViewModel.isLoading.postValue(false)
+        dialogManager.showAlert(requireContext(),title, msg)
     }
 }

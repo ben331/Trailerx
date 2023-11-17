@@ -83,6 +83,7 @@ class SignUpFragment : Fragment() {
                 password,
                 displayName,
                 ::showLogin,
+                ::handleFailure,
             )
         }
     }
@@ -153,11 +154,17 @@ class SignUpFragment : Fragment() {
         authViewModel.isLoading.postValue(false)
         string?.let {
             dialogManager.showAlert(
+                requireContext(),
                 getString(R.string.success),
                 getString(R.string.account_created_success)
             )
         }
         val action = SignUpFragmentDirections.actionSignUpFragmentToLoginFragment()
         navController.navigate(action)
+    }
+
+    private fun handleFailure(title:Int, msg:Int){
+        authViewModel.isLoading.postValue(false)
+        dialogManager.showAlert(requireContext(),title, msg)
     }
 }

@@ -100,17 +100,17 @@ class LoginFragment : Fragment() {
             val email = binding.editTextEmail.text.toString()
             val password = binding.editTextPassword.text.toString()
             authViewModel.isLoading.postValue(true)
-            authViewModel.loginWithEmailAndPassword(email, password, ::createUser)
+            authViewModel.loginWithEmailAndPassword(email, password, ::createUser, ::handleFailure)
         }
 
         binding.labelForgotPassword.setOnClickListener {
             val email = binding.editTextEmail.text.toString()
             if(FormValidator.validateEmail(email)){
-                authViewModel.sendPasswordResetEmail(email) {
-                    dialogManager.showAlert(getString(R.string.success),getString(R.string.password_reset_success))
-                }
+                authViewModel.sendPasswordResetEmail(email, {
+                    dialogManager.showAlert(requireContext(), getString(R.string.success),getString(R.string.password_reset_success))
+                },::handleFailure)
             }else{
-                dialogManager.showAlert(getString(R.string.error), getString(R.string.invalid_email))
+                dialogManager.showAlert(requireContext(), getString(R.string.error), getString(R.string.invalid_email))
             }
         }
 
@@ -122,18 +122,18 @@ class LoginFragment : Fragment() {
 
         binding.facebookBtn.setOnClickListener{
             authViewModel.isLoading.postValue(true)
-            authViewModel.loginWithFacebook(requireActivity(), ::createUser)
+            authViewModel.loginWithFacebook(requireActivity(), ::createUser,::handleFailure)
         }
 
         binding.appleBtn.setOnClickListener{
             authViewModel.isLoading.postValue(true)
-            authViewModel.loginWithApple(requireActivity(), ::createUser)
+            authViewModel.loginWithApple(requireActivity(), ::createUser, ::handleFailure)
         }
     }
 
     private fun onGoogleResult(result:ActivityResult){
         if(result.resultCode == Activity.RESULT_OK){
-            authViewModel.onGoogleResult(result.data, ::createUser)
+            authViewModel.onGoogleResult(result.data, ::createUser, ::handleFailure)
         }
     }
 
@@ -212,17 +212,18 @@ class LoginFragment : Fragment() {
     }
     private fun createUser(email:String, providerType: ProviderType){
         val user = UserModel(email, authViewModel.getDisplayName())
-        authViewModel.createUser(user) {
+        authViewModel.createUser(user, {
             if(it!=null){
                 showHome(email, providerType)
             }else{
                 authViewModel.logout(providerType)
                 dialogManager.showAlert(
+                    requireContext(),
                     getString(R.string.error),
                     getString(R.string.create_user_error)
                 )
             }
-        }
+        }, ::handleFailure)
     }
     private fun enableButtons(enable:Boolean){
         with(binding){
@@ -238,5 +239,10 @@ class LoginFragment : Fragment() {
             labelRegister.isEnabled = enable
             labelGuest.isEnabled = enable
         }
+    }
+
+    private fun handleFailure(title:Int, msg:Int){
+        authViewModel.isLoading.postValue(false)
+        dialogManager.showAlert(requireContext(),title, msg)
     }
 }

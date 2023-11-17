@@ -14,17 +14,22 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.globant.imdb.databinding.FragmentProfileBinding
 import com.globant.imdb.R
+import com.globant.imdb.core.DialogManager
 import com.globant.imdb.ui.view.adapters.MovieProfileAdapter
 import com.globant.imdb.ui.view.adapters.MovieProfileViewHolder
 import com.globant.imdb.ui.view.adapters.StatsAdapter
 import com.globant.imdb.ui.viewmodel.ProfileViewModel
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, MovieProfileViewHolder.MovieListener {
 
     private val profileViewModel:ProfileViewModel by viewModels()
+
+    @Inject
+    lateinit var dialogManager:DialogManager
 
     private val binding: FragmentProfileBinding by lazy {
         FragmentProfileBinding.inflate(layoutInflater)
@@ -57,7 +62,7 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
 
     override fun onResume() {
         super.onResume()
-        profileViewModel.refresh()
+        profileViewModel.refresh(::handleFailure)
     }
 
     private fun setupTopRecyclerView(){
@@ -169,7 +174,7 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
     private fun setupButtons(){
         binding.profileHeaderContainer.btnSettings.setOnClickListener(::showPopup)
         binding.refreshLayout.setOnRefreshListener {
-            profileViewModel.refresh()
+            profileViewModel.refresh(::handleFailure)
         }
     }
 
@@ -195,6 +200,11 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
     }
 
     override fun deleteFromList(id: Int, listNumber: Int) {
-        profileViewModel.deleteMovieFromList(id, listNumber)
+        profileViewModel.deleteMovieFromList(id, listNumber, ::handleFailure)
+    }
+
+    private fun handleFailure(title:Int, msg:Int){
+        profileViewModel.isLoading.postValue(false)
+        dialogManager.showAlert(requireContext(),title, msg)
     }
 }

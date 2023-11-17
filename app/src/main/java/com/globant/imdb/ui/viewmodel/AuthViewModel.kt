@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.globant.imdb.core.DialogManager
 import com.globant.imdb.data.model.user.UserModel
 import com.globant.imdb.data.network.firebase.FirebaseAuthManager
 import com.globant.imdb.data.network.firebase.ProviderType
@@ -16,20 +15,15 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(
     private val createUserUseCase:CreateUserUseCase,
     private val authManager: FirebaseAuthManager,
-    private val dialogManager: DialogManager
 ): ViewModel() {
     val isLoading = MutableLiveData(false)
 
-    private fun handleFailure(title:Int, msg:Int){
-        isLoading.postValue(false)
-        dialogManager.showAlert(title, msg)
-    }
-
     fun createUser(
         localUser: UserModel,
-        handleSuccess:(user: UserModel?)->Unit
+        handleSuccess:(user: UserModel?)->Unit,
+        handleFailure:(title:Int, msg:Int)->Unit
     ){
-        createUserUseCase(localUser, handleSuccess, ::handleFailure)
+        createUserUseCase(localUser, handleSuccess, handleFailure)
     }
 
     fun getDisplayName():String{
@@ -49,13 +43,14 @@ class AuthViewModel @Inject constructor(
         password:String,
         displayName:String,
         onSuccess: (email:String)->Unit,
+        handleFailure:(title:Int, msg:Int)->Unit
     ){
         authManager.signUpWithEmailAndPassword(
             email,
             password,
             displayName,
             onSuccess,
-            ::handleFailure
+            handleFailure
         )
     }
 
@@ -63,34 +58,38 @@ class AuthViewModel @Inject constructor(
         email:String,
         password:String,
         onSuccess: (email:String, provides: ProviderType)->Unit,
+        handleFailure:(title:Int, msg:Int)->Unit
     ){
         authManager.loginWithEmailAndPassword(
             email,
             password,
             onSuccess,
-            ::handleFailure
+            handleFailure
         )
     }
 
     fun sendPasswordResetEmail(
         email: String,
         onSuccess: ()->Unit,
+        handleFailure:(title:Int, msg:Int)->Unit
     ){
-        authManager.sendPasswordResetEmail(email, onSuccess, ::handleFailure)
+        authManager.sendPasswordResetEmail(email, onSuccess, handleFailure)
     }
 
     fun loginWithApple(
         activity:Activity,
         onSuccess: (email:String, provides: ProviderType)->Unit,
+        handleFailure:(title:Int, msg:Int)->Unit
     ){
-        authManager.loginWithApple(activity, onSuccess, ::handleFailure)
+        authManager.loginWithApple(activity, onSuccess, handleFailure)
     }
 
     fun loginWithFacebook(
         activity:Activity,
         onSuccess: (email:String, provides: ProviderType)->Unit,
+        handleFailure:(title:Int, msg:Int)->Unit
     ){
-        authManager.loginWithFacebook(activity, onSuccess, ::handleFailure)
+        authManager.loginWithFacebook(activity, onSuccess, handleFailure)
     }
 
     fun loginWithGoogle(activity:Activity): Intent {
@@ -100,8 +99,9 @@ class AuthViewModel @Inject constructor(
     fun onGoogleResult(
         intent:Intent?,
         onSuccess: (email:String, provides:ProviderType)->Unit,
+        handleFailure:(title:Int, msg:Int)->Unit
     ){
-        authManager.onGoogleResult(intent, onSuccess, ::handleFailure)
+        authManager.onGoogleResult(intent, onSuccess, handleFailure)
     }
 
 }

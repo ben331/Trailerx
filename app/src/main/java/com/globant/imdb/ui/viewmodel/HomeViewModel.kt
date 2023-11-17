@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.globant.imdb.core.DialogManager
 import com.globant.imdb.domain.model.MovieItem
 import com.globant.imdb.domain.moviesUseCases.GetNowPlayingMoviesUseCase
 import com.globant.imdb.domain.moviesUseCases.GetPopularMoviesUseCase
@@ -18,7 +17,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val dialogManager: DialogManager,
     private val getNowPlayingMoviesUseCase:GetNowPlayingMoviesUseCase,
     private val getTrailerUseCase:GetOfficialTrailerUseCase,
     private val getPopularMoviesUseCase:GetPopularMoviesUseCase,
@@ -83,7 +81,8 @@ class HomeViewModel @Inject constructor(
     fun addMovieToWatchList(
         movieId:Int,
         numberList:Int,
-        onSuccess:(MovieItem)->Unit
+        onSuccess:(MovieItem)->Unit,
+        onFailure:(title:Int, msg:Int)->Unit
     ){
         isLoading.postValue(true)
         val homeMovies = when(numberList){
@@ -96,10 +95,7 @@ class HomeViewModel @Inject constructor(
             it.id == movieId
         }
         if(movie!=null){
-            addMovieToListUseCase(movie, 1, onSuccess){ title, msg ->
-                isLoading.postValue(false)
-                dialogManager.showAlert(title, msg)
-            }
+            addMovieToListUseCase(movie, 1, onSuccess, onFailure)
         }
     }
 }

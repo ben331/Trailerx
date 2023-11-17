@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.globant.imdb.core.DialogManager
 import com.globant.imdb.domain.model.MovieItem
 import com.globant.imdb.domain.moviesUseCases.GetMovieByIdUseCase
 import com.globant.imdb.domain.moviesUseCases.GetOfficialTrailerUseCase
@@ -15,7 +14,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MovieViewModel @Inject constructor(
-    private val dialogManager: DialogManager,
     private val getMovieByIdUseCase:GetMovieByIdUseCase,
     private val getTrailerUseCase:GetOfficialTrailerUseCase,
     private val addMovieToListUseCase:AddMovieToListUseCase
@@ -40,14 +38,16 @@ class MovieViewModel @Inject constructor(
         }
     }
 
-    fun addMovieToWatchList(handleSuccess:(movie: MovieItem)->Unit){
+    fun addMovieToWatchList(
+        handleSuccess:(movie: MovieItem)->Unit,
+        handleFailure:(title:Int, msg:Int)->Unit){
         isLoading.postValue(true)
         currentMovie.value?.let {
-            addMovieToListUseCase(it, 1, handleSuccess, ::handleFailure)
+            addMovieToListUseCase(it, 1, handleSuccess, handleFailure)
         }
     }
 
-    fun recordHistory(){
+    fun recordHistory(handleFailure:(title:Int, msg:Int)->Unit){
         isLoading.postValue(true)
         currentMovie.value?.let {
             addMovieToListUseCase(
@@ -55,12 +55,7 @@ class MovieViewModel @Inject constructor(
                 { movieItem ->
                     Log.i("INFO", "Movie ${movieItem.title},id:${movieItem.id} recorded in history")
                 },
-                ::handleFailure)
+                handleFailure)
         }
-    }
-
-    private fun handleFailure(title:Int, msg:Int){
-        isLoading.postValue(false)
-        dialogManager.showAlert(title, msg)
     }
 }

@@ -3,13 +3,10 @@ package com.globant.imdb.core
 import android.app.AlertDialog
 import android.content.Context
 import com.globant.imdb.R
-import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class DialogManager @Inject constructor(
-    @ApplicationContext private val context: Context
-) {
-    fun showAlert(titleResource:Int, msgResource:Int){
+class DialogManager @Inject constructor(){
+    fun showAlert(context:Context, titleResource:Int, msgResource:Int){
         val title = context.getString(titleResource)
         val message = context.getString(msgResource)
         val builder = AlertDialog.Builder(context)
@@ -20,7 +17,7 @@ class DialogManager @Inject constructor(
         dialog.show()
     }
 
-    fun showAlert(title:String, message:String){
+    fun showAlert(context:Context,title:String, message:String){
         val builder = AlertDialog.Builder(context)
         builder.setTitle(title)
         builder.setMessage(message)

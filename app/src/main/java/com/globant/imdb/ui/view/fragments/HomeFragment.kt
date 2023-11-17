@@ -164,12 +164,18 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
     }
 
     override fun addToList(id: Int, numberList:Int) {
-        homeViewModel.addMovieToWatchList(id, numberList){
+        homeViewModel.addMovieToWatchList(id, numberList, {
             homeViewModel.isLoading.postValue(false)
             dialogManager.showAlert(
+                requireContext(),
                 getString(R.string.success),
                 getString(R.string.success_movie_added, it.title)
             )
-        }
+        }, ::handleFailure)
+    }
+
+    private fun handleFailure(title:Int, msg:Int){
+        homeViewModel.isLoading.postValue(false)
+        dialogManager.showAlert(requireContext(),title, msg)
     }
 }
