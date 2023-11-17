@@ -35,6 +35,7 @@
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.IMDb.SmallComponent.Outlined</item>
     </style>
 
+    <!--TODO SPLASH DOES NOT WORK IN OLD APIS-->
     <style name="Theme.IMDb.SplashScreen">
         <item name="android:windowBackground">@color/yellow_400</item>
     </style>

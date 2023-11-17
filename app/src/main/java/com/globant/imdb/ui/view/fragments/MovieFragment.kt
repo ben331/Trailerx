@@ -113,6 +113,7 @@ class MovieFragment : Fragment() {
     private fun setupButtons(){
         binding.btnActionList.setOnClickListener{
             movieViewModel.addMovieToWatchList({
+                movieViewModel.isLoading.postValue(false)
                 dialogManager.showAlert(
                     requireContext(),
                     getString(R.string.success),
