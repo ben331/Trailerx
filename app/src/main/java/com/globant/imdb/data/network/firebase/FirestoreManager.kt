@@ -2,6 +2,7 @@ package com.globant.imdb.data.network.firebase
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.globant.imdb.R
+import com.globant.imdb.data.database.entities.movie.MovieListType
 import com.globant.imdb.data.model.user.UserModel
 import com.globant.imdb.domain.model.MovieItem
 import javax.inject.Inject
@@ -50,90 +51,64 @@ class FirestoreManager @Inject constructor(
     }
 
     fun getUserMoviesList(
-        numberList:Int,
+        listType:MovieListType,
         handleSuccess: (movies:List<MovieItem>)->Unit,
         handleFailure:(title:Int, msg:Int)->Unit
     ) {
-        val collection = when(numberList){
-            1 -> "watchList"
-            2 -> "recentlyViewed"
-            3 -> "favoritePeople"
-            else -> null
-        }
-        collection?.let {
-            db.collection("users").document(email).collection(collection).get()
-                .addOnSuccessListener {
-                    val result:ArrayList<MovieItem> = ArrayList()
-                    if(!it.isEmpty){
-                        for( document in it.documents ){
-                            val movie = document.toObject(MovieItem::class.java)!!
-                            result.add(movie)
-                        }
-                        handleSuccess(result)
-                    }else{
-                        handleSuccess(emptyList())
+        db.collection("users").document(email).collection(listType.name).get()
+            .addOnSuccessListener {
+                val result:ArrayList<MovieItem> = ArrayList()
+                if(!it.isEmpty){
+                    for( document in it.documents ){
+                        val movie = document.toObject(MovieItem::class.java)!!
+                        result.add(movie)
                     }
-                }.addOnFailureListener {
-                    it.printStackTrace()
-                    handleFailure(
-                        R.string.error,
-                        R.string.fetch_movies_error
-                    )
+                    handleSuccess(result)
+                }else{
+                    handleSuccess(emptyList())
                 }
-        }
+            }.addOnFailureListener {
+                it.printStackTrace()
+                handleFailure(
+                    R.string.error,
+                    R.string.fetch_movies_error
+                )
+            }
     }
 
     fun addMovieToList(
-        movie:MovieItem, listNumber: Int,
+        movie:MovieItem, listType:MovieListType,
         handleSuccess:(movie:MovieItem)->Unit,
         handleFailure:(title:Int, msg:Int)->Unit
     ){
-        val collection = when(listNumber){
-            1 -> "watchList"
-            2 -> "recentlyViewed"
-            3 -> "favoritePeople"
-            else -> null
-        }
-
-        collection?.let {
-            db.collection("users")
-                .document(email).collection(it).document(movie.id.toString()).set(movie)
-                .addOnCompleteListener {
-                    handleSuccess(movie)
-                }.addOnFailureListener { e ->
-                    e.printStackTrace()
-                    handleFailure(
-                        R.string.error,
-                        R.string.error
-                    )
-                }
-        }
+        db.collection("users")
+            .document(email).collection(listType.name).document(movie.id.toString()).set(movie)
+            .addOnCompleteListener {
+                handleSuccess(movie)
+            }.addOnFailureListener { e ->
+                e.printStackTrace()
+                handleFailure(
+                    R.string.error,
+                    R.string.error
+                )
+            }
     }
 
     fun deleteMovieFromList(
         movieId:Int,
-        listNumber:Int,
+        listType:MovieListType,
         handleSuccess:()->Unit,
         handleFailure:(title:Int, msg:Int)->Unit
     ){
-        val collection = when(listNumber){
-            1 -> "watchList"
-            2 -> "recentlyViewed"
-            3 -> "favoritePeople"
-            else -> null
-        }
-
-        collection?.let {
-            db.collection("users")
-                .document(email).collection(it).document(movieId.toString()).delete()
-                .addOnSuccessListener {
-                    handleSuccess()
-                }.addOnFailureListener {
-                    handleFailure(
-                        R.string.error,
-                        R.string.delete_movie_error
-                    )
-                }
-        }
+        db.collection("users")
+            .document(email).collection(listType.name).document(movieId.toString()).delete()
+            .addOnSuccessListener {
+                handleSuccess()
+            }.addOnFailureListener {
+                handleFailure(
+                    R.string.error,
+                    R.string.delete_movie_error
+                )
+            }
     }
 }

@@ -11,7 +11,9 @@ enum class MovieListType {
     POPULAR_MOVIES,
     UPCOMING_MOVIES,
     WATCH_LIST_MOVIES,
-    HISTORY_MOVIES
+    HISTORY_MOVIES,
+    /*TODO DELETE FAVORITE PEOPLE, IT DOES NOT BELONG TO MovieListType*/
+    FAVORITE_PEOPLE
 }
 
 @Entity(tableName = "movies_lists")

@@ -105,28 +105,28 @@ class IMDbRepository @Inject constructor(
     }
 
     fun getUserMoviesList(
-        numberList:Int,
+        listType:MovieListType,
         handleSuccess:(List<MovieItem>)->Unit,
         handleFailure:(title:Int, msg:Int)->Unit)
     {
-        return firestoreManager.getUserMoviesList(numberList, handleSuccess, handleFailure)
+        return firestoreManager.getUserMoviesList(listType, handleSuccess, handleFailure)
     }
 
     fun addMovieToList(
         movie:MovieItem,
-        listNumber: Int,
+        listType:MovieListType,
         handleSuccess:(MovieItem)->Unit,
         handleFailure:(title:Int, msg:Int)->Unit)
     {
-        return firestoreManager.addMovieToList(movie, listNumber, handleSuccess, handleFailure)
+        return firestoreManager.addMovieToList(movie, listType, handleSuccess, handleFailure)
     }
 
     fun deleteMovieFromList(
         movieId:Int,
-        listNumber:Int,
+        listType:MovieListType,
         handleSuccess:()->Unit,
         handleFailure:(title:Int, msg:Int)->Unit
     ){
-        firestoreManager.deleteMovieFromList(movieId, listNumber, handleSuccess, handleFailure)
+        firestoreManager.deleteMovieFromList(movieId, listType, handleSuccess, handleFailure)
     }
 }

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.globant.imdb.R
 import com.globant.imdb.core.Constants
-import com.globant.imdb.data.model.movies.MovieModel
+import com.globant.imdb.data.database.entities.movie.MovieListType
 import com.globant.imdb.databinding.ItemMovieProfileBinding
 import com.globant.imdb.domain.model.MovieItem
 import com.globant.imdb.ui.view.fragments.ProfileFragment
@@ -17,7 +17,7 @@ class MovieProfileAdapter: Adapter<MovieProfileViewHolder>() {
 
     var movieList: List<MovieItem> = emptyList()
     lateinit var moviesListener: ProfileFragment
-    var listNumber:Int=-1
+    lateinit var listType:MovieListType
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieProfileViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -26,7 +26,7 @@ class MovieProfileAdapter: Adapter<MovieProfileViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MovieProfileViewHolder, position: Int) {
-        holder.listNumber = listNumber
+        holder.listType = listType
         holder.listener = moviesListener
         with(movieList[position]){
             holder.id = id
@@ -50,7 +50,7 @@ class MovieProfileAdapter: Adapter<MovieProfileViewHolder>() {
 class MovieProfileViewHolder(root:View):ViewHolder(root){
     lateinit var listener:MovieListener
     var id:Int = 0
-    var listNumber:Int=-1
+    lateinit var listType:MovieListType
 
     private val binding = ItemMovieProfileBinding.bind(root)
     val image = binding.imgMovie
@@ -62,12 +62,12 @@ class MovieProfileViewHolder(root:View):ViewHolder(root){
             listener.showDetails(id)
         }
         binding.btnBookmarkDelete.setOnClickListener {
-            listener.deleteFromList(id, listNumber)
+            listener.deleteFromList(id, listType)
         }
     }
 
     interface MovieListener {
         fun showDetails(id:Int)
-        fun deleteFromList(id:Int, listNumber:Int)
+        fun deleteFromList(id:Int, listType:MovieListType)
     }
 }

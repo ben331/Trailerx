@@ -1,8 +1,6 @@
 package com.globant.imdb.domain.moviesUseCases
 
 import com.globant.imdb.data.IMDbRepository
-import com.globant.imdb.data.database.entities.movie.MovieListType
-import com.globant.imdb.data.database.entities.movie.toDatabase
 import com.globant.imdb.domain.model.MovieItem
 import javax.inject.Inject
 

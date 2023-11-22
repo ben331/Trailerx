@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.globant.imdb.data.database.entities.movie.MovieListType
 import com.globant.imdb.domain.model.MovieItem
 import com.globant.imdb.domain.moviesUseCases.GetNowPlayingMoviesUseCase
 import com.globant.imdb.domain.moviesUseCases.GetPopularMoviesUseCase
@@ -97,7 +98,7 @@ class HomeViewModel @Inject constructor(
             it.id == movieId
         }
         if(movie!=null){
-            addMovieToUserListUseCase(movie, 1, onSuccess, onFailure)
+            addMovieToUserListUseCase(movie, MovieListType.WATCH_LIST_MOVIES, onSuccess, onFailure)
         }
     }
 }
