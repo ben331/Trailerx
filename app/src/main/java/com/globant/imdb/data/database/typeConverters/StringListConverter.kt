@@ -4,7 +4,7 @@ import androidx.room.TypeConverter
 
 class StringListConverter {
     @TypeConverter
-    fun fromString(value: String?): List<String>? {
+    fun fromString(value:String?): List<String>? {
         return value?.split(",")
     }
 

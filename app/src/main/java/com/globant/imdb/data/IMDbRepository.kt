@@ -15,7 +15,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
+import javax.inject.Singleton
+@Singleton
 class IMDbRepository @Inject constructor(
     private val api:TMDBService,
     private val firestoreManager:FirestoreManager,
@@ -24,8 +25,10 @@ class IMDbRepository @Inject constructor(
 ) {
     init {
         CoroutineScope(Dispatchers.IO).launch {
-            movieListDao.deleteAll()
-            movieListDao.insertAll( MovieListType.values().map { it.toDatabase() } )
+            val moviesLists = movieListDao.getAllMoviesLists()
+            if(moviesLists.isEmpty()){
+                movieListDao.insertAll( MovieListType.values().map { it.toDatabase() } )
+            }
         }
     }
 

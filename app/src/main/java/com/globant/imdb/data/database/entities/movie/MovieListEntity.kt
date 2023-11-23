@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.globant.imdb.data.database.typeConverters.MovieListTypeConverter
+import com.globant.imdb.data.database.typeConverters.StringMovieListTypeConverter
 
 enum class MovieListType {
     NOW_PLAYING_MOVIES,
@@ -18,8 +18,8 @@ enum class MovieListType {
 
 @Entity(tableName = "movies_lists")
 data class MovieListEntity(
-    @PrimaryKey
-    @TypeConverters(MovieListTypeConverter::class)
+    @PrimaryKey(autoGenerate = false)
+    @TypeConverters(StringMovieListTypeConverter::class)
     @ColumnInfo val id:MovieListType
 )
 

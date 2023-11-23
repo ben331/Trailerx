@@ -21,7 +21,7 @@ data class MovieEntity(
     @ColumnInfo("id")                   val id: Int = 0,
     @ColumnInfo(index = true)                 val listId:String = "",
     @ColumnInfo("adult")                val adult: Boolean = false,
-    @ColumnInfo("backdrop_path")        val backdropPath: String = "",
+    @ColumnInfo("backdrop_path")        val backdropPath: String? = "",
     @TypeConverters(StringListConverter::class)
     @ColumnInfo("genre_names")          val genreNames: List<String> = emptyList(),
     @ColumnInfo("original_language")    val originalLanguage: String = "",

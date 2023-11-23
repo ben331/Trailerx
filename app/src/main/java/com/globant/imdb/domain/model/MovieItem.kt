@@ -6,7 +6,7 @@ import com.globant.imdb.data.model.movies.MovieModel
 
 data class MovieItem(
     val adult: Boolean = false,
-    val backdropPath: String = "",
+    val backdropPath: String? = "",
     val genreNames: List<String> = emptyList(),
     val id: Int = 0,
     val originalLanguage: String = "",
