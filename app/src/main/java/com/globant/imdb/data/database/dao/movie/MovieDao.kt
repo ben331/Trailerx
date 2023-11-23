@@ -21,5 +21,5 @@ interface MovieDao {
     suspend fun deleteMovieList(listId:String)
 
     @Query("UPDATE movies SET tagline = :tagline WHERE id = :id")
-    suspend fun updateTagLine(id:Int, tagline:String)
+    suspend fun updateTagLine(id:Int, tagline:String?)
 }

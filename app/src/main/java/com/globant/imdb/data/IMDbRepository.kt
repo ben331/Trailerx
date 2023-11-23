@@ -85,7 +85,7 @@ class IMDbRepository @Inject constructor(
         val response = movieDao.getMovieById(movieId)
         return response?.toDomain()
     }
-    suspend fun updateMovieTagLine(id:Int, tagline:String){
+    suspend fun updateMovieTagLine(id:Int, tagline:String?){
         movieDao.updateTagLine(id, tagline)
     }
     suspend fun clearMovieList(listId:String){

@@ -77,7 +77,7 @@ class MovieFragment : Fragment() {
             }
             with(binding.containerSypnosis){
                 labelGenre.text =
-                    if(movieItem.genreNames.isNotEmpty()){
+                    if(!movieItem.genreNames.isNullOrEmpty()){
                         movieItem.genreNames[0]
                     }else{ "- - - -" }
                 labelStars.text = movieItem.popularity.toString()

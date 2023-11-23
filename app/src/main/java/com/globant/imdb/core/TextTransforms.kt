@@ -5,7 +5,9 @@ import java.util.Locale
 
 class TextTransforms {
     companion object {
-        fun createDescription(tagline:String, date:String): String{
+        fun createDescription(inputTagline:String?, inputDate:String?): String{
+            val tagline = inputTagline ?: ""
+            val date = inputDate ?: ""
             val formattedDate = convertDate(date)
             return "$tagline $formattedDate"
         }
