@@ -24,7 +24,7 @@ class MovieViewModel @Inject constructor(
     val currentMovie = MutableLiveData<MovieItem>()
     val videoIframe = MutableLiveData<String?>()
 
-    fun onCreate(movieId:Int){
+    fun onRefresh(movieId:Int){
         viewModelScope.launch {
             val result = getMovieByIdUseCase(movieId)
             result?.let {

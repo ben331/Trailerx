@@ -110,8 +110,8 @@ class IMDbRepository @Inject constructor(
     fun getUserMoviesList(
         listType:MovieListType,
         handleSuccess:(List<MovieItem>)->Unit,
-        handleFailure:(title:Int, msg:Int)->Unit)
-    {
+        handleFailure:(title:Int, msg:Int)->Unit
+    ){
         return firestoreManager.getUserMoviesList(listType, handleSuccess, handleFailure)
     }
 
@@ -119,8 +119,8 @@ class IMDbRepository @Inject constructor(
         movie:MovieItem,
         listType:MovieListType,
         handleSuccess:(MovieItem)->Unit,
-        handleFailure:(title:Int, msg:Int)->Unit)
-    {
+        handleFailure:(title:Int, msg:Int)->Unit
+    ){
         return firestoreManager.addMovieToList(movie, listType, handleSuccess, handleFailure)
     }
 

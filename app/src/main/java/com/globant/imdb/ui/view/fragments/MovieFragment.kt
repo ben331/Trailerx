@@ -57,7 +57,7 @@ class MovieFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        movieViewModel.onCreate(args.movieId)
+        movieViewModel.onRefresh(args.movieId)
     }
 
     private fun setupTopAppBar(){
@@ -122,7 +122,7 @@ class MovieFragment : Fragment() {
             }, ::handleFailure)
         }
         binding.refreshLayout.setOnRefreshListener {
-            movieViewModel.onCreate(args.movieId)
+            movieViewModel.onRefresh(args.movieId)
         }
     }
 

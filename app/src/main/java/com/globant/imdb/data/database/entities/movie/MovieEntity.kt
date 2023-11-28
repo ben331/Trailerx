@@ -34,7 +34,7 @@ data class MovieEntity(
     @ColumnInfo("video")                val video: Boolean? = false,
     @ColumnInfo("vote_average")         val voteAverage: Double? = 0.0,
     @ColumnInfo("vote_count")           val voteCount: Int? = 0,
-    @ColumnInfo("tagline")              val tagline:String?,
+    @ColumnInfo("tagline")              val tagline:String? = "",
 )
 
 fun MovieItem.toDatabase(listId:String): MovieEntity =

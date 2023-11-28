@@ -7,14 +7,15 @@ import javax.inject.Inject
 class GetMovieByIdUseCase @Inject constructor( private val repository:IMDbRepository ) {
     suspend operator fun invoke(movieId:Int):MovieItem? {
         val movie = repository.getMovieByIdFromDatabase(movieId)
-
         return if (movie != null ) {
-            if(movie.tagline == ""){
+            if(movie.tagline.isNullOrEmpty()){
                 repository.getMovieByIdFromApi(movieId)?.let {
                     repository.updateMovieTagLine(it.id, it.tagline)
+                    movie
                 }
+            }else{
+                movie
             }
-            movie
         } else {
             repository.getMovieByIdFromApi(movieId)
         }
