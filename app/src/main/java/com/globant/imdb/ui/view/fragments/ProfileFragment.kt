@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.globant.imdb.databinding.FragmentProfileBinding
 import com.globant.imdb.R
 import com.globant.imdb.core.DialogManager
-import com.globant.imdb.data.database.entities.movie.MovieListType
+import com.globant.imdb.data.database.entities.movie.CategoryType
 import com.globant.imdb.ui.view.adapters.MovieProfileAdapter
 import com.globant.imdb.ui.view.adapters.MovieProfileViewHolder
 import com.globant.imdb.ui.view.adapters.StatsAdapter
@@ -81,9 +81,9 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
         recentMoviesAdapter = MovieProfileAdapter()
         favoritePeopleAdapter = MovieProfileAdapter()
 
-        watchListAdapter.listType = MovieListType.WATCH_LIST_MOVIES
-        recentMoviesAdapter.listType = MovieListType.HISTORY_MOVIES
-        favoritePeopleAdapter.listType = MovieListType.FAVORITE_PEOPLE
+        watchListAdapter.listType = CategoryType.WATCH_LIST_MOVIES
+        recentMoviesAdapter.listType = CategoryType.HISTORY_MOVIES
+        favoritePeopleAdapter.listType = CategoryType.FAVORITE_PEOPLE
 
         watchListAdapter.moviesListener = this
         recentMoviesAdapter.moviesListener = this
@@ -200,7 +200,7 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
         navController.navigate(action)
     }
 
-    override fun deleteFromList(id: Int, listType: MovieListType) {
+    override fun deleteFromList(id: Int, listType: CategoryType) {
         profileViewModel.deleteMovieFromList(id, listType, ::handleFailure)
     }
 

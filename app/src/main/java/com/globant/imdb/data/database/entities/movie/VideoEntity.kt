@@ -3,7 +3,7 @@ package com.globant.imdb.data.database.entities.movie
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 
-@Entity(tableName = "videos")
+@Entity(tableName = "video")
 data class VideoEntity(
     @ColumnInfo("iso_639_1")        val iso6391:String,
     @ColumnInfo("iso_3166_1")       val iso31661:String,

@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.globant.imdb.data.database.entities.movie.MovieListType
+import com.globant.imdb.data.database.entities.movie.CategoryType
 import com.globant.imdb.domain.model.MovieItem
 import com.globant.imdb.domain.moviesUseCases.GetMovieByIdUseCase
 import com.globant.imdb.domain.moviesUseCases.GetOfficialTrailerUseCase
@@ -44,7 +44,7 @@ class MovieViewModel @Inject constructor(
         handleFailure:(title:Int, msg:Int)->Unit){
         isLoading.postValue(true)
         currentMovie.value?.let {
-            addMovieToUserListUseCase(it, MovieListType.WATCH_LIST_MOVIES, handleSuccess, handleFailure)
+            addMovieToUserListUseCase(it, CategoryType.WATCH_LIST_MOVIES, handleSuccess, handleFailure)
         }
     }
 
@@ -52,7 +52,7 @@ class MovieViewModel @Inject constructor(
         isLoading.postValue(true)
         currentMovie.value?.let {
             addMovieToUserListUseCase(
-                it, MovieListType.HISTORY_MOVIES,
+                it, CategoryType.HISTORY_MOVIES,
                 { movieItem ->
                     Log.i("INFO", "Movie ${movieItem.title},id:${movieItem.id} recorded in history")
                 },

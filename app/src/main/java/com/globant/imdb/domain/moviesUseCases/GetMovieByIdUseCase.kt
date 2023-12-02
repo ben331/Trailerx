@@ -9,9 +9,9 @@ class GetMovieByIdUseCase @Inject constructor( private val repository:IMDbReposi
         val movie = repository.getMovieByIdFromDatabase(movieId)
         return if (movie != null ) {
             if(movie.tagline.isNullOrEmpty()){
-                repository.getMovieByIdFromApi(movieId)?.let {
-                    repository.updateMovieTagLine(it.id, it.tagline)
-                    movie
+                repository.getMovieByIdFromApi(movieId)?.let { movieItem ->
+                    repository.updateMovieTagLine(movieItem.id, movieItem.tagline)
+                    movieItem
                 }
             }else{
                 movie

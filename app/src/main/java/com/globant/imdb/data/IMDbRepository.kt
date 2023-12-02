@@ -1,9 +1,11 @@
 package com.globant.imdb.data
 
 import com.globant.imdb.data.database.dao.movie.MovieDao
-import com.globant.imdb.data.database.dao.movie.MovieListDao
+import com.globant.imdb.data.database.dao.movie.CategoryDao
+import com.globant.imdb.data.database.dao.movie.CategoryMovieDao
 import com.globant.imdb.data.database.entities.movie.MovieEntity
-import com.globant.imdb.data.database.entities.movie.MovieListType
+import com.globant.imdb.data.database.entities.movie.CategoryType
+import com.globant.imdb.data.database.entities.movie.toCategoryMovie
 import com.globant.imdb.data.database.entities.movie.toDatabase
 import com.globant.imdb.data.model.user.UserModel
 import com.globant.imdb.data.network.firebase.FirestoreManager
@@ -21,13 +23,14 @@ class IMDbRepository @Inject constructor(
     private val api:TMDBService,
     private val firestoreManager:FirestoreManager,
     private val movieDao: MovieDao,
-    private val movieListDao: MovieListDao,
+    private val categoryDao: CategoryDao,
+    private val categoryMovieDao: CategoryMovieDao,
 ) {
     init {
         CoroutineScope(Dispatchers.IO).launch {
-            val moviesLists = movieListDao.getAllMoviesLists()
+            val moviesLists = categoryDao.getAllCategories()
             if(moviesLists.isEmpty()){
-                movieListDao.insertAll( MovieListType.values().map { it.toDatabase() } )
+                categoryDao.insertAll( CategoryType.values().map { it.toDatabase() } )
             }
         }
     }
@@ -60,26 +63,13 @@ class IMDbRepository @Inject constructor(
     }
 
     //-------ROOM [RETROFIT CACHE]-----------------------------------------------------------------
-    suspend fun getNowPlayingMoviesFromDatabase():List<MovieItem>{
-        val response = movieDao.getListOfMovies(MovieListType.NOW_PLAYING_MOVIES.name)
+    suspend fun getMoviesByCategoryFromDatabase(category:CategoryType):List<MovieItem>{
+        val response = movieDao.getMoviesByCategory(category.name)
         return response.map { it.toDomain() }
     }
-    suspend fun insertNowPlayingMovies(movies:List<MovieEntity>){
+    suspend fun insertMoviesToCategory(movies:List<MovieEntity>, category: CategoryType){
         movieDao.insertMovieList(movies)
-    }
-    suspend fun getUpcomingMoviesFromDatabase():List<MovieItem>{
-        val response = movieDao.getListOfMovies(MovieListType.UPCOMING_MOVIES.name)
-        return response.map { it.toDomain() }
-    }
-    suspend fun insertUpcomingMovies(movies:List<MovieEntity>){
-        movieDao.insertMovieList(movies)
-    }
-    suspend fun getPopularMoviesFromDatabase():List<MovieItem>{
-        val response = movieDao.getListOfMovies(MovieListType.POPULAR_MOVIES.name)
-        return response.map { it.toDomain() }
-    }
-    suspend fun insertPopularMovies(movies:List<MovieEntity>){
-        movieDao.insertMovieList(movies)
+        categoryMovieDao.addMovieToCategory( movies.map{ it.toCategoryMovie(category) } )
     }
     suspend fun getMovieByIdFromDatabase(movieId:Int): MovieItem?{
         val response = movieDao.getMovieById(movieId)
@@ -88,8 +78,8 @@ class IMDbRepository @Inject constructor(
     suspend fun updateMovieTagLine(id:Int, tagline:String?){
         movieDao.updateTagLine(id, tagline)
     }
-    suspend fun clearMovieList(listId:String){
-        movieDao.deleteMovieList(listId)
+    suspend fun clearMoviesByCategory(category: CategoryType){
+        movieDao.deleteMoviesByCategory(category.name)
     }
 
 
@@ -108,7 +98,7 @@ class IMDbRepository @Inject constructor(
     }
 
     fun getUserMoviesList(
-        listType:MovieListType,
+        listType:CategoryType,
         handleSuccess:(List<MovieItem>)->Unit,
         handleFailure:(title:Int, msg:Int)->Unit
     ){
@@ -117,7 +107,7 @@ class IMDbRepository @Inject constructor(
 
     fun addMovieToList(
         movie:MovieItem,
-        listType:MovieListType,
+        listType:CategoryType,
         handleSuccess:(MovieItem)->Unit,
         handleFailure:(title:Int, msg:Int)->Unit
     ){
@@ -126,7 +116,7 @@ class IMDbRepository @Inject constructor(
 
     fun deleteMovieFromList(
         movieId:Int,
-        listType:MovieListType,
+        listType:CategoryType,
         handleSuccess:()->Unit,
         handleFailure:(title:Int, msg:Int)->Unit
     ){

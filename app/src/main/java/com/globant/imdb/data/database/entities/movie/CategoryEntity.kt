@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.globant.imdb.data.database.typeConverters.StringMovieListTypeConverter
 
-enum class MovieListType {
+enum class CategoryType {
     NOW_PLAYING_MOVIES,
     POPULAR_MOVIES,
     UPCOMING_MOVIES,
@@ -16,13 +16,13 @@ enum class MovieListType {
     FAVORITE_PEOPLE
 }
 
-@Entity(tableName = "movies_lists")
-data class MovieListEntity(
+@Entity(tableName = "category")
+data class CategoryEntity(
     @PrimaryKey(autoGenerate = false)
     @TypeConverters(StringMovieListTypeConverter::class)
-    @ColumnInfo val id:MovieListType
+    @ColumnInfo val id:CategoryType
 )
 
-fun MovieListType.toDatabase(): MovieListEntity{
-    return MovieListEntity(this)
+fun CategoryType.toDatabase(): CategoryEntity{
+    return CategoryEntity(this)
 }

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.globant.imdb.R
 import com.globant.imdb.core.Constants
-import com.globant.imdb.data.database.entities.movie.MovieListType
+import com.globant.imdb.data.database.entities.movie.CategoryType
 import com.globant.imdb.databinding.ItemMovieProfileBinding
 import com.globant.imdb.domain.model.MovieItem
 import com.globant.imdb.ui.view.fragments.ProfileFragment
@@ -17,7 +17,7 @@ class MovieProfileAdapter: Adapter<MovieProfileViewHolder>() {
 
     var movieList: List<MovieItem> = emptyList()
     lateinit var moviesListener: ProfileFragment
-    lateinit var listType:MovieListType
+    lateinit var listType:CategoryType
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieProfileViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -50,7 +50,7 @@ class MovieProfileAdapter: Adapter<MovieProfileViewHolder>() {
 class MovieProfileViewHolder(root:View):ViewHolder(root){
     lateinit var listener:MovieListener
     var id:Int = 0
-    lateinit var listType:MovieListType
+    lateinit var listType:CategoryType
 
     private val binding = ItemMovieProfileBinding.bind(root)
     val image = binding.imgMovie
@@ -68,6 +68,6 @@ class MovieProfileViewHolder(root:View):ViewHolder(root){
 
     interface MovieListener {
         fun showDetails(id:Int)
-        fun deleteFromList(id:Int, listType:MovieListType)
+        fun deleteFromList(id:Int, listType:CategoryType)
     }
 }

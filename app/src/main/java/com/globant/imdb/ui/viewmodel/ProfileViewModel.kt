@@ -3,7 +3,7 @@ package com.globant.imdb.ui.viewmodel
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.globant.imdb.data.database.entities.movie.MovieListType
+import com.globant.imdb.data.database.entities.movie.CategoryType
 import com.globant.imdb.data.network.firebase.FirebaseAuthManager
 import com.globant.imdb.domain.model.MovieItem
 import com.globant.imdb.domain.userUseCases.DeleteMovieFromUserListUseCase
@@ -33,24 +33,24 @@ class ProfileViewModel @Inject constructor(
             photoUri.postValue(uri)
         }
 
-        getUserMoviesUseCase( MovieListType.WATCH_LIST_MOVIES, { movies ->
+        getUserMoviesUseCase( CategoryType.WATCH_LIST_MOVIES, { movies ->
             watchList.postValue(movies)
             isLoading.postValue(false)
         }, handleFailure)
 
-        getUserMoviesUseCase( MovieListType.HISTORY_MOVIES, { movies ->
+        getUserMoviesUseCase( CategoryType.HISTORY_MOVIES, { movies ->
             recentViewed.postValue(movies)
             isLoading.postValue(false)
         }, handleFailure)
 
-        getUserMoviesUseCase( MovieListType.FAVORITE_PEOPLE, { movies ->
+        getUserMoviesUseCase( CategoryType.FAVORITE_PEOPLE, { movies ->
             favoritePeople.postValue(movies)
             isLoading.postValue(false)
         }, handleFailure)
     }
 
     fun deleteMovieFromList(
-        movieId:Int, listType:MovieListType,
+        movieId:Int, listType:CategoryType,
         handleFailure:(title:Int, msg:Int)->Unit
     ){
         isLoading.postValue(true)

@@ -2,7 +2,7 @@ package com.globant.imdb.data.network.firebase
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.globant.imdb.R
-import com.globant.imdb.data.database.entities.movie.MovieListType
+import com.globant.imdb.data.database.entities.movie.CategoryType
 import com.globant.imdb.data.model.user.UserModel
 import com.globant.imdb.domain.model.MovieItem
 import javax.inject.Inject
@@ -51,7 +51,7 @@ class FirestoreManager @Inject constructor(
     }
 
     fun getUserMoviesList(
-        listType:MovieListType,
+        listType:CategoryType,
         handleSuccess: (movies:List<MovieItem>)->Unit,
         handleFailure:(title:Int, msg:Int)->Unit
     ) {
@@ -77,7 +77,7 @@ class FirestoreManager @Inject constructor(
     }
 
     fun addMovieToList(
-        movie:MovieItem, listType:MovieListType,
+        movie:MovieItem, listType:CategoryType,
         handleSuccess:(movie:MovieItem)->Unit,
         handleFailure:(title:Int, msg:Int)->Unit
     ){
@@ -96,7 +96,7 @@ class FirestoreManager @Inject constructor(
 
     fun deleteMovieFromList(
         movieId:Int,
-        listType:MovieListType,
+        listType:CategoryType,
         handleSuccess:()->Unit,
         handleFailure:(title:Int, msg:Int)->Unit
     ){

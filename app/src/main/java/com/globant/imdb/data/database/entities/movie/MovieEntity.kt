@@ -2,24 +2,15 @@ package com.globant.imdb.data.database.entities.movie
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.globant.imdb.data.database.typeConverters.StringListConverter
 import com.globant.imdb.domain.model.MovieItem
 
-@Entity(
-    tableName = "movies",
-    foreignKeys = [ ForeignKey(
-        entity = MovieListEntity::class,
-        parentColumns = ["id"],
-        childColumns = ["listId"]
-    )]
-)
+@Entity(tableName = "movie")
 data class MovieEntity(
     @PrimaryKey
     @ColumnInfo("id")                   val id: Int = 0,
-    @ColumnInfo(index = true)                 val listId:String? = "",
     @ColumnInfo("adult")                val adult: Boolean? = false,
     @ColumnInfo("backdrop_path")        val backdropPath: String? = "",
     @TypeConverters(StringListConverter::class)
@@ -37,10 +28,9 @@ data class MovieEntity(
     @ColumnInfo("tagline")              val tagline:String? = "",
 )
 
-fun MovieItem.toDatabase(listId:String): MovieEntity =
+fun MovieItem.toDatabase(): MovieEntity =
     MovieEntity(
         id,
-        listId,
         adult,
         backdropPath,
         genreNames,

@@ -8,18 +8,18 @@ import com.globant.imdb.data.database.entities.movie.MovieEntity
 
 @Dao
 interface MovieDao {
-    @Query("SELECT * FROM movies WHERE listId = :listId")
-    suspend fun getListOfMovies(listId:String):List<MovieEntity>
-
-    @Query("SELECT * FROM movies WHERE id = :id LIMIT 1")
+    @Query("SELECT * FROM movie WHERE id = :id LIMIT 1")
     suspend fun getMovieById(id:Int):MovieEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMovieList(movieList:List<MovieEntity>)
 
-    @Query("DELETE FROM movies WHERE listId = :listId")
-    suspend fun deleteMovieList(listId:String)
-
-    @Query("UPDATE movies SET tagline = :tagline WHERE id = :id")
+    @Query("UPDATE movie SET tagline = :tagline WHERE id = :id")
     suspend fun updateTagLine(id:Int, tagline:String?)
+
+    @Query("SELECT movie.* FROM movie INNER JOIN category_movie ON movie.id = idMovie WHERE idCategory = :categoryId")
+    suspend fun getMoviesByCategory(categoryId:String):List<MovieEntity>
+
+    @Query("DELETE FROM movie WHERE id IN (SELECT idMovie FROM category_movie WHERE idCategory = :categoryId)")
+    suspend fun deleteMoviesByCategory(categoryId:String)
 }
