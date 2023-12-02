@@ -23,30 +23,33 @@ class ProfileViewModel @Inject constructor(
     val recentViewed = MutableLiveData<List<MovieItem>>()
     val favoritePeople = MutableLiveData<List<MovieItem>>()
     val isLoading = MutableLiveData(false)
+    val username:String by lazy { authManager.getEmail() }
 
     fun refresh(
         handleFailure:(title:Int, msg:Int)->Unit
     ) {
-        isLoading.postValue(true)
-        val uri = authManager.getProfilePhotoURL()
-        if(uri!=null){
-            photoUri.postValue(uri)
+        if(username.isNotEmpty()){
+            isLoading.postValue(true)
+            val uri = authManager.getProfilePhotoURL()
+            if(uri!=null){
+                photoUri.postValue(uri)
+            }
+
+            getUserMoviesUseCase( CategoryType.WATCH_LIST_MOVIES, { movies ->
+                watchList.postValue(movies)
+                isLoading.postValue(false)
+            }, handleFailure)
+
+            getUserMoviesUseCase( CategoryType.HISTORY_MOVIES, { movies ->
+                recentViewed.postValue(movies)
+                isLoading.postValue(false)
+            }, handleFailure)
+
+            getUserMoviesUseCase( CategoryType.FAVORITE_PEOPLE, { movies ->
+                favoritePeople.postValue(movies)
+                isLoading.postValue(false)
+            }, handleFailure)
         }
-
-        getUserMoviesUseCase( CategoryType.WATCH_LIST_MOVIES, { movies ->
-            watchList.postValue(movies)
-            isLoading.postValue(false)
-        }, handleFailure)
-
-        getUserMoviesUseCase( CategoryType.HISTORY_MOVIES, { movies ->
-            recentViewed.postValue(movies)
-            isLoading.postValue(false)
-        }, handleFailure)
-
-        getUserMoviesUseCase( CategoryType.FAVORITE_PEOPLE, { movies ->
-            favoritePeople.postValue(movies)
-            isLoading.postValue(false)
-        }, handleFailure)
     }
 
     fun deleteMovieFromList(

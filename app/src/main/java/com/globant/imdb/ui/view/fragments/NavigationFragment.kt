@@ -20,7 +20,7 @@ import com.globant.imdb.ui.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class NavigationFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
+class NavigationFragment : Fragment(), PopupMenu.OnMenuItemClickListener, ProfileFragment.LogoutListener {
 
     private val navController: NavController by lazy {
         val navHostFragment =
@@ -81,7 +81,7 @@ class NavigationFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
         return true
     }
 
-    private fun logout(){
+    override fun logout(){
         cleanSession()
         val action = NavigationFragmentDirections.actionNavigationFragmentToLoginFragment()
         findNavController().navigate(action)

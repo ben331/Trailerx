@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.globant.imdb.data.database.entities.movie.CategoryType
+import com.globant.imdb.data.network.firebase.FirebaseAuthManager
 import com.globant.imdb.domain.model.MovieItem
 import com.globant.imdb.domain.moviesUseCases.GetNowPlayingMoviesUseCase
 import com.globant.imdb.domain.moviesUseCases.GetPopularMoviesUseCase
@@ -18,6 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
+    private val authManager: FirebaseAuthManager,
     private val getNowPlayingMoviesUseCase:GetNowPlayingMoviesUseCase,
     private val getTrailerUseCase:GetOfficialTrailerUseCase,
     private val getPopularMoviesUseCase:GetPopularMoviesUseCase,
@@ -32,6 +34,8 @@ class HomeViewModel @Inject constructor(
     val upcomingMovies = MutableLiveData<List<MovieItem>>()
     val popularMovies = MutableLiveData<List<MovieItem>>()
     val isLoading = MutableLiveData(false)
+
+    val username:String by lazy { authManager.getEmail() }
 
     @SuppressLint("NotifyDataSetChanged")
     fun onCreate() {

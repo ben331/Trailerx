@@ -37,6 +37,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/list_movies_one"
                 android:layout_marginTop="@dimen/margin_medium"
+                tools:visibility="gone"
                 layout="@layout/item_movies_lists"/>
 
             <include
@@ -45,7 +46,38 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/list_movies_two"
                 android:layout_marginTop="@dimen/margin_medium"
+                tools:visibility="gone"
                 layout="@layout/item_movies_lists"/>
+
+            <TextView
+                android:id="@+id/inviteToRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/profile_header_container"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginEnd="@dimen/margin_medium"
+                android:text="@string/invitation"
+                android:textAppearance="@style/TextAppearance.IMDb.Body.DarkItalic"
+                android:gravity="center"
+                android:visibility="gone"
+                tools:visibility="visible"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_register"
+                android:layout_width="0dp"
+                app:layout_constraintWidth_max="@dimen/button_max_width"
+                android:layout_height="@dimen/button_height"
+                android:visibility="gone"
+                tools:visibility="visible"
+                app:layout_constraintTop_toBottomOf="@id/inviteToRegister"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginBottom="@dimen/margin_medium"
+                android:textAppearance="@style/TextAppearance.IMDb.Button.Primary"
+                android:text="@string/register"/>
 
             <View
                 android:id="@+id/divider"

@@ -46,6 +46,8 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
     private lateinit var recentMoviesAdapter: MovieProfileAdapter
     private lateinit var favoritePeopleAdapter: MovieProfileAdapter
 
+    private lateinit var logoutListener: LogoutListener
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -57,8 +59,14 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
         super.onViewCreated(view, savedInstanceState)
         setupLiveData()
         setupTopRecyclerView()
-        setupRecyclerViews()
         setupButtons()
+        setupRecyclerViews()
+
+        if(profileViewModel.username.isNotEmpty()){
+            hideInvitation()
+        }else{
+            hideRecyclerViews()
+        }
     }
 
     override fun onResume() {
@@ -121,6 +129,22 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
         }
     }
 
+    private fun hideRecyclerViews(){
+        binding.listMoviesOne.root.visibility = View.GONE
+        binding.listMoviesTwo.root.visibility = View.GONE
+        binding.listMoviesThree.root.visibility = View.GONE
+        binding.inviteToRegister.visibility = View.VISIBLE
+        binding.btnRegister.visibility = View.VISIBLE
+    }
+
+    private fun hideInvitation(){
+        binding.inviteToRegister.visibility = View.GONE
+        binding.btnRegister.visibility = View.GONE
+        binding.listMoviesOne.root.visibility = View.VISIBLE
+        binding.listMoviesTwo.root.visibility = View.VISIBLE
+        binding.listMoviesThree.root.visibility = View.VISIBLE
+    }
+
     @SuppressLint("NotifyDataSetChanged")
     private fun setupLiveData(){
         profileViewModel.photoUri.observe(viewLifecycleOwner){
@@ -177,6 +201,11 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
         binding.refreshLayout.setOnRefreshListener {
             profileViewModel.refresh(::handleFailure)
         }
+        val parent = parentFragment?.parentFragment as NavigationFragment
+        logoutListener = parent
+        binding.btnRegister.setOnClickListener {
+            logoutListener.logout()
+        }
     }
 
     private fun showPopup(v: View) {
@@ -207,5 +236,9 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
     private fun handleFailure(title:Int, msg:Int){
         profileViewModel.isLoading.postValue(false)
         dialogManager.showAlert(requireContext(),title, msg)
+    }
+
+    interface LogoutListener {
+        fun logout()
     }
 }

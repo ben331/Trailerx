@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.globant.imdb.data.database.entities.movie.CategoryType
+import com.globant.imdb.data.network.firebase.FirebaseAuthManager
 import com.globant.imdb.domain.model.MovieItem
 import com.globant.imdb.domain.moviesUseCases.GetMovieByIdUseCase
 import com.globant.imdb.domain.moviesUseCases.GetOfficialTrailerUseCase
@@ -15,6 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MovieViewModel @Inject constructor(
+    private val authManager: FirebaseAuthManager,
     private val getMovieByIdUseCase:GetMovieByIdUseCase,
     private val getTrailerUseCase:GetOfficialTrailerUseCase,
     private val addMovieToUserListUseCase:AddMovieToUserListUseCase
@@ -23,6 +25,8 @@ class MovieViewModel @Inject constructor(
     val isLoading = MutableLiveData(false)
     val currentMovie = MutableLiveData<MovieItem>()
     val videoIframe = MutableLiveData<String?>()
+
+    val username:String by lazy { authManager.getEmail() }
 
     fun onRefresh(movieId:Int){
         viewModelScope.launch {
