@@ -18,8 +18,8 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.facebook.CallbackManager
 import com.globant.imdb.R
-import com.globant.imdb.core.DialogManager
-import com.globant.imdb.core.FormValidator
+import com.globant.imdb.ui.helpers.DialogManager
+import com.globant.imdb.ui.helpers.FormValidator
 import com.globant.imdb.data.model.user.UserModel
 import com.globant.imdb.data.network.firebase.ProviderType
 import com.globant.imdb.databinding.FragmentLoginBinding
@@ -35,7 +35,7 @@ class LoginFragment : Fragment() {
     @Inject
     lateinit var callbackManager:CallbackManager
     @Inject
-    lateinit var dialogManager:DialogManager
+    lateinit var dialogManager: DialogManager
 
     private val binding:FragmentLoginBinding by lazy {
         FragmentLoginBinding.inflate(layoutInflater)

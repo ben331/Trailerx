@@ -1,4 +1,4 @@
-package com.globant.imdb.data
+package com.globant.imdb.data.repositories
 
 import com.globant.imdb.data.database.dao.movie.MovieDao
 import com.globant.imdb.data.database.dao.movie.CategoryDao

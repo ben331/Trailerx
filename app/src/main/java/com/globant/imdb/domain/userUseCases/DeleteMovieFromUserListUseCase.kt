@@ -1,10 +1,10 @@
 package com.globant.imdb.domain.userUseCases
 
-import com.globant.imdb.data.IMDbRepository
+import com.globant.imdb.data.repositories.IMDbRepository
 import com.globant.imdb.data.database.entities.movie.CategoryType
 import javax.inject.Inject
 
-class DeleteMovieFromUserListUseCase @Inject constructor(private val repository:IMDbRepository ) {
+class DeleteMovieFromUserListUseCase @Inject constructor(private val repository: IMDbRepository) {
     operator fun invoke(
         movieId:Int,
         listType: CategoryType,

@@ -13,8 +13,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.globant.imdb.R
 import com.globant.imdb.core.Constants
-import com.globant.imdb.core.DialogManager
-import com.globant.imdb.core.TextTransforms
+import com.globant.imdb.ui.helpers.DialogManager
+import com.globant.imdb.ui.helpers.TextTransforms
 import com.globant.imdb.databinding.FragmentMovieBinding
 import com.globant.imdb.ui.viewmodel.MovieViewModel
 import com.squareup.picasso.Picasso
@@ -25,7 +25,7 @@ import javax.inject.Inject
 class MovieFragment : Fragment() {
 
     @Inject
-    lateinit var dialogManager:DialogManager
+    lateinit var dialogManager: DialogManager
 
     private val movieViewModel: MovieViewModel by viewModels()
 

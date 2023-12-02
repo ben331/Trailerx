@@ -13,8 +13,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.globant.imdb.R
-import com.globant.imdb.core.DialogManager
-import com.globant.imdb.core.FormValidator
+import com.globant.imdb.ui.helpers.DialogManager
+import com.globant.imdb.ui.helpers.FormValidator
 import com.globant.imdb.databinding.FragmentSignUpBinding
 import com.globant.imdb.ui.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +23,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SignUpFragment : Fragment() {
     @Inject
-    lateinit var dialogManager:DialogManager
+    lateinit var dialogManager: DialogManager
     private val authViewModel:AuthViewModel by activityViewModels()
 
     private val binding:FragmentSignUpBinding by lazy {

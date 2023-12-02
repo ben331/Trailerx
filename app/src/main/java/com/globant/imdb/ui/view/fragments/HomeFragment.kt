@@ -13,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.globant.imdb.R
 import com.globant.imdb.core.Constants
-import com.globant.imdb.core.DialogManager
+import com.globant.imdb.ui.helpers.DialogManager
 import com.globant.imdb.databinding.FragmentHomeBinding
 import com.globant.imdb.ui.view.adapters.MovieAdapter
 import com.globant.imdb.ui.view.adapters.MovieViewHolder

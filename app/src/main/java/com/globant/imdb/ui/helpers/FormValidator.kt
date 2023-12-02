@@ -1,9 +1,8 @@
-package com.globant.imdb.core
+package com.globant.imdb.ui.helpers
 
 import android.util.Patterns
 
 private const val MIN_CHARACTERS_PASSWORD = 8
-
 class FormValidator {
     companion object {
         fun validateLogin(email:String, password: String): Boolean{

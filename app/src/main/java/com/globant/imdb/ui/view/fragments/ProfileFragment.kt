@@ -14,7 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.globant.imdb.databinding.FragmentProfileBinding
 import com.globant.imdb.R
-import com.globant.imdb.core.DialogManager
+import com.globant.imdb.ui.helpers.DialogManager
 import com.globant.imdb.data.database.entities.movie.CategoryType
 import com.globant.imdb.ui.view.adapters.MovieProfileAdapter
 import com.globant.imdb.ui.view.adapters.MovieProfileViewHolder
@@ -30,7 +30,7 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
     private val profileViewModel:ProfileViewModel by viewModels()
 
     @Inject
-    lateinit var dialogManager:DialogManager
+    lateinit var dialogManager: DialogManager
 
     private val binding: FragmentProfileBinding by lazy {
         FragmentProfileBinding.inflate(layoutInflater)

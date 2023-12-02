@@ -1,4 +1,4 @@
-package com.globant.imdb.core
+package com.globant.imdb.ui.helpers
 
 import java.text.SimpleDateFormat
 import java.util.Locale

@@ -1,10 +1,10 @@
 package com.globant.imdb.domain.userUseCases
 
-import com.globant.imdb.data.IMDbRepository
+import com.globant.imdb.data.repositories.IMDbRepository
 import com.globant.imdb.data.model.user.UserModel
 import javax.inject.Inject
 
-class CreateUserUseCase @Inject constructor( private val repository:IMDbRepository ) {
+class CreateUserUseCase @Inject constructor( private val repository: IMDbRepository) {
     operator fun invoke(
         localUser:UserModel,
         handleSuccess:(user:UserModel?)->Unit,
