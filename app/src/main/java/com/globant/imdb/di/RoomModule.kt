@@ -27,5 +27,9 @@ object RoomModule {
 
     @Provides
     @Singleton
-    fun provideMovieListDao(db:IMDbDatabase) = db.getMovieListDao()
+    fun provideCategoryDao(db:IMDbDatabase) = db.getCategoryDao()
+
+    @Provides
+    @Singleton
+    fun provideCategoryMovieDao(db:IMDbDatabase) = db.getCategoryMovieDao()
 }

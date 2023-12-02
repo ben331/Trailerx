@@ -2,23 +2,17 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "bbc36cadc0d06092d42446ffd6a3aeec",
+    "identityHash": "85e7980e01b81014115986a1830bbca9",
     "entities": [
       {
-        "tableName": "movies",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `listId` TEXT, `adult` INTEGER, `backdrop_path` TEXT, `genre_names` TEXT, `original_language` TEXT, `original_title` TEXT, `overview` TEXT, `popularity` REAL, `poster_path` TEXT, `release_date` TEXT, `title` TEXT, `video` INTEGER, `vote_average` REAL, `vote_count` INTEGER, `tagline` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`listId`) REFERENCES `movies_lists`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "tableName": "movie",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `adult` INTEGER, `backdrop_path` TEXT, `genre_names` TEXT, `original_language` TEXT, `original_title` TEXT, `overview` TEXT, `popularity` REAL, `poster_path` TEXT, `release_date` TEXT, `title` TEXT, `video` INTEGER, `vote_average` REAL, `vote_count` INTEGER, `tagline` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
             "affinity": "INTEGER",
             "notNull": true
-          },
-          {
-            "fieldPath": "listId",
-            "columnName": "listId",
-            "affinity": "TEXT",
-            "notNull": false
           },
           {
             "fieldPath": "adult",
@@ -111,33 +105,11 @@
             "id"
           ]
         },
-        "indices": [
-          {
-            "name": "index_movies_listId",
-            "unique": false,
-            "columnNames": [
-              "listId"
-            ],
-            "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_movies_listId` ON `${TABLE_NAME}` (`listId`)"
-          }
-        ],
-        "foreignKeys": [
-          {
-            "table": "movies_lists",
-            "onDelete": "NO ACTION",
-            "onUpdate": "NO ACTION",
-            "columns": [
-              "listId"
-            ],
-            "referencedColumns": [
-              "id"
-            ]
-          }
-        ]
+        "indices": [],
+        "foreignKeys": []
       },
       {
-        "tableName": "movies_lists",
+        "tableName": "category",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
@@ -155,12 +127,81 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "category_movie",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idMovie` INTEGER NOT NULL, `idCategory` TEXT NOT NULL, PRIMARY KEY(`idMovie`, `idCategory`), FOREIGN KEY(`idMovie`) REFERENCES `movie`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`idCategory`) REFERENCES `category`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "idMovie",
+            "columnName": "idMovie",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "idCategory",
+            "columnName": "idCategory",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "idMovie",
+            "idCategory"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_category_movie_idMovie",
+            "unique": false,
+            "columnNames": [
+              "idMovie"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_category_movie_idMovie` ON `${TABLE_NAME}` (`idMovie`)"
+          },
+          {
+            "name": "index_category_movie_idCategory",
+            "unique": false,
+            "columnNames": [
+              "idCategory"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_category_movie_idCategory` ON `${TABLE_NAME}` (`idCategory`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "movie",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "idMovie"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "category",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "idCategory"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'bbc36cadc0d06092d42446ffd6a3aeec')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '85e7980e01b81014115986a1830bbca9')"
     ]
   }
 }

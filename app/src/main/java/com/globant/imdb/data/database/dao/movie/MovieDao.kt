@@ -17,7 +17,7 @@ interface MovieDao {
     @Query("UPDATE movie SET tagline = :tagline WHERE id = :id")
     suspend fun updateTagLine(id:Int, tagline:String?)
 
-    @Query("SELECT movie.* FROM movie INNER JOIN category_movie ON movie.id = idMovie WHERE idCategory = :categoryId")
+    @Query("SELECT movie.* FROM movie INNER JOIN category_movie ON movie.id = category_movie.idMovie WHERE category_movie.idCategory = :categoryId")
     suspend fun getMoviesByCategory(categoryId:String):List<MovieEntity>
 
     @Query("DELETE FROM movie WHERE id IN (SELECT idMovie FROM category_movie WHERE idCategory = :categoryId)")

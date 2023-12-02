@@ -69,7 +69,7 @@ class IMDbRepository @Inject constructor(
     }
     suspend fun insertMoviesToCategory(movies:List<MovieEntity>, category: CategoryType){
         movieDao.insertMovieList(movies)
-        categoryMovieDao.addMovieToCategory( movies.map{ it.toCategoryMovie(category) } )
+        categoryMovieDao.addMoviesToCategory( movies.map{ it.toCategoryMovie(category) } )
     }
     suspend fun getMovieByIdFromDatabase(movieId:Int): MovieItem?{
         val response = movieDao.getMovieById(movieId)
