@@ -24,58 +24,62 @@ data class MovieItem(
 
 fun MovieEntity.toDomain():MovieItem {
     return MovieItem(
-        adult,
-        backdropPath,
-        genreNames,
-        id,
-        originalLanguage,
-        originalTitle,
-        overview,
-        popularity,
-        posterPath,
-        releaseDate,
-        tagline,
+        adult = adult,
+        backdropPath = backdropPath,
+        genreNames = genreNames,
+        id = id,
+        originalLanguage = originalLanguage,
+        originalTitle = originalTitle,
+        overview = overview,
+        popularity = popularity,
+        posterPath = posterPath,
+        releaseDate = releaseDate,
+        title = title,
+        video = video,
+        voteAverage = voteAverage,
+        voteCount = voteCount,
+        tagline = tagline,
     )
 }
 
 fun MovieModel.toDomain():MovieItem {
     return MovieItem(
-        adult,
-        backdropPath,
-        emptyList(),
-        id,
-        originalLanguage,
-        originalTitle,
-        overview,
-        popularity,
-        posterPath,
-        releaseDate,
-        title,
-        video,
-        voteAverage,
-        voteCount,
+        adult = adult,
+        backdropPath = backdropPath,
+        genreNames = emptyList(),
+        id = id,
+        originalLanguage = originalLanguage,
+        originalTitle = originalTitle,
+        overview = overview,
+        popularity = popularity,
+        posterPath = posterPath,
+        releaseDate = releaseDate,
+        title = title,
+        video = video,
+        voteAverage = voteAverage,
+        voteCount = voteCount,
     )
 }
 
 fun MovieDetailModel.toDomain():MovieItem {
 
-    val genreIds = genres.map { it.name }
+    val genreNames = genres.map { it.name }
 
     return MovieItem(
-        adult,
-        backdropPath,
-        genreIds,
-        id,
-        originalLanguage,
-        originalTitle,
-        overview,
-        popularity,
-        posterPath,
-        releaseDate,
-        title,
-        video,
-        voteAverage,
-        voteCount,
-        tagline,
+        adult = adult,
+        backdropPath = backdropPath,
+        genreNames = genreNames,
+        id = id,
+        originalLanguage = originalLanguage,
+        originalTitle = originalTitle,
+        overview = overview,
+        popularity = popularity,
+        posterPath = posterPath,
+        releaseDate = releaseDate,
+        title = title,
+        video = video,
+        voteAverage = voteAverage,
+        voteCount = voteCount,
+        tagline = tagline,
     )
 }

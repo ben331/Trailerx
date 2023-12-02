@@ -38,7 +38,6 @@ class NavigationFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         saveSession()
     }
 

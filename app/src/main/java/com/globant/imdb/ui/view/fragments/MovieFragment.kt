@@ -96,9 +96,13 @@ class MovieFragment : Fragment() {
             movieViewModel.videoIframe.observe(viewLifecycleOwner) { videoIframe ->
                 videoIframe?.let {
                     with(binding.containerFrontage.videoMovie){
-                        loadData(it, "text/html", "utf-8")
-                        settings.javaScriptEnabled = true
-                        webChromeClient = WebChromeClient()
+                        try {
+                            loadData(it, "text/html", "utf-8")
+                            settings.javaScriptEnabled = true
+                            webChromeClient = WebChromeClient()
+                        }catch (e:Exception){
+                            e.printStackTrace()
+                        }
                     }
                 }
                 movieViewModel.isLoading.postValue(false)

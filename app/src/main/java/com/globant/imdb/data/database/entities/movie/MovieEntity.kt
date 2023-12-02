@@ -30,19 +30,19 @@ data class MovieEntity(
 
 fun MovieItem.toDatabase(): MovieEntity =
     MovieEntity(
-        id,
-        adult,
-        backdropPath,
-        genreNames,
-        originalLanguage,
-        originalTitle,
-        overview,
-        popularity,
-        posterPath,
-        releaseDate,
-        title,
-        video,
-        voteAverage,
-        voteCount,
-        tagline
+        id = id,
+        adult = adult,
+        backdropPath = backdropPath,
+        genreNames = genreNames,
+        originalLanguage = originalLanguage,
+        originalTitle = originalTitle,
+        overview = overview,
+        popularity = popularity,
+        posterPath = posterPath,
+        releaseDate = releaseDate,
+        title = title,
+        video = video,
+        voteAverage = voteAverage,
+        voteCount = voteCount,
+        tagline = tagline
     )
