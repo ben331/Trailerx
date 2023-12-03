@@ -54,13 +54,22 @@ class NavigationFragment : Fragment(), PopupMenu.OnMenuItemClickListener, Profil
     }
 
     private fun setup(){
-        binding.navBar.setupWithNavController(navController)
         authViewModel.setupName(::setupNavBar)
     }
 
+    @Suppress("DEPRECATION")
     private fun setupNavBar(remoteDisplayName: String?){
+        binding.navBar.setupWithNavController(navController)
         val profileItem = binding.navBar.menu.findItem(R.id.profileFragment)
         profileItem.title = remoteDisplayName ?: getString(R.string.guest_name)
+        binding.navBar.setOnNavigationItemSelectedListener {
+            with(childFragmentManager.findFragmentById(R.id.home_nav_host) as NavHostFragment){
+                if(childFragmentManager.fragments[0] is MovieFragment){
+                    findNavController().popBackStack()
+                }
+            }
+            true
+        }
     }
 
     private fun saveSession(){
