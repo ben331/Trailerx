@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.globant.imdb.data.database.typeConverters.StringListConverter
 import com.globant.imdb.domain.model.MovieItem
+import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "movie")
 data class MovieEntity(
@@ -13,8 +14,7 @@ data class MovieEntity(
     @ColumnInfo("id")                   val id: Int = 0,
     @ColumnInfo("adult")                val adult: Boolean? = false,
     @ColumnInfo("backdrop_path")        val backdropPath: String? = "",
-    @TypeConverters(StringListConverter::class)
-    @ColumnInfo("genre_names")          val genreNames: List<String>? = emptyList(),
+    @ColumnInfo("genre_ids")            val genreIds: List<Int> = emptyList(),
     @ColumnInfo("original_language")    val originalLanguage: String? = "",
     @ColumnInfo("original_title")       val originalTitle: String? = "",
     @ColumnInfo("overview")             val overview: String? = "",
@@ -33,7 +33,7 @@ fun MovieItem.toDatabase(): MovieEntity =
         id = id,
         adult = adult,
         backdropPath = backdropPath,
-        genreNames = genreNames,
+        genreIds = genreIds,
         originalLanguage = originalLanguage,
         originalTitle = originalTitle,
         overview = overview,

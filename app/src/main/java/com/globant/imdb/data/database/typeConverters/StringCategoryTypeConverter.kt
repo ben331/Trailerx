@@ -3,7 +3,7 @@ package com.globant.imdb.data.database.typeConverters
 import androidx.room.TypeConverter
 import com.globant.imdb.data.database.entities.movie.CategoryType
 
-class StringMovieListTypeConverter {
+class StringCategoryTypeConverter {
     @TypeConverter
     fun fromString(value:String): CategoryType {
         return CategoryType.valueOf(value)

@@ -1,6 +1,8 @@
 package com.globant.imdb.data.model.movies
 
+import com.google.gson.annotations.SerializedName
+
 data class GenreModel(
-    val id:Int,
-    val name:String
+    @SerializedName("id")       val id:Int = 0,
+    @SerializedName("name")     val name:String = ""
 )
