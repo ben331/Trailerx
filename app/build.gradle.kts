@@ -93,6 +93,11 @@ dependencies {
     //Gson
     implementation("com.google.code.gson:gson:2.10.1")
 
+    //JWT
+    implementation("io.jsonwebtoken:jjwt-api:0.11.2")
+    implementation("io.jsonwebtoken:jjwt-impl:0.11.2")
+    implementation("io.jsonwebtoken:jjwt-jackson:0.11.2")
+
     //Google
     implementation("com.google.android.gms:play-services-auth:20.7.0")
 

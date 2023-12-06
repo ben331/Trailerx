@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.setupWithNavController
 import com.globant.imdb.R
+import com.globant.imdb.core.TokenService
 import com.globant.imdb.databinding.FragmentNavigationBinding
 import com.globant.imdb.ui.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -72,14 +73,14 @@ class NavigationFragment : Fragment(), PopupMenu.OnMenuItemClickListener, Profil
     }
 
     private fun saveSession(){
-        val email = args.email
-        val provider = args.provider
-
-        val prefs = activity?.
+        args.email?.let { email ->
+            val provider = args.provider
+            val token = TokenService.generateToken(requireContext(), email, provider.name)
+            val prefs = activity?.
             getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)?.edit()!!
-        prefs.putString("email", email)
-        prefs.putString("provider", provider.name)
-        prefs.apply()
+            prefs.putString("token", token)
+            prefs.apply()
+        }
     }
 
     override fun onMenuItemClick(item: MenuItem?): Boolean {

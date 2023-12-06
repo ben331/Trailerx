@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.fragment.app.activityViewModels
@@ -18,6 +19,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.facebook.CallbackManager
 import com.globant.imdb.R
+import com.globant.imdb.core.TokenService
 import com.globant.imdb.ui.helpers.DialogManager
 import com.globant.imdb.ui.helpers.FormValidator
 import com.globant.imdb.data.model.user.UserModel
@@ -188,11 +190,14 @@ class LoginFragment : Fragment() {
     private fun loadSession(){
         val prefs = activity?.
         getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
-        val email = prefs?.getString("email", null)
-        val provider = prefs?.getString("provider", null)
-
-        if(email!=null && provider!=null){
-            showHome(email, ProviderType.valueOf(provider))
+        val token = prefs?.getString("token", null)
+        token?.let {
+            val claims = TokenService.validateToken(requireContext(),token)
+            if(claims!=null){
+                val email = claims["sub"] as String
+                val provider = claims["provider"] as String
+                showHome(email, ProviderType.valueOf(provider))
+            }
         }
     }
 
