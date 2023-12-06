@@ -2,6 +2,7 @@ package com.globant.imdb.ui.view.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -54,6 +55,13 @@ class NavigationFragment : Fragment(), PopupMenu.OnMenuItemClickListener, Profil
     }
 
     private fun setup(){
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if(destination.id == R.id.movieFragment){
+               binding.navBar.visibility = View.GONE
+            }else{
+                binding.navBar.visibility = View.VISIBLE
+            }
+        }
         binding.navBar.setupWithNavController(navController)
         authViewModel.setupName(::setupNavBar)
     }
