@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebChromeClient
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -70,41 +71,59 @@ class MovieFragment : Fragment() {
     }
 
     private fun setupLiveData(){
-        movieViewModel.currentMovie.observe(viewLifecycleOwner){ movieItem ->
-            binding.topAppBar.title = movieItem.title
-            with(binding.containerFrontage){
-                sectionTitle.text = movieItem.title
-                originTitle.text = movieItem.originalTitle
-                detailMovie.text =
-                    TextTransforms.createDescription(movieItem.tagline, movieItem.releaseDate)
-            }
-            with(binding.containerSypnosis){
-                labelGenre.text =
-                    if(!movieItem.genreNames.isNullOrEmpty()){
-                        movieItem.genreNames[0]
-                    }else{ "- - - -" }
-                labelStars.text = movieItem.popularity.toString()
-                textBoxSynopsis.text = movieItem.overview
-                val url = Constants.IMAGES_BASE_URL + movieItem.backdropPath
+        movieViewModel.isServiceAvailable.observe(viewLifecycleOwner, ::turnOfflineMode)
+
+        movieViewModel.currentMovie.observe(viewLifecycleOwner){ movieDetailItem ->
+
+            if(movieDetailItem == null) {
+                dialogManager.showAlert (
+                    requireContext(),
+                    getString(R.string.error),
+                    getString(R.string.get_movie_error)
+                )
+                findNavController().popBackStack()
+            } else {
+                binding.topAppBar.title = movieDetailItem.title
+                with(binding.containerFrontage){
+                    sectionTitle.text = movieDetailItem.title
+                    originTitle.text = movieDetailItem.originalTitle
+                    detailMovie.text =
+                        TextTransforms.createDescription(movieDetailItem.tagline, movieDetailItem.releaseDate)
+                }
+                with(binding.containerSypnosis){
+                    if(movieDetailItem.tagline.isNullOrEmpty()){
+                        labelGenre.visibility = View.GONE
+                    }else{
+                        labelGenre.visibility = View.VISIBLE
+                        labelGenre.text = movieDetailItem.genres?.get(0)?.name
+                    }
+                    labelStars.text = movieDetailItem.popularity.toString()
+                    textBoxSynopsis.text = movieDetailItem.overview
+                }
+                val url = Constants.IMAGES_BASE_URL + movieDetailItem.backdropPath
                 Picasso.with(requireContext())
                     .load(url)
                     .fit()
                     .centerCrop()
-                    .into(imgMovie)
+                    .into(binding.containerSypnosis.imgMovie)
+                Picasso.with(requireContext())
+                    .load(url)
+                    .fit()
+                    .centerCrop()
+                    .into(binding.containerFrontage.imgVideoMovie)
+
+                movieViewModel.isLoading.postValue(false)
             }
-            movieViewModel.isLoading.postValue(false)
         }
 
         movieViewModel.videoIframe.observe(viewLifecycleOwner){
             movieViewModel.videoIframe.observe(viewLifecycleOwner) { videoIframe ->
                 videoIframe?.let {
                     with(binding.containerFrontage.videoMovie){
-                        try {
+                        if(movieViewModel.isServiceAvailable.value == true){
                             loadData(it, "text/html", "utf-8")
                             settings.javaScriptEnabled = true
                             webChromeClient = WebChromeClient()
-                        }catch (e:Exception){
-                            e.printStackTrace()
                         }
                     }
                 }
@@ -114,6 +133,21 @@ class MovieFragment : Fragment() {
 
         movieViewModel.isLoading.observe(viewLifecycleOwner){
             binding.refreshLayout.isRefreshing = it
+        }
+    }
+
+    private fun turnOfflineMode(isServiceAvailable: Boolean) {
+        with(binding.containerFrontage){
+            if(isServiceAvailable){
+                videoMovie.visibility = View.VISIBLE
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.turn_offline_mode),
+                    Toast.LENGTH_SHORT
+                ).show()
+                videoMovie.visibility = View.GONE
+            }
         }
     }
 
@@ -135,6 +169,7 @@ class MovieFragment : Fragment() {
 
         }
         binding.refreshLayout.setOnRefreshListener {
+            movieViewModel.testServiceAvailability()
             movieViewModel.onRefresh(args.movieId)
         }
     }

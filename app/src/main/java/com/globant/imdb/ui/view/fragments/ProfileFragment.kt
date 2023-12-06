@@ -101,6 +101,10 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
             titleContainer.sectionTitle.text = getString(R.string.watch_list)
             listDescription.text = getString(R.string.create_watch_list)
             btnActionList.text = getString(R.string.start_watch_list)
+            btnActionList.setOnClickListener {
+                val action = ProfileFragmentDirections.actionProfileFragmentToHomeFragment()
+                findNavController().navigate(action)
+            }
 
             moviesRecyclerView.adapter = watchListAdapter
             moviesRecyclerView.layoutManager =

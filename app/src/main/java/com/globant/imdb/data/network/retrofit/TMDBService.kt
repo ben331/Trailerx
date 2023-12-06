@@ -1,5 +1,6 @@
 package com.globant.imdb.data.network.retrofit
 
+import com.globant.imdb.core.Constants
 import com.globant.imdb.data.model.movies.MovieDetailModel
 import com.globant.imdb.data.model.movies.MoviesListModel
 import com.globant.imdb.data.model.movies.MoviesListDatesModel
@@ -79,6 +80,17 @@ class TMDBService @Inject constructor( private val api:TMDBApiClient ) {
             }catch (e: Exception){
                 e.printStackTrace()
                 null
+            }
+        }
+    }
+
+    suspend fun testServiceAvailability(): Boolean {
+        return withContext(Dispatchers.IO){
+            try {
+                val response = api.testServiceAvailability()
+                response.body() != null
+            }catch (e: Exception){
+                false
             }
         }
     }

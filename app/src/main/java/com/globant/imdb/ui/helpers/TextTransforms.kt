@@ -13,7 +13,7 @@ class TextTransforms {
         }
 
         private fun convertDate(date:String):String {
-            var result = "- - - -"
+            var result = ""
             val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             val outputFormat = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
             try {

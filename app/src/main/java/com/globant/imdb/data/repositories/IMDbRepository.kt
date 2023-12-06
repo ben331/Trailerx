@@ -3,15 +3,19 @@ package com.globant.imdb.data.repositories
 import com.globant.imdb.data.database.dao.movie.MovieDao
 import com.globant.imdb.data.database.dao.movie.CategoryDao
 import com.globant.imdb.data.database.dao.movie.CategoryMovieDao
+import com.globant.imdb.data.database.dao.movie.MovieDetailDao
 import com.globant.imdb.data.database.entities.movie.MovieEntity
 import com.globant.imdb.data.database.entities.movie.CategoryType
+import com.globant.imdb.data.database.entities.movie.MovieDetailEntity
 import com.globant.imdb.data.database.entities.movie.toCategoryMovie
 import com.globant.imdb.data.database.entities.movie.toDatabase
 import com.globant.imdb.data.model.user.UserModel
 import com.globant.imdb.data.network.firebase.FirestoreManager
 import com.globant.imdb.data.network.retrofit.TMDBService
+import com.globant.imdb.domain.model.MovieDetailItem
 import com.globant.imdb.domain.model.MovieItem
 import com.globant.imdb.domain.model.VideoItem
+import com.globant.imdb.domain.model.toDetail
 import com.globant.imdb.domain.model.toDomain
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,6 +29,7 @@ class IMDbRepository @Inject constructor(
     private val movieDao: MovieDao,
     private val categoryDao: CategoryDao,
     private val categoryMovieDao: CategoryMovieDao,
+    private val movieDetailDao: MovieDetailDao
 ) {
     init {
         CoroutineScope(Dispatchers.IO).launch {
@@ -49,7 +54,7 @@ class IMDbRepository @Inject constructor(
         val response = api.getPopularMovies()?.results ?: emptyList()
         return response.map { it.toDomain() }
     }
-    suspend fun getMovieByIdFromApi(movieId:Int): MovieItem?{
+    suspend fun getMovieByIdFromApi(movieId:Int): MovieDetailItem?{
         val response = api.getMovieById(movieId)
         return response?.toDomain()
     }
@@ -71,12 +76,15 @@ class IMDbRepository @Inject constructor(
         movieDao.insertMovieList(movies)
         categoryMovieDao.addMoviesToCategory( movies.map{ it.toCategoryMovie(category) } )
     }
-    suspend fun getMovieByIdFromDatabase(movieId:Int): MovieItem?{
-        val response = movieDao.getMovieById(movieId)
-        return response?.toDomain()
+    suspend fun getMovieByIdFromDatabase(movieId:Int): MovieDetailItem?{
+        var response = movieDetailDao.getMovieDetailById(movieId)?.toDomain()
+        if(response == null) {
+            response = movieDao.getMovieById(movieId)?.toDetail()
+        }
+        return response
     }
-    suspend fun updateMovie(movie:MovieEntity){
-        movieDao.updateMovie(movie)
+    suspend fun addMovieDetail(movie:MovieDetailEntity){
+        movieDetailDao.insertMovieDetail(movie)
     }
     suspend fun clearMoviesByCategory(category: CategoryType){
         movieDao.deleteMoviesByCategory(category.name)
@@ -122,4 +130,6 @@ class IMDbRepository @Inject constructor(
     ){
         firestoreManager.deleteMovieFromList(movieId, listType, handleSuccess, handleFailure)
     }
+
+    suspend fun testServiceAvailability(): Boolean  = api.testServiceAvailability()
 }

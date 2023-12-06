@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -56,12 +57,19 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
         refresh()
     }
 
+    override fun onResume() {
+        super.onResume()
+        homeViewModel.testServiceAvailability()
+    }
+
     private fun setupButtons(){
         binding.refreshLayout.setOnRefreshListener(::refresh)
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun setupLiveData(){
+        homeViewModel.isServiceAvailable.observe(viewLifecycleOwner, ::turnOfflineMode)
+
         homeViewModel.mainMovie.observe(viewLifecycleOwner) { currentMovie ->
             with(binding.mainTrailerContainer) {
                 trailerName.text = currentMovie.title
@@ -71,6 +79,11 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
                     .fit()
                     .centerCrop()
                     .into(trailerImageView)
+                Picasso.with(requireContext())
+                    .load(imageUrl)
+                    .fit()
+                    .centerCrop()
+                    .into(imgWebView)
 
                 homeViewModel.getTrailerOfMovie(currentMovie.id)
             }
@@ -79,14 +92,11 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
         homeViewModel.videoIframe.observe(viewLifecycleOwner) { videoIframe ->
             videoIframe?.let {
                 with(binding.mainTrailerContainer.trailerWebView){
-                    try {
+                    homeViewModel.isLoading.postValue(false)
+                    if(homeViewModel.isServiceAvailable.value == true){
                         loadData(it, "text/html", "utf-8")
                         settings.javaScriptEnabled = true
                         webChromeClient = WebChromeClient()
-                    } catch (e:Exception){
-                        e.printStackTrace()
-                    } finally {
-                        homeViewModel.isLoading.postValue(false)
                     }
                 }
             }
@@ -107,6 +117,21 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
         homeViewModel.popularMovies.observe(viewLifecycleOwner){
             popularMoviesAdapter.movieList = it
             popularMoviesAdapter.notifyDataSetChanged()
+        }
+    }
+
+    private fun turnOfflineMode(isServiceAvailable: Boolean) {
+        with(binding.mainTrailerContainer){
+            if(isServiceAvailable){
+                trailerWebView.visibility = View.VISIBLE
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.turn_offline_mode),
+                    Toast.LENGTH_SHORT
+                ).show()
+                trailerWebView.visibility = View.GONE
+            }
         }
     }
 
@@ -151,7 +176,8 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
         }
     }
 
-    private fun refresh(){
+    private fun refresh() {
+        homeViewModel.testServiceAvailability()
         homeViewModel.onCreate()
     }
 

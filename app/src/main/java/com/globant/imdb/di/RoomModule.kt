@@ -32,4 +32,8 @@ object RoomModule {
     @Provides
     @Singleton
     fun provideCategoryMovieDao(db:IMDbDatabase) = db.getCategoryMovieDao()
+
+    @Provides
+    @Singleton
+    fun provideMovieDetailDao(db:IMDbDatabase) = db.getMovieDetailDao()
 }

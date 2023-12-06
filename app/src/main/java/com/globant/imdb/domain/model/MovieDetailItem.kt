@@ -1,15 +1,13 @@
 package com.globant.imdb.domain.model
 
 import com.globant.imdb.data.database.entities.movie.MovieDetailEntity
-import com.globant.imdb.data.model.movies.CollectionModel
+import com.globant.imdb.data.database.entities.movie.MovieEntity
 import com.globant.imdb.data.model.movies.MovieDetailModel
-import com.globant.imdb.data.model.movies.SpokenLanguageModel
 
 data class MovieDetailItem(
-    val adult: Boolean?,
-    val belongsToCollection: CollectionModel?,
+    val adult: Boolean? = false,
     val backdropPath: String?,
-    val budget: Int?,
+    val budget: Int? = 0,
     val genres: List<GenreItem>? = emptyList(),
     val homepage:String? = "",
     val id: Int = 0,
@@ -22,7 +20,6 @@ data class MovieDetailItem(
     val releaseDate: String? = "",
     val revenue: Int? = 0,
     val runtime:Int? = 0,
-    val spokenLanguages: List<SpokenLanguageModel>? = emptyList(),
     val status: String? = "",
     val tagline:String? = "",
     val title: String? = "",
@@ -31,13 +28,30 @@ data class MovieDetailItem(
     val voteCount: Int? = 0
 )
 
+fun MovieEntity.toDetail():MovieDetailItem{
+    return MovieDetailItem(
+        adult = adult,
+        backdropPath = backdropPath,
+        id = id,
+        originalLanguage = originalLanguage,
+        originalTitle = originalTitle,
+        overview = overview,
+        popularity = popularity,
+        posterPath = posterPath,
+        releaseDate = releaseDate,
+        title = title,
+        video = video,
+        voteAverage = voteAverage,
+        voteCount = voteCount,
+    )
+}
+
 fun MovieDetailEntity.toDomain():MovieDetailItem {
     return MovieDetailItem(
         adult = adult,
-        belongsToCollection = belongsToCollection,
         backdropPath = backdropPath,
         budget = budget,
-        genres = genres?.map { it.toDomain() },
+        genres = genres,
         homepage = homepage,
         id = id,
         imdbId = imdbId,
@@ -46,10 +60,9 @@ fun MovieDetailEntity.toDomain():MovieDetailItem {
         overview = overview,
         popularity = popularity,
         posterPath = posterPath,
-        releaseDate = posterPath,
+        releaseDate = releaseDate,
         revenue = revenue,
         runtime = runtime,
-        spokenLanguages = spokenLanguages,
         status = status,
         tagline = tagline,
         title = title,
@@ -62,7 +75,6 @@ fun MovieDetailEntity.toDomain():MovieDetailItem {
 fun MovieDetailModel.toDomain():MovieDetailItem {
     return MovieDetailItem(
         adult = adult,
-        belongsToCollection = belongsToCollection,
         backdropPath = backdropPath,
         budget = budget,
         genres = genres?.map { it.toDomain() },
@@ -74,10 +86,9 @@ fun MovieDetailModel.toDomain():MovieDetailItem {
         overview = overview,
         popularity = popularity,
         posterPath = posterPath,
-        releaseDate = posterPath,
+        releaseDate = releaseDate,
         revenue = revenue,
         runtime = runtime,
-        spokenLanguages = spokenLanguages,
         status = status,
         tagline = tagline,
         title = title,

@@ -18,6 +18,7 @@ class SearchViewModel @Inject constructor(
 
     // Live data
     val resultMovies = MutableLiveData<List<MovieItem>>()
+    val isNetworkAvailable = MutableLiveData(true)
 
     // Use Cases
 

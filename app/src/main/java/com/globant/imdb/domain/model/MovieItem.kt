@@ -6,7 +6,6 @@ import com.globant.imdb.data.model.movies.MovieModel
 data class MovieItem(
     val adult: Boolean? = false,
     val backdropPath: String? = "",
-    val genreIds: List<Int> = emptyList(),
     val id: Int = 0,
     val originalLanguage: String? = "",
     val originalTitle: String? = "",
@@ -18,14 +17,12 @@ data class MovieItem(
     val video: Boolean? = false,
     val voteAverage: Double? = 0.0,
     val voteCount: Int? = 0,
-    val tagline:String? = "",
 )
 
-fun MovieEntity.toDomain():MovieItem {
+fun MovieDetailItem.toSimple(): MovieItem{
     return MovieItem(
         adult = adult,
         backdropPath = backdropPath,
-        genreIds = genreIds,
         id = id,
         originalLanguage = originalLanguage,
         originalTitle = originalTitle,
@@ -37,7 +34,24 @@ fun MovieEntity.toDomain():MovieItem {
         video = video,
         voteAverage = voteAverage,
         voteCount = voteCount,
-        tagline = tagline,
+    )
+}
+
+fun MovieEntity.toDomain():MovieItem {
+    return MovieItem(
+        adult = adult,
+        backdropPath = backdropPath,
+        id = id,
+        originalLanguage = originalLanguage,
+        originalTitle = originalTitle,
+        overview = overview,
+        popularity = popularity,
+        posterPath = posterPath,
+        releaseDate = releaseDate,
+        title = title,
+        video = video,
+        voteAverage = voteAverage,
+        voteCount = voteCount,
     )
 }
 
@@ -45,7 +59,6 @@ fun MovieModel.toDomain():MovieItem {
     return MovieItem(
         adult = adult,
         backdropPath = backdropPath,
-        genreIds = genreIds,
         id = id,
         originalLanguage = originalLanguage,
         originalTitle = originalTitle,
