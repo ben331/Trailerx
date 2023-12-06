@@ -130,6 +130,4 @@ class IMDbRepository @Inject constructor(
     ){
         firestoreManager.deleteMovieFromList(movieId, listType, handleSuccess, handleFailure)
     }
-
-    suspend fun testServiceAvailability(): Boolean  = api.testServiceAvailability()
 }

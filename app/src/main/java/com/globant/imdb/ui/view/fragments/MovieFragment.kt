@@ -71,7 +71,7 @@ class MovieFragment : Fragment() {
     }
 
     private fun setupLiveData(){
-        movieViewModel.isServiceAvailable.observe(viewLifecycleOwner, ::turnOfflineMode)
+        movieViewModel.isVideoAvailable.observe(viewLifecycleOwner, ::turnOfflineMode)
 
         movieViewModel.currentMovie.observe(viewLifecycleOwner){ movieDetailItem ->
 
@@ -120,7 +120,7 @@ class MovieFragment : Fragment() {
             movieViewModel.videoIframe.observe(viewLifecycleOwner) { videoIframe ->
                 videoIframe?.let {
                     with(binding.containerFrontage.videoMovie){
-                        if(movieViewModel.isServiceAvailable.value == true){
+                        if(movieViewModel.isVideoAvailable.value == true){
                             loadData(it, "text/html", "utf-8")
                             settings.javaScriptEnabled = true
                             webChromeClient = WebChromeClient()
@@ -140,13 +140,24 @@ class MovieFragment : Fragment() {
         with(binding.containerFrontage){
             if(isServiceAvailable){
                 videoMovie.visibility = View.VISIBLE
+                if(movieViewModel.onlineMode.value == false){
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.connection_recovered),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    movieViewModel.onlineMode.postValue(true)
+                }
             } else {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.turn_offline_mode),
-                    Toast.LENGTH_SHORT
-                ).show()
                 videoMovie.visibility = View.GONE
+                if(movieViewModel.onlineMode.value == true){
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.turn_offline_mode),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    movieViewModel.onlineMode.postValue(false)
+                }
             }
         }
     }
@@ -169,7 +180,6 @@ class MovieFragment : Fragment() {
 
         }
         binding.refreshLayout.setOnRefreshListener {
-            movieViewModel.testServiceAvailability()
             movieViewModel.onRefresh(args.movieId)
         }
     }

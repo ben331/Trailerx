@@ -83,15 +83,4 @@ class TMDBService @Inject constructor( private val api:TMDBApiClient ) {
             }
         }
     }
-
-    suspend fun testServiceAvailability(): Boolean {
-        return withContext(Dispatchers.IO){
-            try {
-                val response = api.testServiceAvailability()
-                response.body() != null
-            }catch (e: Exception){
-                false
-            }
-        }
-    }
 }

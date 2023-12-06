@@ -11,7 +11,6 @@ import com.globant.imdb.domain.model.MovieItem
 import com.globant.imdb.domain.model.toSimple
 import com.globant.imdb.domain.moviesUseCases.GetMovieByIdUseCase
 import com.globant.imdb.domain.moviesUseCases.GetOfficialTrailerUseCase
-import com.globant.imdb.domain.moviesUseCases.TestServiceAvailabilityUseCase
 import com.globant.imdb.domain.userUseCases.AddMovieToUserListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -23,13 +22,13 @@ class MovieViewModel @Inject constructor(
     private val getMovieByIdUseCase:GetMovieByIdUseCase,
     private val getTrailerUseCase:GetOfficialTrailerUseCase,
     private val addMovieToUserListUseCase:AddMovieToUserListUseCase,
-    private val testServiceAvailabilityUseCase: TestServiceAvailabilityUseCase
 ): ViewModel() {
 
     val isLoading = MutableLiveData(false)
     val currentMovie = MutableLiveData<MovieDetailItem?>()
     val videoIframe = MutableLiveData<String?>()
-    val isServiceAvailable = MutableLiveData(true)
+    val isVideoAvailable = MutableLiveData(true)
+    val onlineMode = MutableLiveData(true)
 
     val username:String by lazy { authManager.getEmail() }
 
@@ -40,8 +39,10 @@ class MovieViewModel @Inject constructor(
         }
         viewModelScope.launch {
             val result = getTrailerUseCase(movieId, true)
-            result?.let {
+            if(result != null){
                 videoIframe.postValue(result)
+            } else {
+                isVideoAvailable.postValue(false)
             }
         }
     }
@@ -64,12 +65,6 @@ class MovieViewModel @Inject constructor(
                     Log.i("INFO", "Movie ${movieItem.title},id:${movieItem.id} recorded in history")
                 },
                 handleFailure)
-        }
-    }
-
-    fun testServiceAvailability() {
-        viewModelScope.launch {
-            isServiceAvailable.postValue(testServiceAvailabilityUseCase())
         }
     }
 }

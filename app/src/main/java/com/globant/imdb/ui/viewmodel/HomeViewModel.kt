@@ -12,7 +12,6 @@ import com.globant.imdb.domain.moviesUseCases.GetPopularMoviesUseCase
 import com.globant.imdb.domain.moviesUseCases.GetRandomTopMovieUseCase
 import com.globant.imdb.domain.moviesUseCases.GetOfficialTrailerUseCase
 import com.globant.imdb.domain.moviesUseCases.GetUpcomingMoviesUseCase
-import com.globant.imdb.domain.moviesUseCases.TestServiceAvailabilityUseCase
 import com.globant.imdb.domain.userUseCases.AddMovieToUserListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -27,7 +26,6 @@ class HomeViewModel @Inject constructor(
     private val getRandomTopMovieUseCase:GetRandomTopMovieUseCase,
     private val getUpcomingMovies:GetUpcomingMoviesUseCase,
     private val addMovieToUserListUseCase:AddMovieToUserListUseCase,
-    private val testServiceAvailabilityUseCase: TestServiceAvailabilityUseCase,
 ): ViewModel() {
 
     val mainMovie = MutableLiveData<MovieItem>()
@@ -36,7 +34,8 @@ class HomeViewModel @Inject constructor(
     val upcomingMovies = MutableLiveData<List<MovieItem>>()
     val popularMovies = MutableLiveData<List<MovieItem>>()
     val isLoading = MutableLiveData(false)
-    val isServiceAvailable = MutableLiveData(true)
+    val isVideoAvailable = MutableLiveData(true)
+    val onlineMode = MutableLiveData(true)
 
     val username:String by lazy { authManager.getEmail() }
 
@@ -81,11 +80,14 @@ class HomeViewModel @Inject constructor(
     fun getTrailerOfMovie(movieId:Int){
         isLoading.postValue(true)
         viewModelScope.launch {
-            isLoading.postValue(false)
             val result = getTrailerUseCase(movieId, false)
-            result?.let {
+            if(result != null){
                 videoIframe.postValue(result)
+                isVideoAvailable.postValue(true)
+            } else {
+                isVideoAvailable.postValue(false)
             }
+            isLoading.postValue(false)
         }
     }
 
@@ -107,12 +109,6 @@ class HomeViewModel @Inject constructor(
         }
         if(movie!=null) {
             addMovieToUserListUseCase(movie, CategoryType.WATCH_LIST_MOVIES, onSuccess, onFailure)
-        }
-    }
-
-    fun testServiceAvailability() {
-        viewModelScope.launch {
-            isServiceAvailable.postValue(testServiceAvailabilityUseCase())
         }
     }
 }

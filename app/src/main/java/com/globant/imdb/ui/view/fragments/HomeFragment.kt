@@ -57,18 +57,13 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
         refresh()
     }
 
-    override fun onResume() {
-        super.onResume()
-        homeViewModel.testServiceAvailability()
-    }
-
     private fun setupButtons(){
         binding.refreshLayout.setOnRefreshListener(::refresh)
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun setupLiveData(){
-        homeViewModel.isServiceAvailable.observe(viewLifecycleOwner, ::turnOfflineMode)
+        homeViewModel.isVideoAvailable.observe(viewLifecycleOwner, ::turnOfflineMode)
 
         homeViewModel.mainMovie.observe(viewLifecycleOwner) { currentMovie ->
             with(binding.mainTrailerContainer) {
@@ -93,7 +88,7 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
             videoIframe?.let {
                 with(binding.mainTrailerContainer.trailerWebView){
                     homeViewModel.isLoading.postValue(false)
-                    if(homeViewModel.isServiceAvailable.value == true){
+                    if(homeViewModel.isVideoAvailable.value == true){
                         loadData(it, "text/html", "utf-8")
                         settings.javaScriptEnabled = true
                         webChromeClient = WebChromeClient()
@@ -124,13 +119,24 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
         with(binding.mainTrailerContainer){
             if(isServiceAvailable){
                 trailerWebView.visibility = View.VISIBLE
+                if(homeViewModel.onlineMode.value == false){
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.connection_recovered),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    homeViewModel.onlineMode.postValue(true)
+                }
             } else {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.turn_offline_mode),
-                    Toast.LENGTH_SHORT
-                ).show()
                 trailerWebView.visibility = View.GONE
+                if(homeViewModel.onlineMode.value == true){
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.turn_offline_mode),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    homeViewModel.onlineMode.postValue(false)
+                }
             }
         }
     }
@@ -177,7 +183,6 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
     }
 
     private fun refresh() {
-        homeViewModel.testServiceAvailability()
         homeViewModel.onCreate()
     }
 
