@@ -13,10 +13,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.globant.imdb.databinding.FragmentSearchBinding
+import com.globant.imdb.ui.helpers.ImageRender
 import com.globant.imdb.ui.view.adapters.MovieResultAdapter
 import com.globant.imdb.ui.view.adapters.MovieResultViewHolder
 import com.globant.imdb.ui.viewmodel.SearchViewModel
-import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -87,11 +87,7 @@ class SearchFragment : Fragment(), MovieResultAdapter.ImageRenderListener, Movie
     }
 
     override fun renderImage(url: String, image: ImageView) {
-       Picasso.with(requireContext())
-           .load(url)
-           .fit()
-           .centerCrop()
-           .into(image)
+       ImageRender.renderImageCenterCrop(requireContext(), url, image)
     }
 
     override fun showDetails(id: Int) {

@@ -16,10 +16,10 @@ import com.globant.imdb.R
 import com.globant.imdb.core.Constants
 import com.globant.imdb.ui.helpers.DialogManager
 import com.globant.imdb.databinding.FragmentHomeBinding
+import com.globant.imdb.ui.helpers.ImageRender
 import com.globant.imdb.ui.view.adapters.MovieAdapter
 import com.globant.imdb.ui.view.adapters.MovieViewHolder
 import com.globant.imdb.ui.viewmodel.HomeViewModel
-import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -69,17 +69,8 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
             with(binding.mainTrailerContainer) {
                 trailerName.text = currentMovie.title
                 val imageUrl = Constants.IMAGES_BASE_URL + currentMovie.backdropPath
-                Picasso.with(requireContext())
-                    .load(imageUrl)
-                    .fit()
-                    .centerCrop()
-                    .into(trailerImageView)
-                Picasso.with(requireContext())
-                    .load(imageUrl)
-                    .fit()
-                    .centerCrop()
-                    .into(imgWebView)
-
+                ImageRender.renderImageCenterCrop(requireContext(), imageUrl, trailerImageView)
+                ImageRender.renderImageCenterCrop(requireContext(), imageUrl, imgWebView)
                 homeViewModel.getTrailerOfMovie(currentMovie.id)
             }
         }
@@ -187,11 +178,7 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
     }
 
     override fun renderImage(url: String, image: ImageView) {
-        Picasso.with(requireContext())
-            .load(url)
-            .fit()
-            .centerCrop()
-            .into(image)
+        ImageRender.renderImageCenterCrop(requireContext(), url, image)
     }
 
     override fun showDetails(id: Int) {

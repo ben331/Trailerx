@@ -16,11 +16,11 @@ import com.globant.imdb.databinding.FragmentProfileBinding
 import com.globant.imdb.R
 import com.globant.imdb.ui.helpers.DialogManager
 import com.globant.imdb.data.database.entities.movie.CategoryType
+import com.globant.imdb.ui.helpers.ImageRender
 import com.globant.imdb.ui.view.adapters.MovieProfileAdapter
 import com.globant.imdb.ui.view.adapters.MovieProfileViewHolder
 import com.globant.imdb.ui.view.adapters.StatsAdapter
 import com.globant.imdb.ui.viewmodel.ProfileViewModel
-import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -115,7 +115,6 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
         with(binding.listMoviesTwo){
             titleContainer.sectionTitle.text = getString(R.string.recently_viewed)
             listDescription.text = getString(R.string.content_recently_viewed)
-
             moviesRecyclerView.adapter = recentMoviesAdapter
             moviesRecyclerView.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -125,7 +124,6 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
         with(binding.listMoviesThree){
             titleContainer.sectionTitle.text = getString(R.string.favorite_people)
             listDescription.text = getString(R.string.content_favorite_people)
-
             moviesRecyclerView.adapter = favoritePeopleAdapter
             moviesRecyclerView.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -151,12 +149,11 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
 
     @SuppressLint("NotifyDataSetChanged")
     private fun setupLiveData(){
-        profileViewModel.photoUri.observe(viewLifecycleOwner){
-            Picasso.with(requireContext())
-                .load(it)
-                .fit()
-                .centerCrop()
-                .into(binding.profileHeaderContainer.profilePhotoContainer.profileImage)
+        profileViewModel.photoUri.observe(viewLifecycleOwner) {
+            ImageRender.renderImageCenterCrop (
+                requireContext(), it,
+                binding.profileHeaderContainer.profilePhotoContainer.profileImage
+            )
         }
 
         profileViewModel.isLoading.observe(viewLifecycleOwner){
@@ -221,11 +218,7 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
     }
 
     override fun renderImage(url: String, image: ImageView) {
-        Picasso.with(requireContext())
-            .load(url)
-            .fit()
-            .centerCrop()
-            .into(image)
+        ImageRender.renderImageCenterCrop(requireContext(), url, image)
     }
 
     override fun showDetails(id: Int) {

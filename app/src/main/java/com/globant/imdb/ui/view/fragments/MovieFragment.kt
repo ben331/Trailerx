@@ -17,8 +17,8 @@ import com.globant.imdb.core.Constants
 import com.globant.imdb.ui.helpers.DialogManager
 import com.globant.imdb.ui.helpers.TextTransforms
 import com.globant.imdb.databinding.FragmentMovieBinding
+import com.globant.imdb.ui.helpers.ImageRender
 import com.globant.imdb.ui.viewmodel.MovieViewModel
-import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -101,17 +101,10 @@ class MovieFragment : Fragment() {
                     textBoxSynopsis.text = movieDetailItem.overview
                 }
                 val url = Constants.IMAGES_BASE_URL + movieDetailItem.backdropPath
-                Picasso.with(requireContext())
-                    .load(url)
-                    .fit()
-                    .centerCrop()
-                    .into(binding.containerSypnosis.imgMovie)
-                Picasso.with(requireContext())
-                    .load(url)
-                    .fit()
-                    .centerCrop()
-                    .into(binding.containerFrontage.imgVideoMovie)
-
+                ImageRender
+                    .renderImageCenterCrop(requireContext(),url,binding.containerSypnosis.imgMovie)
+                ImageRender
+                    .renderImageCenterCrop(requireContext(),url,binding.containerFrontage.imgVideoMovie)
                 movieViewModel.isLoading.postValue(false)
             }
         }

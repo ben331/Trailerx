@@ -107,8 +107,8 @@ dependencies {
     runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     runtimeOnly("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
 
-    //Picasso
-    implementation("com.squareup.picasso:picasso:2.5.2")
+    //Glide
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 
     //Dagger Hilt
     implementation("com.google.dagger:hilt-android:2.48.1")
