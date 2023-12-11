@@ -35,5 +35,9 @@ object RoomModule {
 
     @Provides
     @Singleton
+    fun provideSyncCategoryMovieDao(db:IMDbDatabase) = db.getSyncCategoryMovieDao()
+
+    @Provides
+    @Singleton
     fun provideMovieDetailDao(db:IMDbDatabase) = db.getMovieDetailDao()
 }

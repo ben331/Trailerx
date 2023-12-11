@@ -6,7 +6,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.globant.imdb.data.database.entities.movie.CategoryMovieEntity
 import com.globant.imdb.data.database.entities.movie.CategoryType
-import com.globant.imdb.data.database.entities.movie.MovieEntity
 
 @Dao
 interface CategoryMovieDao {

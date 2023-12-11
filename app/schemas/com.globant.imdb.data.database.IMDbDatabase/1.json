@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "526d0577df9a036d281cc46d68851d70",
+    "identityHash": "0130961fe2312e74811a3354dca6ec23",
     "entities": [
       {
         "tableName": "movie",
@@ -186,6 +186,81 @@
         ]
       },
       {
+        "tableName": "sync_category_movie",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idMovie` INTEGER NOT NULL, `idCategory` TEXT NOT NULL, `sync_state` TEXT NOT NULL, PRIMARY KEY(`idMovie`, `idCategory`), FOREIGN KEY(`idMovie`) REFERENCES `movie`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`idCategory`) REFERENCES `category`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "idMovie",
+            "columnName": "idMovie",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "idCategory",
+            "columnName": "idCategory",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "syncState",
+            "columnName": "sync_state",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "idMovie",
+            "idCategory"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_sync_category_movie_idMovie",
+            "unique": false,
+            "columnNames": [
+              "idMovie"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_sync_category_movie_idMovie` ON `${TABLE_NAME}` (`idMovie`)"
+          },
+          {
+            "name": "index_sync_category_movie_idCategory",
+            "unique": false,
+            "columnNames": [
+              "idCategory"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_sync_category_movie_idCategory` ON `${TABLE_NAME}` (`idCategory`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "movie",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "idMovie"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "category",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "idCategory"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
         "tableName": "movie_detail",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`adult` INTEGER, `backdrop_path` TEXT, `budget` INTEGER, `genres` TEXT, `homepage` TEXT, `id` INTEGER NOT NULL, `imdb_id` TEXT, `original_language` TEXT, `original_title` TEXT, `overview` TEXT, `popularity` REAL, `poster_path` TEXT, `release_date` TEXT, `revenue` INTEGER, `runtime` INTEGER, `status` TEXT, `tagline` TEXT, `title` TEXT, `video` INTEGER, `vote_average` REAL, `vote_count` INTEGER, PRIMARY KEY(`id`))",
         "fields": [
@@ -329,7 +404,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '526d0577df9a036d281cc46d68851d70')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0130961fe2312e74811a3354dca6ec23')"
     ]
   }
 }

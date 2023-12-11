@@ -77,14 +77,14 @@ class FirestoreManager @Inject constructor(
     }
 
     fun addMovieToList(
-        movie:MovieItem, listType:CategoryType,
-        handleSuccess:(movie:MovieItem)->Unit,
+        movie:MovieItem, category:CategoryType,
+        handleSuccess:(movie:MovieItem, category:CategoryType)->Unit,
         handleFailure:(title:Int, msg:Int)->Unit
     ){
         db.collection("users")
-            .document(email).collection(listType.name).document(movie.id.toString()).set(movie)
+            .document(email).collection(category.name).document(movie.id.toString()).set(movie)
             .addOnCompleteListener {
-                handleSuccess(movie)
+                handleSuccess(movie, category)
             }.addOnFailureListener { e ->
                 e.printStackTrace()
                 handleFailure(
@@ -96,14 +96,14 @@ class FirestoreManager @Inject constructor(
 
     fun deleteMovieFromList(
         movieId:Int,
-        listType:CategoryType,
-        handleSuccess:()->Unit,
+        category:CategoryType,
+        handleSuccess:(movieId:Int, category:CategoryType)->Unit,
         handleFailure:(title:Int, msg:Int)->Unit
     ){
         db.collection("users")
-            .document(email).collection(listType.name).document(movieId.toString()).delete()
+            .document(email).collection(category.name).document(movieId.toString()).delete()
             .addOnSuccessListener {
-                handleSuccess()
+                handleSuccess(movieId, category)
             }.addOnFailureListener {
                 handleFailure(
                     R.string.error,

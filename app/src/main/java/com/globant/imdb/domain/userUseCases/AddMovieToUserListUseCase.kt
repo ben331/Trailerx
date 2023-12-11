@@ -2,7 +2,7 @@ package com.globant.imdb.domain.userUseCases
 
 import com.globant.imdb.data.repositories.IMDbRepository
 import com.globant.imdb.data.database.entities.movie.CategoryType
-import com.globant.imdb.data.database.entities.movie.toPendingToAdd
+import com.globant.imdb.data.database.entities.movie.SyncState
 import com.globant.imdb.domain.model.MovieItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +20,7 @@ class AddMovieToUserListUseCase @Inject constructor(
         handleSuccess:(movie:MovieItem)->Unit,
         handleFailure:(title:Int, msg:Int)->Unit
     ) {
-        fun handleRemoteSuccess(movie:MovieItem){
+        fun handleRemoteSuccess(movie:MovieItem, category:CategoryType){
             CoroutineScope(Dispatchers.IO).launch {
                 syncUserLocalDataUseCase()
                 try {
@@ -37,7 +37,7 @@ class AddMovieToUserListUseCase @Inject constructor(
             CoroutineScope(Dispatchers.IO).launch {
                 try {
                     repository.addMovieToCategoryDatabase(movie.id, category)
-                    repository.addMovieToCategoryDatabase(movie.id, category.toPendingToAdd())
+                    repository.addMovieToSyncDatabase(movie.id, category, SyncState.PENDING_TO_ADD)
                 }catch (e:Exception){
                     handleFailure(title, msg)
                 }

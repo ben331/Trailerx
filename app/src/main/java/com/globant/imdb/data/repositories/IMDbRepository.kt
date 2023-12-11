@@ -4,10 +4,13 @@ import com.globant.imdb.data.database.dao.movie.MovieDao
 import com.globant.imdb.data.database.dao.movie.CategoryDao
 import com.globant.imdb.data.database.dao.movie.CategoryMovieDao
 import com.globant.imdb.data.database.dao.movie.MovieDetailDao
+import com.globant.imdb.data.database.dao.movie.SyncCategoryMovieDao
 import com.globant.imdb.data.database.entities.movie.CategoryMovieEntity
 import com.globant.imdb.data.database.entities.movie.MovieEntity
 import com.globant.imdb.data.database.entities.movie.CategoryType
 import com.globant.imdb.data.database.entities.movie.MovieDetailEntity
+import com.globant.imdb.data.database.entities.movie.SyncCategoryMovieEntity
+import com.globant.imdb.data.database.entities.movie.SyncState
 import com.globant.imdb.data.database.entities.movie.toCategoryMovie
 import com.globant.imdb.data.database.entities.movie.toDatabase
 import com.globant.imdb.data.model.user.UserModel
@@ -15,6 +18,7 @@ import com.globant.imdb.data.network.firebase.FirestoreManager
 import com.globant.imdb.data.network.retrofit.TMDBService
 import com.globant.imdb.domain.model.MovieDetailItem
 import com.globant.imdb.domain.model.MovieItem
+import com.globant.imdb.domain.model.SyncCategoryMovieItem
 import com.globant.imdb.domain.model.VideoItem
 import com.globant.imdb.domain.model.toDetail
 import com.globant.imdb.domain.model.toDomain
@@ -30,6 +34,7 @@ class IMDbRepository @Inject constructor(
     private val movieDao: MovieDao,
     private val categoryDao: CategoryDao,
     private val categoryMovieDao: CategoryMovieDao,
+    private val syncCategoryMovieDao: SyncCategoryMovieDao,
     private val movieDetailDao: MovieDetailDao
 ) {
     init {
@@ -83,6 +88,15 @@ class IMDbRepository @Inject constructor(
     suspend fun deleteMovieFromCategoryDatabase(movieId:Int, category: CategoryType){
         categoryMovieDao.deleteMovieFromCategory(movieId, category)
     }
+    suspend fun addMovieToSyncDatabase(movieId:Int, category: CategoryType, state:SyncState){
+        syncCategoryMovieDao.addMovieToSync( SyncCategoryMovieEntity(movieId, category, state))
+    }
+    suspend fun deleteMovieFromSyncDatabase(movieId:Int, category: CategoryType){
+        syncCategoryMovieDao.deleteMovieFromSync(movieId, category)
+    }
+    suspend fun getMoviesToSync(state: SyncState): List<SyncCategoryMovieItem>{
+        return syncCategoryMovieDao.getMoviesToSync(state).map { it.toDomain() }
+    }
     suspend fun getMovieByIdFromDatabase(movieId:Int): MovieDetailItem?{
         var response = movieDetailDao.getMovieDetailById(movieId)?.toDomain()
         if(response == null) {
@@ -122,19 +136,19 @@ class IMDbRepository @Inject constructor(
 
     fun addMovieToCategory(
         movie:MovieItem,
-        listType:CategoryType,
-        handleSuccess:(MovieItem)->Unit,
+        category:CategoryType,
+        handleSuccess:(MovieItem, category:CategoryType)->Unit,
         handleFailure:(title:Int, msg:Int)->Unit
     ){
-        return firestoreManager.addMovieToList(movie, listType, handleSuccess, handleFailure)
+        return firestoreManager.addMovieToList(movie, category, handleSuccess, handleFailure)
     }
 
     fun deleteMovieFromCategory(
         movieId:Int,
-        listType:CategoryType,
-        handleSuccess:()->Unit,
+        category:CategoryType,
+        handleSuccess:(movieId:Int, category:CategoryType)->Unit,
         handleFailure:(title:Int, msg:Int)->Unit
     ){
-        firestoreManager.deleteMovieFromList(movieId, listType, handleSuccess, handleFailure)
+        firestoreManager.deleteMovieFromList(movieId, category, handleSuccess, handleFailure)
     }
 }

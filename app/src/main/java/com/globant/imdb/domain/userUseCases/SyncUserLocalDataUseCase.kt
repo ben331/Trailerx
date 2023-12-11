@@ -1,66 +1,43 @@
 package com.globant.imdb.domain.userUseCases
 
 import com.globant.imdb.data.database.entities.movie.CategoryType
+import com.globant.imdb.data.database.entities.movie.SyncState
 import com.globant.imdb.data.repositories.IMDbRepository
+import com.globant.imdb.domain.model.MovieItem
+import com.globant.imdb.domain.model.toSimple
+import com.globant.imdb.domain.moviesUseCases.GetMovieByIdUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class SyncUserLocalDataUseCase @Inject constructor(private val repository: IMDbRepository) {
+class SyncUserLocalDataUseCase @Inject constructor(
+    private val repository: IMDbRepository,
+    private val getMovieByIdUseCase: GetMovieByIdUseCase
+) {
     suspend operator fun invoke() {
-        val watchListToAdd = repository.getMoviesByCategoryFromDatabase(CategoryType.PENDING_TO_ADD_TO_WATCH_LIST_MOVIES)
-        val watchListToRemove = repository.getMoviesByCategoryFromDatabase(CategoryType.PENDING_TO_DELETE_FROM_WATCH_LIST_MOVIES)
-        val historyToAdd = repository.getMoviesByCategoryFromDatabase(CategoryType.PENDING_TO_ADD_TO_HISTORY_MOVIES)
-        val historyToDelete = repository.getMoviesByCategoryFromDatabase(CategoryType.PENDING_TO_DELETE_FROM_HISTORY_MOVIES)
+        val moviesToAdd = repository.getMoviesToSync(SyncState.PENDING_TO_ADD)
+        val moviesToDelete = repository.getMoviesToSync(SyncState.PENDING_TO_DELETE)
 
-        for(movie in watchListToAdd){
-           repository.addMovieToCategory(
-               movie,
-               CategoryType.WATCH_LIST_MOVIES,
-               {
-                   CoroutineScope(Dispatchers.IO).launch {
-                       repository.deleteMovieFromCategoryDatabase(movie.id, CategoryType.PENDING_TO_ADD_TO_WATCH_LIST_MOVIES)}
-               }
-               ,
-               {_,_->}
-           )
+        for (syncMovie in moviesToAdd) {
+            val movie = getMovieByIdUseCase(syncMovie.idMovie)
+            movie?.let {
+                repository.addMovieToCategory(it.toSimple(), syncMovie.idCategory, ::handleSuccessSync) { _, _ -> }
+            }
         }
-        for(movie in watchListToRemove){
-            repository.deleteMovieFromCategory(
-                movie.id,
-                CategoryType.WATCH_LIST_MOVIES,
-                {
-                    CoroutineScope(Dispatchers.IO).launch {
-                        repository.deleteMovieFromCategoryDatabase(movie.id, CategoryType.PENDING_TO_DELETE_FROM_WATCH_LIST_MOVIES)}
-                }
-                ,
-                {_,_->}
-            )
+
+        for (syncMovie in moviesToDelete) {
+            repository.deleteMovieFromCategory(syncMovie.idMovie, syncMovie.idCategory, ::handleSuccessSync) { _, _ -> }
         }
-        for(movie in historyToAdd){
-            repository.addMovieToCategory(
-                movie,
-                CategoryType.HISTORY_MOVIES,
-                {
-                    CoroutineScope(Dispatchers.IO).launch {
-                        repository.deleteMovieFromCategoryDatabase(movie.id, CategoryType.PENDING_TO_ADD_TO_HISTORY_MOVIES)}
-                }
-                ,
-                {_,_->}
-            )
-        }
-        for(movie in historyToDelete){
-            repository.deleteMovieFromCategory(
-                movie.id,
-                CategoryType.HISTORY_MOVIES,
-                {
-                    CoroutineScope(Dispatchers.IO).launch {
-                        repository.deleteMovieFromCategoryDatabase(movie.id, CategoryType.PENDING_TO_DELETE_FROM_HISTORY_MOVIES)}
-                }
-                ,
-                {_,_->}
-            )
+    }
+
+    private fun handleSuccessSync(movieItem: MovieItem, categoryType: CategoryType){
+        handleSuccessSync(movieItem.id, categoryType)
+    }
+
+    private fun handleSuccessSync(movieId: Int, categoryType: CategoryType){
+        CoroutineScope(Dispatchers.IO).launch {
+            repository.deleteMovieFromSyncDatabase(movieId, categoryType)
         }
     }
 }

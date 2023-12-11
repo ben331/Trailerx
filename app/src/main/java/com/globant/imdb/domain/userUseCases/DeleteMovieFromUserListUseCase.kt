@@ -2,7 +2,7 @@ package com.globant.imdb.domain.userUseCases
 
 import com.globant.imdb.data.repositories.IMDbRepository
 import com.globant.imdb.data.database.entities.movie.CategoryType
-import com.globant.imdb.data.database.entities.movie.toPendingToDelete
+import com.globant.imdb.data.database.entities.movie.SyncState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,7 +19,7 @@ class DeleteMovieFromUserListUseCase @Inject constructor(
         handleSuccess:()->Unit,
         handleFailure:(title:Int, msg:Int)->Unit
     ) {
-        fun handleRemoteSuccess(){
+        fun handleRemoteSuccess(movieId:Int, category: CategoryType){
             CoroutineScope(Dispatchers.IO).launch {
                 syncUserLocalDataUseCase()
                 try {
@@ -36,7 +36,7 @@ class DeleteMovieFromUserListUseCase @Inject constructor(
             CoroutineScope(Dispatchers.IO).launch {
                 try {
                     repository.deleteMovieFromCategoryDatabase(movieId, category)
-                    repository.addMovieToCategoryDatabase(movieId, category.toPendingToDelete())
+                    repository.addMovieToSyncDatabase(movieId, category, SyncState.PENDING_TO_DELETE)
                 }catch (e: Exception){
                     handleFailure(title, msg)
                 }
