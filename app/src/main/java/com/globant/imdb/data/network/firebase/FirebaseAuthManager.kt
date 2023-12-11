@@ -231,7 +231,6 @@ class FirebaseAuthManager @Inject constructor(
                                 uploadName(displayName, onFailure)
                                 onSuccess( email, ProviderType.FACEBOOK)
                             }else{
-                                task.exception?.printStackTrace()
                                 onFailure(
                                     R.string.error,
                                     R.string.error,

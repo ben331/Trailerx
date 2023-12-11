@@ -18,7 +18,6 @@ class TMDBService @Inject constructor( private val api:TMDBApiClient ) {
                 val response = api.getNowPlayingMovies( languageCode,1 )
                 response.body()
             }catch (e: Exception){
-                e.printStackTrace()
                 null
             }
         }
@@ -30,7 +29,6 @@ class TMDBService @Inject constructor( private val api:TMDBApiClient ) {
                 val response = api.getUpcomingMovies( languageCode,1 )
                 response.body()
             }catch (e: Exception){
-                e.printStackTrace()
                 null
             }
         }
@@ -42,7 +40,6 @@ class TMDBService @Inject constructor( private val api:TMDBApiClient ) {
                 val response = api.getPopularMovies( languageCode,1 )
                 response.body()
             }catch (e: Exception){
-                e.printStackTrace()
                 null
             }
         }
@@ -54,7 +51,6 @@ class TMDBService @Inject constructor( private val api:TMDBApiClient ) {
                 val response = api.getMovieById( movieId, languageCode )
                 response.body()
             }catch (e: Exception){
-                e.printStackTrace()
                 null
             }
         }
@@ -66,7 +62,6 @@ class TMDBService @Inject constructor( private val api:TMDBApiClient ) {
                 val response = api.searchMovie( query, languageCode, 1 )
                 response.body()
             }catch (e: Exception){
-                e.printStackTrace()
                 null
             }
         }
@@ -78,7 +73,6 @@ class TMDBService @Inject constructor( private val api:TMDBApiClient ) {
                 val response = api.getTrailers( movieId, languageCode)
                 response.body()
             }catch (e: Exception){
-                e.printStackTrace()
                 null
             }
         }

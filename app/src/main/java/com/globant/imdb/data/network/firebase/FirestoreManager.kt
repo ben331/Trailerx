@@ -23,7 +23,6 @@ class FirestoreManager @Inject constructor(
                 handleSuccess(user)
             }
             .addOnFailureListener {
-                it.printStackTrace()
                 handleSuccess(null)
             }
     }
@@ -42,7 +41,6 @@ class FirestoreManager @Inject constructor(
                     handleSuccess(null)
                 }
             }.addOnFailureListener {
-                it.printStackTrace()
                 handleFailure(
                     R.string.error,
                     R.string.create_user_error
@@ -68,7 +66,6 @@ class FirestoreManager @Inject constructor(
                     handleSuccess(emptyList())
                 }
             }.addOnFailureListener {
-                it.printStackTrace()
                 handleFailure(
                     R.string.error,
                     R.string.fetch_movies_error
@@ -85,8 +82,7 @@ class FirestoreManager @Inject constructor(
             .document(email).collection(category.name).document(movie.id.toString()).set(movie)
             .addOnCompleteListener {
                 handleSuccess(movie, category)
-            }.addOnFailureListener { e ->
-                e.printStackTrace()
+            }.addOnFailureListener {
                 handleFailure(
                     R.string.error,
                     R.string.error
