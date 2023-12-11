@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import com.globant.imdb.data.database.entities.movie.CategoryType
 import com.globant.imdb.data.database.entities.movie.MovieEntity
 
 @Dao
@@ -16,8 +17,8 @@ interface MovieDao {
     suspend fun insertMovieList(movieList:List<MovieEntity>)
 
     @Query("SELECT movie.* FROM movie INNER JOIN category_movie ON movie.id = category_movie.idMovie WHERE category_movie.idCategory = :categoryId")
-    suspend fun getMoviesByCategory(categoryId:String):List<MovieEntity>
+    suspend fun getMoviesByCategory(categoryId:CategoryType):List<MovieEntity>
 
     @Query("DELETE FROM movie WHERE id IN (SELECT idMovie FROM category_movie WHERE idCategory = :categoryId)")
-    suspend fun deleteMoviesByCategory(categoryId:String)
+    suspend fun deleteMoviesByCategory(categoryId:CategoryType)
 }

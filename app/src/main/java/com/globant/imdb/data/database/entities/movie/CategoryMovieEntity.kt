@@ -3,6 +3,8 @@ package com.globant.imdb.data.database.entities.movie
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.TypeConverters
+import com.globant.imdb.data.database.typeConverters.StringCategoryTypeConverter
 
 @Entity(
     tableName = "category_movie",
@@ -22,11 +24,12 @@ import androidx.room.ForeignKey
         )
     ]
 )
+@TypeConverters(StringCategoryTypeConverter::class)
 data class CategoryMovieEntity(
     @ColumnInfo(index = true)       val idMovie: Int,
-    @ColumnInfo(index = true)       val idCategory: String,
+    @ColumnInfo(index = true)       val idCategory: CategoryType,
 )
 
 fun MovieEntity.toCategoryMovie(category:CategoryType):CategoryMovieEntity {
-    return CategoryMovieEntity(id, category.name)
+    return CategoryMovieEntity(id, category)
 }

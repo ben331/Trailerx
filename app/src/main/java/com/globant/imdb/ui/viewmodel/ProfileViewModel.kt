@@ -24,7 +24,6 @@ class ProfileViewModel @Inject constructor(
     val favoritePeople = MutableLiveData<List<MovieItem>>()
     val isLoading = MutableLiveData(false)
     val username:String by lazy { authManager.getEmail() }
-    val isNetworkAvailable = MutableLiveData(true)
 
     fun refresh(
         handleFailure:(title:Int, msg:Int)->Unit

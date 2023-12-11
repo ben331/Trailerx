@@ -12,7 +12,7 @@ class GetMovieByIdUseCase @Inject constructor( private val repository: IMDbRepos
         if(movie == null || movie.tagline.isNullOrEmpty()) {
             val movieUpdated = repository.getMovieByIdFromApi(movieId)
             if(movieUpdated != null){
-                repository.addMovieDetail(movieUpdated.toDatabase())
+                repository.addMovieDetailDatabase(movieUpdated.toDatabase())
                 return movieUpdated
             }
         }

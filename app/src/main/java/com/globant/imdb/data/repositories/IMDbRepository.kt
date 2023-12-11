@@ -4,6 +4,7 @@ import com.globant.imdb.data.database.dao.movie.MovieDao
 import com.globant.imdb.data.database.dao.movie.CategoryDao
 import com.globant.imdb.data.database.dao.movie.CategoryMovieDao
 import com.globant.imdb.data.database.dao.movie.MovieDetailDao
+import com.globant.imdb.data.database.entities.movie.CategoryMovieEntity
 import com.globant.imdb.data.database.entities.movie.MovieEntity
 import com.globant.imdb.data.database.entities.movie.CategoryType
 import com.globant.imdb.data.database.entities.movie.MovieDetailEntity
@@ -69,12 +70,18 @@ class IMDbRepository @Inject constructor(
 
     //-------ROOM [RETROFIT CACHE]-----------------------------------------------------------------
     suspend fun getMoviesByCategoryFromDatabase(category:CategoryType):List<MovieItem>{
-        val response = movieDao.getMoviesByCategory(category.name)
+        val response = movieDao.getMoviesByCategory(category)
         return response.map { it.toDomain() }
     }
-    suspend fun insertMoviesToCategory(movies:List<MovieEntity>, category: CategoryType){
+    suspend fun addMoviesToCategoryDatabase(movies:List<MovieEntity>, category: CategoryType){
         movieDao.insertMovieList(movies)
         categoryMovieDao.addMoviesToCategory( movies.map{ it.toCategoryMovie(category) } )
+    }
+    suspend fun addMovieToCategoryDatabase(movieId:Int, category: CategoryType){
+        categoryMovieDao.addMovieToCategory( CategoryMovieEntity(movieId, category))
+    }
+    suspend fun deleteMovieFromCategoryDatabase(movieId:Int, category: CategoryType){
+        categoryMovieDao.deleteMovieFromCategory(movieId, category)
     }
     suspend fun getMovieByIdFromDatabase(movieId:Int): MovieDetailItem?{
         var response = movieDetailDao.getMovieDetailById(movieId)?.toDomain()
@@ -83,11 +90,11 @@ class IMDbRepository @Inject constructor(
         }
         return response
     }
-    suspend fun addMovieDetail(movie:MovieDetailEntity){
+    suspend fun addMovieDetailDatabase(movie:MovieDetailEntity){
         movieDetailDao.insertMovieDetail(movie)
     }
-    suspend fun clearMoviesByCategory(category: CategoryType){
-        movieDao.deleteMoviesByCategory(category.name)
+    suspend fun clearMoviesByCategoryDatabase(category: CategoryType){
+        movieDao.deleteMoviesByCategory(category)
     }
 
 
@@ -113,7 +120,7 @@ class IMDbRepository @Inject constructor(
         return firestoreManager.getUserMoviesList(listType, handleSuccess, handleFailure)
     }
 
-    fun addMovieToList(
+    fun addMovieToCategory(
         movie:MovieItem,
         listType:CategoryType,
         handleSuccess:(MovieItem)->Unit,
@@ -122,7 +129,7 @@ class IMDbRepository @Inject constructor(
         return firestoreManager.addMovieToList(movie, listType, handleSuccess, handleFailure)
     }
 
-    fun deleteMovieFromList(
+    fun deleteMovieFromCategory(
         movieId:Int,
         listType:CategoryType,
         handleSuccess:()->Unit,

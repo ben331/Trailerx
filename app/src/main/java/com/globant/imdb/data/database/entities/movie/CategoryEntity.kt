@@ -12,7 +12,11 @@ enum class CategoryType {
     UPCOMING_MOVIES,
     WATCH_LIST_MOVIES,
     HISTORY_MOVIES,
-    /*TODO DELETE FAVORITE PEOPLE, IT DOES NOT BELONG TO MovieListType*/
+    PENDING_TO_DELETE_FROM_WATCH_LIST_MOVIES,
+    PENDING_TO_ADD_TO_WATCH_LIST_MOVIES,
+    PENDING_TO_DELETE_FROM_HISTORY_MOVIES,
+    PENDING_TO_ADD_TO_HISTORY_MOVIES,
+    // TODO: DELETE FAVORITE_PEOPLE. IT DOES NOT BELONG TO MOVIE CATEGORY
     FAVORITE_PEOPLE
 }
 
@@ -25,4 +29,20 @@ data class CategoryEntity(
 
 fun CategoryType.toDatabase(): CategoryEntity{
     return CategoryEntity(this)
+}
+
+fun CategoryType.toPendingToAdd():CategoryType{
+    return CategoryType.valueOf("PENDING_TO_ADD_TO_${name}")
+}
+
+fun CategoryType.toPendingToDelete():CategoryType{
+    return CategoryType.valueOf("PENDING_TO_DELETE_FROM_${name}")
+}
+
+fun CategoryType.cutPending():CategoryType{
+    return CategoryType.valueOf(
+        name
+            .replace("PENDING_TO_ADD_TO_", "")
+            .replace("PENDING_TO_DELETE_FROM_", "")
+    )
 }

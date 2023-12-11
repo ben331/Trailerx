@@ -12,8 +12,8 @@ class GetNowPlayingMoviesUseCase @Inject constructor( private val repository: IM
 
         val category = CategoryType.NOW_PLAYING_MOVIES
         return if ( movies.isNotEmpty() ) {
-            repository.clearMoviesByCategory(category)
-            repository.insertMoviesToCategory( movies.map { it.toDatabase() }, category )
+            repository.clearMoviesByCategoryDatabase(category)
+            repository.addMoviesToCategoryDatabase( movies.map { it.toDatabase() }, category )
             movies
         } else {
             repository.getMoviesByCategoryFromDatabase(category)
