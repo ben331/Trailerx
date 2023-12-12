@@ -49,12 +49,14 @@
         android:layout_marginEnd="@dimen/margin_large"
         app:layout_constraintTop_toBottomOf="@id/profile_photo_container" />
 
+    <!-- TODO: CHANGE VISIBILITY WHEN STATS RECYCLER IS IMPLEMENTED  -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/shortcuts_recycler_view"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/shortcuts_recycler_height"
         app:layout_constraintTop_toBottomOf="@+id/divider"
         app:layout_constraintStart_toStartOf="@id/divider"
-        android:layout_marginTop="@dimen/margin_medium" />
+        android:layout_marginTop="@dimen/margin_medium"
+        android:visibility="gone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

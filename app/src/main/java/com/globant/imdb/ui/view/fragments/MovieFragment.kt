@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebChromeClient
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -17,7 +16,7 @@ import com.globant.imdb.core.Constants
 import com.globant.imdb.ui.helpers.DialogManager
 import com.globant.imdb.ui.helpers.TextTransforms
 import com.globant.imdb.databinding.FragmentMovieBinding
-import com.globant.imdb.ui.helpers.ImageRender
+import com.globant.imdb.ui.helpers.ImageLoader
 import com.globant.imdb.ui.viewmodel.MovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -101,9 +100,9 @@ class MovieFragment : Fragment() {
                     textBoxSynopsis.text = movieDetailItem.overview
                 }
                 val url = Constants.IMAGES_BASE_URL + movieDetailItem.backdropPath
-                ImageRender
+                ImageLoader
                     .renderImageCenterCrop(requireContext(),url,binding.containerSypnosis.imgMovie)
-                ImageRender
+                ImageLoader
                     .renderImageCenterCrop(requireContext(),url,binding.containerFrontage.imgVideoMovie)
                 movieViewModel.isLoading.postValue(false)
             }
@@ -133,24 +132,8 @@ class MovieFragment : Fragment() {
         with(binding.containerFrontage){
             if(isServiceAvailable){
                 videoMovie.visibility = View.VISIBLE
-                if(movieViewModel.onlineMode.value == false){
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.connection_recovered),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    movieViewModel.onlineMode.postValue(true)
-                }
             } else {
                 videoMovie.visibility = View.GONE
-                if(movieViewModel.onlineMode.value == true){
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.turn_offline_mode),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    movieViewModel.onlineMode.postValue(false)
-                }
             }
         }
     }

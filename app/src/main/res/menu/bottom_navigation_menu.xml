@@ -10,11 +10,14 @@
         android:enabled="true"
         android:icon="@drawable/ic_search"
         android:title="@string/search"/>
+    <!--
+    TODO: IMPLEMENT PLAY SCREEN
     <item
         android:id="@+id/playFragment"
         android:enabled="true"
         android:icon="@drawable/ic_play"
         android:title="@string/play"/>
+    -->
     <item
         android:id="@+id/profileFragment"
         android:enabled="true"

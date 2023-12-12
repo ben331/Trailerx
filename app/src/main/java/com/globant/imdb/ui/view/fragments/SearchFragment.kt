@@ -13,7 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.globant.imdb.databinding.FragmentSearchBinding
-import com.globant.imdb.ui.helpers.ImageRender
+import com.globant.imdb.ui.helpers.ImageLoader
 import com.globant.imdb.ui.view.adapters.MovieResultAdapter
 import com.globant.imdb.ui.view.adapters.MovieResultViewHolder
 import com.globant.imdb.ui.viewmodel.SearchViewModel
@@ -87,7 +87,7 @@ class SearchFragment : Fragment(), MovieResultAdapter.ImageRenderListener, Movie
     }
 
     override fun renderImage(url: String, image: ImageView) {
-       ImageRender.renderImageCenterCrop(requireContext(), url, image)
+       ImageLoader.renderImageCenterCrop(requireContext(), url, image)
     }
 
     override fun showDetails(id: Int) {

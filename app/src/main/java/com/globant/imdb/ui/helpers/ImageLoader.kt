@@ -7,7 +7,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 
-class ImageRender {
+class ImageLoader {
     companion object {
         fun renderImageCenterCrop(context: Context, imageUrl:String?, view:ImageView ) {
             Glide
@@ -27,6 +27,14 @@ class ImageRender {
                 .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(view)
+        }
+
+        fun preLoadImage(context: Context, imageUrl:String? ) {
+            Glide
+                .with(context)
+                .load(imageUrl)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .preload()
         }
     }
 }

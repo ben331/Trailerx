@@ -7,6 +7,7 @@ import com.globant.imdb.domain.model.MovieItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.lang.Exception
 import javax.inject.Inject
 
@@ -25,10 +26,11 @@ class AddMovieToUserListUseCase @Inject constructor(
                 syncUserLocalDataUseCase()
                 try {
                     repository.addMovieToCategoryDatabase(movie.id, category)
+                    withContext(Dispatchers.Main){
+                        handleSuccess(movie)
+                    }
                 }catch (e:Exception){
                     e.printStackTrace()
-                }finally {
-                    handleSuccess(movie)
                 }
             }
         }
@@ -38,8 +40,13 @@ class AddMovieToUserListUseCase @Inject constructor(
                 try {
                     repository.addMovieToCategoryDatabase(movie.id, category)
                     repository.addMovieToSyncDatabase(movie.id, category, SyncState.PENDING_TO_ADD)
+                    withContext(Dispatchers.Main){
+                        handleSuccess(movie)
+                    }
                 }catch (e:Exception){
-                    handleFailure(title, msg)
+                    withContext(Dispatchers.Main){
+                        handleFailure(title, msg)
+                    }
                 }
             }
         }

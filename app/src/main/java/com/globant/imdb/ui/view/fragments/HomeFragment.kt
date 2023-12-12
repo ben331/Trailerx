@@ -16,7 +16,7 @@ import com.globant.imdb.R
 import com.globant.imdb.core.Constants
 import com.globant.imdb.ui.helpers.DialogManager
 import com.globant.imdb.databinding.FragmentHomeBinding
-import com.globant.imdb.ui.helpers.ImageRender
+import com.globant.imdb.ui.helpers.ImageLoader
 import com.globant.imdb.ui.view.adapters.MovieAdapter
 import com.globant.imdb.ui.view.adapters.MovieViewHolder
 import com.globant.imdb.ui.viewmodel.HomeViewModel
@@ -38,6 +38,11 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
     private lateinit var nowPlayingMoviesAdapter: MovieAdapter
     private lateinit var upcomingMoviesAdapter: MovieAdapter
     private lateinit var popularMoviesAdapter: MovieAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        homeViewModel.preLoadProfileData(requireContext())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,8 +74,8 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
             with(binding.mainTrailerContainer) {
                 trailerName.text = currentMovie.title
                 val imageUrl = Constants.IMAGES_BASE_URL + currentMovie.backdropPath
-                ImageRender.renderImageCenterCrop(requireContext(), imageUrl, trailerImageView)
-                ImageRender.renderImageCenterCrop(requireContext(), imageUrl, imgWebView)
+                ImageLoader.renderImageCenterCrop(requireContext(), imageUrl, trailerImageView)
+                ImageLoader.renderImageCenterCrop(requireContext(), imageUrl, imgWebView)
                 homeViewModel.getTrailerOfMovie(currentMovie.id)
             }
         }
@@ -174,11 +179,11 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
     }
 
     private fun refresh() {
-        homeViewModel.onCreate()
+        homeViewModel.onCreate(requireContext())
     }
 
     override fun renderImage(url: String, image: ImageView) {
-        ImageRender.renderImageCenterCrop(requireContext(), url, image)
+        ImageLoader.renderImageCenterCrop(requireContext(), url, image)
     }
 
     override fun showDetails(id: Int) {

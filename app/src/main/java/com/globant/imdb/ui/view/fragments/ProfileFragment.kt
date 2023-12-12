@@ -16,7 +16,7 @@ import com.globant.imdb.databinding.FragmentProfileBinding
 import com.globant.imdb.R
 import com.globant.imdb.ui.helpers.DialogManager
 import com.globant.imdb.data.database.entities.movie.CategoryType
-import com.globant.imdb.ui.helpers.ImageRender
+import com.globant.imdb.ui.helpers.ImageLoader
 import com.globant.imdb.ui.view.adapters.MovieProfileAdapter
 import com.globant.imdb.ui.view.adapters.MovieProfileViewHolder
 import com.globant.imdb.ui.view.adapters.StatsAdapter
@@ -84,6 +84,7 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
         }
     }
 
+    // TODO: IMPLEMENT FAVORITE PEOPLE RECYCLER
     private fun setupRecyclerViews(){
         watchListAdapter = MovieProfileAdapter()
         recentMoviesAdapter = MovieProfileAdapter()
@@ -150,7 +151,7 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
     @SuppressLint("NotifyDataSetChanged")
     private fun setupLiveData(){
         profileViewModel.photoUri.observe(viewLifecycleOwner) {
-            ImageRender.renderImageCenterCrop (
+            ImageLoader.renderImageCenterCrop (
                 requireContext(), it,
                 binding.profileHeaderContainer.profilePhotoContainer.profileImage
             )
@@ -218,7 +219,7 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
     }
 
     override fun renderImage(url: String, image: ImageView) {
-        ImageRender.renderImageCenterCrop(requireContext(), url, image)
+        ImageLoader.renderImageCenterCrop(requireContext(), url, image)
     }
 
     override fun showDetails(id: Int) {

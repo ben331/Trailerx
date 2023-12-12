@@ -1,7 +1,6 @@
 package com.globant.imdb.di
 
 import android.content.Context
-import androidx.core.content.ContextCompat
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore

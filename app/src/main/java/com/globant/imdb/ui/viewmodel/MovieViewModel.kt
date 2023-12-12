@@ -28,7 +28,6 @@ class MovieViewModel @Inject constructor(
     val currentMovie = MutableLiveData<MovieDetailItem?>()
     val videoIframe = MutableLiveData<String?>()
     val isVideoAvailable = MutableLiveData(true)
-    val onlineMode = MutableLiveData(true)
 
     val username:String by lazy { authManager.getEmail() }
 

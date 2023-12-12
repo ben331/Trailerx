@@ -1,9 +1,11 @@
 package com.globant.imdb.ui.viewmodel
 
 import android.annotation.SuppressLint
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.globant.imdb.core.Constants
 import com.globant.imdb.data.database.entities.movie.CategoryType
 import com.globant.imdb.data.network.firebase.FirebaseAuthManager
 import com.globant.imdb.domain.model.MovieItem
@@ -13,6 +15,8 @@ import com.globant.imdb.domain.moviesUseCases.GetRandomTopMovieUseCase
 import com.globant.imdb.domain.moviesUseCases.GetOfficialTrailerUseCase
 import com.globant.imdb.domain.moviesUseCases.GetUpcomingMoviesUseCase
 import com.globant.imdb.domain.userUseCases.AddMovieToUserListUseCase
+import com.globant.imdb.domain.userUseCases.GetUserMoviesUseCase
+import com.globant.imdb.ui.helpers.ImageLoader
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,6 +30,7 @@ class HomeViewModel @Inject constructor(
     private val getRandomTopMovieUseCase:GetRandomTopMovieUseCase,
     private val getUpcomingMovies:GetUpcomingMoviesUseCase,
     private val addMovieToUserListUseCase:AddMovieToUserListUseCase,
+    private val getUserMoviesUseCase: GetUserMoviesUseCase,
 ): ViewModel() {
 
     val mainMovie = MutableLiveData<MovieItem>()
@@ -40,24 +45,27 @@ class HomeViewModel @Inject constructor(
     val username:String by lazy { authManager.getEmail() }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun onCreate() {
+    fun onCreate(context: Context) {
         isLoading.postValue(true)
         val coroutineA = viewModelScope.launch {
             val result = getNowPlayingMoviesUseCase()
             if(result.isNotEmpty()){
                 nowPlayingMovies.postValue(result)
+                preLoadImages(result, context)
             }
         }
         val coroutineB = viewModelScope.launch {
             val result = getUpcomingMovies()
             if(result.isNotEmpty()){
                 upcomingMovies.postValue(result)
+                preLoadImages(result, context)
             }
         }
         val coroutineC = viewModelScope.launch {
             val result = getPopularMoviesUseCase()
             if(result.isNotEmpty()){
                 popularMovies.postValue(result)
+                preLoadImages(result, context)
             }
         }
         viewModelScope.launch {
@@ -109,6 +117,19 @@ class HomeViewModel @Inject constructor(
         }
         if(movie!=null) {
             addMovieToUserListUseCase(movie, CategoryType.WATCH_LIST_MOVIES, onSuccess, onFailure)
+        }
+    }
+    
+    fun preLoadProfileData(context: Context){
+        ImageLoader.preLoadImage(context, authManager.getProfilePhotoURL().toString())
+        getUserMoviesUseCase(CategoryType.WATCH_LIST_MOVIES, {preLoadImages(it,context)},{_,_->})
+        getUserMoviesUseCase(CategoryType.HISTORY_MOVIES, {preLoadImages(it,context)},{_,_->})
+    }
+
+    private fun preLoadImages(movies:List<MovieItem>, context:Context) {
+        movies.forEach { movie ->
+            val imageUrl = (Constants.IMAGES_BASE_URL + movie.backdropPath)
+            ImageLoader.preLoadImage(context, imageUrl)
         }
     }
 }
