@@ -11,7 +11,7 @@ import com.globant.imdb.data.database.entities.movie.SyncState
 @Dao
 interface SyncCategoryMovieDao {
 
-    @Query("SELECT * FROM sync_category_movie WHERE sync_category_movie.sync_state = :state")
+    @Query("SELECT * FROM sync_category_movie WHERE sync_state = :state")
     suspend fun getMoviesToSync(state: SyncState):List<SyncCategoryMovieEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

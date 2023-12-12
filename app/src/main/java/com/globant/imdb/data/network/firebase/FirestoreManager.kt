@@ -43,7 +43,7 @@ class FirestoreManager @Inject constructor(
         handleSuccess:(user:UserModel?)->Unit,
         handleFailure:(title:Int, msg:Int)->Unit
     ) {
-        val task = db.collection("users").document(localEmail).get()
+        db.collection("users").document(localEmail).get()
             .addOnSuccessListener {
                 if(it.exists()){
                     val user = it.toObject(UserModel::class.java)
@@ -57,7 +57,6 @@ class FirestoreManager @Inject constructor(
                     R.string.create_user_error
                 )
             }
-        addTaskTimeOut(task, R.string.create_user_error, handleFailure)
     }
 
     fun getUserMoviesList(
@@ -131,7 +130,7 @@ class FirestoreManager @Inject constructor(
                         delay(100L)
                     }
                 }
-            }catch(e: TimeoutCancellationException){
+            } catch(e: TimeoutCancellationException){
                 task.addOnCompleteListener {  }
                 withContext(Dispatchers.Main){
                     onTimeout(

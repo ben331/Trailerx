@@ -7,6 +7,7 @@ import com.globant.imdb.domain.model.MovieItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.lang.Exception
 import javax.inject.Inject
 
@@ -40,10 +41,14 @@ class GetUserMoviesUseCase @Inject constructor(
                     if(movies.isNotEmpty()){
                         handleSuccess(movies)
                     }else{
-                        handleFailure(title, msg)
+                        withContext(Dispatchers.Main){
+                            handleFailure(title, msg)
+                        }
                     }
                 }catch (e: Exception){
-                    handleFailure(title, msg)
+                    withContext(Dispatchers.Main){
+                        handleFailure(title, msg)
+                    }
                 }
             }
         }

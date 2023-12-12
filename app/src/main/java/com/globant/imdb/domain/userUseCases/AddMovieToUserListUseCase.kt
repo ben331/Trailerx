@@ -44,6 +44,7 @@ class AddMovieToUserListUseCase @Inject constructor(
                         handleSuccess(movie)
                     }
                 }catch (e:Exception){
+                    e.printStackTrace()
                     withContext(Dispatchers.Main){
                         handleFailure(title, msg)
                     }

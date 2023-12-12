@@ -121,15 +121,21 @@ class HomeViewModel @Inject constructor(
     }
     
     fun preLoadProfileData(context: Context){
-        ImageLoader.preLoadImage(context, authManager.getProfilePhotoURL().toString())
-        getUserMoviesUseCase(CategoryType.WATCH_LIST_MOVIES, {preLoadImages(it,context)},{_,_->})
-        getUserMoviesUseCase(CategoryType.HISTORY_MOVIES, {preLoadImages(it,context)},{_,_->})
+        if(onlineMode.value == true){
+            ImageLoader.preLoadImage(context, authManager.getProfilePhotoURL().toString())
+            getUserMoviesUseCase(CategoryType.WATCH_LIST_MOVIES, {preLoadImages(it,context)},{_,_->})
+            getUserMoviesUseCase(CategoryType.HISTORY_MOVIES, {preLoadImages(it,context)},{_,_->})
+        }
     }
 
     private fun preLoadImages(movies:List<MovieItem>, context:Context) {
-        movies.forEach { movie ->
-            val imageUrl = (Constants.IMAGES_BASE_URL + movie.backdropPath)
-            ImageLoader.preLoadImage(context, imageUrl)
+        if(onlineMode.value == true){
+            isLoading.postValue(true)
+            movies.forEach { movie ->
+                val imageUrl = (Constants.IMAGES_BASE_URL + movie.backdropPath)
+                ImageLoader.preLoadImage(context, imageUrl)
+            }
+            isLoading.postValue(false)
         }
     }
 }

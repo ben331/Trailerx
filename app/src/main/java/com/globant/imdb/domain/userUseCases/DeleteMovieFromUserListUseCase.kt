@@ -6,6 +6,7 @@ import com.globant.imdb.data.database.entities.movie.SyncState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.lang.Exception
 import javax.inject.Inject
 
@@ -27,7 +28,9 @@ class DeleteMovieFromUserListUseCase @Inject constructor(
                 }catch (e: Exception){
                     e.printStackTrace()
                 }finally {
-                    handleSuccess()
+                    withContext(Dispatchers.Main){
+                        handleSuccess()
+                    }
                 }
             }
         }
@@ -37,8 +40,13 @@ class DeleteMovieFromUserListUseCase @Inject constructor(
                 try {
                     repository.deleteMovieFromCategoryDatabase(movieId, category)
                     repository.addMovieToSyncDatabase(movieId, category, SyncState.PENDING_TO_DELETE)
+                    withContext(Dispatchers.Main){
+                        handleSuccess()
+                    }
                 }catch (e: Exception){
-                    handleFailure(title, msg)
+                    withContext(Dispatchers.Main){
+                        handleFailure(title, msg)
+                    }
                 }
             }
         }
