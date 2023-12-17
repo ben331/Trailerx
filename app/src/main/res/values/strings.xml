@@ -112,6 +112,9 @@
     <string name="turn_offline_mode">Estás usando en el modo sin conexión</string>
     <string name="connection_recovered">Conexión recuperada</string>
     <string name="get_movie_error">Película no encontrada localmente, intenta recuperar la conexión</string>
+    <string name="error_ups">Ups…</string>
+    <string name="server_error">Obtuvimos un error :(\nPor favor reintenta más tarde</string>
+    <string name="error_retry">Reintentar</string>
 
     /*
     --Facebook strings
