@@ -49,4 +49,24 @@
         android:layout_marginStart="@dimen/margin_large"
         android:layout_marginEnd="@dimen/margin_large"/>
 
+    <include
+        android:id="@+id/offline_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/item_error_retry" />
+
+    <FrameLayout
+        android:id="@+id/progress_component"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray_light_100"
+        android:visibility="gone"
+        tools:visibility="visible">
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="@dimen/progress_size"
+            android:layout_height="@dimen/progress_size"
+            style="@style/Widget.IMDb.ProgressBar"/>
+    </FrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

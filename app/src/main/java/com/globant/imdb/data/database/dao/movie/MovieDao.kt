@@ -6,6 +6,13 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.globant.imdb.data.database.entities.movie.CategoryType
 import com.globant.imdb.data.database.entities.movie.MovieEntity
+import kotlinx.coroutines.flow.Flow
+
+private val homeMovies = listOf(
+    CategoryType.NOW_PLAYING_MOVIES,
+    CategoryType.WATCH_LIST_MOVIES,
+    CategoryType.POPULAR_MOVIES
+)
 
 @Dao
 interface MovieDao {
@@ -17,6 +24,9 @@ interface MovieDao {
 
     @Query("SELECT movie.* FROM movie INNER JOIN category_movie ON movie.id = category_movie.idMovie WHERE category_movie.idCategory = :categoryId")
     suspend fun getMoviesByCategory(categoryId:CategoryType):List<MovieEntity>
+
+    @Query("SELECT * FROM movie")
+    fun getMoviesFlow():Flow<List<MovieEntity>>
 
     @Query("DELETE FROM movie WHERE id IN (SELECT idMovie FROM category_movie WHERE idCategory = :categoryId)")
     suspend fun deleteMoviesByCategory(categoryId:CategoryType)

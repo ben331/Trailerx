@@ -5,22 +5,35 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.globant.imdb.domain.model.MovieItem
+import com.globant.imdb.domain.moviesUseCases.IsNetworkAvailableUseCase
 import com.globant.imdb.domain.moviesUseCases.SearchMovieUseCase
+import com.globant.imdb.ui.helpers.NetworkState
 import com.globant.imdb.ui.view.adapters.MovieResultAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val searchMovieUseCase:SearchMovieUseCase
+    private val searchMovieUseCase:SearchMovieUseCase,
+    private val isNetworkAvailableUseCase: IsNetworkAvailableUseCase
 ): ViewModel() {
 
-    // Live data
     val resultMovies = MutableLiveData<List<MovieItem>>()
-    val isNetworkAvailable = MutableLiveData(true)
 
-    // Use Cases
+    private val _uiState:MutableStateFlow<NetworkState> = MutableStateFlow(NetworkState.Loading)
+    val uiState:StateFlow<NetworkState> = _uiState
+
+    init {
+        viewModelScope.launch {
+            isNetworkAvailableUseCase()
+                .collect { isConnected ->
+                    _uiState.value = if(isConnected) NetworkState.Online else NetworkState.Offline
+                }
+        }
+    }
 
     lateinit var adapter: MovieResultAdapter
 

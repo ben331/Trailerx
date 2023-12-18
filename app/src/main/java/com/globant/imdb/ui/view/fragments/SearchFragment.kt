@@ -10,14 +10,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.globant.imdb.databinding.FragmentSearchBinding
 import com.globant.imdb.ui.helpers.ImageLoader
+import com.globant.imdb.ui.helpers.NetworkState
 import com.globant.imdb.ui.view.adapters.MovieResultAdapter
 import com.globant.imdb.ui.view.adapters.MovieResultViewHolder
 import com.globant.imdb.ui.viewmodel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SearchFragment : Fragment(), MovieResultAdapter.ImageRenderListener, MovieResultViewHolder.MovieResultListener {
@@ -29,6 +34,36 @@ class SearchFragment : Fragment(), MovieResultAdapter.ImageRenderListener, Movie
     }
 
     private lateinit var moviesResultAdapter: MovieResultAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                searchViewModel.uiState.collect { uiState ->
+                    with(binding){
+                        when(uiState) {
+                            is NetworkState.Loading -> {
+                                progressComponent.visibility = View.VISIBLE
+                            }
+                            is NetworkState.Online -> {
+                                searchLayout.visibility = View.VISIBLE
+                                recyclerMoviesResult.visibility = View.VISIBLE
+                                progressComponent.visibility = View.GONE
+                                offlineContainer.root.visibility = View.GONE
+                            }
+                            is NetworkState.Offline -> {
+                                offlineContainer.root.visibility = View.VISIBLE
+                                searchLayout.visibility = View.GONE
+                                progressComponent.visibility = View.GONE
+                                recyclerMoviesResult.visibility = View.GONE
+                            }
+                            else -> {}
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -11,7 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.fragment.app.activityViewModels
@@ -192,7 +191,7 @@ class LoginFragment : Fragment() {
         getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
         val token = prefs?.getString("token", null)
         token?.let {
-            val claims = TokenService.validateToken(requireContext(),token)
+            val claims = TokenService().validateToken(requireContext(),token)
             if(claims!=null){
                 val email = claims["sub"] as String
                 val provider = claims["provider"] as String

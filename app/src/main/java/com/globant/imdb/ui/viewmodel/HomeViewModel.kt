@@ -121,7 +121,7 @@ class HomeViewModel @Inject constructor(
     }
     
     fun preLoadProfileData(context: Context){
-        if(onlineMode.value == true){
+        if(onlineMode.value == true && username.isNotBlank()){
             ImageLoader.preLoadImage(context, authManager.getProfilePhotoURL().toString())
             getUserMoviesUseCase(CategoryType.WATCH_LIST_MOVIES, {preLoadImages(it,context)},{_,_->})
             getUserMoviesUseCase(CategoryType.HISTORY_MOVIES, {preLoadImages(it,context)},{_,_->})

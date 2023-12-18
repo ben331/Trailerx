@@ -1,5 +1,6 @@
 package com.globant.imdb.data.repositories
 
+import com.globant.imdb.core.PingService
 import com.globant.imdb.data.database.dao.movie.MovieDao
 import com.globant.imdb.data.database.dao.movie.CategoryDao
 import com.globant.imdb.data.database.dao.movie.CategoryMovieDao
@@ -24,9 +25,18 @@ import com.globant.imdb.domain.model.toDetail
 import com.globant.imdb.domain.model.toDomain
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
+
+private const val REFRESH_INTERVAL = 5000L
+
 @Singleton
 class IMDbRepository @Inject constructor(
     private val api:TMDBService,
@@ -35,7 +45,8 @@ class IMDbRepository @Inject constructor(
     private val categoryDao: CategoryDao,
     private val categoryMovieDao: CategoryMovieDao,
     private val syncCategoryMovieDao: SyncCategoryMovieDao,
-    private val movieDetailDao: MovieDetailDao
+    private val movieDetailDao: MovieDetailDao,
+    private val pingService: PingService,
 ) {
     init {
         CoroutineScope(Dispatchers.IO).launch {
@@ -43,6 +54,13 @@ class IMDbRepository @Inject constructor(
             if(moviesLists.isEmpty()){
                 categoryDao.insertAll( CategoryType.values().map { it.toDatabase() } )
             }
+        }
+    }
+
+    val isConnectionAvailable: Flow<Boolean> = flow {
+        while (true){
+            emit(pingService.isConnected())
+            delay(REFRESH_INTERVAL)
         }
     }
 

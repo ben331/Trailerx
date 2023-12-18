@@ -2,7 +2,6 @@ package com.globant.imdb.ui.view.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -75,7 +74,7 @@ class NavigationFragment : Fragment(), PopupMenu.OnMenuItemClickListener, Profil
     private fun saveSession(){
         args.email?.let { email ->
             val provider = args.provider
-            val token = TokenService.generateToken(requireContext(), email, provider.name)
+            val token = TokenService().generateToken(requireContext(), email, provider.name)
             val prefs = activity?.
             getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)?.edit()!!
             prefs.putString("token", token)
