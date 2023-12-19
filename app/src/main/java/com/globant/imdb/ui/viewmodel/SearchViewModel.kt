@@ -28,7 +28,7 @@ class SearchViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            isNetworkAvailableUseCase()
+            isNetworkAvailableUseCase.isConnectionAvailable
                 .collect { isConnected ->
                     _uiState.value = if(isConnected) NetworkState.Online else NetworkState.Offline
                 }

@@ -1,6 +1,6 @@
 package com.globant.imdb.data.repositories
 
-import com.globant.imdb.core.PingService
+import com.globant.imdb.core.ServiceMonitor
 import com.globant.imdb.data.database.dao.movie.MovieDao
 import com.globant.imdb.data.database.dao.movie.CategoryDao
 import com.globant.imdb.data.database.dao.movie.CategoryMovieDao
@@ -27,15 +27,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
-private const val REFRESH_INTERVAL = 5000L
+private const val REFRESH_INTERVAL = 1000L
 
 @Singleton
 class IMDbRepository @Inject constructor(
@@ -46,7 +44,7 @@ class IMDbRepository @Inject constructor(
     private val categoryMovieDao: CategoryMovieDao,
     private val syncCategoryMovieDao: SyncCategoryMovieDao,
     private val movieDetailDao: MovieDetailDao,
-    private val pingService: PingService,
+    private val serviceMonitor: ServiceMonitor,
 ) {
     init {
         CoroutineScope(Dispatchers.IO).launch {
@@ -59,10 +57,15 @@ class IMDbRepository @Inject constructor(
 
     val isConnectionAvailable: Flow<Boolean> = flow {
         while (true){
-            emit(pingService.isConnected())
-            delay(REFRESH_INTERVAL)
+            try {
+                emit(serviceMonitor.isConnected())
+            }catch (e:Exception){
+                emit(true)
+            }finally {
+                delay(REFRESH_INTERVAL)
+            }
         }
-    }
+    }.flowOn(Dispatchers.Default)
 
     //-----RETROFIT--------------------------------------------------------------------------------
 

@@ -32,6 +32,9 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
     @Inject
     lateinit var dialogManager: DialogManager
 
+    @Inject
+    lateinit var imageLoader: ImageLoader
+
     private val binding: FragmentProfileBinding by lazy {
         FragmentProfileBinding.inflate(layoutInflater)
     }
@@ -151,7 +154,7 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
     @SuppressLint("NotifyDataSetChanged")
     private fun setupLiveData(){
         profileViewModel.photoUri.observe(viewLifecycleOwner) {
-            ImageLoader.renderImageCenterCrop (
+            imageLoader.renderImageCenterCrop (
                 requireContext(), it,
                 binding.profileHeaderContainer.profilePhotoContainer.profileImage
             )
@@ -219,7 +222,7 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
     }
 
     override fun renderImage(url: String, image: ImageView) {
-        ImageLoader.renderImageCenterCrop(requireContext(), url, image)
+        imageLoader.renderImageCenterCrop(requireContext(), url, image)
     }
 
     override fun showDetails(id: Int) {

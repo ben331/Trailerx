@@ -2,12 +2,11 @@ package com.globant.imdb.domain.moviesUseCases
 
 import com.globant.imdb.data.repositories.IMDbRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import javax.inject.Inject
 
-private const val CLOSE_FLOW_DELAY = 5000L
-
 class IsNetworkAvailableUseCase @Inject constructor(
-    private val repository: IMDbRepository,
+    repository: IMDbRepository,
 ) {
-    operator fun invoke(): Flow<Boolean> = repository.isConnectionAvailable
+    val isConnectionAvailable: Flow<Boolean> = repository.isConnectionAvailable.catch { emit(true) }
 }

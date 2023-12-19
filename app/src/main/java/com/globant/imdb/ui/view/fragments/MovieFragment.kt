@@ -27,6 +27,9 @@ class MovieFragment : Fragment() {
     @Inject
     lateinit var dialogManager: DialogManager
 
+    @Inject
+    lateinit var imageLoader: ImageLoader
+
     private val movieViewModel: MovieViewModel by viewModels()
 
     private val args: MovieFragmentArgs by navArgs()
@@ -100,9 +103,9 @@ class MovieFragment : Fragment() {
                     textBoxSynopsis.text = movieDetailItem.overview
                 }
                 val url = Constants.IMAGES_BASE_URL + movieDetailItem.backdropPath
-                ImageLoader
+                imageLoader
                     .renderImageCenterCrop(requireContext(),url,binding.containerSypnosis.imgMovie)
-                ImageLoader
+                imageLoader
                     .renderImageCenterCrop(requireContext(),url,binding.containerFrontage.imgVideoMovie)
                 movieViewModel.isLoading.postValue(false)
             }

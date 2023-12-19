@@ -13,10 +13,11 @@
         android:id="@+id/img_movie"
         android:layout_width="@dimen/movie_width"
         android:layout_height="@dimen/movie_height"
+        android:background="@color/yellow_400"
         android:contentDescription="@string/img_trailer"
+        android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/yellow_400"
         tools:ignore="ImageContrastCheck" />
 
     <ImageButton

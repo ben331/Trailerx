@@ -23,9 +23,13 @@ import com.globant.imdb.ui.view.adapters.MovieResultViewHolder
 import com.globant.imdb.ui.viewmodel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SearchFragment : Fragment(), MovieResultAdapter.ImageRenderListener, MovieResultViewHolder.MovieResultListener {
+
+    @Inject
+    lateinit var imageLoader: ImageLoader
 
     private val searchViewModel: SearchViewModel by viewModels()
 
@@ -57,7 +61,6 @@ class SearchFragment : Fragment(), MovieResultAdapter.ImageRenderListener, Movie
                                 progressComponent.visibility = View.GONE
                                 recyclerMoviesResult.visibility = View.GONE
                             }
-                            else -> {}
                         }
                     }
                 }
@@ -122,7 +125,7 @@ class SearchFragment : Fragment(), MovieResultAdapter.ImageRenderListener, Movie
     }
 
     override fun renderImage(url: String, image: ImageView) {
-       ImageLoader.renderImageCenterCrop(requireContext(), url, image)
+        imageLoader.renderImageCenterCrop(requireContext(), url, image)
     }
 
     override fun showDetails(id: Int) {

@@ -31,6 +31,7 @@ class HomeViewModel @Inject constructor(
     private val getUpcomingMovies:GetUpcomingMoviesUseCase,
     private val addMovieToUserListUseCase:AddMovieToUserListUseCase,
     private val getUserMoviesUseCase: GetUserMoviesUseCase,
+    private val imageLoader: ImageLoader
 ): ViewModel() {
 
     val mainMovie = MutableLiveData<MovieItem>()
@@ -122,7 +123,7 @@ class HomeViewModel @Inject constructor(
     
     fun preLoadProfileData(context: Context){
         if(onlineMode.value == true && username.isNotBlank()){
-            ImageLoader.preLoadImage(context, authManager.getProfilePhotoURL().toString())
+            imageLoader.preLoadImage(context, authManager.getProfilePhotoURL().toString())
             getUserMoviesUseCase(CategoryType.WATCH_LIST_MOVIES, {preLoadImages(it,context)},{_,_->})
             getUserMoviesUseCase(CategoryType.HISTORY_MOVIES, {preLoadImages(it,context)},{_,_->})
         }
@@ -133,7 +134,7 @@ class HomeViewModel @Inject constructor(
             isLoading.postValue(true)
             movies.forEach { movie ->
                 val imageUrl = (Constants.IMAGES_BASE_URL + movie.backdropPath)
-                ImageLoader.preLoadImage(context, imageUrl)
+                imageLoader.preLoadImage(context, imageUrl)
             }
             isLoading.postValue(false)
         }

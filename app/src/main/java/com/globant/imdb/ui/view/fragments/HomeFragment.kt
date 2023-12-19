@@ -29,6 +29,9 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
     @Inject
     lateinit var dialogManager: DialogManager
 
+    @Inject
+    lateinit var imageLoader:ImageLoader
+
     private val binding: FragmentHomeBinding by lazy {
         FragmentHomeBinding.inflate(layoutInflater)
     }
@@ -74,8 +77,8 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
             with(binding.mainTrailerContainer) {
                 trailerName.text = currentMovie.title
                 val imageUrl = Constants.IMAGES_BASE_URL + currentMovie.backdropPath
-                ImageLoader.renderImageCenterCrop(requireContext(), imageUrl, trailerImageView)
-                ImageLoader.renderImageCenterCrop(requireContext(), imageUrl, imgWebView)
+                imageLoader.renderImageCenterCrop(requireContext(), imageUrl, trailerImageView)
+                imageLoader.renderImageCenterCrop(requireContext(), imageUrl, imgWebView)
                 homeViewModel.getTrailerOfMovie(currentMovie.id)
             }
         }
@@ -183,7 +186,7 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
     }
 
     override fun renderImage(url: String, image: ImageView) {
-        ImageLoader.renderImageCenterCrop(requireContext(), url, image)
+        imageLoader.renderImageCenterCrop(requireContext(), url, image)
     }
 
     override fun showDetails(id: Int) {
