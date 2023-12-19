@@ -42,11 +42,6 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
     private lateinit var upcomingMoviesAdapter: MovieAdapter
     private lateinit var popularMoviesAdapter: MovieAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        homeViewModel.preLoadProfileData(requireContext())
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -182,7 +177,7 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
     }
 
     private fun refresh() {
-        homeViewModel.onCreate(requireContext())
+        homeViewModel.onCreate()
     }
 
     override fun renderImage(url: String, image: ImageView) {
