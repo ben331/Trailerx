@@ -191,22 +191,10 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
 
     override fun addToList(id: Int, numberList:Int) {
         if(homeViewModel.username.isNotEmpty()){
-            homeViewModel.addMovieToWatchList(id, numberList, {
-                homeViewModel.isLoading.postValue(false)
-                dialogManager.showAlert(
-                    requireContext(),
-                    getString(R.string.success),
-                    getString(R.string.success_movie_added, it.title)
-                )
-            }, ::handleFailure)
+            homeViewModel.addMovieToWatchList(id, numberList, requireContext())
         }else{
             val action = HomeFragmentDirections.actionHomeFragmentToProfileFragment()
             findNavController().navigate(action)
         }
-    }
-
-    private fun handleFailure(title:Int, msg:Int){
-        homeViewModel.isLoading.postValue(false)
-        dialogManager.showAlert(requireContext(),title, msg)
     }
 }

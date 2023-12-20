@@ -1,9 +1,11 @@
 package com.globant.imdb.ui.viewmodel
 
 import android.annotation.SuppressLint
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.globant.imdb.R
 import com.globant.imdb.data.database.entities.movie.CategoryType
 import com.globant.imdb.data.network.firebase.FirebaseAuthManager
 import com.globant.imdb.domain.model.MovieItem
@@ -13,8 +15,11 @@ import com.globant.imdb.domain.moviesUseCases.GetRandomTopMovieUseCase
 import com.globant.imdb.domain.moviesUseCases.GetOfficialTrailerUseCase
 import com.globant.imdb.domain.moviesUseCases.GetUpcomingMoviesUseCase
 import com.globant.imdb.domain.userUseCases.AddMovieToUserListUseCase
+import com.globant.imdb.ui.helpers.DialogManager
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,6 +31,7 @@ class HomeViewModel @Inject constructor(
     private val getRandomTopMovieUseCase:GetRandomTopMovieUseCase,
     private val getUpcomingMovies:GetUpcomingMoviesUseCase,
     private val addMovieToUserListUseCase:AddMovieToUserListUseCase,
+    private val dialogManager: DialogManager
 ): ViewModel() {
 
     val mainMovie = MutableLiveData<MovieItem>()
@@ -91,12 +97,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun addMovieToWatchList(
-        movieId:Int,
-        numberList:Int,
-        onSuccess:(MovieItem)->Unit,
-        onFailure:(title:Int, msg:Int)->Unit
-    ){
+    fun addMovieToWatchList(movieId:Int, numberList:Int, context:Context){
         isLoading.postValue(true)
         val homeMovies = when(numberList){
             1 -> nowPlayingMovies.value
@@ -104,11 +105,26 @@ class HomeViewModel @Inject constructor(
             3 -> popularMovies.value
             else -> emptyList()
         }
-        val movie = homeMovies?.find {
-            it.id == movieId
-        }
-        if(movie!=null) {
-            addMovieToUserListUseCase(movie, CategoryType.WATCH_LIST_MOVIES, onSuccess, onFailure)
+        homeMovies?.find { it.id == movieId }?.let{
+            viewModelScope.launch { withContext(Dispatchers.IO){
+                val isAdded = addMovieToUserListUseCase(it, CategoryType.WATCH_LIST_MOVIES)
+                withContext(Dispatchers.Main){
+                    if(isAdded){
+                        dialogManager.showAlert(
+                            context,
+                            context.getString(R.string.success),
+                            context.getString(R.string.success_movie_added, it.title)
+                        )
+                    }else{
+                        dialogManager.showAlert(
+                            context,
+                            context.getString(R.string.success),
+                            context.getString(R.string.server_error)
+                        )
+                    }
+                    isLoading.postValue(false)
+                }
+            }}
         }
     }
 }

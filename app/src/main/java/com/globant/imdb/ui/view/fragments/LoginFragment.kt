@@ -216,10 +216,10 @@ class LoginFragment : Fragment() {
     }
     private fun createUser(email:String, providerType: ProviderType){
         val user = UserModel(email, authViewModel.getDisplayName())
-        authViewModel.createUser(user, {
-            if(it!=null){
+        authViewModel.createUser(user) {
+            if (it != null) {
                 showHome(email, providerType)
-            }else{
+            } else {
                 authViewModel.logout(providerType)
                 dialogManager.showAlert(
                     requireContext(),
@@ -227,7 +227,7 @@ class LoginFragment : Fragment() {
                     getString(R.string.create_user_error)
                 )
             }
-        }, ::handleFailure)
+        }
     }
     private fun enableButtons(enable:Boolean){
         with(binding){

@@ -4,11 +4,15 @@ import android.app.Activity
 import android.content.Intent
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.globant.imdb.data.model.user.UserModel
 import com.globant.imdb.data.network.firebase.FirebaseAuthManager
 import com.globant.imdb.data.network.firebase.ProviderType
 import com.globant.imdb.domain.userUseCases.CreateUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,10 +24,12 @@ class AuthViewModel @Inject constructor(
 
     fun createUser(
         localUser: UserModel,
-        handleSuccess:(user: UserModel?)->Unit,
-        handleFailure:(title:Int, msg:Int)->Unit
+        handleResult:(user: UserModel?)->Unit
     ){
-        createUserUseCase(localUser, handleSuccess, handleFailure)
+        viewModelScope.launch { withContext(Dispatchers.IO){
+            val user = createUserUseCase(localUser)
+            withContext(Dispatchers.Main){ handleResult(user) }
+        }}
     }
 
     fun getDisplayName():String{

@@ -1,14 +1,9 @@
 package com.globant.imdb.domain.userUseCases
 
-import com.globant.imdb.data.database.entities.movie.CategoryType
 import com.globant.imdb.data.database.entities.movie.SyncState
 import com.globant.imdb.data.repositories.IMDbRepository
-import com.globant.imdb.domain.model.MovieItem
 import com.globant.imdb.domain.model.toSimple
 import com.globant.imdb.domain.moviesUseCases.GetMovieByIdUseCase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class SyncUserLocalDataUseCase @Inject constructor(
@@ -22,22 +17,18 @@ class SyncUserLocalDataUseCase @Inject constructor(
         for (syncMovie in moviesToAdd) {
             val movie = getMovieByIdUseCase(syncMovie.idMovie)
             movie?.let {
-                repository.addMovieToCategory(it.toSimple(), syncMovie.idCategory, ::handleSuccessSync) { _, _ -> }
+                val isAdded = repository.addMovieToCategory(it.toSimple(), syncMovie.idCategory)
+                if(isAdded) {
+                    repository.deleteMovieFromSyncDatabase(syncMovie.idMovie, syncMovie.idCategory)
+                }
             }
         }
 
         for (syncMovie in moviesToDelete) {
-            repository.deleteMovieFromCategory(syncMovie.idMovie, syncMovie.idCategory, ::handleSuccessSync) { _, _ -> }
-        }
-    }
-
-    private fun handleSuccessSync(movieItem: MovieItem, categoryType: CategoryType){
-        handleSuccessSync(movieItem.id, categoryType)
-    }
-
-    private fun handleSuccessSync(movieId: Int, categoryType: CategoryType){
-        CoroutineScope(Dispatchers.IO).launch {
-            repository.deleteMovieFromSyncDatabase(movieId, categoryType)
+            val isDeleted = repository.deleteMovieFromCategory(syncMovie.idMovie, syncMovie.idCategory)
+            if(isDeleted) {
+                repository.deleteMovieFromSyncDatabase(syncMovie.idMovie, syncMovie.idCategory)
+            }
         }
     }
 }

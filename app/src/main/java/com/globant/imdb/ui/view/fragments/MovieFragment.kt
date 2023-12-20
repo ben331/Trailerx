@@ -57,9 +57,7 @@ class MovieFragment : Fragment() {
         setupLiveData()
         setupButtons()
 
-        if(movieViewModel.username.isNotEmpty()){
-            movieViewModel.recordHistory(::handleFailure)
-        }
+        if(movieViewModel.username.isNotEmpty()){ movieViewModel.recordHistory() }
     }
 
     override fun onResume() {
@@ -144,14 +142,7 @@ class MovieFragment : Fragment() {
     private fun setupButtons(){
         binding.btnActionList.setOnClickListener{
             if(movieViewModel.username.isNotEmpty()){
-                movieViewModel.addMovieToWatchList({
-                    movieViewModel.isLoading.postValue(false)
-                    dialogManager.showAlert(
-                        requireContext(),
-                        getString(R.string.success),
-                        getString(R.string.success_movie_added, it.title)
-                    )
-                }, ::handleFailure)
+                movieViewModel.addMovieToWatchList(requireContext())
             }else{
                 val action = MovieFragmentDirections.actionMovieFragmentToProfileFragment()
                 findNavController().navigate(action)
@@ -163,8 +154,5 @@ class MovieFragment : Fragment() {
         }
     }
 
-    private fun handleFailure(title:Int, msg:Int){
-        movieViewModel.isLoading.postValue(false)
-        dialogManager.showAlert(requireContext(),title, msg)
-    }
+
 }

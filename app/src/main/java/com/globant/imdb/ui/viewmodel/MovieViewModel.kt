@@ -1,19 +1,23 @@
 package com.globant.imdb.ui.viewmodel
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.globant.imdb.R
 import com.globant.imdb.data.database.entities.movie.CategoryType
 import com.globant.imdb.data.network.firebase.FirebaseAuthManager
 import com.globant.imdb.domain.model.MovieDetailItem
-import com.globant.imdb.domain.model.MovieItem
 import com.globant.imdb.domain.model.toSimple
 import com.globant.imdb.domain.moviesUseCases.GetMovieByIdUseCase
 import com.globant.imdb.domain.moviesUseCases.GetOfficialTrailerUseCase
 import com.globant.imdb.domain.userUseCases.AddMovieToUserListUseCase
+import com.globant.imdb.ui.helpers.DialogManager
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,6 +26,7 @@ class MovieViewModel @Inject constructor(
     private val getMovieByIdUseCase:GetMovieByIdUseCase,
     private val getTrailerUseCase:GetOfficialTrailerUseCase,
     private val addMovieToUserListUseCase:AddMovieToUserListUseCase,
+    private val dialogManager: DialogManager
 ): ViewModel() {
 
     val isLoading = MutableLiveData(false)
@@ -46,24 +51,39 @@ class MovieViewModel @Inject constructor(
         }
     }
 
-    fun addMovieToWatchList(
-        handleSuccess:(movie: MovieItem)->Unit,
-        handleFailure:(title:Int, msg:Int)->Unit){
+    fun addMovieToWatchList(context: Context){
         isLoading.postValue(true)
         currentMovie.value?.let {
-            addMovieToUserListUseCase(it.toSimple(), CategoryType.WATCH_LIST_MOVIES, handleSuccess, handleFailure)
+            viewModelScope.launch { withContext(Dispatchers.IO){
+                val isAdded = addMovieToUserListUseCase(it.toSimple(), CategoryType.WATCH_LIST_MOVIES)
+                withContext(Dispatchers.Main){
+                    if(isAdded){
+                        dialogManager.showAlert(
+                            context,
+                            context.getString(R.string.success),
+                            context.getString(R.string.success_movie_added, it.title)
+                        )
+                    }else{
+                        dialogManager.showAlert(
+                            context,
+                            context.getString(R.string.error),
+                            context.getString(R.string.server_error)
+                        )
+                    }
+                    isLoading.postValue(false)
+                }}
+            }
         }
     }
 
-    fun recordHistory(handleFailure:(title:Int, msg:Int)->Unit){
+    fun recordHistory(){
         isLoading.postValue(true)
-        currentMovie.value?.let {
-            addMovieToUserListUseCase(
-                it.toSimple(), CategoryType.HISTORY_MOVIES,
-                { movieItem ->
-                    Log.i("INFO", "Movie ${movieItem.title},id:${movieItem.id} recorded in history")
-                },
-                handleFailure)
+        currentMovie.value?.let { movieDetail ->
+            viewModelScope.launch { withContext(Dispatchers.IO){
+                addMovieToUserListUseCase(movieDetail.toSimple(), CategoryType.HISTORY_MOVIES).let {
+                    if(it) Log.i("INFO", "Movie ${movieDetail.title},id:${movieDetail.id} recorded in history")
+                }
+            }}
         }
     }
 }

@@ -3,12 +3,17 @@ package com.globant.imdb.ui.viewmodel
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.globant.imdb.R
 import com.globant.imdb.data.database.entities.movie.CategoryType
 import com.globant.imdb.data.network.firebase.FirebaseAuthManager
 import com.globant.imdb.domain.model.MovieItem
 import com.globant.imdb.domain.userUseCases.DeleteMovieFromUserListUseCase
 import com.globant.imdb.domain.userUseCases.GetUserMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,15 +24,13 @@ class ProfileViewModel @Inject constructor(
 ): ViewModel() {
 
     val photoUri = MutableLiveData<Uri?>()
-    val watchList = MutableLiveData<List<MovieItem>>()
-    val recentViewed = MutableLiveData<List<MovieItem>>()
-    val favoritePeople = MutableLiveData<List<MovieItem>>()
+    val watchList = MutableLiveData<List<MovieItem>?>()
+    val recentViewed = MutableLiveData<List<MovieItem>?>()
+    val favoritePeople = MutableLiveData<List<MovieItem>?>()
     val isLoading = MutableLiveData(false)
     val username:String by lazy { authManager.getEmail() }
 
-    fun refresh(
-        handleFailure:(title:Int, msg:Int)->Unit
-    ) {
+    fun refresh(handleFailure:(title:Int, msg:Int)->Unit) {
         if(username.isNotEmpty()){
             isLoading.postValue(true)
             val uri = authManager.getProfilePhotoURL()
@@ -35,20 +38,38 @@ class ProfileViewModel @Inject constructor(
                 photoUri.postValue(uri)
             }
 
-            getUserMoviesUseCase( CategoryType.WATCH_LIST_MOVIES, { movies ->
-                watchList.postValue(movies)
+            viewModelScope.launch { withContext(Dispatchers.IO) {
+                val movies = getUserMoviesUseCase(CategoryType.WATCH_LIST_MOVIES)
+                if ( movies != null ) watchList.postValue(movies)
+                else {
+                    withContext(Dispatchers.Main){
+                        handleFailure(R.string.error, R.string.fetch_movies_error)
+                    }
+                }
                 isLoading.postValue(false)
-            }, handleFailure)
+            }}
 
-            getUserMoviesUseCase( CategoryType.HISTORY_MOVIES, { movies ->
-                recentViewed.postValue(movies)
+            viewModelScope.launch { withContext(Dispatchers.IO) {
+                val movies = getUserMoviesUseCase(CategoryType.HISTORY_MOVIES)
+                if ( movies != null ) recentViewed.postValue(movies)
+                else {
+                    withContext(Dispatchers.Main){
+                        handleFailure(R.string.error, R.string.fetch_movies_error)
+                    }
+                }
                 isLoading.postValue(false)
-            }, handleFailure)
+            }}
 
-            getUserMoviesUseCase( CategoryType.FAVORITE_PEOPLE, { movies ->
-                favoritePeople.postValue(movies)
+            viewModelScope.launch { withContext(Dispatchers.IO) {
+                val movies = getUserMoviesUseCase(CategoryType.FAVORITE_PEOPLE)
+                if ( movies != null ) favoritePeople.postValue(movies)
+                else {
+                    withContext(Dispatchers.Main){
+                        handleFailure(R.string.error, R.string.fetch_movies_error)
+                    }
+                }
                 isLoading.postValue(false)
-            }, handleFailure)
+            }}
         }
     }
 
@@ -57,8 +78,9 @@ class ProfileViewModel @Inject constructor(
         handleFailure:(title:Int, msg:Int)->Unit
     ){
         isLoading.postValue(true)
-        deleteMovieFromUserListUseCase(movieId, listType,{
-            refresh(handleFailure)
-        }, handleFailure)
+        viewModelScope.launch { withContext(Dispatchers.IO) {
+            deleteMovieFromUserListUseCase(movieId, listType)
+            handleFailure(R.string.error, R.string.delete_movie_error)
+        }}
     }
 }

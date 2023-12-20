@@ -7,7 +7,6 @@ import com.globant.imdb.domain.model.MovieItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.lang.Exception
 import javax.inject.Inject
 
@@ -15,43 +14,25 @@ class AddMovieToUserListUseCase @Inject constructor(
     private val repository: IMDbRepository,
     private val syncUserLocalDataUseCase: SyncUserLocalDataUseCase
 ) {
-    operator fun invoke(
-        movie:MovieItem,
-        category:CategoryType,
-        handleSuccess:(movie:MovieItem)->Unit,
-        handleFailure:(title:Int, msg:Int)->Unit
-    ) {
-        fun handleRemoteSuccess(movie:MovieItem, category:CategoryType){
+    suspend operator fun invoke(movie:MovieItem, category:CategoryType):Boolean {
+        val isAdded = repository.addMovieToCategory(movie, category)
+
+        return if(isAdded) {
             CoroutineScope(Dispatchers.IO).launch {
                 syncUserLocalDataUseCase()
                 try {
                     repository.addMovieToCategoryDatabase(movie.id, category)
-                    withContext(Dispatchers.Main){
-                        handleSuccess(movie)
-                    }
-                }catch (e:Exception){
-                    e.printStackTrace()
-                }
+                }catch (_:Exception){ }
+            }
+            true
+        } else {
+            try {
+                repository.addMovieToCategoryDatabase(movie.id, category)
+                repository.addMovieToSyncDatabase(movie.id, category, SyncState.PENDING_TO_ADD)
+                true
+            }catch (_:Exception){
+                false
             }
         }
-
-        fun handleRemoteFailure(title:Int, msg:Int){
-            CoroutineScope(Dispatchers.IO).launch {
-                try {
-                    repository.addMovieToCategoryDatabase(movie.id, category)
-                    repository.addMovieToSyncDatabase(movie.id, category, SyncState.PENDING_TO_ADD)
-                    withContext(Dispatchers.Main){
-                        handleSuccess(movie)
-                    }
-                }catch (e:Exception){
-                    e.printStackTrace()
-                    withContext(Dispatchers.Main){
-                        handleFailure(title, msg)
-                    }
-                }
-            }
-        }
-
-        repository.addMovieToCategory(movie, category, ::handleRemoteSuccess, ::handleRemoteFailure)
     }
 }

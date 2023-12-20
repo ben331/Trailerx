@@ -134,42 +134,23 @@ class IMDbRepository @Inject constructor(
 
 
     //-----FIRESTORE-------------------------------------------------------------------------------
-
-    fun createUser(user:UserModel, handleSuccess:(user:UserModel?)->Unit){
-        firestoreManager.createUser(user, handleSuccess)
+    suspend fun createUser(user:UserModel): Boolean {
+        return firestoreManager.createUser(user)
     }
 
-    fun getUser(
-        localEmail:String,
-        handleSuccess:(user:UserModel?)->Unit,
-        handleFailure:(title:Int, msg:Int)->Unit
-    ){
-        firestoreManager.getUser(localEmail , handleSuccess, handleFailure)
+    suspend fun getUser(localEmail:String): UserModel? {
+        return firestoreManager.getUser(localEmail)
     }
 
-    fun getUserMoviesList(
-        listType:CategoryType,
-        handleSuccess:(List<MovieItem>)->Unit,
-        handleFailure:(title:Int, msg:Int)->Unit
-    ){
-        return firestoreManager.getUserMoviesList(listType, handleSuccess, handleFailure)
+    suspend fun getUserMoviesList(listType:CategoryType): List<MovieItem>? {
+        return firestoreManager.getUserMoviesList(listType)
     }
 
-    fun addMovieToCategory(
-        movie:MovieItem,
-        category:CategoryType,
-        handleSuccess:(MovieItem, category:CategoryType)->Unit,
-        handleFailure:(title:Int, msg:Int)->Unit
-    ){
-        return firestoreManager.addMovieToList(movie, category, handleSuccess, handleFailure)
+    suspend fun addMovieToCategory(movie:MovieItem, category:CategoryType):Boolean {
+        return firestoreManager.addMovieToList(movie, category)
     }
 
-    fun deleteMovieFromCategory(
-        movieId:Int,
-        category:CategoryType,
-        handleSuccess:(movieId:Int, category:CategoryType)->Unit,
-        handleFailure:(title:Int, msg:Int)->Unit
-    ){
-        firestoreManager.deleteMovieFromList(movieId, category, handleSuccess, handleFailure)
+    suspend fun deleteMovieFromCategory(movieId:Int, category:CategoryType):Boolean {
+        return firestoreManager.deleteMovieFromList(movieId, category)
     }
 }

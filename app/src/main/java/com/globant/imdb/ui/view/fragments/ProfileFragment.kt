@@ -165,7 +165,7 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
         }
 
         profileViewModel.watchList.observe(viewLifecycleOwner){ movies ->
-            if(movies.isEmpty()){
+            if(movies.isNullOrEmpty()){
                 with(binding.listMoviesOne) {
                     listDescription.visibility = View.VISIBLE
                     btnActionList.visibility = View.VISIBLE
@@ -176,27 +176,27 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
                     btnActionList.visibility = View.GONE
                 }
             }
-            watchListAdapter.movieList = movies
+            watchListAdapter.movieList = movies ?: emptyList()
             watchListAdapter.notifyDataSetChanged()
         }
 
         profileViewModel.recentViewed.observe(viewLifecycleOwner){ movies ->
-            if(movies.isEmpty()){
+            if(movies.isNullOrEmpty()){
                 binding.listMoviesTwo.listDescription.visibility = View.VISIBLE
             }else{
                 binding.listMoviesTwo.listDescription.visibility = View.GONE
             }
-            recentMoviesAdapter.movieList = movies
+            recentMoviesAdapter.movieList = movies ?: emptyList()
             recentMoviesAdapter.notifyDataSetChanged()
         }
 
         profileViewModel.favoritePeople.observe(viewLifecycleOwner){ movies ->
-            if(movies.isEmpty()){
+            if(movies.isNullOrEmpty()){
                 binding.listMoviesThree.listDescription.visibility = View.VISIBLE
             }else{
                 binding.listMoviesThree.listDescription.visibility = View.GONE
             }
-            favoritePeopleAdapter.movieList = movies
+            favoritePeopleAdapter.movieList = movies ?: emptyList()
             favoritePeopleAdapter.notifyDataSetChanged()
         }
     }
