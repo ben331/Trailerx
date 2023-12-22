@@ -10,7 +10,7 @@ import com.globant.imdb.R
 import kotlinx.coroutines.delay
 import javax.inject.Inject
 
-private const val PRELOAD_TIME = 10000L
+private const val PRELOAD_TIME = 3000L
 class ImageLoader @Inject constructor(){
 
     private val movieOptions = RequestOptions()

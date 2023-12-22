@@ -52,7 +52,6 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/list_movies_two"
                 app:layout_constraintStart_toStartOf="parent"
-                android:visibility="gone"
                 android:layout_marginTop="@dimen/margin_medium"
                 layout="@layout/item_movies_lists"/>
 

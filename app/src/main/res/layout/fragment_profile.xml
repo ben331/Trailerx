@@ -40,7 +40,7 @@
                 tools:visibility="gone"
                 layout="@layout/item_movies_lists"/>
 
-            <!-- TODO: CHANGE VISIBILITY WHEN STATS RECYCLER IS IMPLEMENTED  -->
+            <!-- TODO: CHANGE VISIBILITY WHEN FAVORITE PEOPLE RECYCLER IS IMPLEMENTED  -->
             <include
                 android:id="@+id/list_movies_three"
                 android:layout_width="match_parent"

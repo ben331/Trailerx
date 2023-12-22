@@ -193,9 +193,9 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
 
         profileViewModel.favoritePeople.observe(viewLifecycleOwner){ movies ->
             if(movies.isNullOrEmpty()){
-                binding.listMoviesThree.listDescription.visibility = View.VISIBLE
+                binding.listMoviesThree.root.visibility = View.GONE
             }else{
-                binding.listMoviesThree.listDescription.visibility = View.GONE
+                binding.listMoviesThree.root.visibility = View.VISIBLE
             }
             favoritePeopleAdapter.movieList = movies ?: emptyList()
             favoritePeopleAdapter.notifyDataSetChanged()
