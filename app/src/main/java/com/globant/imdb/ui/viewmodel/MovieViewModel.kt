@@ -8,6 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.globant.imdb.R
 import com.globant.imdb.data.database.entities.movie.CategoryType
 import com.globant.imdb.data.network.firebase.FirebaseAuthManager
+import com.globant.imdb.di.IoDispatcher
+import com.globant.imdb.di.MainDispatcher
 import com.globant.imdb.domain.model.MovieDetailItem
 import com.globant.imdb.domain.model.toSimple
 import com.globant.imdb.domain.moviesUseCases.GetMovieByIdUseCase
@@ -15,10 +17,12 @@ import com.globant.imdb.domain.moviesUseCases.GetOfficialTrailerUseCase
 import com.globant.imdb.domain.userUseCases.AddMovieToUserListUseCase
 import com.globant.imdb.ui.helpers.DialogManager
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+
+private const val TAG = "Movie"
 
 @HiltViewModel
 class MovieViewModel @Inject constructor(
@@ -26,7 +30,11 @@ class MovieViewModel @Inject constructor(
     private val getMovieByIdUseCase:GetMovieByIdUseCase,
     private val getTrailerUseCase:GetOfficialTrailerUseCase,
     private val addMovieToUserListUseCase:AddMovieToUserListUseCase,
-    private val dialogManager: DialogManager
+    private val dialogManager: DialogManager,
+    @IoDispatcher
+    private val ioDispatcher: CoroutineDispatcher,
+    @MainDispatcher
+    private val mainDispatcher: CoroutineDispatcher
 ): ViewModel() {
 
     val isLoading = MutableLiveData(false)
@@ -54,9 +62,9 @@ class MovieViewModel @Inject constructor(
     fun addMovieToWatchList(context: Context){
         isLoading.postValue(true)
         currentMovie.value?.let {
-            viewModelScope.launch { withContext(Dispatchers.IO){
+            viewModelScope.launch(ioDispatcher) {
                 val isAdded = addMovieToUserListUseCase(it.toSimple(), CategoryType.WATCH_LIST_MOVIES)
-                withContext(Dispatchers.Main){
+                withContext(mainDispatcher){
                     if(isAdded){
                         dialogManager.showAlert(
                             context,
@@ -71,7 +79,7 @@ class MovieViewModel @Inject constructor(
                         )
                     }
                     isLoading.postValue(false)
-                }}
+                }
             }
         }
     }
@@ -79,11 +87,12 @@ class MovieViewModel @Inject constructor(
     fun recordHistory(){
         isLoading.postValue(true)
         currentMovie.value?.let { movieDetail ->
-            viewModelScope.launch { withContext(Dispatchers.IO){
-                addMovieToUserListUseCase(movieDetail.toSimple(), CategoryType.HISTORY_MOVIES).let {
-                    if(it) Log.i("INFO", "Movie ${movieDetail.title},id:${movieDetail.id} recorded in history")
+            viewModelScope.launch(ioDispatcher) {
+                addMovieToUserListUseCase(movieDetail.toSimple(), CategoryType.HISTORY_MOVIES).let { isAdded ->
+                    if(isAdded) Log.i(TAG, "Movie ${movieDetail.title}, id:${movieDetail.id} recorded in history")
+                    else Log.e(TAG, "Movie ${movieDetail.title}, id:${movieDetail.id} not recorded in history")
                 }
-            }}
+            }
         }
     }
 }

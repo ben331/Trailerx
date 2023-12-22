@@ -7,9 +7,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.globant.imdb.R
+import kotlinx.coroutines.delay
 import javax.inject.Inject
 
-
+private const val PRELOAD_TIME = 10000L
 class ImageLoader @Inject constructor(){
 
     private val movieOptions = RequestOptions()
@@ -17,6 +18,7 @@ class ImageLoader @Inject constructor(){
         .centerCrop()
         .placeholder(R.drawable.ic_launcher_foreground)
         .error(R.drawable.ic_launcher_foreground)
+
     fun renderImageCenterCrop(context: Context, imageUrl:String?, view:ImageView ) {
         Glide
             .with(context)
@@ -28,17 +30,21 @@ class ImageLoader @Inject constructor(){
     fun renderImageCenterCrop(context: Context, imageUrl:Uri?, view:ImageView ) {
         Glide
             .with(context)
-            .asGif()
             .load(imageUrl)
             .apply(movieOptions)
             .into(view)
     }
 
-    fun preLoadImage(context: Context, imageUrl:String? ) {
-        Glide
-            .with(context)
-            .load(imageUrl)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .preload()
+    suspend fun preLoadImages(context: Context, imageUrls:List<String?>) {
+        for (url in imageUrls){
+            if(!url.isNullOrEmpty()){
+                Glide
+                    .with(context)
+                    .load(url)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .preload()
+            }
+        }
+        delay(PRELOAD_TIME)
     }
 }

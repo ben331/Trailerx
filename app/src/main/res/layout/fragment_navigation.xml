@@ -22,4 +22,20 @@
         app:menu="@menu/bottom_navigation_menu"
         style="@style/Widget.IMDb.BottomNavigationView"/>
 
+
+    <FrameLayout
+        android:id="@+id/progress_component"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="?android:attr/colorBackgroundFloating"
+        android:visibility="gone"
+        tools:visibility="visible">
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="@dimen/progress_size"
+            android:layout_height="@dimen/progress_size"
+            style="@style/Widget.IMDb.ProgressBar"/>
+    </FrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

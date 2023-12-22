@@ -7,11 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.globant.imdb.R
 import com.globant.imdb.data.database.entities.movie.CategoryType
 import com.globant.imdb.data.network.firebase.FirebaseAuthManager
+import com.globant.imdb.di.IoDispatcher
+import com.globant.imdb.di.MainDispatcher
 import com.globant.imdb.domain.model.MovieItem
 import com.globant.imdb.domain.userUseCases.DeleteMovieFromUserListUseCase
 import com.globant.imdb.domain.userUseCases.GetUserMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -21,6 +23,10 @@ class ProfileViewModel @Inject constructor(
     private val authManager: FirebaseAuthManager,
     private val getUserMoviesUseCase:GetUserMoviesUseCase,
     private val deleteMovieFromUserListUseCase:DeleteMovieFromUserListUseCase,
+    @IoDispatcher
+    private val ioDispatcher: CoroutineDispatcher,
+    @MainDispatcher
+    private val mainDispatcher: CoroutineDispatcher
 ): ViewModel() {
 
     val photoUri = MutableLiveData<Uri?>()
@@ -30,7 +36,7 @@ class ProfileViewModel @Inject constructor(
     val isLoading = MutableLiveData(false)
     val username:String by lazy { authManager.getEmail() }
 
-    fun refresh(handleFailure:(title:Int, msg:Int)->Unit) {
+    fun refresh() {
         if(username.isNotEmpty()){
             isLoading.postValue(true)
             val uri = authManager.getProfilePhotoURL()
@@ -38,38 +44,23 @@ class ProfileViewModel @Inject constructor(
                 photoUri.postValue(uri)
             }
 
-            viewModelScope.launch { withContext(Dispatchers.IO) {
+            viewModelScope.launch(ioDispatcher) {
                 val movies = getUserMoviesUseCase(CategoryType.WATCH_LIST_MOVIES)
-                if ( movies != null ) watchList.postValue(movies)
-                else {
-                    withContext(Dispatchers.Main){
-                        handleFailure(R.string.error, R.string.fetch_movies_error)
-                    }
-                }
+                watchList.postValue(movies)
                 isLoading.postValue(false)
-            }}
+            }
 
-            viewModelScope.launch { withContext(Dispatchers.IO) {
+            viewModelScope.launch(ioDispatcher) {
                 val movies = getUserMoviesUseCase(CategoryType.HISTORY_MOVIES)
-                if ( movies != null ) recentViewed.postValue(movies)
-                else {
-                    withContext(Dispatchers.Main){
-                        handleFailure(R.string.error, R.string.fetch_movies_error)
-                    }
-                }
+                recentViewed.postValue(movies)
                 isLoading.postValue(false)
-            }}
+            }
 
-            viewModelScope.launch { withContext(Dispatchers.IO) {
+            viewModelScope.launch(ioDispatcher) {
                 val movies = getUserMoviesUseCase(CategoryType.FAVORITE_PEOPLE)
-                if ( movies != null ) favoritePeople.postValue(movies)
-                else {
-                    withContext(Dispatchers.Main){
-                        handleFailure(R.string.error, R.string.fetch_movies_error)
-                    }
-                }
+                favoritePeople.postValue(movies)
                 isLoading.postValue(false)
-            }}
+            }
         }
     }
 
@@ -78,9 +69,11 @@ class ProfileViewModel @Inject constructor(
         handleFailure:(title:Int, msg:Int)->Unit
     ){
         isLoading.postValue(true)
-        viewModelScope.launch { withContext(Dispatchers.IO) {
+        viewModelScope.launch(ioDispatcher) {
             deleteMovieFromUserListUseCase(movieId, listType)
-            handleFailure(R.string.error, R.string.delete_movie_error)
-        }}
+            withContext(mainDispatcher){
+                handleFailure(R.string.error, R.string.delete_movie_error)
+            }
+        }
     }
 }

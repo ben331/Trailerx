@@ -197,4 +197,6 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
             findNavController().navigate(action)
         }
     }
+
+
 }

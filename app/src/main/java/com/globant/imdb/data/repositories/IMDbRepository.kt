@@ -17,14 +17,16 @@ import com.globant.imdb.data.database.entities.movie.toDatabase
 import com.globant.imdb.data.model.user.UserModel
 import com.globant.imdb.data.network.firebase.FirestoreManager
 import com.globant.imdb.data.network.retrofit.TMDBService
+import com.globant.imdb.di.DefaultDispatcher
+import com.globant.imdb.di.IoDispatcher
 import com.globant.imdb.domain.model.MovieDetailItem
 import com.globant.imdb.domain.model.MovieItem
 import com.globant.imdb.domain.model.SyncCategoryMovieItem
 import com.globant.imdb.domain.model.VideoItem
 import com.globant.imdb.domain.model.toDetail
 import com.globant.imdb.domain.model.toDomain
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -45,9 +47,11 @@ class IMDbRepository @Inject constructor(
     private val syncCategoryMovieDao: SyncCategoryMovieDao,
     private val movieDetailDao: MovieDetailDao,
     private val serviceMonitor: ServiceMonitor,
+    @DefaultDispatcher defaultDispatcher: CoroutineDispatcher,
+    @IoDispatcher ioDispatcher: CoroutineDispatcher
 ) {
     init {
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(ioDispatcher).launch {
             val moviesLists = categoryDao.getAllCategories()
             if(moviesLists.isEmpty()){
                 categoryDao.insertAll( CategoryType.values().map { it.toDatabase() } )
@@ -65,7 +69,7 @@ class IMDbRepository @Inject constructor(
                 delay(REFRESH_INTERVAL)
             }
         }
-    }.flowOn(Dispatchers.Default)
+    }.flowOn(defaultDispatcher)
 
     //-----RETROFIT--------------------------------------------------------------------------------
 

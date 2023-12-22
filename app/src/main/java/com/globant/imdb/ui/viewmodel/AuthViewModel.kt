@@ -8,8 +8,11 @@ import androidx.lifecycle.viewModelScope
 import com.globant.imdb.data.model.user.UserModel
 import com.globant.imdb.data.network.firebase.FirebaseAuthManager
 import com.globant.imdb.data.network.firebase.ProviderType
+import com.globant.imdb.di.IoDispatcher
+import com.globant.imdb.di.MainDispatcher
 import com.globant.imdb.domain.userUseCases.CreateUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -19,6 +22,10 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(
     private val createUserUseCase:CreateUserUseCase,
     private val authManager: FirebaseAuthManager,
+    @IoDispatcher
+    private val ioDispatcher: CoroutineDispatcher,
+    @MainDispatcher
+    private val mainDispatcher: CoroutineDispatcher
 ): ViewModel() {
     val isLoading = MutableLiveData(false)
 
@@ -26,18 +33,14 @@ class AuthViewModel @Inject constructor(
         localUser: UserModel,
         handleResult:(user: UserModel?)->Unit
     ){
-        viewModelScope.launch { withContext(Dispatchers.IO){
+        viewModelScope.launch(ioDispatcher){
             val user = createUserUseCase(localUser)
-            withContext(Dispatchers.Main){ handleResult(user) }
-        }}
+            withContext(mainDispatcher){ handleResult(user) }
+        }
     }
 
     fun getDisplayName():String{
         return authManager.getDisplayName()
-    }
-
-    fun setupName(useName: (remoteDisplayName:String?) -> Unit) {
-        authManager.setupName(useName)
     }
 
     fun logout(provider:ProviderType){

@@ -56,13 +56,12 @@ class MovieFragment : Fragment() {
         setupTopAppBar()
         setupLiveData()
         setupButtons()
-
-        if(movieViewModel.username.isNotEmpty()){ movieViewModel.recordHistory() }
     }
 
     override fun onResume() {
         super.onResume()
         movieViewModel.onRefresh(args.movieId)
+        if(movieViewModel.username.isNotEmpty()) movieViewModel.recordHistory()
     }
 
     private fun setupTopAppBar(){

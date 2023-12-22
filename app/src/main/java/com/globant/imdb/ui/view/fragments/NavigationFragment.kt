@@ -8,7 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -17,7 +17,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.globant.imdb.R
 import com.globant.imdb.core.TokenService
 import com.globant.imdb.databinding.FragmentNavigationBinding
-import com.globant.imdb.ui.viewmodel.AuthViewModel
+import com.globant.imdb.ui.viewmodel.NavigationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,17 +29,18 @@ class NavigationFragment : Fragment(), PopupMenu.OnMenuItemClickListener, Profil
         navHostFragment.navController
     }
 
+    private val viewModel:NavigationViewModel by viewModels()
+
     private val args: NavigationFragmentArgs by navArgs()
 
     private val binding:FragmentNavigationBinding by lazy {
         FragmentNavigationBinding.inflate(layoutInflater)
     }
 
-    private val authViewModel:AuthViewModel by activityViewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         saveSession()
+        preloadImages()
     }
 
     override fun onCreateView(
@@ -63,7 +64,12 @@ class NavigationFragment : Fragment(), PopupMenu.OnMenuItemClickListener, Profil
             }
         }
         binding.navBar.setupWithNavController(navController)
-        authViewModel.setupName(::setupNavBar)
+        viewModel.setupName(::setupNavBar)
+
+        viewModel.isImagesLoading.observe(viewLifecycleOwner){ isLoading ->
+            showContent(!isLoading)
+            showLoading(isLoading)
+        }
     }
 
     private fun setupNavBar(remoteDisplayName: String?){
@@ -100,6 +106,31 @@ class NavigationFragment : Fragment(), PopupMenu.OnMenuItemClickListener, Profil
         getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)?.edit()!!
         prefs.clear()
         prefs.apply()
-        authViewModel.logout(args.provider)
+        viewModel.logout(args.provider)
+    }
+
+    private fun preloadImages(){
+        val prefs = activity?.
+        getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
+        val isFirstTime = prefs?.getBoolean("first_time", true) ?: true
+
+        if(isFirstTime){
+            viewModel.preloadUserDataAndImages(requireContext()) {
+                prefs?.edit()!!.putBoolean("first_time", false).apply()
+            }
+        }
+    }
+
+    private fun showContent(show:Boolean){
+        val visibility = if(show) View.VISIBLE else View.GONE
+        with(binding){
+            homeNavHost.visibility = visibility
+            navBar.visibility = visibility
+        }
+    }
+
+    private fun showLoading(show:Boolean){
+        val visibility = if(show) View.VISIBLE else View.GONE
+        binding.progressComponent.visibility = visibility
     }
 }

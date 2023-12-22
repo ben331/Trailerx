@@ -10,6 +10,7 @@ import com.globant.imdb.domain.moviesUseCases.SearchMovieUseCase
 import com.globant.imdb.ui.helpers.NetworkState
 import com.globant.imdb.ui.view.adapters.MovieResultAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -27,7 +28,7 @@ class SearchViewModel @Inject constructor(
     val uiState:StateFlow<NetworkState> = _uiState
 
     init {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             isNetworkAvailableUseCase.isConnectionAvailable
                 .collect { isConnected ->
                     _uiState.value = if(isConnected) NetworkState.Online else NetworkState.Offline

@@ -8,6 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.globant.imdb.R
 import com.globant.imdb.data.database.entities.movie.CategoryType
 import com.globant.imdb.data.network.firebase.FirebaseAuthManager
+import com.globant.imdb.di.IoDispatcher
+import com.globant.imdb.di.MainDispatcher
 import com.globant.imdb.domain.model.MovieItem
 import com.globant.imdb.domain.moviesUseCases.GetNowPlayingMoviesUseCase
 import com.globant.imdb.domain.moviesUseCases.GetPopularMoviesUseCase
@@ -15,11 +17,15 @@ import com.globant.imdb.domain.moviesUseCases.GetRandomTopMovieUseCase
 import com.globant.imdb.domain.moviesUseCases.GetOfficialTrailerUseCase
 import com.globant.imdb.domain.moviesUseCases.GetUpcomingMoviesUseCase
 import com.globant.imdb.domain.userUseCases.AddMovieToUserListUseCase
+import com.globant.imdb.domain.userUseCases.GetUserMoviesUseCase
 import com.globant.imdb.ui.helpers.DialogManager
+import com.globant.imdb.ui.helpers.ImageLoader
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeout
+import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,7 +37,13 @@ class HomeViewModel @Inject constructor(
     private val getRandomTopMovieUseCase:GetRandomTopMovieUseCase,
     private val getUpcomingMovies:GetUpcomingMoviesUseCase,
     private val addMovieToUserListUseCase:AddMovieToUserListUseCase,
-    private val dialogManager: DialogManager
+    private val getUserMoviesUseCase: GetUserMoviesUseCase,
+    private val dialogManager: DialogManager,
+    private val imageLoader: ImageLoader,
+    @IoDispatcher
+    private val ioDispatcher: CoroutineDispatcher,
+    @MainDispatcher
+    private val mainDispatcher: CoroutineDispatcher
 ): ViewModel() {
 
     val mainMovie = MutableLiveData<MovieItem>()
@@ -42,6 +54,7 @@ class HomeViewModel @Inject constructor(
     val isLoading = MutableLiveData(false)
     val isVideoAvailable = MutableLiveData(true)
     val onlineMode = MutableLiveData(true)
+    val isImagesLoading = MutableLiveData(false)
 
     val username:String by lazy { authManager.getEmail() }
 
@@ -106,9 +119,9 @@ class HomeViewModel @Inject constructor(
             else -> emptyList()
         }
         homeMovies?.find { it.id == movieId }?.let{
-            viewModelScope.launch { withContext(Dispatchers.IO){
+            viewModelScope.launch(ioDispatcher){
                 val isAdded = addMovieToUserListUseCase(it, CategoryType.WATCH_LIST_MOVIES)
-                withContext(Dispatchers.Main){
+                withContext(mainDispatcher){
                     if(isAdded){
                         dialogManager.showAlert(
                             context,
@@ -124,7 +137,24 @@ class HomeViewModel @Inject constructor(
                     }
                     isLoading.postValue(false)
                 }
-            }}
+            }
+        }
+    }
+
+    fun preloadUserDataAndImages(context:Context, callback: () -> Unit) {
+        isImagesLoading.postValue(true)
+        viewModelScope.launch(ioDispatcher){
+            val watchList = getUserMoviesUseCase(CategoryType.WATCH_LIST_MOVIES) ?: emptyList()
+            val history = getUserMoviesUseCase(CategoryType.HISTORY_MOVIES) ?: emptyList()
+
+            val allMovies =  (nowPlayingMovies.value ?: emptyList())
+                .plus(upcomingMovies.value ?: emptyList())
+                .plus(popularMovies.value ?: emptyList())
+                .plus(watchList).plus(history)
+
+            imageLoader.preLoadImages(context, allMovies.map { it.backdropPath })
+            isImagesLoading.postValue(false)
+            callback()
         }
     }
 }
