@@ -1,6 +1,5 @@
 package com.globant.imdb.data.repositories
 
-import com.globant.imdb.core.ServiceMonitor
 import com.globant.imdb.data.database.dao.movie.MovieDao
 import com.globant.imdb.data.database.dao.movie.CategoryDao
 import com.globant.imdb.data.database.dao.movie.CategoryMovieDao
@@ -35,7 +34,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
-private const val REFRESH_INTERVAL = 1000L
+private const val REFRESH_INTERVAL = 3000L
 
 @Singleton
 class IMDbRepository @Inject constructor(
@@ -46,7 +45,6 @@ class IMDbRepository @Inject constructor(
     private val categoryMovieDao: CategoryMovieDao,
     private val syncCategoryMovieDao: SyncCategoryMovieDao,
     private val movieDetailDao: MovieDetailDao,
-    private val serviceMonitor: ServiceMonitor,
     @DefaultDispatcher defaultDispatcher: CoroutineDispatcher,
     @IoDispatcher ioDispatcher: CoroutineDispatcher
 ) {
@@ -59,15 +57,11 @@ class IMDbRepository @Inject constructor(
         }
     }
 
-    val isConnectionAvailable: Flow<Boolean> = flow {
+    val isServiceAvailable: Flow<Boolean> = flow {
         while (true){
-            try {
-                emit(serviceMonitor.isConnected())
-            }catch (e:Exception){
-                emit(true)
-            }finally {
-                delay(REFRESH_INTERVAL)
-            }
+            val isConnected = api.testService()
+            emit(isConnected)
+            delay(REFRESH_INTERVAL)
         }
     }.flowOn(defaultDispatcher)
 

@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.globant.imdb.domain.model.MovieItem
-import com.globant.imdb.domain.moviesUseCases.IsNetworkAvailableUseCase
+import com.globant.imdb.domain.moviesUseCases.IsServiceAvailableUseCase
 import com.globant.imdb.domain.moviesUseCases.SearchMovieUseCase
 import com.globant.imdb.ui.helpers.NetworkState
 import com.globant.imdb.ui.view.adapters.MovieResultAdapter
@@ -19,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val searchMovieUseCase:SearchMovieUseCase,
-    private val isNetworkAvailableUseCase: IsNetworkAvailableUseCase
+    private val isServiceAvailableUseCase: IsServiceAvailableUseCase
 ): ViewModel() {
 
     val resultMovies = MutableLiveData<List<MovieItem>>()
@@ -29,7 +29,7 @@ class SearchViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            isNetworkAvailableUseCase.isConnectionAvailable
+            isServiceAvailableUseCase.isServiceAvailable
                 .collect { isConnected ->
                     _uiState.value = if(isConnected) NetworkState.Online else NetworkState.Offline
                 }

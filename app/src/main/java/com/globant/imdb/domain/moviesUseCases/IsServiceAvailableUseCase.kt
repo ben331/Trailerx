@@ -2,11 +2,10 @@ package com.globant.imdb.domain.moviesUseCases
 
 import com.globant.imdb.data.repositories.IMDbRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
 import javax.inject.Inject
 
-class IsNetworkAvailableUseCase @Inject constructor(
+class IsServiceAvailableUseCase @Inject constructor(
     repository: IMDbRepository,
 ) {
-    val isConnectionAvailable: Flow<Boolean> = repository.isConnectionAvailable.catch { emit(true) }
+    val isServiceAvailable: Flow<Boolean> = repository.isServiceAvailable
 }

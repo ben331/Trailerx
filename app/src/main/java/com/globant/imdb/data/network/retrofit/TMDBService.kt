@@ -11,6 +11,18 @@ import java.util.Locale
 import javax.inject.Inject
 
 class TMDBService @Inject constructor( private val api:TMDBApiClient ) {
+
+    suspend fun testService():Boolean {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = api.headService()
+                response.code() == 200
+            } catch (_:Exception) {
+                false
+            }
+        }
+    }
+
     suspend fun getNowPlayingMovies(): MoviesListDatesModel?{
         return withContext(Dispatchers.IO){
             try {
