@@ -48,6 +48,7 @@ class MovieViewModel @Inject constructor(
         viewModelScope.launch {
             val result = getMovieByIdUseCase(movieId)
             currentMovie.postValue(result)
+            recordHistory(result)
         }
         viewModelScope.launch {
             val result = getTrailerUseCase(movieId, true)
@@ -84,11 +85,11 @@ class MovieViewModel @Inject constructor(
         }
     }
 
-    fun recordHistory(){
+    private fun recordHistory(movie:MovieDetailItem?){
         isLoading.postValue(true)
-        currentMovie.value?.let { movieDetail ->
+        movie?.let { movieDetail ->
             viewModelScope.launch(ioDispatcher) {
-                addMovieToUserListUseCase(movieDetail.toSimple(), CategoryType.HISTORY_MOVIES).let { isAdded ->
+                addMovieToUserListUseCase(movieDetail.toSimple(), CategoryType.HISTORY_MOVIES).also { isAdded ->
                     if(isAdded) Log.i(TAG, "Movie ${movieDetail.title}, id:${movieDetail.id} recorded in history")
                     else Log.e(TAG, "Movie ${movieDetail.title}, id:${movieDetail.id} not recorded in history")
                 }

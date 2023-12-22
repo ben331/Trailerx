@@ -66,14 +66,14 @@ class ProfileViewModel @Inject constructor(
 
     fun deleteMovieFromList(
         movieId:Int, listType:CategoryType,
-        handleFailure:(title:Int, msg:Int)->Unit
+        handleResult:(isDeleted:Boolean)->Unit
     ){
         isLoading.postValue(true)
         viewModelScope.launch(ioDispatcher) {
-            deleteMovieFromUserListUseCase(movieId, listType)
-            withContext(mainDispatcher){
-                handleFailure(R.string.error, R.string.delete_movie_error)
+            deleteMovieFromUserListUseCase(movieId, listType).also { isDeleted ->
+                withContext(mainDispatcher) { handleResult(isDeleted) }
             }
+            isLoading.postValue(false)
         }
     }
 }

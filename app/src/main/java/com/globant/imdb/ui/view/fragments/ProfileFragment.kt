@@ -231,8 +231,15 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
         navController.navigate(action)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun deleteFromList(id: Int, listType: CategoryType) {
-        profileViewModel.deleteMovieFromList(id, listType, ::handleFailure)
+        profileViewModel.deleteMovieFromList(id, listType) { isDeleted ->
+            if(isDeleted){
+                profileViewModel.refresh()
+            }else{
+                handleFailure(R.string.error, R.string.delete_movie_error)
+            }
+        }
     }
 
     private fun handleFailure(title:Int, msg:Int){

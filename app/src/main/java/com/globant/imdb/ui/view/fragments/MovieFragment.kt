@@ -61,7 +61,6 @@ class MovieFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         movieViewModel.onRefresh(args.movieId)
-        if(movieViewModel.username.isNotEmpty()) movieViewModel.recordHistory()
     }
 
     private fun setupTopAppBar(){
