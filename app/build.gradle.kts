@@ -9,15 +9,15 @@ plugins {
 
 android {
     namespace = "com.globant.imdb"
-    compileSdk = 34
+    compileSdk = ConfigurationData.compileSdk
 
     defaultConfig {
-        applicationId = "com.globant.imdb"
-        minSdk = 24
+        applicationId = ConfigurationData.applicationId
+        minSdk = ConfigurationData.minSdk
         //noinspection OldTargetApi
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        targetSdk = ConfigurationData.targetSdk
+        versionCode = ConfigurationData.versionCode
+        versionName = ConfigurationData.versionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -45,7 +45,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = ConfigurationData.jvmTarget
     }
     buildFeatures {
         viewBinding = true
@@ -54,76 +54,65 @@ android {
 
 dependencies {
     //  Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.0")
+    implementation(Libs.Kotlin.stdlib)
 
-    //Android
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    //AndroidX
+    implementation(Libs.AndroidX.core)
+    implementation(Libs.AndroidX.appcompat)
+    implementation(Libs.AndroidX.constraint)
+    implementation(Libs.AndroidX.splash)
 
-    //Material Design
-    implementation("com.google.android.material:material:1.9.0")
-
-    //Tests
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-
-    val navVersion = "2.7.3"
-    // Kotlin
-    implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
-    implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
-    // Feature module Support
-    implementation("androidx.navigation:navigation-dynamic-features-fragment:$navVersion")
-    // Testing Navigation
-    androidTestImplementation("androidx.navigation:navigation-testing:$navVersion")
-    // Jetpack Compose Integration
-    implementation("androidx.navigation:navigation-compose:$navVersion")
-    //SplashScreen
-    implementation("androidx.core:core-splashscreen:1.0.1")
-
-    //Firebase
-    implementation("com.firebaseui:firebase-ui-auth:8.0.2")
-    implementation("com.google.firebase:firebase-auth:22.3.0")
-    implementation("com.google.firebase:firebase-storage:20.3.0")
-    implementation("com.google.firebase:firebase-firestore:24.10.0")
-
-    //Gson
-    implementation("com.google.code.gson:gson:2.10.1")
-
-    //JWT
-    implementation("io.jsonwebtoken:jjwt-api:0.11.2")
-    implementation("io.jsonwebtoken:jjwt-impl:0.11.2")
-    implementation("io.jsonwebtoken:jjwt-jackson:0.11.2")
+    //Navigation
+    implementation(Libs.Navigation.fragment)
+    implementation(Libs.Navigation.ui)
+    implementation(Libs.Navigation.feature)
+    implementation(Libs.Navigation.compose)
 
     //Google
-    implementation("com.google.android.gms:play-services-auth:20.7.0")
+    implementation(Libs.Google.material)
+    implementation(Libs.Google.auth)
+
+    //Tests
+    testImplementation(Libs.Testing.junit)
+    androidTestImplementation(Libs.Testing.junit_androidx)
+    androidTestImplementation(Libs.Testing.espresso)
+    androidTestImplementation(Libs.Testing.navigation)
+
+    //Firebase
+    implementation(Libs.Firebase.ui)
+    implementation(Libs.Firebase.auth)
+    implementation(Libs.Firebase.firestore)
+    implementation(Libs.Firebase.storage)
+
+    //JWT
+    implementation(Libs.JWT.api)
+    implementation(Libs.JWT.impl)
+    implementation(Libs.JWT.jackson)
 
     //Facebook
-    implementation("com.facebook.android:facebook-android-sdk:[8,9)")
+    implementation(Libs.Facebook.sdk)
 
     //Retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation(Libs.Retrofit.retrofit)
+    implementation(Libs.Retrofit.gson)
 
     //Coroutines
-    runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
-    runtimeOnly("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
+    runtimeOnly(Libs.Coroutines.androidx)
+    runtimeOnly(Libs.Coroutines.lifecycle)
 
     //Glide
-    implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation(Libs.Glide.glide)
 
     //Dagger Hilt
-    implementation("com.google.dagger:hilt-android:2.48.1")
-    kapt("com.google.dagger:hilt-android-compiler:2.48.1")
+    implementation(Libs.Hilt.hilt)
+    kapt(Libs.Hilt.compiler)
 
     //Room
-    val roomVersion = "2.6.0"
-    implementation("androidx.room:room-ktx:$roomVersion")
-    implementation("androidx.room:room-runtime:$roomVersion")
+    implementation(Libs.Room.room)
+    implementation(Libs.Room.runtime)
     //It is not time to migrate: https://medium.com/@callmeryan/migrate-from-kapt-to-kotlin-ksp-not-the-best-time-yet-b30f8869da17
     //noinspection KaptUsageInsteadOfKsp
-    kapt("androidx.room:room-compiler:$roomVersion")
+    kapt(Libs.Room.compiler)
 }
 
 kapt {

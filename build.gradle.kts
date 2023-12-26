@@ -5,15 +5,14 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        val navVersion = "2.7.3"
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$navVersion")
-        classpath("com.google.dagger:hilt-android-gradle-plugin:2.48.1")
+        classpath(Libs.AndroidX.navigation_plugin)
+        classpath(Libs.Hilt.plugin)
     }
 }
 
 plugins {
-    id("com.android.application") version "8.1.1" apply false
-    id("org.jetbrains.kotlin.android") version "1.8.0" apply false
-    id("com.google.gms.google-services") version "4.4.0" apply false
-    id("com.google.dagger.hilt.android") version "2.44" apply false
+    id("com.android.application") version Versions.application_plugin apply false
+    id("org.jetbrains.kotlin.android") version Versions.android_plugin apply false
+    id("com.google.gms.google-services") version Versions.google_services apply false
+    id("com.google.dagger.hilt.android") version Versions.hilt_plugin apply false
 }

@@ -1,0 +1,105 @@
+object Versions {
+    const val kotlin = "1.9.0"
+    const val androidx_core = "1.12.0"
+    const val androidx_appcompat = "1.6.1"
+    const val androidx_constraint = "2.1.4"
+    const val androidx_navigation = "2.7.3"
+    const val androidx_splash = "1.0.1"
+    const val androidx_junit = "4.13.2"
+    const val androidx_test_junit = "1.1.5"
+    const val androidx_espresso = "3.5.1"
+    const val material = "1.9.0"
+    const val room = "2.6.0"
+    const val firebase_ui = "8.0.2"
+    const val firebase_auth = "22.3.0"
+    const val firebase_storage = "20.3.0"
+    const val firebase_firestore = "24.10.0"
+    const val jwt = "0.11.2"
+    const val google_auth = "20.7.0"
+    const val facebook_auth = "[8,9)"
+    const val retrofit = "2.9.0"
+    const val coroutine_androidx = "1.7.3"
+    const val coroutine_lifecycle = "2.6.1"
+    const val glide = "4.16.0"
+    const val hilt = "2.48.1"
+    const val hilt_plugin = "2.44"
+    const val google_services = "4.4.0"
+    const val android_plugin = "1.8.0"
+    const val application_plugin = "8.1.1"
+}
+
+object Libs {
+    object Kotlin {
+        const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlin}"
+    }
+
+    object AndroidX {
+        const val core = "androidx.core:core-ktx:${Versions.androidx_core}"
+        const val appcompat = "androidx.appcompat:appcompat:${Versions.androidx_appcompat}"
+        const val constraint = "androidx.constraintlayout:constraintlayout:${Versions.androidx_constraint}"
+        const val splash = "androidx.core:core-splashscreen:${Versions.androidx_splash}"
+        const val navigation_plugin = "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.androidx_navigation}"
+    }
+
+    object Navigation {
+        const val fragment = "androidx.navigation:navigation-fragment-ktx:${Versions.androidx_navigation}"
+        const val ui = "androidx.navigation:navigation-ui-ktx:${Versions.androidx_navigation}"
+        const val feature = "androidx.navigation:navigation-dynamic-features-fragment:${Versions.androidx_navigation}"
+        const val compose = "androidx.navigation:navigation-compose:${Versions.androidx_navigation}"
+    }
+
+    object Testing {
+        const val junit = "junit:junit:${Versions.androidx_junit}"
+        const val junit_androidx = "androidx.test.ext:junit:${Versions.androidx_test_junit}"
+        const val espresso = "androidx.test.espresso:espresso-core:${Versions.androidx_espresso}"
+        const val navigation = "androidx.navigation:navigation-testing:${Versions.androidx_navigation}"
+    }
+
+    object Firebase {
+        const val ui = "com.firebaseui:firebase-ui-auth:${Versions.firebase_ui}"
+        const val auth = "com.google.firebase:firebase-auth:${Versions.firebase_auth}"
+        const val storage = "com.google.firebase:firebase-storage:${Versions.firebase_storage}"
+        const val firestore = "com.google.firebase:firebase-firestore:${Versions.firebase_firestore}"
+    }
+
+    object JWT {
+        const val api = "io.jsonwebtoken:jjwt-api:${Versions.jwt}"
+        const val impl = "io.jsonwebtoken:jjwt-impl:${Versions.jwt}"
+        const val jackson = "io.jsonwebtoken:jjwt-jackson:${Versions.jwt}"
+    }
+
+    object Google {
+        const val material = "com.google.android.material:material:${Versions.material}"
+        const val auth = "com.google.android.gms:play-services-auth:${Versions.google_auth}"
+    }
+
+    object Facebook {
+        const val sdk = "com.facebook.android:facebook-android-sdk:${Versions.facebook_auth}"
+    }
+
+    object Retrofit {
+        const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
+        const val gson = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
+    }
+
+    object Coroutines {
+        const val androidx = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutine_androidx}"
+        const val lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.coroutine_lifecycle}"
+    }
+
+    object Glide {
+        const val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
+    }
+
+    object Hilt {
+        const val hilt = "com.google.dagger:hilt-android:${Versions.hilt}"
+        const val compiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
+        const val plugin = "com.google.dagger:hilt-android-gradle-plugin:${Versions.hilt}"
+    }
+
+    object Room {
+        const val room = "androidx.room:room-ktx:${Versions.room}"
+        const val runtime = "androidx.room:room-runtime:${Versions.room}"
+        const val compiler = "androidx.room:room-compiler:${Versions.room}"
+    }
+}
