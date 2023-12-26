@@ -46,8 +46,10 @@ class NavigationViewModel @Inject constructor(
             val nowPlayingMovies = getNowPlayingMoviesUseCase()
             val upcomingMovies = getUpcomingMovies()
             val popularMovies = getPopularMoviesUseCase()
-            val watchList = getUserMoviesUseCase(CategoryType.WATCH_LIST_MOVIES) ?: emptyList()
-            val history = getUserMoviesUseCase(CategoryType.HISTORY_MOVIES) ?: emptyList()
+            val watchList = getUserMoviesUseCase(CategoryType.WATCH_LIST_MOVIES)
+                .toRightValueOrNull() ?: emptyList()
+            val history = getUserMoviesUseCase(CategoryType.HISTORY_MOVIES)
+                .toRightValueOrNull() ?: emptyList()
 
             val allMovies =
                 nowPlayingMovies    +

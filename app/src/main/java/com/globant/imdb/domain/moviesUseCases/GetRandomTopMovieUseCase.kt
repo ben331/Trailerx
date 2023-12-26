@@ -7,9 +7,11 @@ import javax.inject.Inject
 
 class GetRandomTopMovieUseCase @Inject constructor( private val repository: IMDbRepository){
     suspend operator fun invoke(): MovieItem? {
-        val movies = repository.getMoviesByCategoryFromDatabase(CategoryType.NOW_PLAYING_MOVIES)
+        val movies = repository
+            .getMoviesByCategoryFromDatabase(CategoryType.NOW_PLAYING_MOVIES)
+            .toRightValueOrNull()
 
-        if(movies.isNotEmpty()){
+        if(movies!=null){
             val indices = if (movies.size > 10 )  (0..9) else movies.indices
             return movies[indices.random()]
         }

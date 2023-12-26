@@ -1,5 +1,9 @@
 package com.globant.imdb.data.repositories
 
+import com.globant.imdb.core.Either
+import com.globant.imdb.core.ErrorData
+import com.globant.imdb.core.ErrorFactory
+import com.globant.imdb.core.ErrorStatusCode
 import com.globant.imdb.data.database.dao.movie.MovieDao
 import com.globant.imdb.data.database.dao.movie.CategoryDao
 import com.globant.imdb.data.database.dao.movie.CategoryMovieDao
@@ -93,9 +97,17 @@ class IMDbRepository @Inject constructor(
     }
 
     //-------ROOM [RETROFIT CACHE]-----------------------------------------------------------------
-    suspend fun getMoviesByCategoryFromDatabase(category:CategoryType):List<MovieItem>{
-        val response = movieDao.getMoviesByCategory(category)
-        return response.map { it.toDomain() }
+    suspend fun getMoviesByCategoryFromDatabase(category:CategoryType): Either<ErrorData,List<MovieItem>> {
+        return try {
+            val response = movieDao.getMoviesByCategory(category)
+            if(response.isNotEmpty()){
+                Either.Right(response.map { it.toDomain() })
+            }else{
+                Either.Left(ErrorFactory(ErrorStatusCode.EmptyCache.code))
+            }
+        } catch ( e:Exception) {
+            Either.Left(ErrorFactory(e.hashCode()))
+        }
     }
     suspend fun addMoviesToCategoryDatabase(movies:List<MovieEntity>, category: CategoryType){
         movieDao.insertMovieList(movies)
@@ -140,8 +152,13 @@ class IMDbRepository @Inject constructor(
         return firestoreManager.getUser(localEmail)
     }
 
-    suspend fun getUserMoviesList(listType:CategoryType): List<MovieItem>? {
-        return firestoreManager.getUserMoviesList(listType)
+    suspend fun getUserMoviesList(listType:CategoryType): Either<ErrorData, List<MovieItem>> {
+        val movies = firestoreManager.getUserMoviesList(listType)
+        return if(movies!=null){
+            Either.Right(movies)
+        }else{
+            Either.Left(ErrorFactory(ErrorStatusCode.NoInternetConnection.code))
+        }
     }
 
     suspend fun addMovieToCategory(movie:MovieItem, category:CategoryType):Boolean {

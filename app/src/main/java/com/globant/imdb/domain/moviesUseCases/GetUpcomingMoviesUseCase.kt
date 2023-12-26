@@ -16,7 +16,7 @@ class GetUpcomingMoviesUseCase @Inject constructor( private val repository: IMDb
             repository.addMoviesToCategoryDatabase( movies.map { it.toDatabase() }, category )
             movies
         } else {
-            repository.getMoviesByCategoryFromDatabase(category)
+            repository.getMoviesByCategoryFromDatabase(category).toRightValueOrNull() ?: emptyList()
         }
     }
 }

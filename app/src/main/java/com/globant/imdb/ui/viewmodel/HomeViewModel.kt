@@ -2,6 +2,7 @@ package com.globant.imdb.ui.viewmodel
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -27,6 +28,8 @@ import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
 import java.lang.Exception
 import javax.inject.Inject
+
+private const val TAG = "Home viewModel"
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -138,23 +141,6 @@ class HomeViewModel @Inject constructor(
                     isLoading.postValue(false)
                 }
             }
-        }
-    }
-
-    fun preloadUserDataAndImages(context:Context, callback: () -> Unit) {
-        isImagesLoading.postValue(true)
-        viewModelScope.launch(ioDispatcher){
-            val watchList = getUserMoviesUseCase(CategoryType.WATCH_LIST_MOVIES) ?: emptyList()
-            val history = getUserMoviesUseCase(CategoryType.HISTORY_MOVIES) ?: emptyList()
-
-            val allMovies =  (nowPlayingMovies.value ?: emptyList())
-                .plus(upcomingMovies.value ?: emptyList())
-                .plus(popularMovies.value ?: emptyList())
-                .plus(watchList).plus(history)
-
-            imageLoader.preLoadImages(context, allMovies.map { it.backdropPath })
-            isImagesLoading.postValue(false)
-            callback()
         }
     }
 }

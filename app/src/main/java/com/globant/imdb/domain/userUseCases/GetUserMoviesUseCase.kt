@@ -1,5 +1,8 @@
 package com.globant.imdb.domain.userUseCases
 
+import com.globant.imdb.core.Either
+import com.globant.imdb.core.ErrorData
+import com.globant.imdb.core.ErrorStatusCode
 import com.globant.imdb.data.repositories.IMDbRepository
 import com.globant.imdb.data.database.entities.movie.CategoryType
 import com.globant.imdb.data.database.entities.movie.toDatabase
@@ -18,19 +21,21 @@ class GetUserMoviesUseCase @Inject constructor(
     @IoDispatcher
     private val ioDispatcher: CoroutineDispatcher
 ) {
-    suspend operator fun invoke(category: CategoryType): List<MovieItem>? {
-        val movies = repository.getUserMoviesList(category)
-        return if(movies!=null) {
-            CoroutineScope(ioDispatcher).launch {
-                syncUserLocalDataUseCase()
-                try {
-                    repository.clearMoviesByCategoryDatabase(category)
-                    repository.addMoviesToCategoryDatabase(movies.map { it.toDatabase() }, category)
-                }catch (_: Exception){ }
+    suspend operator fun invoke(category: CategoryType): Either<ErrorData,List<MovieItem>> {
+        return when(val result = repository.getUserMoviesList(category)){
+            is Either.Right -> {
+                CoroutineScope(ioDispatcher).launch {
+                    syncUserLocalDataUseCase()
+                    try {
+                        repository.clearMoviesByCategoryDatabase(category)
+                        repository.addMoviesToCategoryDatabase(result.r.map { it.toDatabase() }, category)
+                    }catch (_: Exception){ }
+                }
+                result
             }
-            movies
-        }else {
-            repository.getMoviesByCategoryFromDatabase(category).ifEmpty { null }
+            is Either.Left -> {
+                repository.getMoviesByCategoryFromDatabase(category)
+            }
         }
     }
 }

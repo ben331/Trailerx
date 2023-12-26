@@ -74,7 +74,7 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
 
     override fun onResume() {
         super.onResume()
-        profileViewModel.refresh()
+        profileViewModel.refresh(requireContext())
     }
 
     private fun setupTopRecyclerView(){
@@ -170,7 +170,6 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
                     listDescription.visibility = View.VISIBLE
                     btnActionList.visibility = View.VISIBLE
                 }
-                handleFailure(R.string.error, R.string.fetch_movies_error)
             }else{
                 with(binding.listMoviesOne) {
                     listDescription.visibility = View.GONE
@@ -205,7 +204,7 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
     private fun setupButtons(){
         binding.profileHeaderContainer.btnSettings.setOnClickListener(::showPopup)
         binding.refreshLayout.setOnRefreshListener {
-            profileViewModel.refresh()
+            profileViewModel.refresh(requireContext())
         }
         val parent = parentFragment?.parentFragment as NavigationFragment
         logoutListener = parent
@@ -235,7 +234,7 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
     override fun deleteFromList(id: Int, listType: CategoryType) {
         profileViewModel.deleteMovieFromList(id, listType) { isDeleted ->
             if(isDeleted){
-                profileViewModel.refresh()
+                profileViewModel.refresh(requireContext())
             }else{
                 handleFailure(R.string.error, R.string.delete_movie_error)
             }

@@ -1,5 +1,6 @@
 package com.globant.imdb.ui.viewmodel
 
+import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,6 +13,7 @@ import com.globant.imdb.di.MainDispatcher
 import com.globant.imdb.domain.model.MovieItem
 import com.globant.imdb.domain.userUseCases.DeleteMovieFromUserListUseCase
 import com.globant.imdb.domain.userUseCases.GetUserMoviesUseCase
+import com.globant.imdb.ui.helpers.DialogManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
@@ -23,6 +25,7 @@ class ProfileViewModel @Inject constructor(
     private val authManager: FirebaseAuthManager,
     private val getUserMoviesUseCase:GetUserMoviesUseCase,
     private val deleteMovieFromUserListUseCase:DeleteMovieFromUserListUseCase,
+    private val dialogManager: DialogManager,
     @IoDispatcher
     private val ioDispatcher: CoroutineDispatcher,
     @MainDispatcher
@@ -36,7 +39,7 @@ class ProfileViewModel @Inject constructor(
     val isLoading = MutableLiveData(false)
     val username:String by lazy { authManager.getEmail() }
 
-    fun refresh() {
+    fun refresh(context:Context) {
         if(username.isNotEmpty()){
             isLoading.postValue(true)
             val uri = authManager.getProfilePhotoURL()
@@ -45,20 +48,41 @@ class ProfileViewModel @Inject constructor(
             }
 
             viewModelScope.launch(ioDispatcher) {
-                val movies = getUserMoviesUseCase(CategoryType.WATCH_LIST_MOVIES)
-                watchList.postValue(movies)
+                getUserMoviesUseCase(CategoryType.WATCH_LIST_MOVIES).apply {
+                    withContext(mainDispatcher){
+                        fold({
+                            dialogManager.showAlert(context, R.string.error, R.string.fetch_movies_error)
+                        },{
+                            watchList.postValue(it)
+                        })
+                    }
+                }
                 isLoading.postValue(false)
             }
 
             viewModelScope.launch(ioDispatcher) {
-                val movies = getUserMoviesUseCase(CategoryType.HISTORY_MOVIES)
-                recentViewed.postValue(movies)
+                getUserMoviesUseCase(CategoryType.HISTORY_MOVIES).apply {
+                    withContext(mainDispatcher){
+                        fold({
+                            dialogManager.showAlert(context, R.string.error, R.string.fetch_movies_error)
+                        },{
+                            watchList.postValue(it)
+                        })
+                    }
+                }
                 isLoading.postValue(false)
             }
 
             viewModelScope.launch(ioDispatcher) {
-                val movies = getUserMoviesUseCase(CategoryType.FAVORITE_PEOPLE)
-                favoritePeople.postValue(movies)
+                getUserMoviesUseCase(CategoryType.FAVORITE_PEOPLE).apply {
+                    withContext(mainDispatcher){
+                        fold({
+                            dialogManager.showAlert(context, R.string.error, R.string.fetch_movies_error)
+                        },{
+                            watchList.postValue(it)
+                        })
+                    }
+                }
                 isLoading.postValue(false)
             }
         }
