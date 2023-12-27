@@ -1,7 +1,7 @@
 
 # IMDb App
 
-Aplicación móvil de listas de reproducción. Construida con Arquitectura Limpia, MVVM, Room, Retrofit, y las mejores prácticas de desarrollo.
+Playlist mobile app. Built with Clean Architecture, MVVM, Room, Retrofit, and best development practices.
 
 
 ## Installation
