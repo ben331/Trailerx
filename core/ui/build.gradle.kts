@@ -34,12 +34,16 @@ android {
 
 dependencies {
 
+    //AndroidX
     implementation(Libs.AndroidX.core)
     implementation(Libs.AndroidX.appcompat)
     implementation(Libs.Google.material)
+
+    //Tests
     testImplementation(Libs.Testing.junit)
     androidTestImplementation(Libs.Testing.junit_androidx)
     androidTestImplementation(Libs.Testing.espresso)
+    androidTestImplementation(Libs.Testing.navigation)
 
     //JWT
     implementation(Libs.JWT.api)
