@@ -1,4 +1,4 @@
-package com.globant.imdb.core
+package com.globant.common
 
 open class ErrorFactory(errorCode: Int) : ErrorData {
     private val error =

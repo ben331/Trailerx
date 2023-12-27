@@ -7,7 +7,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.globant.imdb.R
-import com.globant.imdb.core.Constants
+import com.globant.common.Constants
 import com.globant.imdb.data.database.entities.movie.CategoryType
 import com.globant.imdb.databinding.ItemMovieProfileBinding
 import com.globant.imdb.domain.model.MovieItem

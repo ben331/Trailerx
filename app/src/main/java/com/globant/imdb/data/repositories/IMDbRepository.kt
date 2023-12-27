@@ -1,9 +1,9 @@
 package com.globant.imdb.data.repositories
 
-import com.globant.imdb.core.Either
-import com.globant.imdb.core.ErrorData
-import com.globant.imdb.core.ErrorFactory
-import com.globant.imdb.core.ErrorStatusCode
+import com.globant.common.Either
+import com.globant.common.ErrorData
+import com.globant.common.ErrorFactory
+import com.globant.common.ErrorStatusCode
 import com.globant.imdb.data.database.dao.movie.MovieDao
 import com.globant.imdb.data.database.dao.movie.CategoryDao
 import com.globant.imdb.data.database.dao.movie.CategoryMovieDao

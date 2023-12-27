@@ -15,7 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.setupWithNavController
 import com.globant.imdb.R
-import com.globant.imdb.core.TokenService
+import com.globant.ui.TokenService
 import com.globant.imdb.databinding.FragmentNavigationBinding
 import com.globant.imdb.ui.viewmodel.NavigationViewModel
 import dagger.hilt.android.AndroidEntryPoint

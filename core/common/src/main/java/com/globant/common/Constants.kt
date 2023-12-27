@@ -1,4 +1,4 @@
-package com.globant.imdb.core
+package com.globant.common
 
 
 object Constants {

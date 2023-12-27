@@ -1,6 +1,6 @@
 package com.globant.imdb.data.network.retrofit
 
-import com.globant.imdb.core.Constants
+import com.globant.common.Constants
 import com.globant.imdb.data.model.movies.MovieDetailModel
 import com.globant.imdb.data.model.movies.MoviesListModel
 import com.globant.imdb.data.model.movies.MoviesListDatesModel

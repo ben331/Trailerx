@@ -18,13 +18,13 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.facebook.CallbackManager
 import com.globant.imdb.R
-import com.globant.imdb.core.TokenService
 import com.globant.imdb.ui.helpers.DialogManager
 import com.globant.imdb.ui.helpers.FormValidator
 import com.globant.imdb.data.model.user.UserModel
 import com.globant.imdb.data.network.firebase.ProviderType
 import com.globant.imdb.databinding.FragmentLoginBinding
 import com.globant.imdb.ui.viewmodel.AuthViewModel
+import com.globant.ui.TokenService
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

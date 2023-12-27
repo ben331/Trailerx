@@ -12,7 +12,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.globant.imdb.R
-import com.globant.imdb.core.Constants
+import com.globant.common.Constants
 import com.globant.imdb.ui.helpers.DialogManager
 import com.globant.imdb.ui.helpers.TextTransforms
 import com.globant.imdb.databinding.FragmentMovieBinding

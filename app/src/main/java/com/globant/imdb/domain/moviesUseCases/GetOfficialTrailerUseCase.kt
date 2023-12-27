@@ -1,6 +1,6 @@
 package com.globant.imdb.domain.moviesUseCases
 
-import com.globant.imdb.core.Constants
+import com.globant.common.Constants
 import com.globant.imdb.data.repositories.IMDbRepository
 import com.globant.imdb.domain.model.VideoItem
 import javax.inject.Inject

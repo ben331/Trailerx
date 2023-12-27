@@ -1,7 +1,6 @@
-package com.globant.imdb.core
+package com.globant.ui
 
 import android.content.Context
-import com.globant.imdb.R
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import java.util.*

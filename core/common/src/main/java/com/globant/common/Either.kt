@@ -1,4 +1,4 @@
-package com.globant.imdb.core
+package com.globant.common
 
 sealed class Either<out L, out R> {
     data class Left<out L>(val l: L) : Either<L, Nothing>()

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.globant.imdb.databinding.ItemMovieBinding
 import com.globant.imdb.R
-import com.globant.imdb.core.Constants
+import com.globant.common.Constants
 import com.globant.imdb.domain.model.MovieItem
 import com.globant.imdb.ui.view.fragments.HomeFragment
 

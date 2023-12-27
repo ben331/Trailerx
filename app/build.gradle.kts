@@ -53,6 +53,11 @@ android {
 }
 
 dependencies {
+
+    // Project
+    implementation(project(":core:common"))
+    implementation(project(":core:ui"))
+
     //  Kotlin
     implementation(Libs.Kotlin.stdlib)
 
@@ -83,11 +88,6 @@ dependencies {
     implementation(Libs.Firebase.auth)
     implementation(Libs.Firebase.firestore)
     implementation(Libs.Firebase.storage)
-
-    //JWT
-    implementation(Libs.JWT.api)
-    implementation(Libs.JWT.impl)
-    implementation(Libs.JWT.jackson)
 
     //Facebook
     implementation(Libs.Facebook.sdk)
