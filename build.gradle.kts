@@ -15,4 +15,6 @@ plugins {
     id("org.jetbrains.kotlin.android") version Versions.android_plugin apply false
     id("com.google.gms.google-services") version Versions.google_services apply false
     id("com.google.dagger.hilt.android") version Versions.hilt_plugin apply false
+    id("com.android.library") version "8.1.1" apply false
+    id("org.jetbrains.kotlin.jvm") version "1.8.0" apply false
 }
