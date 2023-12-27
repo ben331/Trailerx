@@ -117,13 +117,6 @@
     <string name="error_retry">Reintentar</string>
 
     /*
-    --Facebook strings
-    */
-    <string name="facebook_app_id">1280760569299540</string>
-    <string name="fb_login_protocol_scheme">fb1280760569299540</string>
-
-
-    /*
     --Examples
     */
     <string name="synopsis">
