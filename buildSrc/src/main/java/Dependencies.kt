@@ -18,9 +18,11 @@ object Versions {
     const val google_auth = "20.7.0"
     const val facebook_auth = "[8,9)"
     const val retrofit = "2.9.0"
+    const val coroutine_core = "1.7.3"
     const val coroutine_androidx = "1.7.3"
     const val coroutine_lifecycle = "2.6.1"
     const val glide = "4.16.0"
+    const val dagger = "2.50"
     const val hilt = "2.48.1"
     const val hilt_plugin = "2.44"
     const val google_services = "4.4.0"
@@ -83,6 +85,7 @@ object Libs {
     }
 
     object Coroutines {
+        const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutine_core}"
         const val androidx = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutine_androidx}"
         const val lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.coroutine_lifecycle}"
     }
@@ -95,6 +98,7 @@ object Libs {
         const val hilt = "com.google.dagger:hilt-android:${Versions.hilt}"
         const val compiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
         const val plugin = "com.google.dagger:hilt-android-gradle-plugin:${Versions.hilt}"
+        const val dagger = "com.google.dagger:dagger:${Versions.dagger}"
     }
 
     object Room {

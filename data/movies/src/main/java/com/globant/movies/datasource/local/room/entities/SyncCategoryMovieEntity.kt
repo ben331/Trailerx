@@ -1,20 +1,17 @@
-package com.globant.imdb.data.database.entities.movie
+package com.globant.movies.datasource.local.room.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.TypeConverters
-import com.globant.imdb.data.database.typeConverters.StringCategoryTypeConverter
-import com.globant.imdb.data.database.typeConverters.StringSyncStateConverter
-import com.globant.imdb.domain.model.SyncCategoryMovieItem
+import com.globant.common.CategoryType
+import com.globant.common.SyncState
+import com.globant.movies.datasource.local.room.typeconverter.StringCategoryTypeConverter
+import com.globant.movies.datasource.local.room.typeconverter.StringSyncStateConverter
+import com.globant.movies.model.SyncCategoryMovieItem
 
-fun SyncCategoryMovieItem.toDatabase(): SyncCategoryMovieEntity{
+fun SyncCategoryMovieItem.toDatabase(): SyncCategoryMovieEntity {
     return SyncCategoryMovieEntity(idMovie, idCategory, syncState)
-}
-
-enum class SyncState {
-    PENDING_TO_ADD,
-    PENDING_TO_DELETE
 }
 
 @Entity(
@@ -40,5 +37,5 @@ data class SyncCategoryMovieEntity(
     @ColumnInfo(index = true)       val idMovie: Int,
     @ColumnInfo(index = true)       val idCategory: CategoryType,
     @TypeConverters(StringSyncStateConverter::class)
-    @ColumnInfo("sync_state") val syncState:SyncState
+    @ColumnInfo("sync_state") val syncState: SyncState
 )

@@ -1,24 +1,13 @@
-package com.globant.imdb.data.database.entities.movie
+package com.globant.movies.datasource.local.room.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.TypeConverters
-import com.globant.imdb.data.database.typeConverters.StringCategoryTypeConverter
-import com.globant.imdb.data.database.typeConverters.StringSyncStateConverter
-import com.globant.imdb.domain.model.SyncCategoryMovieItem
-
-fun SyncCategoryMovieItem.toDatabase(): SyncCategoryMovieEntity{
-    return SyncCategoryMovieEntity(idMovie, idCategory, syncState)
-}
-
-enum class SyncState {
-    PENDING_TO_ADD,
-    PENDING_TO_DELETE
-}
+import com.globant.movies.datasource.local.room.typeconverter.StringCategoryTypeConverter
 
 @Entity(
-    tableName = "sync_category_movie",
+    tableName = "category_movie",
     primaryKeys = ["idMovie", "idCategory"],
     foreignKeys = [
         ForeignKey(
@@ -36,9 +25,11 @@ enum class SyncState {
     ]
 )
 @TypeConverters(StringCategoryTypeConverter::class)
-data class SyncCategoryMovieEntity(
+data class CategoryMovieEntity(
     @ColumnInfo(index = true)       val idMovie: Int,
     @ColumnInfo(index = true)       val idCategory: CategoryType,
-    @TypeConverters(StringSyncStateConverter::class)
-    @ColumnInfo("sync_state") val syncState:SyncState
 )
+
+fun MovieEntity.toCategoryMovie(category: CategoryType): CategoryMovieEntity {
+    return CategoryMovieEntity(id, category)
+}
