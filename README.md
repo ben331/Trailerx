@@ -42,5 +42,5 @@ Playlist mobile app. Built with Clean Architecture, MVVM, Room, Retrofit, and be
     
 ## Authors
 
-- [@Benjamin Silva](https://github.com/benja331)
+- [@Benjamin Silva](https://github.com/ben331)
 
