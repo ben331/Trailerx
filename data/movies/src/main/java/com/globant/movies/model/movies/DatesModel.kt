@@ -1,4 +1,4 @@
-package com.globant.imdb.data.model.movies
+package com.globant.movies.model.movies
 
 data class DatesModel(
     val maximum:String,

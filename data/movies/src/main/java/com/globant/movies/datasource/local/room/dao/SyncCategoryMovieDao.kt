@@ -1,8 +1,12 @@
 package com.globant.movies.datasource.local.room.dao
 
-import com.globant.movies.datasource.local.room.entities.CategoryType
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.globant.common.CategoryType
+import com.globant.common.SyncState
 import com.globant.movies.datasource.local.room.entities.SyncCategoryMovieEntity
-import com.globant.movies.datasource.local.room.entities.SyncState
 
 @Dao
 interface SyncCategoryMovieDao {

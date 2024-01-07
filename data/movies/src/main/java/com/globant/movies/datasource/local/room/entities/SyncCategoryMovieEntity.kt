@@ -8,11 +8,6 @@ import com.globant.common.CategoryType
 import com.globant.common.SyncState
 import com.globant.movies.datasource.local.room.typeconverter.StringCategoryTypeConverter
 import com.globant.movies.datasource.local.room.typeconverter.StringSyncStateConverter
-import com.globant.movies.model.SyncCategoryMovieItem
-
-fun SyncCategoryMovieItem.toDatabase(): SyncCategoryMovieEntity {
-    return SyncCategoryMovieEntity(idMovie, idCategory, syncState)
-}
 
 @Entity(
     tableName = "sync_category_movie",

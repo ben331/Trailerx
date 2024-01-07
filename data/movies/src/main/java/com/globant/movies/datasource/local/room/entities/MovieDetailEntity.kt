@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.globant.movies.datasource.local.room.typeconverter.StringGenreItemConverter
-import com.globant.imdb.domain.model.GenreItem
+import com.globant.movies.model.GenreItem
 import com.globant.movies.model.MovieDetailItem
 @TypeConverters(StringGenreItemConverter::class)
 @Entity(tableName = "movie_detail")
@@ -33,28 +33,3 @@ data class MovieDetailEntity(
     @ColumnInfo("vote_average")             val voteAverage: Double? = 0.0,
     @ColumnInfo("vote_count")               val voteCount: Int? = 0
 )
-
-fun MovieDetailItem.toDatabase(): MovieDetailEntity =
-    MovieDetailEntity(
-        adult = adult,
-        backdropPath = backdropPath,
-        budget = budget,
-        genres = genres,
-        homepage = homepage,
-        id = id,
-        imdbId = imdbId,
-        originalLanguage = originalLanguage,
-        originalTitle = originalTitle,
-        overview = overview,
-        popularity = popularity,
-        posterPath = posterPath,
-        releaseDate = releaseDate,
-        revenue = revenue,
-        runtime = runtime,
-        status = status,
-        tagline = tagline,
-        title = title,
-        video = video,
-        voteAverage = voteAverage,
-        voteCount = voteCount
-    )

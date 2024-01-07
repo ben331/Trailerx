@@ -1,5 +1,10 @@
 package com.globant.imdb.data.model.movies
 
+import com.globant.movies.model.movies.CollectionModel
+import com.globant.movies.model.movies.GenreModel
+import com.globant.movies.model.movies.ProductionCompanyModel
+import com.globant.movies.model.movies.ProductionCountryModel
+import com.globant.movies.model.movies.SpokenLanguageModel
 import com.google.gson.annotations.SerializedName
 
 data class MovieDetailModel (

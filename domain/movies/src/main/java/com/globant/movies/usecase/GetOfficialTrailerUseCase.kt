@@ -2,10 +2,10 @@ package com.globant.movies.usecase
 
 import com.globant.common.Constants
 import com.globant.movies.model.VideoItem
-import com.globant.movies.repository.MovieRepository
+import com.globant.movies.repository.MoviesRepository
 import javax.inject.Inject
 
-class GetOfficialTrailerUseCase @Inject constructor( private val repository: MovieRepository){
+class GetOfficialTrailerUseCase @Inject constructor( private val repository: MoviesRepository){
     suspend operator fun invoke(movieId:Int, withControls:Boolean):String? {
         var officialTrailer: VideoItem? = null
         val videoList = repository.getTrailersFromApi(movieId)

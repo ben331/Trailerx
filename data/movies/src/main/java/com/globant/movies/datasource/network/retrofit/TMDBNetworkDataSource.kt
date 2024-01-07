@@ -1,17 +1,18 @@
 package com.globant.movies.datasource.network.retrofit
 
-import com.globant.imdb.data.model.movies.MovieDetailModel
-import com.globant.imdb.data.model.movies.MoviesListModel
-import com.globant.imdb.data.model.movies.MoviesListDatesModel
-import com.globant.imdb.data.model.movies.VideoListModel
+import com.globant.movies.datasource.MoviesNetworkDataSource
+import com.globant.movies.mapper.toDomain
+import com.globant.movies.model.MovieDetailItem
+import com.globant.movies.model.MovieItem
+import com.globant.movies.model.VideoItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.Locale
 import javax.inject.Inject
 
-class TMDBService @Inject constructor( private val api:TMDBApiClient ) {
+class TMDBNetworkDataSource @Inject constructor(private val api:TMDBApiClient ): MoviesNetworkDataSource {
 
-    suspend fun testService():Boolean {
+    override suspend fun testService():Boolean {
         return withContext(Dispatchers.IO) {
             try {
                 val response = api.headService()
@@ -22,67 +23,67 @@ class TMDBService @Inject constructor( private val api:TMDBApiClient ) {
         }
     }
 
-    suspend fun getNowPlayingMovies(): MoviesListDatesModel?{
+    override suspend fun getNowPlayingMovies(): List<MovieItem>?{
         return withContext(Dispatchers.IO){
             try {
                 val languageCode = Locale.getDefault().language
                 val response = api.getNowPlayingMovies( languageCode,1 )
-                response.body()
+                response.body()?.results?.map { it.toDomain() }
             }catch (e: Exception){
                 null
             }
         }
     }
-    suspend fun getUpcomingMovies(): MoviesListDatesModel?{
+    override suspend fun getUpcomingMovies(): List<MovieItem>?{
         return withContext(Dispatchers.IO){
             try {
                 val languageCode = Locale.getDefault().language
                 val response = api.getUpcomingMovies( languageCode,1 )
-                response.body()
+                response.body()?.results?.map { it.toDomain() }
             }catch (e: Exception){
                 null
             }
         }
     }
-    suspend fun getPopularMovies(): MoviesListModel?{
+    override suspend fun getPopularMovies(): List<MovieItem>?{
         return withContext(Dispatchers.IO){
             try {
                 val languageCode = Locale.getDefault().language
                 val response = api.getPopularMovies( languageCode,1 )
-                response.body()
+                response.body()?.results?.map { it.toDomain() }
             }catch (e: Exception){
                 null
             }
         }
     }
-    suspend fun getMovieById(movieId: Int): MovieDetailModel?{
+    override suspend fun getMovieById(movieId: Int): MovieDetailItem?{
         return withContext(Dispatchers.IO){
             try {
                 val languageCode = Locale.getDefault().language
                 val response = api.getMovieById( movieId, languageCode )
-                response.body()
+                response.body()?.toDomain()
             }catch (e: Exception){
                 null
             }
         }
     }
-    suspend fun searchMovie(query: String): MoviesListModel?{
+    override suspend fun searchMovie(query: String): List<MovieItem>? {
         return withContext(Dispatchers.IO){
             try {
                 val languageCode = Locale.getDefault().language
                 val response = api.searchMovie( query, languageCode, 1 )
-                response.body()
+                response.body()?.results?.map { it.toDomain() }
             }catch (e: Exception){
                 null
             }
         }
     }
-    suspend fun getTrailers(movieId: Int): VideoListModel?{
+    override suspend fun getTrailers(movieId: Int): List<VideoItem>?{
         return withContext(Dispatchers.IO){
             try {
                 val languageCode = Locale.getDefault().language
                 val response = api.getTrailers( movieId, languageCode)
-                response.body()
+                response.body()?.results?.map { it.toDomain() }
             }catch (e: Exception){
                 null
             }

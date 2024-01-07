@@ -22,20 +22,3 @@ data class MovieEntity(
     @ColumnInfo("vote_average")         val voteAverage: Double? = 0.0,
     @ColumnInfo("vote_count")           val voteCount: Int? = 0,
 )
-
-fun MovieItem.toDatabase(): MovieEntity =
-    MovieEntity(
-        id = id,
-        adult = adult,
-        backdropPath = backdropPath,
-        originalLanguage = originalLanguage,
-        originalTitle = originalTitle,
-        overview = overview,
-        popularity = popularity,
-        posterPath = posterPath,
-        releaseDate = releaseDate,
-        title = title,
-        video = video,
-        voteAverage = voteAverage,
-        voteCount = voteCount,
-    )

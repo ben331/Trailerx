@@ -1,7 +1,7 @@
 package com.globant.movies.datasource.local.room.typeconverter
 
 import androidx.room.TypeConverter
-import com.globant.movies.datasource.local.room.entities.SyncState
+import com.globant.common.SyncState
 
 class StringSyncStateConverter {
     @TypeConverter

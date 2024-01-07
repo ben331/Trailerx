@@ -1,9 +1,12 @@
 package com.globant.movies.mapper
 
-import com.globant.imdb.data.model.movies.GenreModel
+import com.globant.common.CategoryType
+import com.globant.movies.model.movies.GenreModel
 import com.globant.imdb.data.model.movies.MovieDetailModel
-import com.globant.imdb.data.model.movies.MovieModel
-import com.globant.imdb.data.model.movies.VideoModel
+import com.globant.movies.model.movies.MovieModel
+import com.globant.movies.model.movies.VideoModel
+import com.globant.movies.datasource.local.room.entities.CategoryEntity
+import com.globant.movies.datasource.local.room.entities.CategoryMovieEntity
 import com.globant.movies.model.VideoItem
 import com.globant.movies.datasource.local.room.entities.MovieDetailEntity
 import com.globant.movies.datasource.local.room.entities.MovieEntity
@@ -159,3 +162,54 @@ fun VideoEntity.toDomain(): VideoItem {
         publishedAt
     )
 }
+
+fun CategoryType.toDatabase(): CategoryEntity {
+    return CategoryEntity(this)
+}
+
+fun MovieEntity.toCategoryMovie(category: CategoryType): CategoryMovieEntity {
+    return CategoryMovieEntity(id, category)
+}
+
+fun MovieDetailItem.toDatabase(): MovieDetailEntity =
+    MovieDetailEntity(
+        adult = adult,
+        backdropPath = backdropPath,
+        budget = budget,
+        genres = genres,
+        homepage = homepage,
+        id = id,
+        imdbId = imdbId,
+        originalLanguage = originalLanguage,
+        originalTitle = originalTitle,
+        overview = overview,
+        popularity = popularity,
+        posterPath = posterPath,
+        releaseDate = releaseDate,
+        revenue = revenue,
+        runtime = runtime,
+        status = status,
+        tagline = tagline,
+        title = title,
+        video = video,
+        voteAverage = voteAverage,
+        voteCount = voteCount
+    )
+
+fun MovieItem.toDatabase(): MovieEntity =
+    MovieEntity(
+        id = id,
+        adult = adult,
+        backdropPath = backdropPath,
+        originalLanguage = originalLanguage,
+        originalTitle = originalTitle,
+        overview = overview,
+        popularity = popularity,
+        posterPath = posterPath,
+        releaseDate = releaseDate,
+        title = title,
+        video = video,
+        voteAverage = voteAverage,
+        voteCount = voteCount,
+    )
+

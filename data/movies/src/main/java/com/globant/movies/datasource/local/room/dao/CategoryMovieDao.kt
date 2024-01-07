@@ -1,7 +1,11 @@
 package com.globant.movies.datasource.local.room.dao
 
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.globant.common.CategoryType
 import com.globant.movies.datasource.local.room.entities.CategoryMovieEntity
-import com.globant.movies.datasource.local.room.entities.CategoryType
 
 @Dao
 interface CategoryMovieDao {

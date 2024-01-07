@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.TypeConverters
+import com.globant.common.CategoryType
 import com.globant.movies.datasource.local.room.typeconverter.StringCategoryTypeConverter
 
 @Entity(
@@ -29,7 +30,3 @@ data class CategoryMovieEntity(
     @ColumnInfo(index = true)       val idMovie: Int,
     @ColumnInfo(index = true)       val idCategory: CategoryType,
 )
-
-fun MovieEntity.toCategoryMovie(category: CategoryType): CategoryMovieEntity {
-    return CategoryMovieEntity(id, category)
-}

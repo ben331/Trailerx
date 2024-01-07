@@ -10,7 +10,7 @@ import com.globant.movies.model.SyncCategoryMovieItem
 import com.globant.movies.model.VideoItem
 import kotlinx.coroutines.flow.Flow
 
-interface MovieRepository {
+interface MoviesRepository {
 
     val isServiceAvailable: Flow<Boolean>
 
@@ -21,19 +21,20 @@ interface MovieRepository {
     suspend fun getMovieByIdFromApi(movieId:Int): MovieDetailItem?
     suspend fun searchMovie(query:String):List<MovieItem>
     suspend fun getTrailersFromApi(movieId:Int):List<VideoItem>
-    suspend fun getUserMoviesList(listType:CategoryType): Either<ErrorData, List<MovieItem>>
-    suspend fun addMovieToCategory(movie:MovieItem, category:CategoryType):Boolean
-    suspend fun deleteMovieFromCategory(movieId:Int, category:CategoryType):Boolean
+    suspend fun getUserMoviesList(listType:CategoryType, email:String): Either<ErrorData, List<MovieItem>>
+    suspend fun addMovieToCategory(movie:MovieItem, category:CategoryType, email:String):Boolean
+    suspend fun deleteMovieFromCategory(movieId:Int, category:CategoryType, email:String):Boolean
 
     //------DB-----------------------------------------------------------------
-    suspend fun getMoviesByCategoryFromDatabase(category:CategoryType): Either<ErrorData, List<MovieItem>>
-    suspend fun addMoviesToCategoryDatabase(movies:List<MovieItem>, category: CategoryType)
-    suspend fun addMovieToCategoryDatabase(movieId:Int, category: CategoryType)
-    suspend fun deleteMovieFromCategoryDatabase(movieId:Int, category: CategoryType)
-    suspend fun addMovieToSyncDatabase(movieId:Int, category: CategoryType, state:SyncState)
-    suspend fun deleteMovieFromSyncDatabase(movieId:Int, category: CategoryType)
+    suspend fun getMoviesByCategoryFromLocal(category:CategoryType): Either<ErrorData, List<MovieItem>>
+    suspend fun addMoviesToCategoryLocal(movies:List<MovieItem>, category: CategoryType)
+    suspend fun addMovieToCategoryLocal(movieId:Int, category: CategoryType)
+    suspend fun deleteMovieFromCategoryLocal(movieId:Int, category: CategoryType)
+    suspend fun addMovieToSyncLocal(movieId:Int, category: CategoryType, state:SyncState)
+    suspend fun deleteMovieFromSyncLocal(movieId:Int, category: CategoryType)
     suspend fun getMoviesToSync(state: SyncState): List<SyncCategoryMovieItem>
-    suspend fun getMovieByIdFromDatabase(movieId:Int): MovieDetailItem?
-    suspend fun addMovieDetailDatabase(movie:MovieDetailItem)
-    suspend fun clearMoviesByCategoryDatabase(category: CategoryType)
+    suspend fun getMovieByIdFromLocal(movieId:Int): MovieDetailItem?
+    suspend fun addMovieDetailLocal(movie:MovieDetailItem)
+    suspend fun clearMoviesByCategoryLocal(category: CategoryType)
 }
+

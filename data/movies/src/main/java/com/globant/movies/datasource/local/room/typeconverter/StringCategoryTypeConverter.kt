@@ -1,7 +1,7 @@
 package com.globant.movies.datasource.local.room.typeconverter
 
 import androidx.room.TypeConverter
-import com.globant.movies.datasource.local.room.entities.CategoryType
+import com.globant.common.CategoryType
 
 class StringCategoryTypeConverter {
     @TypeConverter

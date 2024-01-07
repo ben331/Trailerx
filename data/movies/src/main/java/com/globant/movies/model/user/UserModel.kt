@@ -1,4 +1,4 @@
-package com.globant.imdb.data.model.user
+package com.globant.movies.model.user
 
 data class UserModel(
     val email:String = "",

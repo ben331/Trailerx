@@ -2,9 +2,9 @@ package com.globant.movies.datasource.network.retrofit
 
 import com.globant.common.Constants
 import com.globant.imdb.data.model.movies.MovieDetailModel
-import com.globant.imdb.data.model.movies.MoviesListModel
-import com.globant.imdb.data.model.movies.MoviesListDatesModel
-import com.globant.imdb.data.model.movies.VideoListModel
+import com.globant.movies.model.movies.MoviesListModel
+import com.globant.movies.model.movies.MoviesListDatesModel
+import com.globant.movies.model.movies.VideoListModel
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.HEAD

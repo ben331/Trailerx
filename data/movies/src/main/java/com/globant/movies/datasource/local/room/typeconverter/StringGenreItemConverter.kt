@@ -1,7 +1,7 @@
 package com.globant.movies.datasource.local.room.typeconverter
 
 import androidx.room.TypeConverter
-import com.globant.imdb.domain.model.GenreItem
+import com.globant.movies.model.GenreItem
 import java.lang.NumberFormatException
 
 class StringGenreItemConverter {

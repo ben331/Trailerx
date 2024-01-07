@@ -3,9 +3,9 @@ package com.globant.movies.datasource.local.room
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.globant.movies.dao.MovieDao
 import com.globant.movies.datasource.local.room.dao.CategoryDao
 import com.globant.movies.datasource.local.room.dao.CategoryMovieDao
+import com.globant.movies.datasource.local.room.dao.MovieDao
 import com.globant.movies.datasource.local.room.dao.MovieDetailDao
 import com.globant.movies.datasource.local.room.dao.SyncCategoryMovieDao
 import com.globant.movies.datasource.local.room.entities.MovieEntity

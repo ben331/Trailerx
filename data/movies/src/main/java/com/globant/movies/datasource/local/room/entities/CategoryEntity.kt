@@ -13,7 +13,3 @@ data class CategoryEntity(
     @TypeConverters(StringCategoryTypeConverter::class)
     @ColumnInfo val id: CategoryType
 )
-
-fun CategoryType.toDatabase(): CategoryEntity {
-    return CategoryEntity(this)
-}
