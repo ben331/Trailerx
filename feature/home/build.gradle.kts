@@ -1,14 +1,17 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("androidx.navigation.safeargs.kotlin")
+    id("com.google.dagger.hilt.android")
+    id("kotlin-kapt")
 }
 
 android {
     namespace = "com.globant.home"
-    compileSdk = 33
+    compileSdk = ConfigurationData.compileSdk
 
     defaultConfig {
-        minSdk = 24
+        minSdk = ConfigurationData.minSdk
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -24,20 +27,52 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = ConfigurationData.jvmTarget
+    }
+    buildFeatures {
+        viewBinding = true
     }
 }
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    implementation(project(":domain:movies"))
+    implementation(project(":core:common"))
+    implementation(project(":core:ui"))
+
+    //  Kotlin
+    implementation(Libs.Kotlin.stdlib)
+
+    //AndroidX
+    implementation(Libs.AndroidX.core)
+    implementation(Libs.AndroidX.appcompat)
+    implementation(Libs.AndroidX.constraint)
+    implementation(Libs.AndroidX.splash)
+
+    //Navigation
+    implementation(Libs.Navigation.fragment)
+    implementation(Libs.Navigation.ui)
+    implementation(Libs.Navigation.feature)
+    implementation(Libs.Navigation.compose)
+
+    //Tests
+    testImplementation(Libs.Testing.junit)
+    androidTestImplementation(Libs.Testing.junit_androidx)
+    androidTestImplementation(Libs.Testing.espresso)
+    androidTestImplementation(Libs.Testing.navigation)
+
+    //Coroutines
+    runtimeOnly(Libs.Coroutines.androidx)
+    runtimeOnly(Libs.Coroutines.lifecycle)
+
+    //Dagger Hilt
+    implementation(Libs.Hilt.hilt)
+    kapt(Libs.Hilt.compiler)
+}
+kapt {
+    correctErrorTypes = true
 }

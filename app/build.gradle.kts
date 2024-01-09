@@ -20,15 +20,6 @@ android {
         versionName = ConfigurationData.versionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments += mapOf(
-                    "room.schemaLocation" to "$projectDir/schemas",
-                    "room.incremental" to "true"
-                )
-            }
-        }
     }
 
     buildTypes {
@@ -55,6 +46,8 @@ android {
 dependencies {
 
     // Project
+    implementation(project(":feature:auth"))
+    implementation(project(":feature:home"))
     implementation(project(":core:common"))
     implementation(project(":core:ui"))
 
@@ -73,46 +66,12 @@ dependencies {
     implementation(Libs.Navigation.feature)
     implementation(Libs.Navigation.compose)
 
-    //Google
-    implementation(Libs.Google.material)
-    implementation(Libs.Google.auth)
-
-    //Tests
-    testImplementation(Libs.Testing.junit)
-    androidTestImplementation(Libs.Testing.junit_androidx)
-    androidTestImplementation(Libs.Testing.espresso)
-    androidTestImplementation(Libs.Testing.navigation)
-
-    //Firebase
-    implementation(Libs.Firebase.ui)
-    implementation(Libs.Firebase.auth)
-    implementation(Libs.Firebase.firestore)
-    implementation(Libs.Firebase.storage)
-
     //Facebook
     implementation(Libs.Facebook.sdk)
-
-    //Retrofit
-    implementation(Libs.Retrofit.retrofit)
-    implementation(Libs.Retrofit.gson)
-
-    //Coroutines
-    runtimeOnly(Libs.Coroutines.androidx)
-    runtimeOnly(Libs.Coroutines.lifecycle)
-
-    //Glide
-    implementation(Libs.Glide.glide)
 
     //Dagger Hilt
     implementation(Libs.Hilt.hilt)
     kapt(Libs.Hilt.compiler)
-
-    //Room
-    implementation(Libs.Room.room)
-    implementation(Libs.Room.runtime)
-    //It is not time to migrate: https://medium.com/@callmeryan/migrate-from-kapt-to-kotlin-ksp-not-the-best-time-yet-b30f8869da17
-    //noinspection KaptUsageInsteadOfKsp
-    kapt(Libs.Room.compiler)
 }
 
 kapt {

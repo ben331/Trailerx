@@ -13,6 +13,14 @@ android {
         minSdk = ConfigurationData.minSdk
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += mapOf(
+                    "room.schemaLocation" to "$projectDir/schemas",
+                    "room.incremental" to "true"
+                )
+            }
+        }
         consumerProguardFiles("consumer-rules.pro")
     }
 

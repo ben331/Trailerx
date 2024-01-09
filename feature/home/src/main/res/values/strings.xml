@@ -1,0 +1,109 @@
+<resources>
+    <string name="app_name">IMDb</string>
+
+    /*
+    ---Navigation buttons---
+    */
+    <string name="home">Inicio</string>
+    <string name="search">Buscar</string>
+    <string name="play">Play</string>
+    <string name="profile">Perfil</string>
+
+    /*
+    ---HomeFragment---
+    */
+    <string name="section_now_playing">Tendencia ahora</string>
+    <string name="section_upcoming">Proximamente</string>
+    <string name="section_popular">Populares</string>
+    <string name="best_selections">Las mejores selecciones</string>
+    <string name="success_movie_added">%1$s se agregó correctamente a tu lista.</string>
+
+    /*
+    ---MovieFragment---
+    */
+    <string name="origin_title">(Título original)</string>
+
+    /*
+    ---SearchFragment---
+    */
+    <string name="search_hint">Buscar IMDb</string>
+    <string name="chapters_guide">Guía de episodios</string>
+    <string name="add_to_watch_list">Agregar a mi lista de seguimiento</string>
+    <string name="trailer">Trailer Oficial</string>
+
+    /*
+    ---Profile---
+    */
+    <string name="watch_list">Lista de seguimiento</string>
+    <string name="create_watch_list"> Crea una lista de seguimiento para no perderte ninguna película o serie de tv.</string>
+    <string name="start_watch_list">Empieza tu lista de seguimiento</string>
+    <string name="recently_viewed">Vistas recientes</string>
+    <string name="content_recently_viewed"> Aquí podras consultar los trailers de las series o películas que has visto ;)</string>
+    <string name="no_recent">No has visitado ninguna página recientemente.</string>
+    <string name="favorite_people">Personas favoritas</string>
+    <string name="content_favorite_people"> Aquí podras conocer los actores que más te gustan!</string>
+    <string name="logout">Cerrar Sesión</string>
+    <string name="guest_name">Invitado</string>
+    <string name="favorite_movies">Favoritos</string>
+    <string name="invitation">Lleva tu propia lista personalizada de favoritos y habilita todas las funciones, regístrate!</string>
+
+    /*
+    ---Content Description For Images---
+    */
+    <string name="img_facebook">Facebook</string>
+    <string name="img_google">Google</string>
+    <string name="img_apple">Apple</string>
+    <string name="ic_back">Atrás</string>
+    <string name="ic_forward">Imagen adelante</string>
+    <string name="img_trailer">Imagen del trailer</string>
+    <string name="btn_bookmark">Botón bookmark de agregar</string>
+    <string name="img_star">Puntuación en estrellas</string>
+    <string name="img_info">Botón Información</string>
+    <string name="video_trailer">Video trailer</string>
+    <string name="img_profile">Foto de perfil</string>
+    <string name="img_settings">Ajustes</string>
+
+    /*
+    --File names
+    */
+    <string name="prefs_file">com.globant.imdb.PREFERENCE_FILE_KEY</string>
+
+    /*
+    --Errors and Alerts Messages
+    */
+    <string name="error">Error</string>
+    <string name="warning">Advertencia</string>
+    <string name="success">Excelente!</string>
+    <string name="auth_error">Se ha producido un error autenticando al usuario</string>
+    <string name="auth_cancel">Se ha cancelado el inicio de sesión</string>
+    <string name="upload_username_error">Se ha producido un error actualizando el nombre del usuario</string>
+    <string name="invalid_email">Formato de correo invalido</string>
+    <string name="invalid_password">La contraseña no cumple los criterios</string>
+    <string name="required_field">Campo requerido</string>
+    <string name="password_reset_error">No se pudo enviar el correo de recuperación</string>
+    <string name="password_reset_success"> Correo enviado exitosamente, revisa tanto tu bandeja de entrada como el correo no deseado (spam).</string>
+    <string name="account_created_success"> Antes de continuar, necesitas verificar tu cuenta. Revisa tu bandeja de entrada y el correo no deseado. </string>
+    <string name="create_user_error">Lo sentimos, no logramos iniciar sesión. Revisa tu conexión o reintenta de nuevo mas tarde.</string>
+    <string name="fetch_movies_error">Lo sentimos, no logramos cargar tus listas. Revisa tu conexión o reintenta mas tarde.</string>
+    <string name="delete_movie_error">Lo sentimos, la película o serie no pudo ser eliminada.</string>
+    <string name="turn_offline_mode">Estás usando en el modo sin conexión</string>
+    <string name="connection_recovered">Conexión recuperada</string>
+    <string name="get_movie_error">Película no encontrada localmente, intenta recuperar la conexión</string>
+    <string name="error_ups">Ups…</string>
+    <string name="server_error">Obtuvimos un error :(\nPor favor reintenta más tarde</string>
+    <string name="error_retry">Reintentar</string>
+
+    /*
+    --Examples
+    */
+    <string name="synopsis">
+        Ambientada en la Guerra Fría; una huérfana llamada Beth Harmon con un don para el ajedrez
+        lucha contra las adicciones mientras juega por el campeonato del mundo
+    </string>
+    <string name="sample_list">
+        Crea una lista de seguimiento para no perderte ninguna película o serie de tv.
+    </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="play_fragment">play blank fragment</string>
+
+</resources>
