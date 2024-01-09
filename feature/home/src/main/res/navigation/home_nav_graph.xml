@@ -9,7 +9,11 @@
         android:name="com.globant.home.view.fragments.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
-        <deepLink app:uri="android-app://com.globant.imdb/home" />
+        <argument
+            android:name="token"
+            app:argType="string"
+            android:defaultValue="default_value"/>
+        <deepLink app:uri="android-app://com.globant.imdb/home?token={token}" />
         <action
             android:id="@+id/action_homeFragment_to_movieFragment"
             app:destination="@id/movieFragment"

@@ -30,7 +30,7 @@ import com.globant.auth.R
 import com.globant.auth.databinding.FragmentLoginBinding
 import com.globant.auth.datasource.remote.response.UserModel
 
-private const val HOME_URI = "android-app://com.globant.imdb/home"
+private const val HOME_URI = "android-app://com.globant.imdb/home?token=tokenValue"
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -212,17 +212,18 @@ class LoginFragment : Fragment() {
         callbackManager.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun showHome(email:String?, providerType: ProviderType){
+    private fun showHome(email:String?, provider: ProviderType){
         authViewModel.isLoading.postValue(false)
+        val accessToken = email?.let{ TokenService().generateToken(requireContext(), email, provider.name)} ?: ""
         val request = NavDeepLinkRequest.Builder
-            .fromUri(HOME_URI.toUri())
+            .fromUri(HOME_URI.replace("tokenValue", accessToken).toUri())
             .build()
         navController.navigate(request)
     }
     private fun createUser(email:String, providerType: ProviderType){
         val user = UserModel(email, authViewModel.getDisplayName())
-        authViewModel.createUser(user) {
-            if (it != null) {
+        authViewModel.createUser(user) { userCreated ->
+            if (userCreated) {
                 showHome(email, providerType)
             } else {
                 authViewModel.logout(providerType)

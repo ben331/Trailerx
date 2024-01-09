@@ -30,6 +30,8 @@
 
                 <data android:scheme="android-app"/>
                 <data android:host="com.globant.imdb"/>
+                <data android:pathPrefix="/auth" />
+                <data android:pathPrefix="/home" />
             </intent-filter>
         </activity>
 

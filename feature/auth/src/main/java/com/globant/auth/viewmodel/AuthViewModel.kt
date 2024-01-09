@@ -28,10 +28,10 @@ class AuthViewModel @Inject constructor(
 
     fun createUser(
         localUser: UserModel,
-        handleResult:(user: UserModel?)->Unit
+        handleResult:(user: Boolean)->Unit
     ){
         viewModelScope.launch(ioDispatcher){
-            val user = createUserUseCase(localUser)
+            val user = authRepository.createUser(localUser)
             withContext(mainDispatcher){ handleResult(user) }
         }
     }
