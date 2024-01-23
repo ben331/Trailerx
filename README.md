@@ -18,7 +18,7 @@ Playlist mobile app. Built with Clean Architecture, MVVM, Room, Retrofit, and be
 ```
 *secrets.xml file is already ignored by git*
 
-4. In the same file create a key to encrypt user sessions:
+4. Create a new file secrets.xml in core > ui > res > values and create a key to encrypt user sessions:
 
 ```xml
 ...
@@ -31,7 +31,7 @@ Playlist mobile app. Built with Clean Architecture, MVVM, Room, Retrofit, and be
 <string name="TMDB_api_token">*******</string>
 ```
 
-6. Finally, Copy the account_id from [TMBD Api](https://developer.themoviedb.org/reference/account-details) and replace it in the Constants.kt file at app/main/java/com.globant.imdb/core directory:
+6. Finally, Copy the account_id from [TMBD Api](https://developer.themoviedb.org/reference/account-details) and replace it in the Constants.kt file at core > common > main > java > com.globant.common > Constants:
 
 ```kotlin
   object Constants {
