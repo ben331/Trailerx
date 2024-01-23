@@ -3,7 +3,7 @@ package com.globant.movies.usecase
 
 import com.globant.common.CategoryType
 import com.globant.common.SyncState
-import com.globant.movies.di.IoDispatcher
+import com.globant.common.di.IoDispatcher
 import com.globant.movies.model.MovieItem
 import com.globant.movies.repository.MoviesRepository
 import kotlinx.coroutines.CoroutineDispatcher

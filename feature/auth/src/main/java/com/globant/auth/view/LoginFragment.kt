@@ -30,7 +30,7 @@ import com.globant.auth.R
 import com.globant.auth.databinding.FragmentLoginBinding
 import com.globant.auth.datasource.remote.response.UserModel
 
-private const val HOME_URI = "android-app://com.globant.imdb/home?token=tokenValue"
+private const val HOME_URI = "android-app://com.globant.imdb/home?token={tokenValue}"
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -97,7 +97,7 @@ class LoginFragment : Fragment() {
 
     private fun setupButtons(){
         binding.labelGuest.setOnClickListener {
-            showHome(null, ProviderType.GUEST)
+            showHome("", ProviderType.GUEST)
         }
 
         binding.btnLogin.setOnClickListener{
@@ -194,14 +194,7 @@ class LoginFragment : Fragment() {
         val prefs = activity?.
         getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
         val token = prefs?.getString("token", null)
-        token?.let {
-            val claims = TokenService().validateToken(requireContext(),token)
-            if(claims!=null){
-                val email = claims["sub"] as String
-                val provider = claims["provider"] as String
-                showHome(email, ProviderType.valueOf(provider))
-            }
-        }
+        token?.let { showHome(token) }
     }
 
     @Suppress("DEPRECATION")
@@ -212,11 +205,15 @@ class LoginFragment : Fragment() {
         callbackManager.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun showHome(email:String?, provider: ProviderType){
+    private fun showHome(email:String, provider: ProviderType) {
+        val accessToken = email.let{ TokenService().generateToken(requireContext(), email, provider.name)}
+        showHome(accessToken)
+    }
+
+    private fun showHome(token:String){
         authViewModel.isLoading.postValue(false)
-        val accessToken = email?.let{ TokenService().generateToken(requireContext(), email, provider.name)} ?: ""
         val request = NavDeepLinkRequest.Builder
-            .fromUri(HOME_URI.replace("tokenValue", accessToken).toUri())
+            .fromUri(HOME_URI.replace("{tokenValue}", token).toUri())
             .build()
         navController.navigate(request)
     }

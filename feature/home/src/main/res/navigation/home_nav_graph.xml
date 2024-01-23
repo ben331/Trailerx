@@ -9,11 +9,6 @@
         android:name="com.globant.home.view.fragments.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
-        <argument
-            android:name="token"
-            app:argType="string"
-            android:defaultValue="default_value"/>
-        <deepLink app:uri="android-app://com.globant.imdb/home?token={token}" />
         <action
             android:id="@+id/action_homeFragment_to_movieFragment"
             app:destination="@id/movieFragment"
@@ -43,7 +38,7 @@
     </fragment>
     <fragment
         android:id="@+id/movieFragment"
-        android:name="com.globant.imdb.ui.view.fragments.MovieFragment"
+        android:name="com.globant.home.view.fragments.MovieFragment"
         android:label="fragment_movie"
         tools:layout="@layout/fragment_movie" >
         <argument

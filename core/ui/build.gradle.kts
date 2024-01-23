@@ -1,6 +1,8 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("com.google.dagger.hilt.android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -49,4 +51,11 @@ dependencies {
     implementation(Libs.JWT.api)
     implementation(Libs.JWT.impl)
     implementation(Libs.JWT.jackson)
+
+    //Glide
+    implementation(Libs.Glide.glide)
+
+    //Dagger Hilt
+    implementation(Libs.Hilt.hilt)
+    kapt(Libs.Hilt.compiler)
 }

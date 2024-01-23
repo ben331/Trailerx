@@ -9,7 +9,7 @@ import com.globant.common.SyncState
 import com.globant.movies.datasource.MoviesLocalDataSource
 import com.globant.movies.datasource.MoviesNetworkDataSource
 import com.globant.movies.datasource.UserMoviesNetworkDataSource
-import com.globant.movies.di.DefaultDispatcher
+import com.globant.common.di.DefaultDispatcher
 import com.globant.movies.mapper.toDatabase
 import com.globant.movies.model.MovieDetailItem
 import com.globant.movies.model.MovieItem

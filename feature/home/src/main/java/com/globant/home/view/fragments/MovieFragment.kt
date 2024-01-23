@@ -1,4 +1,4 @@
-package com.globant.imdb.ui.view.fragments
+package com.globant.home.view.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,16 +11,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
-import com.globant.imdb.R
 import com.globant.common.Constants
 import com.globant.home.R
 import com.globant.home.databinding.FragmentMovieBinding
 import com.globant.home.viewmodel.MovieViewModel
 import com.globant.ui.helpers.DialogManager
 import com.globant.ui.helpers.TextTransforms
-import com.globant.imdb.databinding.FragmentMovieBinding
 import com.globant.ui.helpers.ImageLoader
-import com.globant.imdb.ui.viewmodel.MovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

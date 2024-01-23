@@ -7,9 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.globant.auth.datasource.remote.ProviderType
 import com.globant.auth.datasource.remote.response.UserModel
-import com.globant.auth.di.IoDispatcher
-import com.globant.auth.di.MainDispatcher
 import com.globant.auth.repository.AuthRepositoryImpl
+import com.globant.common.di.IoDispatcher
+import com.globant.common.di.MainDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch

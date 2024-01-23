@@ -150,9 +150,9 @@ class SignUpFragment : Fragment() {
         binding.editTextPassword.addTextChangedListener(watcher)
     }
 
-    private fun showLogin(string: String?){
+    private fun showLogin(email: String?){
         authViewModel.isLoading.postValue(false)
-        string?.let {
+        email?.let {
             dialogManager.showAlert(
                 requireContext(),
                 getString(R.string.success),

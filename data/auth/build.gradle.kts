@@ -35,6 +35,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:common"))
     implementation(Libs.AndroidX.core)
     implementation(Libs.Firebase.auth)
     implementation(Libs.Facebook.sdk)

@@ -41,8 +41,12 @@ android {
 dependencies {
 
     implementation(project(":domain:movies"))
+    implementation(project(":data:auth"))
     implementation(project(":core:common"))
     implementation(project(":core:ui"))
+
+    //Layout
+    implementation(Libs.Layouts.swipe_refresh)
 
     //  Kotlin
     implementation(Libs.Kotlin.stdlib)

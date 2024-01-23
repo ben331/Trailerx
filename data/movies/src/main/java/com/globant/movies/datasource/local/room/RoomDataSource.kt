@@ -12,7 +12,7 @@ import com.globant.movies.datasource.local.room.entities.CategoryMovieEntity
 import com.globant.movies.datasource.local.room.entities.MovieDetailEntity
 import com.globant.movies.datasource.local.room.entities.MovieEntity
 import com.globant.movies.datasource.local.room.entities.SyncCategoryMovieEntity
-import com.globant.movies.di.IoDispatcher
+import com.globant.common.di.IoDispatcher
 import com.globant.movies.mapper.toCategoryMovie
 import com.globant.movies.mapper.toDatabase
 import com.globant.movies.mapper.toDetail

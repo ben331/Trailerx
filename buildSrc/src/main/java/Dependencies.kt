@@ -28,6 +28,7 @@ object Versions {
     const val google_services = "4.4.0"
     const val android_plugin = "1.8.0"
     const val application_plugin = "8.1.1"
+    const val swipe_refresh = "1.1.0"
 }
 
 object Libs {
@@ -48,6 +49,10 @@ object Libs {
         const val ui = "androidx.navigation:navigation-ui-ktx:${Versions.androidx_navigation}"
         const val feature = "androidx.navigation:navigation-dynamic-features-fragment:${Versions.androidx_navigation}"
         const val compose = "androidx.navigation:navigation-compose:${Versions.androidx_navigation}"
+    }
+
+    object Layouts {
+        const val swipe_refresh = "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swipe_refresh}"
     }
 
     object Testing {

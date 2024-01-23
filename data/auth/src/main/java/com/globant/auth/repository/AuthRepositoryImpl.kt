@@ -6,7 +6,7 @@ import android.net.Uri
 import com.globant.auth.datasource.remote.AuthRemoteDataSourceFirebase
 import com.globant.auth.datasource.remote.ProviderType
 import com.globant.auth.datasource.remote.response.UserModel
-import com.globant.auth.di.IoDispatcher
+import com.globant.common.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 import javax.inject.Singleton

@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.globant.common.Constants
+import com.globant.home.R
 import com.globant.home.databinding.FragmentHomeBinding
 import com.globant.ui.helpers.DialogManager
 import com.globant.ui.helpers.ImageLoader
