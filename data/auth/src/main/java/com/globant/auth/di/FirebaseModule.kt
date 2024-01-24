@@ -21,10 +21,6 @@ object FirebaseModule {
 
     @Provides
     @Singleton
-    fun provideFirestore():FirebaseFirestore = FirebaseFirestore.getInstance()
-
-    @Provides
-    @Singleton
     fun provideGoogleConf(
         @ApplicationContext context:Context
     ):GoogleSignInOptions {

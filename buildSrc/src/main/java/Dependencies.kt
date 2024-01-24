@@ -29,6 +29,7 @@ object Versions {
     const val android_plugin = "1.8.0"
     const val application_plugin = "8.1.1"
     const val swipe_refresh = "1.1.0"
+    const val multidex = "2.0.1"
 }
 
 object Libs {
@@ -42,6 +43,7 @@ object Libs {
         const val constraint = "androidx.constraintlayout:constraintlayout:${Versions.androidx_constraint}"
         const val splash = "androidx.core:core-splashscreen:${Versions.androidx_splash}"
         const val navigation_plugin = "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.androidx_navigation}"
+        const val multidex = "androidx.multidex:multidex:${Versions.multidex}"
     }
 
     object Navigation {

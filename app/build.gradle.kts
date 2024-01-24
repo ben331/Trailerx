@@ -48,6 +48,8 @@ dependencies {
     // Project
     implementation(project(":feature:auth"))
     implementation(project(":feature:home"))
+    implementation(project(":domain:movies"))
+    implementation(project(":data:movies"))
     implementation(project(":core:common"))
     implementation(project(":core:ui"))
 
