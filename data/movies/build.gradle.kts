@@ -45,6 +45,7 @@ android {
 dependencies {
     //Project
     implementation(project(":core:common"))
+    implementation(project(":core:di"))
     implementation(project(":domain:movies"))
 
     //AndroidX

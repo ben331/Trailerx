@@ -6,15 +6,12 @@ import android.net.Uri
 import com.globant.auth.datasource.remote.AuthRemoteDataSourceFirebase
 import com.globant.auth.datasource.remote.ProviderType
 import com.globant.auth.datasource.remote.response.UserModel
-import com.globant.common.di.IoDispatcher
-import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class AuthRepositoryImpl @Inject constructor(
-    private val dataSource: AuthRemoteDataSourceFirebase,
-    @IoDispatcher ioDispatcher: CoroutineDispatcher
+    private val dataSource: AuthRemoteDataSourceFirebase
 ) {
     suspend fun createUser(user: UserModel): Boolean {
         return dataSource.createUser(user)

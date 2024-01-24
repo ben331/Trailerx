@@ -8,8 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.globant.auth.repository.AuthRepositoryImpl
 import com.globant.common.CategoryType
 import com.globant.home.R
-import com.globant.common.di.IoDispatcher
-import com.globant.common.di.MainDispatcher
+import com.globant.di.IoDispatcher
+import com.globant.di.MainDispatcher
 import com.globant.movies.model.MovieDetailItem
 import com.globant.movies.model.toSimple
 import com.globant.movies.usecase.AddMovieToUserListUseCase

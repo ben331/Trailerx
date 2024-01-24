@@ -9,17 +9,14 @@ import com.globant.common.SyncState
 import com.globant.movies.datasource.MoviesLocalDataSource
 import com.globant.movies.datasource.MoviesNetworkDataSource
 import com.globant.movies.datasource.UserMoviesNetworkDataSource
-import com.globant.common.di.DefaultDispatcher
 import com.globant.movies.mapper.toDatabase
 import com.globant.movies.model.MovieDetailItem
 import com.globant.movies.model.MovieItem
 import com.globant.movies.model.SyncCategoryMovieItem
 import com.globant.movies.model.VideoItem
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -30,7 +27,6 @@ class MoviesRepositoryImpl @Inject constructor(
     private val moviesNetworkDataSource: MoviesNetworkDataSource,
     private val userMoviesNetworkDataSource: UserMoviesNetworkDataSource,
     private val moviesLocalDataSource: MoviesLocalDataSource,
-    @DefaultDispatcher defaultDispatcher: CoroutineDispatcher
 ):MoviesRepository {
 
     override val isServiceAvailable: Flow<Boolean> = flow {
@@ -39,7 +35,7 @@ class MoviesRepositoryImpl @Inject constructor(
             emit(isConnected)
             delay(REFRESH_INTERVAL)
         }
-    }.flowOn(defaultDispatcher)
+    }
 
     //-----APIS--------------------------------------------------------------------------------
     override suspend fun getNowPlayingMoviesFromApi(): List<MovieItem> =

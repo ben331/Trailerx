@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.globant.auth.datasource.remote.ProviderType
 import com.globant.auth.repository.AuthRepositoryImpl
 import com.globant.common.CategoryType
-import com.globant.common.di.IoDispatcher
+import com.globant.di.IoDispatcher
 import com.globant.movies.usecase.GetNowPlayingMoviesUseCase
 import com.globant.movies.usecase.GetPopularMoviesUseCase
 import com.globant.movies.usecase.GetUpcomingMoviesUseCase

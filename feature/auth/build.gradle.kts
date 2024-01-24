@@ -43,6 +43,7 @@ dependencies {
     implementation(project(":data:auth"))
     implementation(project(":core:common"))
     implementation(project(":core:ui"))
+    implementation(project(":core:di"))
 
     //  Kotlin
     implementation(Libs.Kotlin.stdlib)

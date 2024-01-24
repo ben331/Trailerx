@@ -12,7 +12,6 @@ import com.globant.movies.datasource.local.room.entities.CategoryMovieEntity
 import com.globant.movies.datasource.local.room.entities.MovieDetailEntity
 import com.globant.movies.datasource.local.room.entities.MovieEntity
 import com.globant.movies.datasource.local.room.entities.SyncCategoryMovieEntity
-import com.globant.common.di.IoDispatcher
 import com.globant.movies.mapper.toCategoryMovie
 import com.globant.movies.mapper.toDatabase
 import com.globant.movies.mapper.toDetail
@@ -20,8 +19,8 @@ import com.globant.movies.mapper.toDomain
 import com.globant.movies.model.MovieDetailItem
 import com.globant.movies.model.MovieItem
 import com.globant.movies.model.SyncCategoryMovieItem
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,11 +30,10 @@ class RoomDataSource @Inject constructor(
     private val categoryMovieDao: CategoryMovieDao,
     private val syncCategoryMovieDao: SyncCategoryMovieDao,
     private val movieDetailDao: MovieDetailDao,
-    @IoDispatcher ioDispatcher: CoroutineDispatcher
 ):MoviesLocalDataSource {
 
     init {
-        CoroutineScope(ioDispatcher).launch {
+        CoroutineScope(Dispatchers.Default).launch {
             val moviesLists = categoryDao.getAllCategories()
             if(moviesLists.isEmpty()){
                 categoryDao.insertAll( CategoryType.values().map { it.toDatabase() } )

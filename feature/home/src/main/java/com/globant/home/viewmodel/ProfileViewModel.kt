@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.globant.auth.repository.AuthRepositoryImpl
 import com.globant.common.CategoryType
-import com.globant.common.di.IoDispatcher
-import com.globant.common.di.MainDispatcher
+import com.globant.di.IoDispatcher
+import com.globant.di.MainDispatcher
 import com.globant.home.R
 import com.globant.movies.model.MovieItem
 import com.globant.movies.usecase.DeleteMovieFromUserListUseCase
