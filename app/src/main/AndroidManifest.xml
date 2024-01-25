@@ -26,12 +26,6 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="android-app"/>
-                <data android:host="com.globant.imdb"/>
-                <data android:pathPrefix="/auth" />
-                <data android:pathPrefix="/home" />
             </intent-filter>
             <nav-graph android:value="@navigation/app_nav_graph" />
         </activity>
