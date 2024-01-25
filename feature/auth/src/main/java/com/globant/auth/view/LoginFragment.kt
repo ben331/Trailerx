@@ -17,6 +17,7 @@ import androidx.core.net.toUri
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.NavDeepLinkRequest
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.facebook.CallbackManager
 import com.globant.auth.datasource.remote.ProviderType
@@ -212,6 +213,7 @@ class LoginFragment : Fragment() {
 
     private fun showHome(token:String){
         authViewModel.isLoading.postValue(false)
+
         val request = NavDeepLinkRequest.Builder
             .fromUri(HOME_URI.replace("{tokenValue}", token).toUri())
             .build()

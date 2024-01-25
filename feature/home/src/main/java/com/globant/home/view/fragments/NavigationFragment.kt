@@ -44,7 +44,7 @@ class NavigationFragment : Fragment(), PopupMenu.OnMenuItemClickListener,
 
     private val args: NavigationFragmentArgs by navArgs()
 
-    private lateinit var email:String
+    private var email: String? = null
     private lateinit var provider:ProviderType
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,7 +93,7 @@ class NavigationFragment : Fragment(), PopupMenu.OnMenuItemClickListener,
 
         //Decrypt Success
         if(claims!=null){
-            email = claims["sub"] as String
+            email = claims["sub"] as String?
             provider = ProviderType.valueOf( claims["provider"] as String )
             if(provider!=ProviderType.GUEST){
                 saveSession(token)

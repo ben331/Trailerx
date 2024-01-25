@@ -3,6 +3,7 @@ package com.globant.movies.di
 import android.content.Context
 import com.globant.common.Constants
 import com.globant.movies.R
+import com.globant.movies.datasource.network.retrofit.TMDBApiClient
 import com.globant.movies.datasource.network.retrofit.TMDBNetworkDataSource
 import dagger.Module
 import dagger.Provides
@@ -45,7 +46,7 @@ object RetrofitModule {
 
     @Singleton
     @Provides
-    fun provideTMDBApiClient(retrofit: Retrofit):TMDBNetworkDataSource{
-        return retrofit.create(TMDBNetworkDataSource::class.java)
+    fun provideTMDBApiClient(retrofit: Retrofit):TMDBApiClient{
+        return retrofit.create(TMDBApiClient::class.java)
     }
 }
