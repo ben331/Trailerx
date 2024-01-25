@@ -66,7 +66,7 @@ class ProfileViewModel @Inject constructor(
                         fold({
                             dialogManager.showAlert(context, R.string.error, R.string.fetch_movies_error)
                         },{
-                            watchList.postValue(it)
+                            recentViewed.postValue(it)
                         })
                     }
                 }
@@ -79,7 +79,7 @@ class ProfileViewModel @Inject constructor(
                         fold({
                             dialogManager.showAlert(context, R.string.error, R.string.fetch_movies_error)
                         },{
-                            watchList.postValue(it)
+                            favoritePeople.postValue(it)
                         })
                     }
                 }
