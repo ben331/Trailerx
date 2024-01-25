@@ -31,7 +31,7 @@ Playlist mobile app. Built with Clean Architecture, MVVM, Room, Retrofit, and be
 <string name="TMDB_api_token">*******</string>
 ```
 
-6. Finally, Copy the account_id from [TMBD Api](https://developer.themoviedb.org/reference/account-details) and replace it in the Constants.kt file at core > common > main > java > com.globant.common > Constants:
+6. Copy the account_id from [TMBD Api](https://developer.themoviedb.org/reference/account-details) and replace it in the Constants.kt file at core > common > main > java > com.globant.common > Constants:
 
 ```kotlin
   object Constants {
@@ -39,6 +39,9 @@ Playlist mobile app. Built with Clean Architecture, MVVM, Room, Retrofit, and be
     const val TMDB_ACCOUNT= "*****"
   }
 ```
+7. For deployment ask for release KeyStore and their credentials.
+   
+8. Finally for AuthLogin be sure that both DebugKeyStore and ReleaseKeyStore SHA1 is registered in firebase settings.
     
 ## Authors
 
