@@ -17,9 +17,9 @@ import androidx.core.net.toUri
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.NavDeepLinkRequest
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.facebook.CallbackManager
+import com.globant.auth.R
 import com.globant.auth.datasource.remote.ProviderType
 import com.globant.auth.viewmodel.AuthViewModel
 import com.globant.ui.helpers.DialogManager
@@ -27,7 +27,6 @@ import com.globant.ui.helpers.FormValidator
 import com.globant.ui.TokenService
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import com.globant.auth.R
 import com.globant.auth.databinding.FragmentLoginBinding
 import com.globant.auth.datasource.remote.response.UserModel
 
@@ -56,6 +55,7 @@ class LoginFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        findNavController().popBackStack(R.id.loginFragment, true)
         loadSession()
     }
 

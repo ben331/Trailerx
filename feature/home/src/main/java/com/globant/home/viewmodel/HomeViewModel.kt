@@ -17,16 +17,12 @@ import com.globant.movies.usecase.GetOfficialTrailerUseCase
 import com.globant.movies.usecase.GetPopularMoviesUseCase
 import com.globant.movies.usecase.GetRandomTopMovieUseCase
 import com.globant.movies.usecase.GetUpcomingMoviesUseCase
-import com.globant.movies.usecase.GetUserMoviesUseCase
 import com.globant.ui.helpers.DialogManager
-import com.globant.ui.helpers.ImageLoader
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-
-private const val TAG = "Home viewModel"
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -37,9 +33,7 @@ class HomeViewModel @Inject constructor(
     private val getRandomTopMovieUseCase:GetRandomTopMovieUseCase,
     private val getUpcomingMovies:GetUpcomingMoviesUseCase,
     private val addMovieToUserListUseCase:AddMovieToUserListUseCase,
-    private val getUserMoviesUseCase: GetUserMoviesUseCase,
     private val dialogManager: DialogManager,
-    private val imageLoader: ImageLoader,
     @IoDispatcher
     private val ioDispatcher: CoroutineDispatcher,
     @MainDispatcher
@@ -54,7 +48,6 @@ class HomeViewModel @Inject constructor(
     val isLoading = MutableLiveData(false)
     val isVideoAvailable = MutableLiveData(true)
     val onlineMode = MutableLiveData(true)
-    val isImagesLoading = MutableLiveData(false)
 
     val username:String by lazy { authRepository.getEmail() }
 
@@ -131,7 +124,7 @@ class HomeViewModel @Inject constructor(
                     }else{
                         dialogManager.showAlert(
                             context,
-                            context.getString(R.string.success),
+                            context.getString(R.string.error),
                             context.getString(R.string.server_error)
                         )
                     }

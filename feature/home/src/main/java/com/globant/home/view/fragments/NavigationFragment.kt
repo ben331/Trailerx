@@ -98,6 +98,7 @@ class NavigationFragment : Fragment(), PopupMenu.OnMenuItemClickListener,
             if(provider!=ProviderType.GUEST){
                 saveSession(token)
             }
+            findNavController().popBackStack(R.id.navigationFragment, true)
         }//Decrypt Fail
         else{
             DialogManager().showAlert(requireContext(), "Error", "Invalid Token")

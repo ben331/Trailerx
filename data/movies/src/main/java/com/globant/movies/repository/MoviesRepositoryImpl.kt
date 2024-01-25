@@ -37,7 +37,7 @@ class MoviesRepositoryImpl @Inject constructor(
         }
     }
 
-    //-----APIS--------------------------------------------------------------------------------
+    //-----API 1--------------------------------------------------------------------------------
     override suspend fun getNowPlayingMoviesFromApi(): List<MovieItem> =
         moviesNetworkDataSource.getNowPlayingMovies() ?: emptyList()
     override suspend fun getUpcomingMoviesFromApi():List<MovieItem> =
@@ -50,6 +50,8 @@ class MoviesRepositoryImpl @Inject constructor(
         moviesNetworkDataSource.searchMovie(query) ?: emptyList()
     override suspend fun getTrailersFromApi(movieId:Int):List<VideoItem> =
         moviesNetworkDataSource.getTrailers(movieId) ?: emptyList()
+
+    //-------API 2 [USER DATA]-----------------------------------------------------------------
     override suspend fun getUserMoviesList(listType: CategoryType, email:String): Either<ErrorData, List<MovieItem>> {
         val movies = userMoviesNetworkDataSource.getUserMoviesList(listType, email)
         return if(movies!=null){

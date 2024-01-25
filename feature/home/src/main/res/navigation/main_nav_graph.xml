@@ -14,6 +14,8 @@
             android:name="token"
             app:argType="string"
             android:defaultValue=""/>
-        <deepLink app:uri="android-app://com.globant.imdb/home?token={token}" />
+        <deepLink
+            app:uri="android-app://com.globant.imdb/home?token={token}"
+            />
     </fragment>
 </navigation>
