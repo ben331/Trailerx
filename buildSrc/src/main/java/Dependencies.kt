@@ -30,6 +30,9 @@ object Versions {
     const val application_plugin = "8.1.1"
     const val swipe_refresh = "1.1.0"
     const val multidex = "2.0.1"
+    const val coroutine_test = "1.6.4"
+    const val mockK = "1.12.0"
+    const val androidx_test = "2.2.0"
 }
 
 object Libs {
@@ -62,6 +65,9 @@ object Libs {
         const val junit_androidx = "androidx.test.ext:junit:${Versions.androidx_test_junit}"
         const val espresso = "androidx.test.espresso:espresso-core:${Versions.androidx_espresso}"
         const val navigation = "androidx.navigation:navigation-testing:${Versions.androidx_navigation}"
+        const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutine_test}"
+        const val androidx = "androidx.arch.core:core-testing:${Versions.androidx_test}"
+        const val mockK = "io.mockk:mockk:${Versions.mockK}"
     }
 
     object Firebase {

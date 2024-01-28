@@ -16,7 +16,7 @@ class TMDBNetworkDataSource @Inject constructor(private val api:TMDBApiClient ):
         return withContext(Dispatchers.IO) {
             try {
                 val response = api.headService()
-                response.code() == 200
+                response.code() in 200..299
             } catch (_:Exception) {
                 false
             }
@@ -28,7 +28,11 @@ class TMDBNetworkDataSource @Inject constructor(private val api:TMDBApiClient ):
             try {
                 val languageCode = Locale.getDefault().language
                 val response = api.getNowPlayingMovies( languageCode,1 )
-                response.body()?.results?.map { it.toDomain() }
+                if( response.code() in 200..299){
+                    response.body()?.results?.map { it.toDomain() }
+                }else{
+                    null
+                }
             }catch (e: Exception){
                 null
             }
@@ -39,7 +43,11 @@ class TMDBNetworkDataSource @Inject constructor(private val api:TMDBApiClient ):
             try {
                 val languageCode = Locale.getDefault().language
                 val response = api.getUpcomingMovies( languageCode,1 )
-                response.body()?.results?.map { it.toDomain() }
+                if( response.code() in 200..299){
+                    response.body()?.results?.map { it.toDomain() }
+                }else{
+                    null
+                }
             }catch (e: Exception){
                 null
             }
@@ -50,7 +58,11 @@ class TMDBNetworkDataSource @Inject constructor(private val api:TMDBApiClient ):
             try {
                 val languageCode = Locale.getDefault().language
                 val response = api.getPopularMovies( languageCode,1 )
-                response.body()?.results?.map { it.toDomain() }
+                if( response.code() in 200..299){
+                    response.body()?.results?.map { it.toDomain() }
+                }else{
+                    null
+                }
             }catch (e: Exception){
                 null
             }
@@ -61,7 +73,11 @@ class TMDBNetworkDataSource @Inject constructor(private val api:TMDBApiClient ):
             try {
                 val languageCode = Locale.getDefault().language
                 val response = api.getMovieById( movieId, languageCode )
-                response.body()?.toDomain()
+                if( response.code() in 200..299){
+                    response.body()?.toDomain()
+                }else{
+                    null
+                }
             }catch (e: Exception){
                 null
             }
@@ -72,7 +88,11 @@ class TMDBNetworkDataSource @Inject constructor(private val api:TMDBApiClient ):
             try {
                 val languageCode = Locale.getDefault().language
                 val response = api.searchMovie( query, languageCode, 1 )
-                response.body()?.results?.map { it.toDomain() }
+                if( response.code() in 200..299){
+                    response.body()?.results?.map { it.toDomain() }
+                }else{
+                    null
+                }
             }catch (e: Exception){
                 null
             }
@@ -83,7 +103,11 @@ class TMDBNetworkDataSource @Inject constructor(private val api:TMDBApiClient ):
             try {
                 val languageCode = Locale.getDefault().language
                 val response = api.getTrailers( movieId, languageCode)
-                response.body()?.results?.map { it.toDomain() }
+                if( response.code() in 200..299){
+                    response.body()?.results?.map { it.toDomain() }
+                }else{
+                    null
+                }
             }catch (e: Exception){
                 null
             }
