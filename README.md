@@ -41,7 +41,7 @@ Playlist mobile app. Built with Clean Architecture, MVVM, Room, Retrofit, and be
 ```
 7. For deployment ask for release KeyStore and their credentials.
    
-8. Finally for AuthLogin be sure that both DebugKeyStore and ReleaseKeyStore SHA1 is registered in firebase settings.
+8. Finally for AuthLogin be sure that both DebugKeyStore and ReleaseKeyStore SHA1 is registered in firebase settings, facebook platform developers app and apple.
     
 ## Authors
 
