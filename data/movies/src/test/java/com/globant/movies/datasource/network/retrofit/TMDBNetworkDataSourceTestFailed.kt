@@ -37,7 +37,7 @@ class TMDBNetworkDataSourceTestFailed {
         runTest {
             //Given
             val codeError = 500
-            val expectedValue: Response<Void> = Response.error(codeError, mockk())
+            val expectedValue: Response<Void> = Response.error(codeError, mockk(relaxed = true))
             val expectedResult = false
 
             coEvery {
@@ -78,7 +78,7 @@ class TMDBNetworkDataSourceTestFailed {
             val languageCode = Locale.getDefault().language
             val page = 1
             val codeError = 500
-            val expectedValue: Response<MoviesListDatesModel?> = Response.error(codeError, mockk())
+            val expectedValue: Response<MoviesListDatesModel?> = Response.error(codeError, mockk(relaxed = true))
             val expectedResult:List<MovieItem>? = null
 
             coEvery {
@@ -119,7 +119,7 @@ class TMDBNetworkDataSourceTestFailed {
             val languageCode = Locale.getDefault().language
             val page = 1
             val codeError = 500
-            val expectedValue: Response<MoviesListDatesModel?> = Response.error(codeError, mockk())
+            val expectedValue: Response<MoviesListDatesModel?> = Response.error(codeError, mockk(relaxed = true))
             val expectedResult:List<MovieItem>? = null
 
             coEvery {
@@ -160,7 +160,7 @@ class TMDBNetworkDataSourceTestFailed {
             val languageCode = Locale.getDefault().language
             val page = 1
             val codeError = 500
-            val expectedValue: Response<MoviesListModel?> = Response.error(codeError, mockk())
+            val expectedValue: Response<MoviesListModel?> = Response.error(codeError, mockk(relaxed = true))
             val expectedResult:List<MovieItem>? = null
 
             coEvery {
@@ -199,7 +199,7 @@ class TMDBNetworkDataSourceTestFailed {
             val languageCode = Locale.getDefault().language
             val movieId = 123456
             val codeError = 500
-            val expectedValue:Response<MovieDetailModel?> = Response.error(codeError, mockk())
+            val expectedValue:Response<MovieDetailModel?> = Response.error(codeError, mockk(relaxed = true))
             val expectedResult: MovieDetailItem? = null
 
             coEvery {
@@ -240,7 +240,7 @@ class TMDBNetworkDataSourceTestFailed {
             val query = "query"
             val page = 1
             val codeError = 500
-            val expectedValue:Response<MoviesListModel?> = Response.error(codeError, mockk())
+            val expectedValue:Response<MoviesListModel?> = Response.error(codeError, mockk(relaxed = true))
             val expectedResult:List<MovieItem>? = null
 
             coEvery {
@@ -279,7 +279,7 @@ class TMDBNetworkDataSourceTestFailed {
             val languageCode = Locale.getDefault().language
             val movieId = 123456
             val codeError = 500
-            val expectedValue:Response<VideoListModel?> = Response.error(codeError, mockk())
+            val expectedValue:Response<VideoListModel?> = Response.error(codeError, mockk(relaxed = true))
             val expectedResult:List<VideoItem>? = null
 
             coEvery {

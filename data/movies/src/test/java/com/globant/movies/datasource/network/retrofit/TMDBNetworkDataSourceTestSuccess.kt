@@ -1,9 +1,7 @@
 package com.globant.movies.datasource.network.retrofit
 
-import android.util.Log
 import com.globant.imdb.data.model.movies.MovieDetailModel
 import com.globant.movies.mapper.toDomain
-import com.globant.movies.model.MovieItem
 import com.globant.movies.model.movies.MoviesListDatesModel
 import com.globant.movies.model.movies.MoviesListModel
 import com.globant.movies.model.movies.VideoListModel
@@ -57,7 +55,7 @@ class TMDBNetworkDataSourceTestSuccess {
             //Given
             val languageCode = Locale.getDefault().language
             val page = 1
-            val movies = mockk<MoviesListDatesModel>()
+            val movies = mockk<MoviesListDatesModel>(relaxed = true)
             val expectedValue = Response.success(movies)
             val expectedResult = movies.results.map { it.toDomain() }
 
@@ -79,7 +77,7 @@ class TMDBNetworkDataSourceTestSuccess {
             //Given
             val languageCode = Locale.getDefault().language
             val page = 1
-            val movies = mockk<MoviesListDatesModel>()
+            val movies = mockk<MoviesListDatesModel>(relaxed = true)
             val expectedValue = Response.success(movies)
             val expectedResult = movies.results.map { it.toDomain() }
 
@@ -101,7 +99,7 @@ class TMDBNetworkDataSourceTestSuccess {
             //Given
             val languageCode = Locale.getDefault().language
             val page = 1
-            val movies = mockk<MoviesListModel>()
+            val movies = mockk<MoviesListModel>(relaxed = true)
             val expectedValue = Response.success(movies)
             val expectedResult = movies.results.map { it.toDomain() }
 
@@ -123,7 +121,7 @@ class TMDBNetworkDataSourceTestSuccess {
             //Given
             val languageCode = Locale.getDefault().language
             val movieId = 123456
-            val movie = mockk<MovieDetailModel>()
+            val movie = mockk<MovieDetailModel>(relaxed = true)
             val expectedValue = Response.success(movie)
             val expectedResult = movie.toDomain()
 
@@ -146,7 +144,7 @@ class TMDBNetworkDataSourceTestSuccess {
             val languageCode = Locale.getDefault().language
             val query = "query"
             val page = 1
-            val movies = mockk<MoviesListModel>()
+            val movies = mockk<MoviesListModel>(relaxed = true)
             val expectedValue = Response.success(movies)
             val expectedResult = movies.results.map { it.toDomain() }
 
@@ -168,7 +166,7 @@ class TMDBNetworkDataSourceTestSuccess {
             //Given
             val languageCode = Locale.getDefault().language
             val movieId = 123456
-            val trailers = mockk<VideoListModel>()
+            val trailers = mockk<VideoListModel>(relaxed = true)
             val expectedValue = Response.success(trailers)
             val expectedResult = trailers.results.map { it.toDomain() }
 
