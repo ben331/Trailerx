@@ -1,9 +1,11 @@
 package com.globant.movies.datasource.network.firestore
 
+import android.util.Log
 import com.globant.common.CategoryType
 import com.globant.movies.datasource.UserMoviesNetworkDataSource
 import com.globant.movies.model.MovieItem
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withTimeout
 import javax.inject.Inject
@@ -16,10 +18,10 @@ class FirestoreNetworkDataSource @Inject constructor(
     override suspend fun getUserMoviesList(listType: CategoryType, email:String):List<MovieItem>? {
         return try {
             withTimeout(SHORT_TIMEOUT) {
-                val query: com.google.firebase.firestore.QuerySnapshot =
+                val query: QuerySnapshot =
                     db.collection("users").document(email).collection(listType.name).get()
                         .await()
-                val result: ArrayList<MovieItem> = ArrayList()
+                val result = mutableListOf<MovieItem>()
                 for (document in query.documents) {
                     val movie =
                         document.toObject(MovieItem::class.java)!!
