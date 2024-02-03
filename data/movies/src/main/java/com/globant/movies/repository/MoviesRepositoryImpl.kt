@@ -71,7 +71,7 @@ class MoviesRepositoryImpl @Inject constructor(
     override suspend fun getMoviesByCategoryFromLocal(category: CategoryType): Either<ErrorData, List<MovieItem>> {
         return try {
             val response = moviesLocalDataSource.getMoviesByCategory(category)
-            if(response.isNotEmpty()){
+            if(!response.isNullOrEmpty()){
                 Either.Right(response)
             }else{
                 Either.Left(ErrorFactory(ErrorStatusCode.EmptyCache.code))
@@ -90,13 +90,12 @@ class MoviesRepositoryImpl @Inject constructor(
         moviesLocalDataSource.addMovieToSync(movieId, category, state)
     override suspend fun deleteMovieFromSyncLocal(movieId:Int, category: CategoryType) =
         moviesLocalDataSource.deleteMovieFromSync(movieId, category)
-    override suspend fun getMoviesToSync(state: SyncState): List<SyncCategoryMovieItem> =
+    override suspend fun getMoviesToSync(state: SyncState): List<SyncCategoryMovieItem>? =
         moviesLocalDataSource.getMoviesToSync(state)
     override suspend fun getMovieByIdFromLocal(movieId:Int): MovieDetailItem? =
         moviesLocalDataSource.getMovieById(movieId)
     override suspend fun addMovieDetailLocal(movie: MovieDetailItem) =
         moviesLocalDataSource.addMovieDetailList(movie.toDatabase())
-    override suspend fun clearMoviesByCategoryLocal(category: CategoryType){
+    override suspend fun clearMoviesByCategoryLocal(category: CategoryType): Boolean =
         moviesLocalDataSource.deleteMoviesByCategory(category)
-    }
 }

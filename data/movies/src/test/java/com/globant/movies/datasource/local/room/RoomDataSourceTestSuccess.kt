@@ -12,10 +12,11 @@ import com.globant.movies.datasource.local.room.entities.MovieDetailEntity
 import com.globant.movies.datasource.local.room.entities.MovieEntity
 import com.globant.movies.datasource.local.room.entities.SyncCategoryMovieEntity
 import com.globant.movies.mapper.toCategoryMovie
+import com.globant.movies.mapper.toDetail
+import com.globant.movies.mapper.toDomain
 import io.mockk.MockKAnnotations
 import io.mockk.Runs
 import io.mockk.coEvery
-import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import io.mockk.just
 import io.mockk.mockk
@@ -23,10 +24,11 @@ import io.mockk.spyk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-class RoomDataSourceTest {
+class RoomDataSourceTestSuccess {
     @MockK
     lateinit var movieDao: MovieDao
     @MockK
@@ -58,194 +60,205 @@ class RoomDataSourceTest {
     }
 
     @Test
-    fun `getMoviesByCategory should call getMoviesByCategory from movieDao`() {
+    fun `getMoviesByCategory should return a List of MovieItem when call is success`() {
         runTest {
             //Given
             val category = CategoryType.POPULAR_MOVIES
             val expectedMovies = mockk<List<MovieEntity>>(relaxed = true)
+            val expectedResult = expectedMovies.map { it.toDomain() }
 
             coEvery { movieDao.getMoviesByCategory(category) } returns expectedMovies
 
             //When
-            roomDataSource.getMoviesByCategory(category)
+            val response = roomDataSource.getMoviesByCategory(category)
 
             //Then
-            coVerify { movieDao.getMoviesByCategory(category) }
+            assertEquals(expectedResult, response)
         }
     }
 
     @Test
-    fun `getMovieById should call getMovieDetailById from movieDetailDao at first time`() {
+    fun `getMovieById should return a MovieDetailItem when call is success from detail`() {
         runTest {
             //Given
             val movieId = 123456
             val expectedMovieDetail = mockk<MovieDetailEntity>(relaxed = true)
+            val expectedResult = expectedMovieDetail.toDomain()
 
             coEvery { movieDetailDao.getMovieDetailById(movieId) } returns expectedMovieDetail
 
             //When
-            roomDataSource.getMovieById(movieId)
+            val response = roomDataSource.getMovieById(movieId)
 
             //Then
-            coVerify { movieDetailDao.getMovieDetailById(movieId) }
+            assertEquals(expectedResult, response)
         }
     }
 
     @Test
-    fun `getMovieById should call getMovieById from movieDao if getMovieDetailById from movieDetailDao is null`() {
+    fun `getMovieById should return a MovieDetailItem when call is error from detail but success from movie table`() {
         runTest {
             //Given
             val movieId = 123456
             val expectedMovieDetail:MovieDetailEntity? = null
             val expectedMovie = mockk<MovieEntity>(relaxed = true)
+            val expectedResult = expectedMovie.toDetail()
 
             coEvery { movieDetailDao.getMovieDetailById(movieId) } returns expectedMovieDetail
             coEvery { movieDao.getMovieById(movieId) } returns expectedMovie
 
             //When
-            roomDataSource.getMovieById(movieId)
+            val response = roomDataSource.getMovieById(movieId)
 
             //Then
-            coVerify { movieDetailDao.getMovieDetailById(movieId) }
+            assertEquals(expectedResult, response)
         }
     }
 
     @Test
-    fun `addMoviesToCategory should call addMoviesToCategory from categoryMovieDao`() {
+    fun `addMoviesToCategory should return true when call is success`() {
         runTest {
             //Given
             val category = CategoryType.HISTORY_MOVIES
             val movies = mockk<List<MovieEntity>>(relaxed = true)
             val moviesCategory = movies.map { it.toCategoryMovie(category) }
+            val expectedResult = true
 
             coEvery { movieDao.insertMovieList(movies) } just Runs
             coEvery { categoryMovieDao.addMoviesToCategory(moviesCategory) } just Runs
 
             //When
-            roomDataSource.addMoviesToCategory(movies, category)
+            val response = roomDataSource.addMoviesToCategory(movies, category)
 
             //Then
-            coVerify { categoryMovieDao.addMoviesToCategory(moviesCategory) }
+            assertEquals(expectedResult, response)
         }
     }
 
     @Test
-    fun `addMovieToCategory should call addMovieToCategory from categoryMovieDao`() {
+    fun `addMovieToCategory should return true when call is success`() {
         runTest {
             //Given
             val category = CategoryType.HISTORY_MOVIES
             val movieId = 123456
             val movieCategory = spyk(CategoryMovieEntity(movieId, category))
+            val expectedResult = true
 
             coEvery { categoryMovieDao.addMovieToCategory(movieCategory) } just Runs
 
             //When
-            roomDataSource.addMovieToCategory(movieId, category)
+            val response = roomDataSource.addMovieToCategory(movieId, category)
 
             //Then
-            coVerify { categoryMovieDao.addMovieToCategory(movieCategory) }
+            assertEquals(expectedResult, response)
         }
     }
 
     @Test
-    fun `deleteMovieFromCategory should call deleteMovieFromCategory from categoryMovieDao`() {
+    fun `deleteMovieFromCategory should return true when call is success`() {
         runTest {
             //Given
             val category = CategoryType.HISTORY_MOVIES
             val movieId = 123456
+            val expectedResult = true
 
             coEvery { categoryMovieDao.deleteMovieFromCategory(movieId, category) } just Runs
 
             //When
-            roomDataSource.deleteMovieFromCategory(movieId, category)
+            val response = roomDataSource.deleteMovieFromCategory(movieId, category)
 
             //Then
-            coVerify { categoryMovieDao.deleteMovieFromCategory(movieId, category) }
+            assertEquals(expectedResult, response)
         }
     }
 
     @Test
-    fun `deleteMoviesByCategory should call deleteMoviesByCategory from movieDao`() {
+    fun `deleteMoviesByCategory should return true when call is success`() {
         runTest {
             //Given
             val category = CategoryType.UPCOMING_MOVIES
+            val expectedResult = true
 
             coEvery { movieDao.deleteMoviesByCategory(category) } just Runs
 
             //When
-            roomDataSource.deleteMoviesByCategory(category)
+            val response = roomDataSource.deleteMoviesByCategory(category)
 
             //Then
-            coVerify { movieDao.deleteMoviesByCategory(category) }
+            assertEquals(expectedResult, response)
         }
     }
 
     @Test
-    fun `addMovieToSync should call addMovieToSync from syncCategoryMovieDao`() {
+    fun `addMovieToSync should return true when call is success`() {
         runTest {
             //Given
             val category = CategoryType.HISTORY_MOVIES
             val movieId = 123456
             val state = SyncState.PENDING_TO_ADD
             val syncCategoryMovie = spyk(SyncCategoryMovieEntity(movieId, category, state))
+            val expectedResult = true
 
             coEvery { syncCategoryMovieDao.addMovieToSync(syncCategoryMovie) } just Runs
 
             //When
-            roomDataSource.addMovieToSync(movieId, category, state)
+            val response = roomDataSource.addMovieToSync(movieId, category, state)
 
             //Then
-            coVerify { syncCategoryMovieDao.addMovieToSync(syncCategoryMovie) }
+            assertEquals(expectedResult, response)
         }
     }
 
     @Test
-    fun `getMoviesToSync should call getMoviesToSync from syncCategoryMovieDao`() {
+    fun `getMoviesToSync should a list of MovieDetailItem when call is success`() {
         runTest {
             //Given
             val state = SyncState.PENDING_TO_ADD
             val expectedValue = mockk<List<SyncCategoryMovieEntity>>(relaxed = true)
+            val expectedResult = expectedValue.map { it.toDomain() }
 
             coEvery { syncCategoryMovieDao.getMoviesToSync(state) } returns expectedValue
 
             //When
-            roomDataSource.getMoviesToSync(state)
+            val response = roomDataSource.getMoviesToSync(state)
 
             //Then
-            coVerify {  syncCategoryMovieDao.getMoviesToSync(state) }
+            assertEquals(expectedResult, response)
         }
     }
 
     @Test
-    fun `deleteMovieFromSync should call deleteMovieFromSync from syncCategoryMovieDao`() {
+    fun `deleteMovieFromSync should return true when call is success`() {
         runTest {
             //Given
             val movieId = 123456
             val category = CategoryType.HISTORY_MOVIES
+            val expectedResult = true
 
             coEvery { syncCategoryMovieDao.deleteMovieFromSync(movieId, category) } just Runs
 
             //When
-            roomDataSource.deleteMovieFromSync(movieId, category)
+            val response = roomDataSource.deleteMovieFromSync(movieId, category)
 
             //Then
-            coVerify { syncCategoryMovieDao.deleteMovieFromSync(movieId, category) }
+            assertEquals(expectedResult, response)
         }
     }
 
     @Test
-    fun `addMovieDetailList should call addMovieDetailList from movieDetailDao`() {
+    fun `addMovieDetailList should return true when call is success`() {
         runTest {
             //Given
             val movie = mockk<MovieDetailEntity>(relaxed = true)
+            val expectedResult = true
 
             coEvery { movieDetailDao.insertMovieDetail(movie) } just Runs
 
             //When
-            roomDataSource.addMovieDetailList(movie)
+            val response = roomDataSource.addMovieDetailList(movie)
 
             //Then
-            coVerify { movieDetailDao.insertMovieDetail(movie) }
+            assertEquals(expectedResult, response)
         }
     }
 }

@@ -20,10 +20,10 @@ import com.globant.movies.mapper.toDomain
 import com.globant.movies.model.MovieDetailItem
 import com.globant.movies.model.MovieItem
 import com.globant.movies.model.SyncCategoryMovieItem
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
 class RoomDataSource @Inject constructor(
     private val movieDao: MovieDao,
@@ -32,7 +32,7 @@ class RoomDataSource @Inject constructor(
     private val syncCategoryMovieDao: SyncCategoryMovieDao,
     private val movieDetailDao: MovieDetailDao,
     @DefaultDispatcher
-    private val defaultDispatcher: CoroutineContext
+    private val defaultDispatcher: CoroutineDispatcher
 ):MoviesLocalDataSource {
 
     init {
