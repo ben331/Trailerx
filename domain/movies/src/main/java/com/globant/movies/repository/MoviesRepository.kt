@@ -27,14 +27,14 @@ interface MoviesRepository {
 
     //------DB-----------------------------------------------------------------
     suspend fun getMoviesByCategoryFromLocal(category:CategoryType): Either<ErrorData, List<MovieItem>>
-    suspend fun addMoviesToCategoryLocal(movies:List<MovieItem>, category: CategoryType)
-    suspend fun addMovieToCategoryLocal(movieId:Int, category: CategoryType)
-    suspend fun deleteMovieFromCategoryLocal(movieId:Int, category: CategoryType)
-    suspend fun addMovieToSyncLocal(movieId:Int, category: CategoryType, state:SyncState)
-    suspend fun deleteMovieFromSyncLocal(movieId:Int, category: CategoryType)
-    suspend fun getMoviesToSync(state: SyncState): List<SyncCategoryMovieItem>
+    suspend fun addMoviesToCategoryLocal(movies:List<MovieItem>, category: CategoryType): Boolean
+    suspend fun addMovieToCategoryLocal(movieId:Int, category: CategoryType): Boolean
+    suspend fun deleteMovieFromCategoryLocal(movieId:Int, category: CategoryType): Boolean
+    suspend fun addMovieToSyncLocal(movieId:Int, category: CategoryType, state:SyncState): Boolean
+    suspend fun deleteMovieFromSyncLocal(movieId:Int, category: CategoryType): Boolean
+    suspend fun getMoviesToSync(state: SyncState): List<SyncCategoryMovieItem>?
     suspend fun getMovieByIdFromLocal(movieId:Int): MovieDetailItem?
-    suspend fun addMovieDetailLocal(movie:MovieDetailItem)
-    suspend fun clearMoviesByCategoryLocal(category: CategoryType)
+    suspend fun addMovieDetailLocal(movie:MovieDetailItem): Boolean
+    suspend fun clearMoviesByCategoryLocal(category: CategoryType): Boolean
 }
 

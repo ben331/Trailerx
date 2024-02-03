@@ -21,18 +21,13 @@ class AddMovieToUserListUseCase @Inject constructor(
         return if(isAdded) {
             CoroutineScope(Dispatchers.IO).launch {
                 syncUserLocalDataUseCase(email)
-                try {
-                    repository.addMovieToCategoryLocal(movie.id, category)
-                }catch (_:Exception){ }
+                repository.addMovieToCategoryLocal(movie.id, category)
             }
             true
         } else {
-            try {
-                repository.addMovieToCategoryLocal(movie.id, category)
-                repository.addMovieToSyncLocal(movie.id, category, SyncState.PENDING_TO_ADD)
-                true
-            }catch (_:Exception){
-                false
+            repository.addMovieToCategoryLocal(movie.id, category).also { addedToLocal ->
+                if(addedToLocal)
+                    repository.addMovieToSyncLocal(movie.id, category, SyncState.PENDING_TO_ADD)
             }
         }
     }

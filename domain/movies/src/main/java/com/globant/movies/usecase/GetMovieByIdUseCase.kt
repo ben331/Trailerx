@@ -7,6 +7,7 @@ import javax.inject.Inject
 class GetMovieByIdUseCase @Inject constructor( private val repository: MoviesRepository) {
     suspend operator fun invoke(movieId:Int):MovieDetailItem? {
         val movie = repository.getMovieByIdFromLocal(movieId)
+
         if(movie == null || movie.tagline.isNullOrEmpty()) {
             val movieUpdated = repository.getMovieByIdFromApi(movieId)
             if(movieUpdated != null){

@@ -9,15 +9,15 @@ import com.globant.movies.model.MovieItem
 import com.globant.movies.model.SyncCategoryMovieItem
 
 interface MoviesLocalDataSource {
-    suspend fun getMoviesByCategory(category:CategoryType):List<MovieItem>
+    suspend fun getMoviesByCategory(category:CategoryType):List<MovieItem>?
     suspend fun getMovieById(movieId: Int): MovieDetailItem?
-    suspend fun addMoviesToCategory(movies:List<MovieEntity>, category: CategoryType)
-    suspend fun addMovieToCategory(movieId:Int, category: CategoryType)
-    suspend fun deleteMovieFromCategory(movieId:Int, category: CategoryType)
-    suspend fun addMovieToSync(movieId:Int, category: CategoryType, state: SyncState)
-    suspend fun deleteMovieFromSync(movieId:Int, category: CategoryType)
-    suspend fun getMoviesToSync(state: SyncState): List<SyncCategoryMovieItem>
-    suspend fun addMovieDetailList(movie: MovieDetailEntity)
-    suspend fun deleteMoviesByCategory(category:CategoryType)
+    suspend fun addMoviesToCategory(movies:List<MovieEntity>, category: CategoryType): Boolean
+    suspend fun addMovieToCategory(movieId:Int, category: CategoryType): Boolean
+    suspend fun deleteMovieFromCategory(movieId:Int, category: CategoryType): Boolean
+    suspend fun addMovieToSync(movieId:Int, category: CategoryType, state: SyncState): Boolean
+    suspend fun deleteMovieFromSync(movieId:Int, category: CategoryType): Boolean
+    suspend fun getMoviesToSync(state: SyncState): List<SyncCategoryMovieItem>?
+    suspend fun addMovieDetailList(movie: MovieDetailEntity): Boolean
+    suspend fun deleteMoviesByCategory(category:CategoryType): Boolean
 }
 

@@ -20,10 +20,8 @@ class GetUserMoviesUseCase @Inject constructor(
             is Either.Right -> {
                 CoroutineScope(Dispatchers.IO).launch {
                     syncUserLocalDataUseCase(email)
-                    try {
-                        repository.clearMoviesByCategoryLocal(category)
-                        repository.addMoviesToCategoryLocal(result.r, category)
-                    }catch (_: Exception){ }
+                    repository.clearMoviesByCategoryLocal(category)
+                    repository.addMoviesToCategoryLocal(result.r, category)
                 }
                 result
             }

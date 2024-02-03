@@ -18,17 +18,14 @@ class DeleteMovieFromUserListUseCase @Inject constructor(
         return if(isDeleted){
             CoroutineScope(Dispatchers.IO).launch {
                 syncUserLocalDataUseCase(email)
-                try {
-                    repository.deleteMovieFromCategoryLocal(movieId, category)
-                } catch (_:Exception){ }
+                repository.deleteMovieFromCategoryLocal(movieId, category)
             }
             true
         } else {
-            try {
-                repository.deleteMovieFromCategoryLocal(movieId, category)
-                repository.addMovieToSyncLocal(movieId, category, SyncState.PENDING_TO_DELETE)
-                true
-            }catch (_: Exception){ false }
+            repository.deleteMovieFromCategoryLocal(movieId, category).also { deletedFromLocal ->
+                if(deletedFromLocal)
+                    repository.addMovieToSyncLocal(movieId, category, SyncState.PENDING_TO_DELETE)
+            }
         }
     }
 }
