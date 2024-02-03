@@ -11,7 +11,6 @@ import com.globant.movies.model.SyncCategoryMovieItem
 interface MoviesLocalDataSource {
     suspend fun getMoviesByCategory(category:CategoryType):List<MovieItem>
     suspend fun getMovieById(movieId: Int): MovieDetailItem?
-    suspend fun getUserMoviesCategory(listType: CategoryType):List<MovieItem>
     suspend fun addMoviesToCategory(movies:List<MovieEntity>, category: CategoryType)
     suspend fun addMovieToCategory(movieId:Int, category: CategoryType)
     suspend fun deleteMovieFromCategory(movieId:Int, category: CategoryType)

@@ -2,6 +2,7 @@ package com.globant.movies.datasource.local.room
 
 import com.globant.common.CategoryType
 import com.globant.common.SyncState
+import com.globant.di.DefaultDispatcher
 import com.globant.movies.datasource.MoviesLocalDataSource
 import com.globant.movies.datasource.local.room.dao.CategoryDao
 import com.globant.movies.datasource.local.room.dao.CategoryMovieDao
@@ -20,9 +21,9 @@ import com.globant.movies.model.MovieDetailItem
 import com.globant.movies.model.MovieItem
 import com.globant.movies.model.SyncCategoryMovieItem
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 
 class RoomDataSource @Inject constructor(
     private val movieDao: MovieDao,
@@ -30,10 +31,12 @@ class RoomDataSource @Inject constructor(
     private val categoryMovieDao: CategoryMovieDao,
     private val syncCategoryMovieDao: SyncCategoryMovieDao,
     private val movieDetailDao: MovieDetailDao,
+    @DefaultDispatcher
+    private val defaultDispatcher: CoroutineContext
 ):MoviesLocalDataSource {
 
     init {
-        CoroutineScope(Dispatchers.Default).launch {
+        CoroutineScope(defaultDispatcher).launch {
             val moviesLists = categoryDao.getAllCategories()
             if(moviesLists.isEmpty()){
                 categoryDao.insertAll( CategoryType.values().map { it.toDatabase() } )
@@ -51,10 +54,6 @@ class RoomDataSource @Inject constructor(
         }
         return response
     }
-
-    override suspend fun getUserMoviesCategory(
-        listType: CategoryType
-    ): List<MovieItem> = movieDao.getMoviesByCategory(listType).map { it.toDomain() }
 
     override suspend fun addMoviesToCategory(movies: List<MovieEntity>, category: CategoryType) {
         movieDao.insertMovieList(movies)
