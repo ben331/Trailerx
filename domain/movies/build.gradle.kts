@@ -13,4 +13,9 @@ dependencies {
 
     implementation(Libs.Coroutines.core)
     implementation(Libs.Hilt.dagger)
+
+    //Testing
+    testImplementation(Libs.Testing.junit)
+    testImplementation(Libs.Testing.coroutines)
+    testImplementation(Libs.Testing.mockK)
 }

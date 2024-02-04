@@ -66,9 +66,12 @@ dependencies {
 
     //Tests
     testImplementation(Libs.Testing.junit)
+    testImplementation(Libs.Testing.coroutines)
+    testImplementation(Libs.Testing.mockK)
     androidTestImplementation(Libs.Testing.junit_androidx)
     androidTestImplementation(Libs.Testing.espresso)
     androidTestImplementation(Libs.Testing.navigation)
+    testImplementation(Libs.Testing.androidx)
 
     //Coroutines
     runtimeOnly(Libs.Coroutines.androidx)

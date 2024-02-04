@@ -94,7 +94,6 @@ class SearchFragment : Fragment(), MovieResultAdapter.ImageRenderListener, Movie
         moviesResultAdapter = MovieResultAdapter()
         moviesResultAdapter.movieList = searchViewModel.resultMovies
         moviesResultAdapter.moviesListener = this
-        searchViewModel.adapter = moviesResultAdapter
         with(binding.recyclerMoviesResult){
             adapter = moviesResultAdapter
             layoutManager = LinearLayoutManager(requireContext())
