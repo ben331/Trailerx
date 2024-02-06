@@ -5,6 +5,7 @@ plugins {
     id("com.google.gms.google-services")
     id("com.google.dagger.hilt.android")
     id("kotlin-kapt")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -74,6 +75,10 @@ dependencies {
     //Dagger Hilt
     implementation(Libs.Hilt.hilt)
     kapt(Libs.Hilt.compiler)
+
+    //Firebase
+    implementation(Libs.Firebase.analytics)
+    implementation(Libs.Firebase.crashlytics)
 }
 
 kapt {
