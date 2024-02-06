@@ -17,6 +17,7 @@ object Versions {
     const val firebase_analytics = "21.5.0"
     const val firebase_crashlytics = "18.6.1"
     const val firebase_perf = "20.5.1"
+    const val firebase_remote_config = "21.6.0"
     const val jwt = "0.11.2"
     const val google_auth = "20.7.0"
     const val facebook_auth = "[8,9)"
@@ -81,6 +82,7 @@ object Libs {
         const val analytics = "com.google.firebase:firebase-analytics:${Versions.firebase_analytics}"
         const val crashlytics = "com.google.firebase:firebase-crashlytics:${Versions.firebase_crashlytics}"
         const val performance = "com.google.firebase:firebase-perf:${Versions.firebase_perf}"
+        const val remote_config = "com.google.firebase:firebase-config:${Versions.firebase_remote_config}"
     }
 
     object JWT {

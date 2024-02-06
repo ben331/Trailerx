@@ -20,11 +20,18 @@ import com.globant.ui.helpers.ImageLoader
 import com.globant.home.view.adapters.MovieAdapter
 import com.globant.home.view.adapters.MovieViewHolder
 import com.globant.home.viewmodel.HomeViewModel
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHolder.MovieListener {
+
+    companion object {
+        private const val FIRST_HOME_TITLE = "first_home_title"
+        private const val  SECOND_HOME_TITLE= "second_home_title"
+        private const val  THIRD_HOME_TITLE= "third_home_title"
+    }
 
     @Inject
     lateinit var dialogManager: DialogManager
@@ -41,6 +48,10 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
     private lateinit var nowPlayingMoviesAdapter: MovieAdapter
     private lateinit var upcomingMoviesAdapter: MovieAdapter
     private lateinit var popularMoviesAdapter: MovieAdapter
+
+    private val remoteConfig: FirebaseRemoteConfig by lazy {
+        FirebaseRemoteConfig.getInstance()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -148,31 +159,33 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
         upcomingMoviesAdapter.moviesListener = this
         popularMoviesAdapter.moviesListener = this
 
-        with(binding.listMoviesOne){
-            titleContainer.sectionTitle.text = getString(R.string.section_now_playing)
-            listDescription.visibility = View.GONE
-            moviesRecyclerView.adapter = nowPlayingMoviesAdapter
-            moviesRecyclerView.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            moviesRecyclerView.setHasFixedSize(true)
-        }
+        remoteConfig.fetchAndActivate().addOnCompleteListener { _ ->
+            with(binding.listMoviesOne){
+                titleContainer.sectionTitle.text = remoteConfig.getString(FIRST_HOME_TITLE)
+                listDescription.visibility = View.GONE
+                moviesRecyclerView.adapter = nowPlayingMoviesAdapter
+                moviesRecyclerView.layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                moviesRecyclerView.setHasFixedSize(true)
+            }
 
-        with(binding.listMoviesTwo){
-            titleContainer.sectionTitle.text = getString(R.string.section_upcoming)
-            listDescription.visibility = View.GONE
-            moviesRecyclerView.adapter = upcomingMoviesAdapter
-            moviesRecyclerView.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            moviesRecyclerView.setHasFixedSize(true)
-        }
+            with(binding.listMoviesTwo){
+                titleContainer.sectionTitle.text = remoteConfig.getString(SECOND_HOME_TITLE)
+                listDescription.visibility = View.GONE
+                moviesRecyclerView.adapter = upcomingMoviesAdapter
+                moviesRecyclerView.layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                moviesRecyclerView.setHasFixedSize(true)
+            }
 
-        with(binding.listMoviesTree){
-            titleContainer.sectionTitle.text = getString(R.string.section_popular)
-            listDescription.visibility = View.GONE
-            moviesRecyclerView.adapter = popularMoviesAdapter
-            moviesRecyclerView.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            moviesRecyclerView.setHasFixedSize(true)
+            with(binding.listMoviesTree){
+                titleContainer.sectionTitle.text = remoteConfig.getString(THIRD_HOME_TITLE)
+                listDescription.visibility = View.GONE
+                moviesRecyclerView.adapter = popularMoviesAdapter
+                moviesRecyclerView.layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                moviesRecyclerView.setHasFixedSize(true)
+            }
         }
     }
 

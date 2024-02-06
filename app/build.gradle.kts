@@ -81,6 +81,7 @@ dependencies {
     implementation(Libs.Firebase.analytics)
     implementation(Libs.Firebase.crashlytics)
     implementation(Libs.Firebase.performance)
+    implementation(Libs.Firebase.remote_config)
 }
 
 kapt {

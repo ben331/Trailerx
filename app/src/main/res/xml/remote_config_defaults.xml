@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<defaultsMap>
+    <entry>
+        <key>first_home_title</key>
+        <value>~ Tendencia ahora</value>
+    </entry>
+    <entry>
+        <key>second_home_title</key>
+        <value>~ Pŕoximamente</value>
+    </entry>
+    <entry>
+        <key>third_home_title</key>
+        <value>~ Populares</value>
+    </entry>
+</defaultsMap>

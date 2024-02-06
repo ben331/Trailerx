@@ -80,6 +80,9 @@ dependencies {
     //Dagger Hilt
     implementation(Libs.Hilt.hilt)
     kapt(Libs.Hilt.compiler)
+
+    //Firebase
+    implementation(Libs.Firebase.remote_config)
 }
 kapt {
     correctErrorTypes = true
