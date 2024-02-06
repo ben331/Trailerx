@@ -16,6 +16,7 @@ object Versions {
     const val firebase_firestore = "24.10.0"
     const val firebase_analytics = "21.5.0"
     const val firebase_crashlytics = "18.6.1"
+    const val firebase_perf = "20.5.1"
     const val jwt = "0.11.2"
     const val google_auth = "20.7.0"
     const val facebook_auth = "[8,9)"
@@ -79,6 +80,7 @@ object Libs {
         const val firestore = "com.google.firebase:firebase-firestore:${Versions.firebase_firestore}"
         const val analytics = "com.google.firebase:firebase-analytics:${Versions.firebase_analytics}"
         const val crashlytics = "com.google.firebase:firebase-crashlytics:${Versions.firebase_crashlytics}"
+        const val performance = "com.google.firebase:firebase-perf:${Versions.firebase_perf}"
     }
 
     object JWT {

@@ -6,6 +6,7 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("kotlin-kapt")
     id("com.google.firebase.crashlytics")
+    id("com.google.firebase.firebase-perf")
 }
 
 android {
@@ -79,6 +80,7 @@ dependencies {
     //Firebase
     implementation(Libs.Firebase.analytics)
     implementation(Libs.Firebase.crashlytics)
+    implementation(Libs.Firebase.performance)
 }
 
 kapt {
