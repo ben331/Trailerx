@@ -19,15 +19,14 @@
 
         <ImageView
             android:id="@+id/imgLogo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="250dp"
+            android:layout_height="80dp"
             android:layout_marginTop="@dimen/margin_large"
+            android:layout_marginBottom="@dimen/margin_extra_large"
             android:autofillHints="@string/app_name"
             android:contentDescription="@string/app_name"
             android:scaleType="fitXY"
-            android:scaleX="@dimen/scale_logo"
-            android:scaleY="@dimen/scale_logo"
-            android:src="@drawable/ic_launcher_foreground"
+            android:src="@drawable/ic_trailerx"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

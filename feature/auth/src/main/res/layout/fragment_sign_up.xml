@@ -45,9 +45,7 @@
                 android:layout_height="@dimen/icon_login_height"
                 android:layout_gravity="center"
                 android:contentDescription="@string/app_name"
-                android:scaleX="@dimen/scale_x_logo_login"
-                android:scaleY="@dimen/scale_y_logo_login"
-                android:src="@drawable/ic_launcher_foreground" />
+                android:src="@drawable/ic_trailerx" />
         </FrameLayout>
 
         <TextView
