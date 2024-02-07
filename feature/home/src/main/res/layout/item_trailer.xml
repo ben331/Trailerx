@@ -41,7 +41,7 @@
         android:layout_marginStart="@dimen/margin_large"
         android:layout_marginTop="@dimen/margin_micro"
         android:elevation="@dimen/elevation_medium"
-        style="@style/TextAppearance.IMDb.Body.Medium"
+        style="@style/TextAppearance.Trailerx.Body.Medium"
         tools:text="@tools:sample/full_names"/>
 
     <TextView
@@ -51,6 +51,6 @@
         app:layout_constraintTop_toBottomOf="@id/trailerName"
         android:layout_marginStart="@dimen/margin_large"
         android:layout_marginTop="@dimen/margin_micro"
-        style="@style/TextAppearance.IMDb.Body.Small"
+        style="@style/TextAppearance.Trailerx.Body.Small"
         android:text="@string/trailer"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

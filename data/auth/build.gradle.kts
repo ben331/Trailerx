@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.globant.auth"
+    namespace = "tech.benhack.auth"
     compileSdk = ConfigurationData.compileSdk
 
     defaultConfig {

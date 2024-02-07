@@ -43,7 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_micro"
-        android:textAppearance="@style/TextAppearance.IMDb.Body.SmallLight"
+        android:textAppearance="@style/TextAppearance.Trailerx.Body.SmallLight"
         app:layout_constraintStart_toEndOf="@id/icon_star"
         app:layout_constraintTop_toTopOf="@id/icon_star"
         tools:ignore="TextContrastCheck"
@@ -63,7 +63,7 @@
         android:layout_marginBottom="@dimen/margin_medium"
         android:ellipsize="end"
         android:maxLines="10"
-        android:textAppearance="@style/TextAppearance.IMDb.Body"
+        android:textAppearance="@style/TextAppearance.Trailerx.Body"
         tools:text="@string/synopsis"
         tools:ignore="VisualLintLongText" />
 

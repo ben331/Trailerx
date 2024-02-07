@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.globant.movies"
+    namespace = "tech.benhack.movies"
     compileSdk = ConfigurationData.compileSdk
 
     defaultConfig {

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">IMDb</string>
+    <string name="app_name">Trailerx</string>
 
     /*
     ---Login---
@@ -35,7 +35,7 @@
     /*
     --File names
     */
-    <string name="prefs_file">com.globant.imdb.PREFERENCE_FILE_KEY</string>
+    <string name="prefs_file">tech.benhack.trailerx.PREFERENCE_FILE_KEY</string>
 
     /*
     --Errors and Alerts Messages

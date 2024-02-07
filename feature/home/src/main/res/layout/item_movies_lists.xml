@@ -24,7 +24,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="@dimen/margin_medium"
         android:layout_marginEnd="@dimen/margin_large"
-        android:textAppearance="@style/TextAppearance.IMDb.Body.Small"
+        android:textAppearance="@style/TextAppearance.Trailerx.Body.Small"
         tools:text="@string/sample_list"/>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -48,7 +48,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginTop="@dimen/margin_medium"
         android:layout_marginBottom="@dimen/margin_medium"
-        android:textAppearance="@style/TextAppearance.IMDb.Button.Primary"
+        android:textAppearance="@style/TextAppearance.Trailerx.Button.Primary"
         android:text="@string/start_watch_list"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

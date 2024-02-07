@@ -30,7 +30,7 @@
         app:layout_constraintStart_toEndOf="@id/img_result"
         android:layout_marginTop="@dimen/margin_large"
         android:layout_marginStart="@dimen/margin_large"
-        android:textAppearance="@style/TextAppearance.IMDb.Title"
+        android:textAppearance="@style/TextAppearance.Trailerx.Title"
         tools:text="The Queens Gambit"/>
 
     <TextView
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_large"
         android:layout_marginTop="@dimen/margin_micro"
-        android:textAppearance="@style/TextAppearance.IMDb.Title.Light"
+        android:textAppearance="@style/TextAppearance.Trailerx.Title.Light"
         app:layout_constraintStart_toEndOf="@id/img_result"
         app:layout_constraintTop_toBottomOf="@id/label_title_result"
         tools:ignore="TextContrastCheck"
@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_large"
         android:layout_marginTop="@dimen/margin_large"
-        android:textAppearance="@style/TextAppearance.IMDb.Body.MediumLight"
+        android:textAppearance="@style/TextAppearance.Trailerx.Body.MediumLight"
         app:layout_constraintStart_toEndOf="@id/img_result"
         app:layout_constraintTop_toBottomOf="@id/label_year"
         tools:ignore="TextContrastCheck"

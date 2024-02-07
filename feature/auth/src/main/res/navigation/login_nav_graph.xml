@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.globant.auth.view.LoginFragment"
+        android:name="tech.benhack.auth.view.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -18,11 +18,11 @@
             app:popEnterAnim="@android:anim/slide_in_left"
             app:popExitAnim="@android:anim/slide_out_right" />
         <deepLink
-            app:uri="android-app://com.globant.imdb/auth" />
+            app:uri="android-app://tech.benhack.trailerx/auth" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.globant.auth.view.SignUpFragment"
+        android:name="tech.benhack.auth.view.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" >
         <action

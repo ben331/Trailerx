@@ -60,7 +60,7 @@
                 android:layout_marginStart="@dimen/margin_medium"
                 android:layout_marginEnd="@dimen/margin_medium"
                 android:text="@string/invitation"
-                android:textAppearance="@style/TextAppearance.IMDb.Body.DarkItalic"
+                android:textAppearance="@style/TextAppearance.Trailerx.Body.DarkItalic"
                 android:gravity="center"
                 android:visibility="gone"
                 tools:visibility="visible"
@@ -78,7 +78,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="@dimen/margin_medium"
                 android:layout_marginBottom="@dimen/margin_medium"
-                android:textAppearance="@style/TextAppearance.IMDb.Button.Primary"
+                android:textAppearance="@style/TextAppearance.Trailerx.Button.Primary"
                 android:text="@string/register"/>
 
             <View

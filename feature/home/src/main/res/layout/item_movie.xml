@@ -4,7 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="190dp"
     android:layout_marginEnd="@dimen/recycler_view_item_margin"
-    style="@style/Widget.IMDb.ItemMovie"
+    style="@style/Widget.Trailerx.ItemMovie"
     android:elevation="@dimen/elevation_medium"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.view.fragments.MovieFragment">
@@ -51,7 +51,7 @@
         app:layout_constraintBottom_toBottomOf="@id/img_star"
         app:layout_constraintStart_toEndOf="@id/img_star"
         android:layout_marginStart="@dimen/margin_micro"
-        android:textAppearance="@style/TextAppearance.IMDb.Body.Micro"
+        android:textAppearance="@style/TextAppearance.Trailerx.Body.Micro"
         tools:text="4.5"/>
 
     <TextView
@@ -60,7 +60,7 @@
         android:layout_height="0dp"
         android:ellipsize="end"
         android:maxLines="2"
-        android:textAppearance="@style/TextAppearance.IMDb.Body.Pico"
+        android:textAppearance="@style/TextAppearance.Trailerx.Body.Pico"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/img_info"
         app:layout_constraintStart_toStartOf="@id/img_star"

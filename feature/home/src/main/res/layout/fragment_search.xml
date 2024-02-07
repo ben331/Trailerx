@@ -25,11 +25,11 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="@dimen/margin_extra_large"
             android:layout_marginEnd="@dimen/margin_extra_large"
-            style="@style/Widget.IMDb.TextInputLayout.Search">
+            style="@style/Widget.Trailerx.TextInputLayout.Search">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/search_text_field"
-                style="@style/Widget.IMDb.TextInputEditText.Search"
+                style="@style/Widget.Trailerx.TextInputEditText.Search"
                 app:endIconMode="clear_text"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/edittext_height"
@@ -67,7 +67,7 @@
             android:id="@+id/progressBar"
             android:layout_width="@dimen/progress_size"
             android:layout_height="@dimen/progress_size"
-            style="@style/Widget.IMDb.ProgressBar"/>
+            style="@style/Widget.Trailerx.ProgressBar"/>
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

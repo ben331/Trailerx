@@ -1,5 +1,5 @@
 
-# IMDb App
+# Trailerx App
 
 Playlist mobile app. Built with Clean Architecture, MVVM, Room, Retrofit, and best development practices.
 
@@ -31,7 +31,7 @@ Playlist mobile app. Built with Clean Architecture, MVVM, Room, Retrofit, and be
 <string name="TMDB_api_token">*******</string>
 ```
 
-6. Copy the account_id from [TMBD Api](https://developer.themoviedb.org/reference/account-details) and replace it in the Constants.kt file at core > common > main > java > com.globant.common > Constants:
+6. Copy the account_id from [TMBD Api](https://developer.themoviedb.org/reference/account-details) and replace it in the Constants.kt file at core > common > main > java > tech.benhack.common > Constants:
 
 ```kotlin
   object Constants {

@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.globant.home"
+    namespace = "tech.benhack.home"
     compileSdk = ConfigurationData.compileSdk
 
     defaultConfig {

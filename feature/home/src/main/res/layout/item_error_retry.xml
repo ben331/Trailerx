@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:textAppearance="@style/TextAppearance.IMDb.Title.Light"
+        android:textAppearance="@style/TextAppearance.Trailerx.Title.Light"
         />
 
     <ImageView
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/server_error"
-        android:textAppearance="@style/TextAppearance.IMDb.ItalicBody"
+        android:textAppearance="@style/TextAppearance.Trailerx.ItalicBody"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_error" />

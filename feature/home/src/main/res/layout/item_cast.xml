@@ -19,21 +19,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_small"
-        android:textAppearance="@style/TextAppearance.IMDb.Body.Micro"
+        android:textAppearance="@style/TextAppearance.Trailerx.Body.Micro"
         tools:text="Marcin"/>
 
     <TextView
         android:id="@+id/label_cast_lastname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.IMDb.Body.Micro"
+        android:textAppearance="@style/TextAppearance.Trailerx.Body.Micro"
         tools:text="Dorocinski"/>
 
     <TextView
         android:id="@+id/label_cast_character"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.IMDb.Body.MicroLight"
+        android:textAppearance="@style/TextAppearance.Trailerx.Body.MicroLight"
         tools:ignore="TextContrastCheck"
         tools:text="Vasily Bargov" />
 </LinearLayout>

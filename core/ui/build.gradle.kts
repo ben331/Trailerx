@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.globant.ui"
+    namespace = "tech.benhack.ui"
     compileSdk = ConfigurationData.compileSdk
 
     defaultConfig {

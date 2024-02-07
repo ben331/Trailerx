@@ -20,7 +20,7 @@
         app:layout_constraintBottom_toBottomOf="@id/divider_end"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="@dimen/margin_large"
-        android:textAppearance="@style/TextAppearance.IMDb.Button.Raw"
+        android:textAppearance="@style/TextAppearance.Trailerx.Button.Raw"
         android:text="@string/chapters_guide"/>
 
     <TextView
@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_medium"
-        android:textAppearance="@style/TextAppearance.IMDb.Body.SmallLight"
+        android:textAppearance="@style/TextAppearance.Trailerx.Body.SmallLight"
         app:layout_constraintBottom_toBottomOf="@id/divider_end"
         app:layout_constraintEnd_toStartOf="@id/icon_forward"
         app:layout_constraintTop_toTopOf="@id/divider_start"

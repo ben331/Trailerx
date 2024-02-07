@@ -10,7 +10,7 @@ plugins {
 }
 
 android {
-    namespace = "com.globant.imdb"
+    namespace = "tech.benhack.trailerx"
     compileSdk = ConfigurationData.compileSdk
 
     defaultConfig {

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">IMDb</string>
+    <string name="app_name">Trailerx</string>
 
     /*
     ---Navigation buttons---
@@ -26,7 +26,7 @@
     /*
     ---SearchFragment---
     */
-    <string name="search_hint">Buscar IMDb</string>
+    <string name="search_hint">Buscar Trailerx</string>
     <string name="chapters_guide">Guía de episodios</string>
     <string name="add_to_watch_list">Agregar a mi lista de seguimiento</string>
     <string name="trailer">Trailer Oficial</string>
@@ -67,7 +67,7 @@
     /*
     --File names
     */
-    <string name="prefs_file">com.globant.imdb.PREFERENCE_FILE_KEY</string>
+    <string name="prefs_file">tech.benhack.trailerx.PREFERENCE_FILE_KEY</string>
 
     /*
     --Errors and Alerts Messages

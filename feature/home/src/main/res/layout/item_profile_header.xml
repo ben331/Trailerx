@@ -24,7 +24,7 @@
         app:layout_constraintBottom_toBottomOf="@id/profile_photo_container"
         app:layout_constraintStart_toEndOf="@id/profile_photo_container"
         android:layout_marginStart="@dimen/margin_large"
-        android:textAppearance="@style/TextAppearance.IMDb.Body.Dark"
+        android:textAppearance="@style/TextAppearance.Trailerx.Body.Dark"
         tools:text="Juan Perez"/>
 
     <ImageView

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigationFragment"
-        android:name="com.globant.home.view.fragments.NavigationFragment"
+        android:name="tech.benhack.home.view.fragments.NavigationFragment"
         android:label="fragment_navigation"
         tools:layout="@layout/fragment_navigation" >
         <argument
@@ -15,7 +15,7 @@
             app:argType="string"
             android:defaultValue=""/>
         <deepLink
-            app:uri="android-app://com.globant.imdb/home?token={token}"
+            app:uri="android-app://tech.benhack.trailerx/home?token={token}"
             />
     </fragment>
 </navigation>

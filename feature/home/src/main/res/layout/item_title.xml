@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_medium"
-        style="@style/TextAppearance.IMDb.Body.Dark"
+        style="@style/TextAppearance.Trailerx.Body.Dark"
         tools:text="Default Section Title"/>
 
 </LinearLayout>

@@ -23,12 +23,12 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginStart="@dimen/margin_medium"
         android:layout_marginTop="@dimen/margin_medium"
-        style="@style/TextAppearance.IMDb.Title.Bold"
+        style="@style/TextAppearance.Trailerx.Title.Bold"
         tools:text="Gambito de dama"/>
 
     <TextView
         android:id="@+id/origin_title"
-        style="@style/TextAppearance.IMDb.Body.SmallLight"
+        style="@style/TextAppearance.Trailerx.Body.SmallLight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_medium"
@@ -39,7 +39,7 @@
         tools:text="The queens Gambit" />
 
     <TextView
-        style="@style/TextAppearance.IMDb.Body.SmallLight"
+        style="@style/TextAppearance.Trailerx.Body.SmallLight"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_small"
@@ -55,7 +55,7 @@
 
     <TextView
         android:id="@+id/detail_movie"
-        style="@style/TextAppearance.IMDb.TextField.SignUp"
+        style="@style/TextAppearance.Trailerx.TextField.SignUp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_medium"

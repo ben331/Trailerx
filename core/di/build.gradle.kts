@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.globant.di"
+    namespace = "tech.benhack.di"
     compileSdk = ConfigurationData.compileSdk
 
     defaultConfig {

@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.IMDb" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Trailerx" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
         <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">@mipmap/ic_launcher</item>
 
@@ -30,16 +30,16 @@
         <item name="android:statusBarColor">@color/yellow_400</item>
 
         <!-- Text Appearances. -->
-        <item name="textAppearanceCaption">@style/TextAppearance.IMDb.Caption</item>
-        <item name="textAppearanceButton">@style/TextAppearance.IMDb.Button.Primary</item>
+        <item name="textAppearanceCaption">@style/TextAppearance.Trailerx.Caption</item>
+        <item name="textAppearanceButton">@style/TextAppearance.Trailerx.Button.Primary</item>
 
         <!-- Shape Appearances. -->
-        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.IMDb.SmallComponent.Outlined</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Trailerx.SmallComponent.Outlined</item>
     </style>
 
-    <style name="Theme.IMDb.SplashScreen" parent="Theme.SplashScreen">
+    <style name="Theme.Trailerx.SplashScreen" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/yellow_400</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
-        <item name="postSplashScreenTheme">@style/Theme.IMDb</item>
+        <item name="postSplashScreenTheme">@style/Theme.Trailerx</item>
     </style>
 </resources>
