@@ -8,8 +8,8 @@
     <string name="password">Contraseña</string>
     <string name="forgot_password">¿Olvidaste la contraseña?</string>
     <string name="login">Login</string>
-    <string name="login_with">Ó podes ingresar con</string>
-    <string name="has_account">¿No tenes cuenta?</string>
+    <string name="login_with">Ó puedes ingresar con</string>
+    <string name="has_account">¿No tienes cuenta?</string>
     <string name="register">Regístrate</string>
     <string name="guest">Continuar como invitado</string>
 
@@ -18,7 +18,7 @@
     */
     <string name="create_account">Crear una cuenta</string>
     <string name="name">Nombre</string>
-    <string name="email">Correo electrónico</string>
+    <string name="email">Correo</string>
     <string name="password_rule">La contraseña debe contener 8 caracteres</string>
     <string name="accept">Aceptar</string>
     <string name="finish_signup">Finalizar Registro</string>

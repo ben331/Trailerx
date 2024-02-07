@@ -35,7 +35,7 @@
             android:id="@+id/labelUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/user"
+            android:text="@string/email"
             android:textAppearance="@style/TextAppearance.Trailerx.LoginLabel"
             app:layout_constraintStart_toStartOf="@+id/editTextEmail"
             app:layout_constraintTop_toBottomOf="@+id/imgLogo" />
@@ -118,40 +118,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
-        <FrameLayout
-            android:id="@+id/facebook_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_large"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/labelLoginWith"
-            tools:context=".ui.view.MainActivity">
-
-            <ImageView
-                android:layout_width="@dimen/icon_layout_width"
-                android:layout_height="@dimen/icon_layout_height"
-                android:layout_gravity="center"
-                android:background="@drawable/ic_white_circle"
-                android:contentDescription="@string/img_facebook"
-                tools:ignore="ImageContrastCheck" />
-
-            <ImageView
-                android:layout_width="@dimen/icon_width"
-                android:layout_height="@dimen/icon_height"
-                android:layout_gravity="center"
-                android:contentDescription=""
-                android:src="@drawable/ic_facebook"
-                tools:ignore="ContentDescription" />
-        </FrameLayout>
-
+        <!--TODO: Turn visible when apple auth is available -->
         <FrameLayout
             android:id="@+id/apple_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_large"
-            app:layout_constraintEnd_toStartOf="@+id/facebook_btn"
-            app:layout_constraintTop_toTopOf="@+id/facebook_btn"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@+id/google_btn"
+            app:layout_constraintTop_toTopOf="@+id/google_btn"
             tools:context=".ui.view.MainActivity">
 
             <ImageView
@@ -175,9 +150,10 @@
             android:id="@+id/google_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_large"
-            app:layout_constraintStart_toEndOf="@+id/facebook_btn"
-            app:layout_constraintTop_toTopOf="@+id/facebook_btn"
+            android:layout_marginTop="@dimen/margin_large"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/labelLoginWith"
             tools:context=".ui.view.MainActivity">
 
             <ImageView
@@ -197,6 +173,34 @@
                 tools:ignore="ContentDescription" />
         </FrameLayout>
 
+        <!--TODO: Turn visible when facebook auth is available -->
+        <FrameLayout
+            android:id="@+id/facebook_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_large"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="@+id/google_btn"
+            app:layout_constraintStart_toEndOf="@+id/google_btn"
+            tools:context=".ui.view.MainActivity">
+
+            <ImageView
+                android:layout_width="@dimen/icon_layout_width"
+                android:layout_height="@dimen/icon_layout_height"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_white_circle"
+                android:contentDescription="@string/img_facebook"
+                tools:ignore="ImageContrastCheck" />
+
+            <ImageView
+                android:layout_width="@dimen/icon_width"
+                android:layout_height="@dimen/icon_height"
+                android:layout_gravity="center"
+                android:contentDescription=""
+                android:src="@drawable/ic_facebook"
+                tools:ignore="ContentDescription" />
+        </FrameLayout>
+
         <TextView
             android:id="@+id/labelHasAccount"
             android:layout_width="wrap_content"
@@ -204,19 +208,20 @@
             android:layout_marginTop="@dimen/margin_medium"
             android:text="@string/has_account"
             android:textAppearance="@style/TextAppearance.Trailerx.ItalicBody"
-            app:layout_constraintStart_toStartOf="@+id/apple_btn"
-            app:layout_constraintTop_toBottomOf="@+id/apple_btn" />
+            app:layout_constraintTop_toBottomOf="@+id/google_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <TextView
             android:id="@+id/labelRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_small"
             android:text="@string/register"
             android:textAppearance="@style/TextAppearance.Trailerx.Body.DarkItalic"
             android:textColor="@color/gray_800"
-            app:layout_constraintStart_toEndOf="@+id/labelHasAccount"
-            app:layout_constraintTop_toTopOf="@+id/labelHasAccount" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/labelHasAccount" />
 
         <TextView
             android:id="@+id/labelGuest"
@@ -229,7 +234,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/labelHasAccount" />
+            app:layout_constraintTop_toBottomOf="@+id/labelRegister" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
