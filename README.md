@@ -1,7 +1,7 @@
 
 # Trailerx App
 
-Playlist mobile app. Built with Clean Architecture, MVVM, Room, Retrofit, and best development practices.
+Application of trailers for trending, premiere and popular movies. Create your own movie watchlist. Built with Multi-Module Clean Architecture, MVVM, Room Cache, Retrofit, Hilt, Material design and best development development, testing and deployment practices, such as; SOLID, Design Patterns, BDD and DevOps culture.
 
 
 ## Installation
