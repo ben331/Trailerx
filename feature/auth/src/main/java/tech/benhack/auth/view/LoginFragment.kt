@@ -55,7 +55,6 @@ class LoginFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        findNavController().popBackStack(R.id.loginFragment, true)
         loadSession()
     }
 
@@ -208,6 +207,7 @@ class LoginFragment : Fragment() {
 
     private fun showHome(email:String, provider: ProviderType) {
         val accessToken = email.let{ TokenService().generateToken(requireContext(), email, provider.name)}
+        navController.popBackStack(R.id.loginFragment, true)
         showHome(accessToken)
     }
 

@@ -66,8 +66,7 @@ class SignUpFragment : Fragment() {
 
     private fun setupButtons(){
         binding.backButton.setOnClickListener{
-            val action = SignUpFragmentDirections.actionSignUpFragmentToLoginFragment()
-            navController.navigate(action)
+            navController.popBackStack()
         }
 
         binding.btnAccept.setOnClickListener {
@@ -159,8 +158,7 @@ class SignUpFragment : Fragment() {
                 getString(R.string.account_created_success)
             )
         }
-        val action = SignUpFragmentDirections.actionSignUpFragmentToLoginFragment()
-        navController.navigate(action)
+        navController.popBackStack()
     }
 
     private fun handleFailure(title:Int, msg:Int){
