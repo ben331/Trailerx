@@ -3,6 +3,11 @@
 
 Application of trailers for trending, premiere and popular movies. Create your own movie watchlist. Built with Multi-Module Clean Architecture, MVVM, Room Cache, Retrofit, Hilt, Material design and best development development, testing and deployment practices, such as; SOLID, Design Patterns, BDD and DevOps culture.
 
+![1  login](https://github.com/ben331/Trailerx/assets/54720004/9f03bb0c-fd4d-453e-88fc-a16ada164e67)
+![2  home](https://github.com/ben331/Trailerx/assets/54720004/cde313dc-bd2b-49ab-a346-baa7918d9f2b)
+![3  movie](https://github.com/ben331/Trailerx/assets/54720004/8ac1781b-a918-4609-8059-64f304c54273)
+![4  search](https://github.com/ben331/Trailerx/assets/54720004/0d1dc8cc-744e-46f7-b1e6-5a6b0582f97f)
+![5  profile](https://github.com/ben331/Trailerx/assets/54720004/3693cba7-9441-4e22-a1bb-676ea1584648)
 
 ## Installation
 
