@@ -49,6 +49,7 @@ class NavigationFragment : Fragment(), PopupMenu.OnMenuItemClickListener,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        findNavController().popBackStack(R.id.navigationFragment, false)
         checkSession()
         preloadImages()
     }

@@ -17,6 +17,7 @@ import androidx.core.net.toUri
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.NavDeepLinkRequest
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.facebook.CallbackManager
 import tech.benhack.auth.R
@@ -207,13 +208,12 @@ class LoginFragment : Fragment() {
 
     private fun showHome(email:String, provider: ProviderType) {
         val accessToken = email.let{ TokenService().generateToken(requireContext(), email, provider.name)}
-        navController.popBackStack(R.id.loginFragment, true)
         showHome(accessToken)
     }
 
     private fun showHome(token:String){
         authViewModel.isLoading.postValue(false)
-
+        navController.popBackStack(R.id.loginFragment, true)
         val request = NavDeepLinkRequest.Builder
             .fromUri(HOME_URI.replace("{tokenValue}", token).toUri())
             .build()
