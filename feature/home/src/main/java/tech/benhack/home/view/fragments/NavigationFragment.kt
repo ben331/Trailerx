@@ -44,12 +44,8 @@ class NavigationFragment : Fragment(), PopupMenu.OnMenuItemClickListener,
 
     private val args: NavigationFragmentArgs by navArgs()
 
-    private var email: String? = null
-    private lateinit var provider:ProviderType
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        findNavController().popBackStack(R.id.navigationFragment, false)
         checkSession()
         preloadImages()
     }
@@ -89,17 +85,17 @@ class NavigationFragment : Fragment(), PopupMenu.OnMenuItemClickListener,
     }
 
     private fun checkSession() {
-        val token = args.token
+        val token =
+            activity?.getSharedPreferences(
+                getString(R.string.prefs_file),
+                Context.MODE_PRIVATE
+            )?.getString("token", null) ?: args.token
+
         val claims = TokenService().validateToken(requireContext(),token)
 
         //Decrypt Success
         if(claims!=null){
-            email = claims["sub"] as String?
-            provider = ProviderType.valueOf( claims["provider"] as String )
-            if(provider!=ProviderType.GUEST){
-                saveSession(token)
-            }
-            findNavController().popBackStack(R.id.navigationFragment, true)
+            saveSession(token)
         }//Decrypt Fail
         else{
             DialogManager().showAlert(requireContext(), "Error", "Invalid Token")
@@ -134,7 +130,11 @@ class NavigationFragment : Fragment(), PopupMenu.OnMenuItemClickListener,
         getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)?.edit()!!
         prefs.clear()
         prefs.apply()
-        viewModel.logout(provider)
+
+        TokenService().validateToken(requireContext(), args.token)?.also {
+            val provider = ProviderType.valueOf( it["provider"] as String )
+            viewModel.logout(provider)
+        }
     }
 
     private fun preloadImages(){

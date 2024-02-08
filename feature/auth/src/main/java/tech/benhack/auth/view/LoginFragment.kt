@@ -19,6 +19,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
 import com.facebook.CallbackManager
 import tech.benhack.auth.R
 import tech.benhack.auth.datasource.remote.ProviderType
@@ -213,11 +214,17 @@ class LoginFragment : Fragment() {
 
     private fun showHome(token:String){
         authViewModel.isLoading.postValue(false)
-        navController.popBackStack(R.id.loginFragment, true)
+
         val request = NavDeepLinkRequest.Builder
             .fromUri(HOME_URI.replace("{tokenValue}", token).toUri())
             .build()
-        navController.navigate(request)
+
+        // By default, implicit deeplink does not clean backstack, options is necessary.
+        val options = NavOptions.Builder()
+            .setPopUpTo(R.id.login_nav_graph, true)
+            .build()
+
+        navController.navigate(request, options)
     }
     private fun createUser(email:String, providerType: ProviderType){
         val user = UserModel(email, authViewModel.getDisplayName())
