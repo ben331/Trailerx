@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/constraintLayout"
+    android:background="?android:attr/colorBackground"
     tools:context=".view.SignUpFragment">
 
     <ImageButton

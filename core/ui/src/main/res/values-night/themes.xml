@@ -36,7 +36,9 @@
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Trailerx.SmallComponent.Outlined</item>
     </style>
 
-    <style name="Theme.Trailerx.SplashScreen">
-        <item name="android:windowBackground">@color/yellow_400</item>
+    <style name="Theme.Trailerx.SplashScreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/yellow_400</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/Theme.Trailerx</item>
     </style>
 </resources>

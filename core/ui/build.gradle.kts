@@ -39,6 +39,7 @@ dependencies {
     //AndroidX
     implementation(Libs.AndroidX.core)
     implementation(Libs.AndroidX.appcompat)
+    implementation(Libs.AndroidX.splash)
     implementation(Libs.Google.material)
 
     //Tests
