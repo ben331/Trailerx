@@ -8,6 +8,7 @@ build/
 
 # Local configuration file (sdk path, etc)
 local.properties
+*secrets.xml
 
 # Log/OS Files
 *.log
@@ -17,7 +18,7 @@ captures/
 .externalNativeBuild/
 .cxx/
 *.apk
-output.json
+output*.json
 
 # IntelliJ
 *.iml

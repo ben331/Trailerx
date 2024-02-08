@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="?android:attr/colorBackgroundFloating"
+    tools:context=".ui.view.fragments.SearchFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/header_search_height"
+        android:background="?android:attr/colorBackground"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/search_layout"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_max="@dimen/edittext_max_width"
+            android:layout_height="@dimen/edittext_layout_height"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="@dimen/margin_extra_large"
+            android:layout_marginEnd="@dimen/margin_extra_large"
+            style="@style/Widget.Trailerx.TextInputLayout.Search">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/search_text_field"
+                style="@style/Widget.Trailerx.TextInputEditText.Search"
+                app:endIconMode="clear_text"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edittext_height"
+                android:hint="@string/search_hint"
+                tools:ignore="TextContrastCheck" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_movies_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/header_container"
+        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginStart="@dimen/margin_large"
+        android:layout_marginEnd="@dimen/margin_large"/>
+
+    <include
+        android:id="@+id/offline_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        layout="@layout/item_error_retry" />
+
+    <FrameLayout
+        android:id="@+id/progress_component"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray_light_100"
+        android:visibility="gone"
+        tools:visibility="visible">
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="@dimen/progress_size"
+            android:layout_height="@dimen/progress_size"
+            style="@style/Widget.Trailerx.ProgressBar"/>
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

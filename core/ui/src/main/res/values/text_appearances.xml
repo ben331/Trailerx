@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextAppearance.Trailerx.Button.Primary" parent="TextAppearance.MaterialComponents.Button">
+        <item name="fontFamily">@font/roboto_bold</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="TextAppearance.Trailerx.Button.Secondary" parent="TextAppearance.MaterialComponents.Button">
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textColor">@color/login_button_text_color_selector</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="TextAppearance.Trailerx.TextField.SignUp" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="fontFamily">@font/roboto_regular</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textColor">@color/gray_500</item>
+    </style>
+
+    <style name="TextAppearance.Trailerx.TextField.Login" parent="">
+        <item name="fontFamily">@font/roboto_light_italic</item>
+        <item name="android:fontFamily">@font/roboto_light_italic</item>
+        <item name="android:textSize">@dimen/text_size_regular</item>
+        <item name="android:textColor">@color/gray_800</item>
+    </style>
+
+    <style name="TextAppearance.Trailerx.Caption" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="fontFamily">@font/roboto_light_italic</item>
+        <item name="android:fontFamily">@font/roboto_light_italic</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textColor">@color/gray_800</item>
+    </style>
+
+    <style name="TextAppearance.Trailerx.LoginLabel" parent="">
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textColor">@color/gray_800</item>
+    </style>
+
+    <style name="TextAppearance.Trailerx.LoginTitle" parent="">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textColor">@color/gray_800</item>
+    </style>
+
+    <style name="TextAppearance.Trailerx.ItalicBody" parent="">
+        <item name="android:fontFamily">@font/roboto_light_italic</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textColor">@color/gray_800</item>
+    </style>
+
+    <style name="TextAppearance.Trailerx.Link" parent="">
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textSize">@dimen/text_size_regular</item>
+        <item name="android:textColor">@color/gray_800</item>
+    </style>
+
+    <style name="TextAppearance.Trailerx.Title" parent="">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">@dimen/text_size_title</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextAppearance.Trailerx.Title.Bold" parent="">
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textSize">@dimen/text_size_extra_large</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextAppearance.Trailerx.Title.Light" parent="">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">@dimen/text_size_title</item>
+        <item name="android:textColor">@color/gray_500</item>
+    </style>
+
+    <style name="TextAppearance.Trailerx.Body" parent="">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">@dimen/text_size_regular</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextAppearance.Trailerx.Body.Small" parent="">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextAppearance.Trailerx.Body.Pico" parent="">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">@dimen/text_size_pico</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextAppearance.Trailerx.Body.Micro" parent="">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">@dimen/text_size_micro</item>
+        <item name="android:textColor">@color/gray_800</item>
+    </style>
+
+    <style name="TextAppearance.Trailerx.Body.MicroLight" parent="">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">@dimen/text_size_micro</item>
+        <item name="android:textColor">@color/gray_500</item>
+    </style>
+
+    <style name="TextAppearance.Trailerx.Body.SmallLight" parent="">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textColor">@color/gray_500</item>
+    </style>
+
+    <style name="TextAppearance.Trailerx.Body.Medium" parent="">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextAppearance.Trailerx.Body.MediumLight" parent="">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textColor">@color/gray_500</item>
+    </style>
+
+    <style name="TextAppearance.Trailerx.Body.Dark" parent="">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/gray_800</item>
+    </style>
+
+    <style name="TextAppearance.Trailerx.Button.Raw" parent="">
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/gray_800</item>
+    </style>
+
+    <style name="TextAppearance.Trailerx.Body.DarkItalic" parent="">
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textStyle">bold|italic</item>
+        <item name="android:textColor">@color/gray_800</item>
+    </style>
+</resources>

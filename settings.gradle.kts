@@ -13,5 +13,13 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "IMDb"
+rootProject.name = "Trailerx"
 include(":app")
+include(":feature:home")
+include(":feature:auth")
+include(":domain:movies")
+include(":data:movies")
+include(":data:auth")
+include(":core:common")
+include(":core:ui")
+include(":core:di")

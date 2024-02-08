@@ -1,19 +1,25 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("androidx.navigation.safeargs.kotlin")
+    id("com.google.gms.google-services")
+    id("com.google.dagger.hilt.android")
+    id("kotlin-kapt")
+    id("com.google.firebase.crashlytics")
+    id("com.google.firebase.firebase-perf")
 }
 
 android {
-    namespace = "com.globant.imdb"
-    compileSdk = 33
+    namespace = "tech.benhack.trailerx"
+    compileSdk = ConfigurationData.compileSdk
 
     defaultConfig {
-        applicationId = "com.globant.imdb"
-        minSdk = 24
+        applicationId = ConfigurationData.applicationId
+        minSdk = ConfigurationData.minSdk
         //noinspection OldTargetApi
-        targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
+        targetSdk = ConfigurationData.targetSdk
+        versionCode = ConfigurationData.versionCode
+        versionName = ConfigurationData.versionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -28,21 +34,56 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = ConfigurationData.jvmTarget
+    }
+    buildFeatures {
+        viewBinding = true
     }
 }
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.10.1")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.9.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    // Project
+    implementation(project(":feature:auth"))
+    implementation(project(":feature:home"))
+    implementation(project(":domain:movies"))
+    implementation(project(":data:movies"))
+    implementation(project(":core:common"))
+    implementation(project(":core:ui"))
+
+    //  Kotlin
+    implementation(Libs.Kotlin.stdlib)
+
+    //AndroidX
+    implementation(Libs.AndroidX.core)
+    implementation(Libs.AndroidX.appcompat)
+    implementation(Libs.AndroidX.constraint)
+    implementation(Libs.AndroidX.splash)
+
+    //Navigation
+    implementation(Libs.Navigation.fragment)
+    implementation(Libs.Navigation.ui)
+    implementation(Libs.Navigation.feature)
+    implementation(Libs.Navigation.compose)
+
+    //Facebook
+    implementation(Libs.Facebook.sdk)
+
+    //Dagger Hilt
+    implementation(Libs.Hilt.hilt)
+    kapt(Libs.Hilt.compiler)
+
+    //Firebase
+    implementation(Libs.Firebase.analytics)
+    implementation(Libs.Firebase.crashlytics)
+    implementation(Libs.Firebase.performance)
+    implementation(Libs.Firebase.remote_config)
+}
+
+kapt {
+    correctErrorTypes = true
 }

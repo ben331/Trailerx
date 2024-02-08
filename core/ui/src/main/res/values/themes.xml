@@ -1,0 +1,45 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Trailerx" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+        <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">@mipmap/ic_launcher</item>
+
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/yellow_400</item>
+        <item name="colorPrimaryVariant">@color/yellow_700</item>
+        <item name="colorOnPrimary">@color/black</item>
+
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/gray_500</item>
+        <item name="colorSecondaryVariant">@color/gray_800</item>
+        <item name="colorOnSecondary">@color/white</item>
+
+        <!-- Backgrounds. -->
+        <item name="background">@color/white</item>
+        <item name="android:colorBackgroundFloating">@color/gray_100</item>
+        <item name="colorSurface">@color/gray_100</item>
+        <item name="colorError">@color/deep_orange_900</item>
+
+        <!-- OnBackgrounds. -->
+        <item name="colorOnBackground">@color/black</item>
+        <item name="android:colorForeground">@color/black</item>
+        <item name="colorOnSurface">@color/gray_500</item>
+        <item name="colorOnError">@color/white</item>
+
+        <!-- Status Bar. -->
+        <item name="android:statusBarColor">@color/yellow_400</item>
+
+        <!-- Text Appearances. -->
+        <item name="textAppearanceCaption">@style/TextAppearance.Trailerx.Caption</item>
+        <item name="textAppearanceButton">@style/TextAppearance.Trailerx.Button.Primary</item>
+
+        <!-- Shape Appearances. -->
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Trailerx.SmallComponent.Outlined</item>
+    </style>
+
+    <style name="Theme.Trailerx.SplashScreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/yellow_400</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/Theme.Trailerx</item>
+    </style>
+</resources>

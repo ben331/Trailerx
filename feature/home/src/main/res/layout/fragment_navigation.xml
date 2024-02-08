@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.fragments.NavigationFragment">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/home_nav_host"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/home_nav_graph" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/nav_bar_height"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/bottom_navigation_menu"
+        style="@style/Widget.Trailerx.BottomNavigationView"/>
+
+
+    <FrameLayout
+        android:id="@+id/progress_component"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="?android:attr/colorBackgroundFloating"
+        android:visibility="gone"
+        tools:visibility="visible">
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="@dimen/progress_size"
+            android:layout_height="@dimen/progress_size"
+            style="@style/Widget.Trailerx.ProgressBar"/>
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

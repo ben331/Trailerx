@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/button_height"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <View
+        android:id="@+id/divider_start"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/gray_500"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/divider_start"
+        app:layout_constraintBottom_toBottomOf="@id/divider_end"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="@dimen/margin_large"
+        android:textAppearance="@style/TextAppearance.Trailerx.Button.Raw"
+        android:text="@string/chapters_guide"/>
+
+    <TextView
+        android:id="@+id/label_caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:textAppearance="@style/TextAppearance.Trailerx.Body.SmallLight"
+        app:layout_constraintBottom_toBottomOf="@id/divider_end"
+        app:layout_constraintEnd_toStartOf="@id/icon_forward"
+        app:layout_constraintTop_toTopOf="@id/divider_start"
+        tools:text="7 episodios" />
+
+    <ImageView
+        android:id="@+id/icon_forward"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:contentDescription="@string/ic_forward"
+        android:src="@drawable/ic_arrow_forward"
+        app:layout_constraintBottom_toBottomOf="@id/divider_end"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/divider_start"
+        tools:ignore="ImageContrastCheck" />
+
+    <View
+        android:id="@+id/divider_end"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/gray_500"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

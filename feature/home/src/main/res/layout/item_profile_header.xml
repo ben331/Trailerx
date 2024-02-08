@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="?android:attr/colorBackground"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <include
+        android:id="@+id/profile_photo_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginStart="@dimen/margin_large"
+        layout="@layout/item_profile_photo"/>
+
+    <TextView
+        android:id="@+id/label_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/profile_photo_container"
+        app:layout_constraintBottom_toBottomOf="@id/profile_photo_container"
+        app:layout_constraintStart_toEndOf="@id/profile_photo_container"
+        android:layout_marginStart="@dimen/margin_large"
+        android:textAppearance="@style/TextAppearance.Trailerx.Body.Dark"
+        tools:text="Juan Perez"/>
+
+    <ImageView
+        android:id="@+id/btn_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_large"
+        android:contentDescription="@string/img_settings"
+        android:src="@drawable/ic_settings"
+        app:layout_constraintBottom_toBottomOf="@id/profile_photo_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/profile_photo_container"
+        tools:ignore="ImageContrastCheck" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/gray_500"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginStart="@dimen/margin_large"
+        android:layout_marginEnd="@dimen/margin_large"
+        app:layout_constraintTop_toBottomOf="@id/profile_photo_container" />
+
+    <!-- TODO: CHANGE VISIBILITY WHEN STATS RECYCLER IS IMPLEMENTED  -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/shortcuts_recycler_view"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/shortcuts_recycler_height"
+        app:layout_constraintTop_toBottomOf="@+id/divider"
+        app:layout_constraintStart_toStartOf="@id/divider"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:visibility="gone" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

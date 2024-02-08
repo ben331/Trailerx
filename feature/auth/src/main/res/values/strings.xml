@@ -1,0 +1,64 @@
+<resources>
+    <string name="app_name">Trailerx</string>
+
+    /*
+    ---Login---
+    */
+    <string name="user">Usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="forgot_password">¿Olvidaste la contraseña?</string>
+    <string name="login">Login</string>
+    <string name="login_with">Ó puedes ingresar con</string>
+    <string name="has_account">¿No tienes cuenta?</string>
+    <string name="register">Regístrate</string>
+    <string name="guest">Continuar como invitado</string>
+
+    /*
+    ---Signup---
+    */
+    <string name="create_account">Crear una cuenta</string>
+    <string name="name">Nombre</string>
+    <string name="email">Correo</string>
+    <string name="password_rule">La contraseña debe contener 8 caracteres</string>
+    <string name="accept">Aceptar</string>
+    <string name="finish_signup">Finalizar Registro</string>
+    <string name="connect_to_google">Conectalo a tu cuenta de google</string>
+
+    /*
+    ---Content Description For Images---
+    */
+    <string name="img_facebook">Facebook</string>
+    <string name="img_google">Google</string>
+    <string name="img_apple">Apple</string>
+    <string name="ic_back">Atrás</string>
+
+    /*
+    --File names
+    */
+    <string name="prefs_file">tech.benhack.trailerx.PREFERENCE_FILE_KEY</string>
+
+    /*
+    --Errors and Alerts Messages
+    */
+    <string name="error">Error</string>
+    <string name="warning">Advertencia</string>
+    <string name="success">Excelente!</string>
+    <string name="auth_error">Se ha producido un error autenticando al usuario</string>
+    <string name="auth_cancel">Se ha cancelado el inicio de sesión</string>
+    <string name="upload_username_error">Se ha producido un error actualizando el nombre del usuario</string>
+    <string name="invalid_email">Formato de correo invalido</string>
+    <string name="invalid_password">La contraseña no cumple los criterios</string>
+    <string name="required_field">Campo requerido</string>
+    <string name="password_reset_error">No se pudo enviar el correo de recuperación</string>
+    <string name="password_reset_success"> Correo enviado exitosamente, revisa tanto tu bandeja de entrada como el correo no deseado (spam).</string>
+    <string name="account_created_success"> Antes de continuar, necesitas verificar tu cuenta. Revisa tu bandeja de entrada y el correo no deseado. </string>
+    <string name="create_user_error">Lo sentimos, no logramos iniciar sesión. Revisa tu conexión o reintenta de nuevo mas tarde.</string>
+    <string name="fetch_movies_error">Lo sentimos, no logramos cargar tus listas. Revisa tu conexión o reintenta mas tarde.</string>
+    <string name="delete_movie_error">Lo sentimos, la película o serie no pudo ser eliminada.</string>
+    <string name="turn_offline_mode">Estás usando en el modo sin conexión</string>
+    <string name="connection_recovered">Conexión recuperada</string>
+    <string name="get_movie_error">Película no encontrada localmente, intenta recuperar la conexión</string>
+    <string name="error_ups">Ups…</string>
+    <string name="server_error">Obtuvimos un error :(\nPor favor reintenta más tarde</string>
+    <string name="error_retry">Reintentar</string>
+</resources>

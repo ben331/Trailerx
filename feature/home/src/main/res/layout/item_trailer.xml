@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/section_home_height"
+    android:background="?android:attr/colorBackground"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <ImageView
+        android:id="@+id/imgWebView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/video_height"
+        android:background="?android:attr/colorBackground"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <WebView
+        android:id="@+id/trailerWebView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/video_height"
+        android:background="?android:attr/colorBackground"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/trailerImageView"
+        android:layout_width="@dimen/movie_width"
+        android:layout_height="@dimen/movie_height"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgWebView"
+        android:layout_marginStart="@dimen/margin_extra_large"
+        android:layout_marginTop="@dimen/margin_home_movie"
+        android:contentDescription="@string/img_trailer"
+        android:background="@color/yellow_400"/>
+
+    <TextView
+        android:id="@+id/trailerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/trailerImageView"
+        app:layout_constraintTop_toBottomOf="@id/imgWebView"
+        android:layout_marginStart="@dimen/margin_large"
+        android:layout_marginTop="@dimen/margin_micro"
+        android:elevation="@dimen/elevation_medium"
+        style="@style/TextAppearance.Trailerx.Body.Medium"
+        tools:text="@tools:sample/full_names"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/trailerImageView"
+        app:layout_constraintTop_toBottomOf="@id/trailerName"
+        android:layout_marginStart="@dimen/margin_large"
+        android:layout_marginTop="@dimen/margin_micro"
+        style="@style/TextAppearance.Trailerx.Body.Small"
+        android:text="@string/trailer"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

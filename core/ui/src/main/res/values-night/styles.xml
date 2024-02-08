@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources >
+
+    <style name="Widget.Trailerx.Button.Primary" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.Trailerx.Button.Primary</item>
+    </style>
+    <style name="ThemeOverlay.Trailerx.Button.Primary" parent="">
+        <item name="colorOnPrimary">@color/gray_800</item>
+        <item name="textAppearanceButton">@style/TextAppearance.Trailerx.Button.Primary</item>
+    </style>
+
+    <style name="Widget.Trailerx.Button.Secondary" parent="@style/Widget.AppCompat.Button">
+        <item name="layout_constraintWidth_max">@dimen/button_max_width</item>
+        <item name="android:enabled">false</item>
+        <item name="android:background">@drawable/ic_btn_background_selector_night</item>
+        <item name="android:textAppearance">@style/TextAppearance.Trailerx.Button.Secondary</item>
+        <item name="android:paddingEnd">@dimen/padding_large</item>
+        <item name="android:paddingStart">@dimen/padding_large</item>
+    </style>
+
+    <style name="Widget.Trailerx.TextInputLayout.Signup" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="layout_constraintWidth_max">@dimen/edittext_max_width</item>
+        <item name="materialThemeOverlay">@style/ThemeOverlay.Trailerx.TextInputLayout.SignUp</item>
+        <item name="expandedHintEnabled">false</item>
+    </style>
+    <style name="ThemeOverlay.Trailerx.TextInputLayout.SignUp" parent="">
+        <item name="colorPrimary">@color/gray_100</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="helperTextEnabled">true</item>
+        <item name="errorEnabled">true</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.Trailerx.TextField.SignUp</item>
+        <item name="textAppearanceCaption">@style/TextAppearance.Trailerx.Caption</item>
+        <item name="editTextStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
+    </style>
+
+    <style name="Widget.Trailerx.TextInputEditText.Login" parent="">
+        <item name="layout_constraintWidth_max">@dimen/edittext_max_width</item>
+        <item name="android:background">@drawable/ic_editext_login_background_dark</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:paddingStart">@dimen/padding_large</item>
+        <item name="android:paddingEnd">@dimen/padding_large</item>
+        <item name="android:textColorHint">@color/gray_800</item>
+        <item name="android:textAppearance">@style/TextAppearance.Trailerx.TextField.Login</item>
+    </style>
+
+    <style name="Widget.Trailerx.TextInputLayout.Search" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Trailerx.SmallComponent.Filled</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+        <item name="android:gravity">center</item>
+        <item name="endIconMode">clear_text</item>
+        <item name="endIconDrawable">@drawable/ic_cancel</item>
+        <item name="startIconDrawable">@drawable/ic_search</item>
+        <item name="fontFamily">@font/roboto_regular</item>
+        <item name="iconTint">@color/gray_800</item>
+        <item name="hintEnabled">false</item>
+        <item name="startIconTint">@color/gray_500</item>
+    </style>
+
+    <style name="Widget.Trailerx.TextInputEditText.Search" parent="">
+        <item name="layout_constraintWidth_max">@dimen/edittext_max_width</item>
+        <item name="android:gravity">top</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorHint">@color/gray_500</item>
+        <item name="fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
+    </style>
+
+    <style name="Widget.Trailerx.BottomNavigationView" parent="@style/Widget.MaterialComponents.BottomNavigationView.PrimarySurface">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.Trailerx.BottomNavigationView</item>
+        <item name="android:elevation">@dimen/elevation_medium</item>
+        <item name="labelVisibilityMode">labeled</item>
+        <item name="android:background">@drawable/ic_navigation_background</item>
+    </style>
+    <style name="ThemeOverlay.Trailerx.BottomNavigationView" parent="">
+        <item name="colorOnSurface">@color/black</item>
+        <item name="colorOnSurfaceVariant">@color/black</item>
+        <item name="colorPrimary">@color/black</item>
+    </style>
+
+    <style name="Widget.Trailerx.Toolbar" parent="@style/Widget.MaterialComponents.Toolbar.Primary">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.Trailerx.Toolbar</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="navigationIcon">@drawable/ic_arrow_back</item>
+        <item name="navigationIconTint">@color/white</item>
+        <item name="titleTextColor">@color/white</item>
+        <item name="titleCentered">true</item>
+        <item name="android:elevation">0dp</item>
+    </style>
+    <style name="ThemeOverlay.Trailerx.Toolbar" parent="">
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorOnPrimary">@color/white</item>
+    </style>
+
+    <style name ="Widget.TextView.Ship" parent="">
+        <item name="android:background">@drawable/ic_background_genre_night</item>
+        <item name="android:paddingTop">@dimen/padding_small</item>
+        <item name="android:paddingBottom">@dimen/padding_small</item>
+        <item name="android:paddingStart">@dimen/padding_medium</item>
+        <item name="android:paddingEnd">@dimen/padding_medium</item>
+    </style>
+
+    <style name="Widget.Trailerx.ItemMovie" parent="">
+        <item name="android:background">@drawable/ic_footer_movie_night</item>
+    </style>
+
+    <style name="Widget.Trailerx.Shortcut" parent="">
+        <item name="android:background">@drawable/ic_background_shortcut_night</item>
+    </style>
+    <style name="Widget.Trailerx.Shortcut.Small" parent="">
+        <item name="android:background">@drawable/ic_background_shortcut_small_night</item>
+    </style>
+
+</resources>
