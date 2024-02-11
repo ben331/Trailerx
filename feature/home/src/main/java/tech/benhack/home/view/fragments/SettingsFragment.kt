@@ -62,6 +62,12 @@ class SettingsFragment : Fragment() {
             logout()
         }
 
+        if(viewModel.email.isBlank()){
+            binding.btnDeleteAccount.visibility = View.GONE
+        }else {
+            binding.btnDeleteAccount.visibility = View.VISIBLE
+        }
+
         binding.btnDeleteAccount.setOnClickListener {
             dialogManager.showDialog(
                 requireContext(),

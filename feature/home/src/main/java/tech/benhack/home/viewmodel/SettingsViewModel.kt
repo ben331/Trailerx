@@ -27,13 +27,16 @@ class SettingsViewModel @Inject constructor(
     val accountDeleted = MutableLiveData(false)
     val isLoading = MutableLiveData(false)
 
+    val email by lazy {
+        authRepository.getEmail()
+    }
+
     @Inject
     lateinit var dialogManager: DialogManager
 
     fun deleteAccount(context:Context){
         isLoading.postValue(true)
         viewModelScope.launch(ioDispatcher) {
-            val email = authRepository.getEmail()
             val authToken = authRepository.getAuthToken()
             if(authToken!=null){
                 val isDataDeleted = deleteUserDataUseCase(email, authToken)

@@ -19,7 +19,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navOptions
 import com.facebook.CallbackManager
 import tech.benhack.auth.R
 import tech.benhack.auth.datasource.remote.ProviderType
@@ -141,6 +140,8 @@ class LoginFragment : Fragment() {
     private fun onGoogleResult(result:ActivityResult){
         if(result.resultCode == Activity.RESULT_OK){
             authViewModel.onGoogleResult(result.data, ::createUser, ::handleFailure)
+        }else{
+            dialogManager.showAlert(requireContext(), R.string.error, R.string.auth_error)
         }
     }
 
@@ -213,6 +214,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun showHome(token:String){
+
         authViewModel.isLoading.postValue(false)
 
         val request = NavDeepLinkRequest.Builder
