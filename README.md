@@ -44,9 +44,31 @@ Application of trailers for trending, premiere and popular movies. Create your o
     const val TMDB_ACCOUNT= "*****"
   }
 ```
+
 7. For deployment ask for release KeyStore and their credentials.
+
+8. For the account delete functionality to work correctly, you need to publish the lambda function to path: firebase-functions/index.js in firebase functions. If you want to add a different firebase account you must delete the folder firebase-functions/functions and run the next commands in the directory firebase-functions:
+
+```bash
+  npm install -g firebase-tools
+  firebase login
+  firebase init
+```
+Then copy the firebase-functions/index.js file into firebase-functions/functions directory and there run:
+
+```bash
+  npm install
+  firebase deploy
+```
    
-8. Finally for AuthLogin be sure that both DebugKeyStore and ReleaseKeyStore SHA1 is registered in firebase settings, facebook platform developers app and apple.
+If you want to use the same firebase account, just run in firebase-functions/functions directory:
+
+```bash
+  npm install
+  firebase deploy
+```
+
+9. Finally for AuthLogin be sure that both DebugKeyStore and ReleaseKeyStore SHA1 is registered in firebase settings, facebook platform developers app and apple.
     
 ## Authors
 
