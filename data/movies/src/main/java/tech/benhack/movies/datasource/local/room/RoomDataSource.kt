@@ -115,6 +115,19 @@ class RoomDataSource @Inject constructor(
         }
     }
 
+    override suspend fun deleteUserData(): Boolean {
+        return try {
+            movieDao.clean()
+            categoryMovieDao.clean()
+            syncCategoryMovieDao.clean()
+            movieDetailDao.clean()
+            true
+        } catch (e:Exception){
+            e.printStackTrace()
+            false
+        }
+    }
+
     override suspend fun addMovieToSync(movieId: Int, category: CategoryType, state: SyncState):Boolean {
         return try {
             syncCategoryMovieDao.addMovieToSync(SyncCategoryMovieEntity(movieId, category, state))

@@ -19,4 +19,7 @@ interface SyncCategoryMovieDao {
 
     @Query("DELETE FROM sync_category_movie WHERE idMovie=:idMovie AND idCategory=:idCategory")
     suspend fun deleteMovieFromSync(idMovie:Int, idCategory: CategoryType)
+
+    @Query("DELETE FROM sync_category_movie")
+    suspend fun clean()
 }

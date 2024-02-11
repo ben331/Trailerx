@@ -17,4 +17,7 @@ interface CategoryMovieDao {
 
     @Query("DELETE FROM category_movie WHERE idMovie=:idMovie AND idCategory=:idCategory")
     suspend fun deleteMovieFromCategory(idMovie:Int, idCategory: CategoryType)
+
+    @Query("DELETE FROM category_movie")
+    suspend fun clean()
 }

@@ -19,5 +19,6 @@ interface MoviesLocalDataSource {
     suspend fun getMoviesToSync(state: SyncState): List<SyncCategoryMovieItem>?
     suspend fun addMovieDetailList(movie: MovieDetailEntity): Boolean
     suspend fun deleteMoviesByCategory(category:CategoryType): Boolean
+    suspend fun deleteUserData(): Boolean
 }
 
