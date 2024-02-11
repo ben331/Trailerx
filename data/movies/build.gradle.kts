@@ -69,6 +69,7 @@ dependencies {
 
     //Firebase Firestore
     implementation(Libs.Firebase.firestore)
+    implementation(Libs.Firebase.functions)
 
     //Testing
     testImplementation(Libs.Testing.junit)

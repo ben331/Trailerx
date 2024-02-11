@@ -69,5 +69,12 @@
             app:launchSingleTop="true"
             app:popUpTo="@+id/home_nav_graph"
             app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_profileFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="tech.benhack.home.view.fragments.SettingsFragment"
+        android:label="SettingsFragment" />
 </navigation>

@@ -49,6 +49,13 @@
     <string name="register">Regístrate</string>
 
     /*
+    ---Profile---
+    */
+    <string name="settings">Configuración</string>
+    <string name="delete_icon">Icono de borrar</string>
+    <string name="delete_account">Borrar cuenta</string>
+
+    /*
     ---Content Description For Images---
     */
     <string name="img_facebook">Facebook</string>
@@ -93,6 +100,10 @@
     <string name="error_ups">Ups…</string>
     <string name="server_error">Obtuvimos un error :(\nPor favor reintenta más tarde</string>
     <string name="error_retry">Reintentar</string>
+    <string name="alert_delete_account">¿Segur@ que quieres eliminar tu cuenta? Tus listas serán borradas permanentemente.</string>
+    <string name="delete_user_data_error">Lo sentimos, no logramos eliminar tus datos, por favor reintenta más tarde.</string>
+    <string name="delete_account_error">Está operación es peligrosa, si estás seguro de borrar la cuenta, inicia sesión nuevamente y intenta borrar la cuenta de nuevo.</string>
+    <string name="delete_account_success">Tu cuenta y todos tus datos asociados se han borrado de forma exitosa y completa. Esperamos verte pronto!</string>
 
     /*
     --Examples
