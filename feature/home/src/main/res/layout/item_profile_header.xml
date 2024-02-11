@@ -29,15 +29,16 @@
 
     <ImageView
         android:id="@+id/btn_settings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginEnd="@dimen/margin_large"
         android:contentDescription="@string/img_settings"
-        android:src="@drawable/ic_settings"
+        android:src="@drawable/ic_menu"
         app:layout_constraintBottom_toBottomOf="@id/profile_photo_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/profile_photo_container"
-        tools:ignore="ImageContrastCheck" />
+        tools:ignore="ImageContrastCheck"
+        app:tint="@color/yellow_400" />
 
     <View
         android:id="@+id/divider"
