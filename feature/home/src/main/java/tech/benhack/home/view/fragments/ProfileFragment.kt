@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -25,7 +26,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, MovieProfileViewHolder.MovieListener {
+class ProfileFragment :
+    Fragment(),
+    PopupMenu.OnMenuItemClickListener,
+    MovieProfileAdapter.ImageRenderListener,
+    MovieProfileViewHolder.MovieListener {
 
     private val profileViewModel:ProfileViewModel by viewModels()
 
@@ -48,8 +53,6 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
     private lateinit var watchListAdapter: MovieProfileAdapter
     private lateinit var recentMoviesAdapter: MovieProfileAdapter
     private lateinit var favoritePeopleAdapter: MovieProfileAdapter
-
-    private lateinit var logoutListener: LogoutListener
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -206,19 +209,23 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
         binding.refreshLayout.setOnRefreshListener {
             profileViewModel.refresh(requireContext())
         }
-        val parent = parentFragment?.parentFragment as NavigationFragment
-        logoutListener = parent
-        binding.btnRegister.setOnClickListener {
-            logoutListener.logout()
-        }
     }
 
     private fun showPopup(v: View) {
-        val parent = parentFragment?.parentFragment as NavigationFragment
         val popup = PopupMenu(requireActivity(), v)
-        popup.setOnMenuItemClickListener(parent)
+        popup.setOnMenuItemClickListener(this)
         popup.inflate(R.menu.profile_popup_menu)
         popup.show()
+    }
+
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+        when (item!!.itemId) {
+            R.id.item_settings -> {
+                val action = ProfileFragmentDirections.actionProfileFragmentToSettingsFragment()
+                navController.navigate(action)
+            }
+        }
+        return true
     }
 
     override fun renderImage(url: String, image: ImageView) {
@@ -244,9 +251,5 @@ class ProfileFragment : Fragment(), MovieProfileAdapter.ImageRenderListener, Mov
     private fun handleFailure(title:Int, msg:Int){
         profileViewModel.isLoading.postValue(false)
         dialogManager.showAlert(requireContext(),title, msg)
-    }
-
-    interface LogoutListener {
-        fun logout()
     }
 }

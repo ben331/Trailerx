@@ -329,4 +329,32 @@ class AuthRemoteDataSourceFirebase @Inject constructor(
             )
         }
     }
+
+    suspend fun deleteAccount(email:String):Boolean {
+        return if(auth.currentUser!=null && auth.currentUser?.email == email){
+            try {
+                withTimeout(10000){
+                    auth.currentUser!!.delete().await()
+                    true
+                }
+            } catch (e:Exception){
+                e.printStackTrace()
+                false
+            }
+        } else {
+            false
+        }
+    }
+
+    suspend fun getAuthToken(): String? {
+        // Get authentication token using Firebase Authentication
+        val user = FirebaseAuth.getInstance().currentUser
+        return try {
+            withTimeout(2000){
+                user?.getIdToken(true)?.await()?.token
+            }
+        } catch (_:Exception){
+            null
+        }
+    }
 }

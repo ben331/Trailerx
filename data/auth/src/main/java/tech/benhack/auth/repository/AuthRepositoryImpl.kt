@@ -96,4 +96,8 @@ class AuthRepositoryImpl @Inject constructor(
         onSuccess,
         onFailure
     )
+
+    suspend fun deleteAccount(email:String):Boolean = dataSource.deleteAccount(email)
+
+    suspend fun getAuthToken():String? = dataSource.getAuthToken()
 }

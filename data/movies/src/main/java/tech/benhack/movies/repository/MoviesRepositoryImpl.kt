@@ -66,6 +66,9 @@ class MoviesRepositoryImpl @Inject constructor(
     override suspend fun deleteMovieFromCategory(movieId:Int, category: CategoryType, email:String):Boolean {
         return userMoviesNetworkDataSource.deleteMovieFromList(movieId, category, email)
     }
+    override suspend fun deleteUserData(email:String, authToken:String): Boolean {
+        return userMoviesNetworkDataSource.deleteUserData(email, authToken)
+    }
 
     //-------Local [CACHE]-----------------------------------------------------------------
     override suspend fun getMoviesByCategoryFromLocal(category: CategoryType): Either<ErrorData, List<MovieItem>> {

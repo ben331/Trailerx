@@ -12,6 +12,7 @@ import androidx.core.net.toUri
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.NavDeepLinkRequest
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -27,8 +28,8 @@ import dagger.hilt.android.AndroidEntryPoint
 private const val AUTH_URI = "android-app://tech.benhack.trailerx/auth"
 
 @AndroidEntryPoint
-class NavigationFragment : Fragment(), PopupMenu.OnMenuItemClickListener,
-    ProfileFragment.LogoutListener {
+class NavigationFragment : Fragment(),
+    SettingsFragment.LogoutListener {
 
     private val navController: NavController by lazy {
         val navHostFragment =
@@ -64,7 +65,7 @@ class NavigationFragment : Fragment(), PopupMenu.OnMenuItemClickListener,
 
     private fun setup(){
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if(destination.id == R.id.movieFragment){
+            if(destination.id == R.id.movieFragment || destination.id == R.id.settingsFragment){
                binding.navBar.visibility = View.GONE
             }else{
                 binding.navBar.visibility = View.VISIBLE
@@ -110,19 +111,17 @@ class NavigationFragment : Fragment(), PopupMenu.OnMenuItemClickListener,
         prefs.apply()
     }
 
-    override fun onMenuItemClick(item: MenuItem?): Boolean {
-        when (item!!.itemId) {
-            R.id.item_logout -> logout()
-        }
-        return true
-    }
-
     override fun logout(){
         cleanSession()
         val request = NavDeepLinkRequest.Builder
             .fromUri(AUTH_URI.toUri())
             .build()
-        findNavController().navigate(request)
+
+        val options = NavOptions.Builder()
+            .setPopUpTo(R.id.main_nav_graph, true)
+            .build()
+
+        findNavController().navigate(request, options)
     }
 
     private fun cleanSession(){

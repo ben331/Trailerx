@@ -24,6 +24,7 @@ interface MoviesRepository {
     suspend fun getUserMoviesList(listType:CategoryType, email:String): Either<ErrorData, List<MovieItem>>
     suspend fun addMovieToCategory(movie:MovieItem, category:CategoryType, email:String):Boolean
     suspend fun deleteMovieFromCategory(movieId:Int, category:CategoryType, email:String):Boolean
+    suspend fun deleteUserData(email:String, authToken:String): Boolean
 
     //------DB-----------------------------------------------------------------
     suspend fun getMoviesByCategoryFromLocal(category:CategoryType): Either<ErrorData, List<MovieItem>>
