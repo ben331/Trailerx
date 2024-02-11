@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -139,8 +140,12 @@ class LoginFragment : Fragment() {
     }
 
     private fun onGoogleResult(result:ActivityResult){
+        Log.e("LOGIN FRAGMENT", "GOOGLE RESULT")
         if(result.resultCode == Activity.RESULT_OK){
+            Log.e("LOGIN FRAGMENT", "RESULT OK")
             authViewModel.onGoogleResult(result.data, ::createUser, ::handleFailure)
+        }else{
+            dialogManager.showAlert(requireContext(), R.string.error, R.string.auth_error)
         }
     }
 
@@ -208,22 +213,28 @@ class LoginFragment : Fragment() {
     }
 
     private fun showHome(email:String, provider: ProviderType) {
+        Log.e("LOGIN FRAGMENT", "TOKEN")
         val accessToken = email.let{ TokenService().generateToken(requireContext(), email, provider.name)}
         showHome(accessToken)
     }
 
     private fun showHome(token:String){
+
+        Log.e("LOGIN FRAGMENT", "SHOW HOME")
         authViewModel.isLoading.postValue(false)
 
+        Log.e("LOGIN FRAGMENT", "REQUEST")
         val request = NavDeepLinkRequest.Builder
             .fromUri(HOME_URI.replace("{tokenValue}", token).toUri())
             .build()
 
+        Log.e("LOGIN FRAGMENT", "OPTIONS")
         // By default, implicit deeplink does not clean backstack, options is necessary.
         val options = NavOptions.Builder()
             .setPopUpTo(R.id.login_nav_graph, true)
             .build()
 
+        Log.e("LOGIN FRAGMENT", "NAVIGATE")
         navController.navigate(request, options)
     }
     private fun createUser(email:String, providerType: ProviderType){

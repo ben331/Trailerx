@@ -85,6 +85,8 @@ class ProfileViewModel @Inject constructor(
                 }
                 isLoading.postValue(false)
             }
+        } else{
+            isLoading.postValue(false)
         }
     }
 
