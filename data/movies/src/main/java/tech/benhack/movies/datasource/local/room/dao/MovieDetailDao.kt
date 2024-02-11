@@ -15,5 +15,5 @@ interface MovieDetailDao {
     suspend fun insertMovieDetail(movieDetail: MovieDetailEntity)
 
     @Query("DELETE FROM movie_detail")
-    suspend fun clear()
+    suspend fun clean()
 }

@@ -37,5 +37,6 @@ interface MoviesRepository {
     suspend fun getMovieByIdFromLocal(movieId:Int): MovieDetailItem?
     suspend fun addMovieDetailLocal(movie:MovieDetailItem): Boolean
     suspend fun clearMoviesByCategoryLocal(category: CategoryType): Boolean
+    suspend fun deleteLocalData(): Boolean
 }
 
