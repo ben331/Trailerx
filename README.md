@@ -11,7 +11,7 @@ Application of trailers for trending, premiere and popular movies. Create your o
 
 ## Settings Development enviroment
 1. Install lastest version of android studio
-2. Be sure your using the same version of java specified in project build.gradle files. (JAVA 17)
+2. Be sure you are using the same version of java specified in project build.gradle files. (JAVA 17)
 
 ## Installation
 
