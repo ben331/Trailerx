@@ -9,6 +9,10 @@ Application of trailers for trending, premiere and popular movies. Create your o
 ![4  search](https://github.com/ben331/Trailerx/assets/54720004/0d1dc8cc-744e-46f7-b1e6-5a6b0582f97f)
 ![5  profile](https://github.com/ben331/Trailerx/assets/54720004/3693cba7-9441-4e22-a1bb-676ea1584648)
 
+## Settings Development enviroment
+1. Install lastest version of android studio
+2. Be sure your using the same version of java specified in project build.gradle files. (JAVA 17)
+
 ## Installation
 
 1. Sync gradle
