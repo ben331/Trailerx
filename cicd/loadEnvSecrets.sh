@@ -12,10 +12,25 @@ sed -i "s/REPLACE_WITH_TMDB_ACCOUNT/$TMDB_ACCOUNT/" "$PROJECT_LOCATION/core/comm
 echo "$GOOGLE_SERVICES_FILE" >> "$google_services_path"
 
 {
-  echo "<string name=\"facebook_app_id\">$FACEBOOK_APP_ID</string>"
-  echo "<string name=\"fb_login_protocol_scheme\">$FB_LOGIN_PROTOCOL_SCHEME</string>"
+  echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
+  echo "<resources>"
+  echo "  <string name=\"facebook_app_id\">$FACEBOOK_APP_ID</string>"
+  echo "  <string name=\"facebook_app_id\">$FACEBOOK_APP_ID</string>"
+  echo "  <string name=\"fb_login_protocol_scheme\">$FB_LOGIN_PROTOCOL_SCHEME</string>"
   echo "<string name=\"facebook_client_token\">$FACEBOOK_CLIENT_TOKEN</string>"
+  echo "</resources>"
 } >> "$app_secrets_path"
 
-echo echo "<string name=\"tokens_secret_key\">$TOKENS_SECRET_KEY</string>" >> "$ui_secrets_path"
-echo echo "<string name=\"TMDB_api_token\">$TMDB_API_TOKEN</string>" >> "$movies_secrets_path"
+{
+    echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
+    echo "<resources>"
+    echo "<string name=\"tokens_secret_key\">$TOKENS_SECRET_KEY</string>"
+    echo "</resources>"
+} >> "$ui_secrets_path"
+
+{
+      echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
+      echo "<resources>"
+      echo "<string name=\"TMDB_api_token\">$TMDB_API_TOKEN</string>"
+      echo "</resources>"
+} >> "$movies_secrets_path"
