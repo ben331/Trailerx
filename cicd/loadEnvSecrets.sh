@@ -1,7 +1,6 @@
 #!/bin/sh
 
 # Define the file paths
-google_services_path="$PROJECT_LOCATION/app/google-services.json"
 app_secrets_path="$PROJECT_LOCATION/app/src/main/res/values/secrets.xml"
 ui_secrets_path="$PROJECT_LOCATION/core/ui/src/main/res/values/secrets.xml"
 movies_secrets_path="$PROJECT_LOCATION/data/movies/src/main/res/values/secrets.xml"
@@ -9,7 +8,6 @@ movies_secrets_path="$PROJECT_LOCATION/data/movies/src/main/res/values/secrets.x
 sed -i "s/REPLACE_WITH_TMDB_ACCOUNT/$TMDB_ACCOUNT/" "$PROJECT_LOCATION/core/common/src/main/java/tech/benhack/common/Constants.kt"
 
 # Append environment variables to files
-echo "$GOOGLE_SERVICES_FILE" >> "$google_services_path"
 
 {
   echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
