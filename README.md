@@ -31,7 +31,7 @@ Application of trailers for trending, premiere and popular movies. Create your o
 
 ```xml
 ...
-<string name="tokens_secret_key">*******</string>
+<string name="tokens_secret_key">********</string>
 ```
 
 5. Then, go to [TMDB account settings](https://www.themoviedb.org/settings/api) copy the *API Read Access Token* and add it to data > movies > src > main > res > values > secrets.xml file .
