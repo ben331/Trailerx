@@ -18,7 +18,7 @@ Application of trailers for trending, premiere and popular movies. Create your o
 1. Sync gradle
 2. Download firebase credentials: [Guide](https://firebase.google.com/docs/android/setup?hl=es&authuser=0&_gl=1*ti29fm*_ga*MTI5MzgzMjkwNC4xNjk3MDQ4OTkw*_ga_CW55HF8NVT*MTcwMzY5NDM3Mi41NS4xLjE3MDM2OTQ3OTIuMzAuMC4w#add-config-file). Then, switch to project view in android studio and move the downloaded *google-services.json* file to *app/* directory.
 
-3. Go to Facebook developer app > Settings > Basic and copy the app identifier and the secret key: [Guide](https://developers.facebook.com/docs/facebook-login/android/#manifest). Then create the file secrets.xml in app > main > res > values.
+3. Go to Facebook developer app > Settings > Basic and copy the app identifier and the secret key: [Guide](https://developers.facebook.com/docs/facebook-login/android/#manifest). Then create the file secrets.xml in app > src > main > res > values.
 
 ```xml
 <string name="facebook_app_id">1234</string>
@@ -27,14 +27,14 @@ Application of trailers for trending, premiere and popular movies. Create your o
 ```
 *secrets.xml file is already ignored by git*
 
-4. Create a new file secrets.xml in core > ui > res > values and create a key to encrypt user sessions:
+4. Create a new file secrets.xml in core > ui > src > main > res > values and create a key to encrypt user sessions:
 
 ```xml
 ...
 <string name="tokens_secret_key">*******</string>
 ```
 
-5. Then, go to [TMDB account settings](https://www.themoviedb.org/settings/api) copy the *API Read Access Token* and add it to data > movies > res > values > secrets.xml file .
+5. Then, go to [TMDB account settings](https://www.themoviedb.org/settings/api) copy the *API Read Access Token* and add it to data > movies > src > main > res > values > secrets.xml file .
 ```xml
 ...
 <string name="TMDB_api_token">*******</string>
