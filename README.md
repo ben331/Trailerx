@@ -9,6 +9,10 @@ Application of trailers for trending, premiere and popular movies. Create your o
 ![4  search](https://github.com/ben331/Trailerx/assets/54720004/0d1dc8cc-744e-46f7-b1e6-5a6b0582f97f)
 ![5  profile](https://github.com/ben331/Trailerx/assets/54720004/3693cba7-9441-4e22-a1bb-676ea1584648)
 
+## Settings Development enviroment
+1. Install lastest version of android studio
+2. Be sure you are using the same version of java specified in project build.gradle files. (JAVA 17)
+
 ## Installation
 
 1. Sync gradle
@@ -30,7 +34,7 @@ Application of trailers for trending, premiere and popular movies. Create your o
 <string name="tokens_secret_key">*******</string>
 ```
 
-5. Then, go to [TMDB account settings](https://www.themoviedb.org/settings/api) copy the *API Read Access Token* and add it to the same file too.
+5. Then, go to [TMDB account settings](https://www.themoviedb.org/settings/api) copy the *API Read Access Token* and add it to data > movies > res > values > secrets.xml file .
 ```xml
 ...
 <string name="TMDB_api_token">*******</string>
