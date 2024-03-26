@@ -25,7 +25,7 @@ import tech.benhack.auth.datasource.remote.ProviderType
 import tech.benhack.auth.viewmodel.AuthViewModel
 import tech.benhack.ui.helpers.DialogManager
 import tech.benhack.ui.helpers.FormValidator
-import tech.benhack.ui.TokenService
+import tech.benhack.ui.helpers.TokenUtil
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import tech.benhack.auth.databinding.FragmentLoginBinding
@@ -209,7 +209,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun showHome(email:String, provider: ProviderType) {
-        val accessToken = email.let{ TokenService().generateToken(requireContext(), email, provider.name)}
+        val accessToken = email.let{ TokenUtil().generateToken(requireContext(), email, provider.name)}
         showHome(accessToken)
     }
 

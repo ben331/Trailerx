@@ -1,11 +1,12 @@
-package tech.benhack.ui
+package tech.benhack.ui.helpers
 
 import android.content.Context
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
+import tech.benhack.ui.R
 import java.util.*
 
-class TokenService {
+class TokenUtil {
     fun generateToken(context:Context, email: String, provider: String): String {
         val secretKey = context.getString(R.string.tokens_secret_key)
         val expireDate = Date(System.currentTimeMillis() + 2592000000 ) // 1 month in millis

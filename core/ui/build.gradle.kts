@@ -32,6 +32,12 @@ android {
     kotlinOptions {
         jvmTarget = ConfigurationData.jvmTarget
     }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = ConfigurationData.composeCompiler
+    }
 }
 
 dependencies {
@@ -41,6 +47,16 @@ dependencies {
     implementation(Libs.AndroidX.appcompat)
     implementation(Libs.AndroidX.splash)
     implementation(Libs.Google.material)
+
+    //Compose
+    val composeBom = platform(Libs.Compose.bom)
+    implementation(composeBom)
+    androidTestImplementation(composeBom)
+    implementation(Libs.Compose.material3)
+    implementation(Libs.Compose.preview)
+    debugImplementation(Libs.Compose.debugPreview)
+    androidTestImplementation(Libs.Compose.junit4)
+    debugImplementation(Libs.Compose.debugTesting)
 
     //Tests
     testImplementation(Libs.Testing.junit)

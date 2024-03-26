@@ -38,6 +38,8 @@ object Versions {
     const val coroutine_test = "1.6.4"
     const val mockK = "1.12.0"
     const val androidx_test = "2.2.0"
+    const val compose = "2024.03.00"
+    const val composeRuntime = "1.6.4"
 }
 
 object Libs {
@@ -96,6 +98,35 @@ object Libs {
     object Google {
         const val material = "com.google.android.material:material:${Versions.material}"
         const val auth = "com.google.android.gms:play-services-auth:${Versions.google_auth}"
+    }
+
+    object Compose {
+        const val bom = "androidx.compose:compose-bom:${Versions.compose}"
+        const val runtime = "androidx.compose.runtime:runtime:${Versions.composeRuntime}"
+
+        // Choose one of the following for ui
+        const val material3 = "androidx.compose.material3:material3"
+        const val material2 = "androidx.compose.material:material"
+        const val foundationalComponents = "androidx.compose.foundation:foundation"
+        const val ui = "androidx.compose.ui:ui"
+
+        //Android Preview
+        const val preview = "androidx.compose.ui:ui-tooling-preview"
+        const val debugPreview = "androidx.compose.ui:ui-tooling"
+
+        //Testing
+        const val junit4 = "androidx.compose.ui:ui-test-junit4"
+        const val debugTesting = "androidx.compose.ui:ui-test-manifest"
+
+        object Optionals {
+            const val icons = "androidx.compose.material:material-icons-core"
+            const val iconsExtended = "androidx.compose.material:material-icons-extended"
+            const val windowSizeUtils = "androidx.compose.material3:material3-window-size-class"
+            const val activities = "androidx.activity:activity-compose:1.8.2"
+            const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1"
+            const val liveData = "androidx.compose.runtime:runtime-livedata"
+            const val rxjava = "androidx.compose.runtime:runtime-rxjava2"
+        }
     }
 
     object Facebook {

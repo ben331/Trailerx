@@ -4,10 +4,8 @@ import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupMenu
 import androidx.core.net.toUri
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -21,7 +19,7 @@ import tech.benhack.auth.datasource.remote.ProviderType
 import tech.benhack.home.R
 import tech.benhack.home.databinding.FragmentNavigationBinding
 import tech.benhack.home.viewmodel.NavigationViewModel
-import tech.benhack.ui.TokenService
+import tech.benhack.ui.helpers.TokenUtil
 import tech.benhack.ui.helpers.DialogManager
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -92,7 +90,7 @@ class NavigationFragment : Fragment(),
                 Context.MODE_PRIVATE
             )?.getString("token", null) ?: args.token
 
-        val claims = TokenService().validateToken(requireContext(),token)
+        val claims = TokenUtil().validateToken(requireContext(),token)
 
         //Decrypt Success
         if(claims!=null){
@@ -130,7 +128,7 @@ class NavigationFragment : Fragment(),
         prefs.clear()
         prefs.apply()
 
-        TokenService().validateToken(requireContext(), args.token)?.also {
+        TokenUtil().validateToken(requireContext(), args.token)?.also {
             val provider = ProviderType.valueOf( it["provider"] as String )
             viewModel.logout(provider)
         }
