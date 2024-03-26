@@ -16,6 +16,8 @@ private val lightColorScheme = lightColorScheme(
     onError = Color.White,
     background = Color.White,
     onBackground = Color.Black,
+    surface = Gray100,
+    onSurface = Gray500
 )
 
 private val darkColorScheme = darkColorScheme(
@@ -27,6 +29,8 @@ private val darkColorScheme = darkColorScheme(
     onError = Color.White,
     background = Color.Black,
     onBackground = Color.White,
+    surface = Gray100,
+    onSurface = Gray500
 )
 
 @Composable

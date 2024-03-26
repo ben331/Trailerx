@@ -18,15 +18,23 @@ import tech.benhack.ui.theme.trailerxShapes
 import tech.benhack.ui.theme.trailerxTypography
 
 @Composable
-fun PrimaryButton(
+fun SecondaryButton(
     modifier: Modifier = Modifier,
     text: String,
     onClick: () -> Unit,
+    enabled: Boolean = true,
 ) {
     Button(
         modifier = modifier,
         onClick = onClick,
-        shape = trailerxShapes.small,
+        enabled = enabled,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Gray800,
+            contentColor = Gray100,
+            disabledContainerColor = Gray500,
+            disabledContentColor = Color.White,
+        ),
+        shape = trailerxShapes.small
     ) {
         Text(
             text = text,
@@ -37,12 +45,13 @@ fun PrimaryButton(
 
 @Preview
 @Composable
-fun PrimaryButtonPreview(){
+fun SecondaryButtonPreview(){
     TrailerxTheme {
-        PrimaryButton(
+        SecondaryButton(
             modifier = Modifier.width(250.dp),
             text = "Login",
-            onClick = { Log.d("PrimaryButton", "onClick called") }
+            onClick = { Log.d("PrimaryButton", "onClick called") },
+            enabled = true
         )
     }
 }
