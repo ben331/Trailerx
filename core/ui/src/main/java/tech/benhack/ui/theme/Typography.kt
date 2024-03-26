@@ -17,6 +17,7 @@ val robotoFamily = FontFamily(
 )
 
 val trailerxTypography = Typography(
+    /*
     displayLarge = TextStyle(
         fontFamily = robotoFamily,
         fontWeight = FontWeight.Bold,
@@ -46,12 +47,12 @@ val trailerxTypography = Typography(
         fontFamily = robotoFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 18.sp
-    ),
+    ), */
     titleLarge = TextStyle(
         fontFamily = robotoFamily,
-        fontWeight = FontWeight.Medium,
+        fontWeight = FontWeight.Bold,
         fontSize = 18.sp
-    ),
+    ), /*
     titleMedium = TextStyle(
         fontFamily = robotoFamily,
         fontWeight = FontWeight.Medium,
@@ -94,4 +95,5 @@ val trailerxTypography = Typography(
         fontWeight = FontWeight.Normal,
         fontSize = 10.sp
     )
+     */
 )
