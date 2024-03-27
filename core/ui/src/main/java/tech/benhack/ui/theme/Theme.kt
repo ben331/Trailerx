@@ -16,8 +16,9 @@ private val lightColorScheme = lightColorScheme(
     onError = Color.White,
     background = Color.White,
     onBackground = Color.Black,
-    surface = Gray100,
-    onSurface = Gray500
+    surface = Color.White,
+    onSurface = Gray500,
+    surfaceContainer = Color.White
 )
 
 private val darkColorScheme = darkColorScheme(
@@ -30,22 +31,27 @@ private val darkColorScheme = darkColorScheme(
     background = Color.Black,
     onBackground = Color.White,
     surface = Gray100,
-    onSurface = Gray500
+    onSurface = Gray500,
+    surfaceContainer = Gray800
 )
+
+object TrailerxTheme {
+    var colorScheme = lightColorScheme
+}
 
 @Composable
 fun TrailerxTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ){
-    val colorScheme =
+    TrailerxTheme.colorScheme =
         if (darkTheme) {
             darkColorScheme
         } else {
             lightColorScheme
         }
     MaterialTheme(
-        colorScheme = colorScheme,
+        colorScheme = TrailerxTheme.colorScheme,
         typography = trailerxTypography,
         content = content,
         shapes = trailerxShapes

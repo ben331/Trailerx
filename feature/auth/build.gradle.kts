@@ -62,6 +62,14 @@ dependencies {
     val composeBom = platform(Libs.Compose.bom)
     implementation(composeBom)
     androidTestImplementation(composeBom)
+    implementation(Libs.Compose.material3)
+    implementation(Libs.Compose.preview)
+    debugImplementation(Libs.Compose.debugPreview)
+    androidTestImplementation(Libs.Compose.junit4)
+    debugImplementation(Libs.Compose.debugTesting)
+    implementation(Libs.Compose.Optionals.activities)
+    implementation(Libs.Compose.Optionals.viewModel)
+    implementation(Libs.Compose.Optionals.liveData)
 
     //Navigation
     implementation(Libs.Navigation.fragment)

@@ -34,7 +34,7 @@ fun SecondaryButton(
             disabledContainerColor = Gray500,
             disabledContentColor = Color.White,
         ),
-        shape = trailerxShapes.small
+        shape = trailerxShapes.medium
     ) {
         Text(
             text = text,

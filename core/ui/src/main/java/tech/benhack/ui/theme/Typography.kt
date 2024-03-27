@@ -22,12 +22,13 @@ val trailerxTypography = Typography(
         fontFamily = robotoFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 24.sp
-    ),
+    ),*/
     displayMedium = TextStyle(
         fontFamily = robotoFamily,
-        fontWeight = FontWeight.Bold,
-        fontSize = 22.sp
-    ),
+        fontWeight = FontWeight.Light,
+        fontStyle = FontStyle.Italic,
+        fontSize = 16.sp
+    ),/*
     displaySmall = TextStyle(
         fontFamily = robotoFamily,
         fontWeight = FontWeight.Medium,
@@ -84,12 +85,12 @@ val trailerxTypography = Typography(
         fontFamily = robotoFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp
-    ),
+    ),*/
     labelMedium = TextStyle(
         fontFamily = robotoFamily,
-        fontWeight = FontWeight.Normal,
-        fontSize = 12.sp
-    ),
+        fontWeight = FontWeight.Bold,
+        fontSize = 18.sp
+    ),/*
     labelSmall = TextStyle(
         fontFamily = robotoFamily,
         fontWeight = FontWeight.Normal,
