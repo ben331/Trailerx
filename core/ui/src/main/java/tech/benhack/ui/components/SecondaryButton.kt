@@ -21,8 +21,8 @@ import tech.benhack.ui.theme.trailerxTypography
 fun SecondaryButton(
     modifier: Modifier = Modifier,
     text: String,
-    onClick: () -> Unit,
     enabled: Boolean = true,
+    onClick: () -> Unit,
 ) {
     Button(
         modifier = modifier,

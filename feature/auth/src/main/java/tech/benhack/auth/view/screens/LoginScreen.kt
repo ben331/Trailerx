@@ -5,24 +5,32 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import tech.benhack.auth.R
 import tech.benhack.auth.view.components.LoginTextField
-import tech.benhack.ui.components.PrimaryButton
+import tech.benhack.auth.view.components.TrailerxImageHeader
+import tech.benhack.ui.components.SecondaryButton
 import tech.benhack.ui.theme.TrailerxTheme
 import tech.benhack.ui.theme.Yellow400
+import tech.benhack.ui.theme.trailerxTypography
 
 @Composable
 fun LoginScreen(){
@@ -33,27 +41,64 @@ fun LoginScreen(){
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Image(
-            painter = painterResource(id = tech.benhack.ui.R.drawable.ic_trailerx),
-            contentDescription = stringResource(id = tech.benhack.ui.R.string.app_name),
-            modifier = Modifier
-                .width(250.dp)
-                .height(80.dp)
+        TrailerxImageHeader()
+        LoginTextField(
+            text = stringResource(id = R.string.email),
+            value = "",
+            onValueChange = {}
         )
-        Text(text = "")
-        PrimaryButton(text = "") {
-
-        }
-        Text(text = "")
-        IconButton(onClick = { /*TODO*/ }) {
-
-        }
-        Text(text = "")
+        LoginTextField(
+            text = stringResource(id = R.string.password),
+            value = "",
+            onValueChange = {}
+        )
         Button(onClick = { /*TODO*/ }) {
-
+            Text(
+                text = stringResource(id = R.string.forgot_password),
+                style = trailerxTypography.labelSmall,
+                textAlign = TextAlign.Left,
+            )
         }
+        SecondaryButton(
+            modifier = Modifier
+                .width(280.dp)
+                .height(50.dp),
+            text = stringResource(id = R.string.login),
+            enabled = false
+        ) {
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(
+            text = stringResource(id = R.string.login_with),
+            style = trailerxTypography.displayMedium
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+        IconButton(
+            modifier = Modifier
+                .size(52.dp)
+                .background(Color.White, shape = CircleShape)
+                .padding(12.dp),
+            onClick = {}
+        ) {
+            Image(painterResource(id = tech.benhack.ui.R.drawable.ic_google), contentDescription = "Google")
+        }
+        Spacer(modifier = Modifier.height(20.dp))
+        Text(
+            text = stringResource(id = R.string.has_account),
+            style = trailerxTypography.displayMedium
+        )
         Button(onClick = { /*TODO*/ }) {
-
+            Text(
+                text = stringResource(id = R.string.register),
+                style = trailerxTypography.labelMedium
+            )
+        }
+        Spacer(modifier = Modifier.height(12.dp))
+        Button(onClick = { /*TODO*/ }) {
+            Text(
+                text = stringResource(id = R.string.guest),
+                style = trailerxTypography.labelMedium
+            )
         }
     }
 }

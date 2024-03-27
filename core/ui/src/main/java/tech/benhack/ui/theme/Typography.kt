@@ -90,11 +90,11 @@ val trailerxTypography = Typography(
         fontFamily = robotoFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 18.sp
-    ),/*
+    ),
     labelSmall = TextStyle(
         fontFamily = robotoFamily,
-        fontWeight = FontWeight.Normal,
-        fontSize = 10.sp
+        fontWeight = FontWeight.Light,
+        fontStyle = FontStyle.Italic,
+        fontSize = 14.sp
     )
-     */
 )

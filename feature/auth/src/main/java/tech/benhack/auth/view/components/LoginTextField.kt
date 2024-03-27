@@ -17,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import tech.benhack.ui.theme.DeepOrange900
+import tech.benhack.ui.theme.Gray800
 import tech.benhack.ui.theme.TrailerxTheme
 import tech.benhack.ui.theme.trailerxShapes
 import tech.benhack.ui.theme.trailerxTypography
@@ -64,6 +65,7 @@ fun LoginTextField(
     ) {
         Text(
             text = text,
+            color = Gray800,
             style = trailerxTypography.labelMedium,
             modifier = Modifier.padding(vertical = 8.dp)
         )
