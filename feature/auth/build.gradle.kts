@@ -70,6 +70,7 @@ dependencies {
     implementation(Libs.Compose.Optionals.activities)
     implementation(Libs.Compose.Optionals.viewModel)
     implementation(Libs.Compose.Optionals.liveData)
+    implementation(Libs.Compose.Optionals.constraints)
 
     //Navigation
     implementation(Libs.Navigation.fragment)

@@ -40,6 +40,7 @@ object Versions {
     const val androidx_test = "2.2.0"
     const val compose = "2024.03.00"
     const val composeRuntime = "1.6.4"
+    const val constraintLayout = "1.0.1"
 }
 
 object Libs {
@@ -126,6 +127,7 @@ object Libs {
             const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1"
             const val liveData = "androidx.compose.runtime:runtime-livedata"
             const val rxjava = "androidx.compose.runtime:runtime-rxjava2"
+            const val constraints = "androidx.constraintlayout:constraintlayout-compose:${Versions.constraintLayout}"
         }
     }
 

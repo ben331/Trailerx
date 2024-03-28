@@ -17,7 +17,7 @@ private val lightColorScheme = lightColorScheme(
     background = Color.White,
     onBackground = Color.Black,
     surface = Color.White,
-    onSurface = Gray500,
+    onSurface = Gray800,
     surfaceContainer = Color.White
 )
 
@@ -30,8 +30,8 @@ private val darkColorScheme = darkColorScheme(
     onError = Color.White,
     background = Color.Black,
     onBackground = Color.White,
-    surface = Gray100,
-    onSurface = Gray500,
+    surface = Gray800,
+    onSurface = Color.White,
     surfaceContainer = Gray800
 )
 

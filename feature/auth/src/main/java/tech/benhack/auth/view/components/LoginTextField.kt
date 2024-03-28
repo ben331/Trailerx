@@ -4,18 +4,25 @@ import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import tech.benhack.ui.R
 import tech.benhack.ui.theme.DeepOrange900
 import tech.benhack.ui.theme.Gray800
 import tech.benhack.ui.theme.TrailerxTheme
@@ -28,6 +35,10 @@ fun LoginTextField(
     value:String,
     modifier: Modifier = Modifier,
     isError:Boolean = false,
+    isPassword:Boolean = false,
+    showPassword:Boolean = false,
+    keyboardType: KeyboardType = KeyboardType.Text,
+    onClickTrailingIcon:()->Unit = {},
     onValueChange:(value:String)->Unit,
 ) {
 
@@ -46,9 +57,9 @@ fun LoginTextField(
         unfocusedIndicatorColor = Color.Transparent,
         disabledIndicatorColor = Color.Transparent,
         errorIndicatorColor = Color.Transparent,
-        focusedTrailingIconColor = Color.Transparent,
-        unfocusedTrailingIconColor = Color.Transparent,
-        disabledTrailingIconColor = Color.Transparent,
+        focusedTrailingIconColor = TrailerxTheme.colorScheme.onSurface,
+        unfocusedTrailingIconColor = TrailerxTheme.colorScheme.onSurface,
+        disabledTrailingIconColor = TrailerxTheme.colorScheme.secondary,
         errorTrailingIconColor = DeepOrange900,
         focusedLabelColor = Color.Transparent,
         unfocusedLabelColor = Color.Transparent,
@@ -76,14 +87,38 @@ fun LoginTextField(
             colors = loginTextFieldColors,
             shape = trailerxShapes.medium,
             textStyle = trailerxTypography.displayMedium,
+            visualTransformation = if(isPassword && !showPassword) {
+                PasswordVisualTransformation()
+            } else VisualTransformation.None ,
+            keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
             trailingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Warning,
-                    contentDescription = stringResource(
-                        id = tech.benhack.auth.R.string.error
+                if(isError) {
+                    Icon(
+                        imageVector = Icons.Default.Warning,
+                        contentDescription = stringResource(
+                            id = tech.benhack.auth.R.string.error
+                        )
                     )
-                )
-            }
+                } else if ( isPassword) {
+                    IconButton(onClick = { onClickTrailingIcon() }) {
+                        if(showPassword) {
+                            Icon(
+                                painter = painterResource(R.drawable.visibility),
+                                contentDescription = stringResource(
+                                    id = tech.benhack.auth.R.string.error
+                                )
+                            )
+                        } else {
+                            Icon(
+                                painter = painterResource(R.drawable.visibility_off),
+                                contentDescription = stringResource(
+                                    id = tech.benhack.auth.R.string.error
+                                )
+                            )
+                        }
+                    }
+                }
+            },
         )
     }
 }
@@ -97,10 +132,12 @@ fun LoginTextField(
 fun LoginTextFieldPreview(){
     TrailerxTheme {
         LoginTextField(
-            text = "Email",
+            text = "Password",
             modifier = Modifier.fillMaxSize(),
-            value = "bengi-silva@hotmail.com",
-            isError = false
+            value = "password",
+            isError = false,
+            isPassword = true,
+            showPassword = false
         ) { _ ->
 
         }
@@ -119,7 +156,7 @@ fun LoginTextFieldPreviewNight(){
         LoginTextField(
             text = "Email",
             modifier = Modifier.fillMaxSize(),
-            value = "bengi-silva@hotmail.com",
+            value = "bengi-silva.com",
             isError = true
         ) { _ ->
 

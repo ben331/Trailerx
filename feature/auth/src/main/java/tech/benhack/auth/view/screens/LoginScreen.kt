@@ -28,6 +28,8 @@ import tech.benhack.auth.R
 import tech.benhack.auth.view.components.LoginTextField
 import tech.benhack.auth.view.components.TrailerxImageHeader
 import tech.benhack.ui.components.SecondaryButton
+import tech.benhack.ui.theme.Gray500
+import tech.benhack.ui.theme.Gray800
 import tech.benhack.ui.theme.TrailerxTheme
 import tech.benhack.ui.theme.Yellow400
 import tech.benhack.ui.theme.trailerxTypography
@@ -56,7 +58,7 @@ fun LoginScreen(){
             Text(
                 text = stringResource(id = R.string.forgot_password),
                 style = trailerxTypography.labelSmall,
-                textAlign = TextAlign.Left,
+                color = Gray800
             )
         }
         SecondaryButton(
@@ -70,7 +72,8 @@ fun LoginScreen(){
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             text = stringResource(id = R.string.login_with),
-            style = trailerxTypography.displayMedium
+            style = trailerxTypography.displayMedium,
+            color = Gray800
         )
         Spacer(modifier = Modifier.height(20.dp))
         IconButton(
@@ -85,19 +88,22 @@ fun LoginScreen(){
         Spacer(modifier = Modifier.height(20.dp))
         Text(
             text = stringResource(id = R.string.has_account),
-            style = trailerxTypography.displayMedium
+            style = trailerxTypography.displayMedium,
+            color = Gray800
         )
         Button(onClick = { /*TODO*/ }) {
             Text(
                 text = stringResource(id = R.string.register),
-                style = trailerxTypography.labelMedium
+                style = trailerxTypography.labelMedium,
+                color = Gray800
             )
         }
         Spacer(modifier = Modifier.height(12.dp))
         Button(onClick = { /*TODO*/ }) {
             Text(
                 text = stringResource(id = R.string.guest),
-                style = trailerxTypography.labelMedium
+                style = trailerxTypography.labelMedium,
+                color = Gray800
             )
         }
     }

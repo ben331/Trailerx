@@ -52,13 +52,13 @@ val trailerxTypography = Typography(
     titleLarge = TextStyle(
         fontFamily = robotoFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 18.sp
-    ), /*
+        fontSize = 20.sp
+    ),
     titleMedium = TextStyle(
         fontFamily = robotoFamily,
         fontWeight = FontWeight.Medium,
-        fontSize = 16.sp
-    ),
+        fontSize = 18.sp
+    ),/*
     titleSmall = TextStyle(
         fontFamily = robotoFamily,
         fontWeight = FontWeight.Normal,
