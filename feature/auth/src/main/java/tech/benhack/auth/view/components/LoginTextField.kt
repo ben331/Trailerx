@@ -34,7 +34,7 @@ fun LoginTextField(
     text:String,
     value:String,
     modifier: Modifier = Modifier,
-    isError:Boolean = false,
+    error:String = "",
     isPassword:Boolean = false,
     showPassword:Boolean = false,
     keyboardType: KeyboardType = KeyboardType.Text,
@@ -83,7 +83,8 @@ fun LoginTextField(
         TextField(
             value = value,
             onValueChange = onValueChange,
-            isError = isError,
+            isError = error.isNotEmpty(),
+            supportingText = { Text(text = error)},
             colors = loginTextFieldColors,
             shape = trailerxShapes.medium,
             textStyle = trailerxTypography.displayMedium,
@@ -92,7 +93,7 @@ fun LoginTextField(
             } else VisualTransformation.None ,
             keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
             trailingIcon = {
-                if(isError) {
+                if(error.isNotEmpty()) {
                     Icon(
                         imageVector = Icons.Default.Warning,
                         contentDescription = stringResource(
@@ -135,7 +136,7 @@ fun LoginTextFieldPreview(){
             text = "Password",
             modifier = Modifier.fillMaxSize(),
             value = "password",
-            isError = false,
+            error = "",
             isPassword = true,
             showPassword = false
         ) { _ ->
@@ -157,7 +158,7 @@ fun LoginTextFieldPreviewNight(){
             text = "Email",
             modifier = Modifier.fillMaxSize(),
             value = "bengi-silva.com",
-            isError = true
+            error = "Error"
         ) { _ ->
 
         }

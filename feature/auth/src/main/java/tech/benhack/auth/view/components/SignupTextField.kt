@@ -29,7 +29,7 @@ fun SignupTextField(
     text:String,
     value:String,
     modifier: Modifier = Modifier,
-    isError:Boolean = false,
+    error:String = "",
     isPassword:Boolean = false,
     showPassword:Boolean = false,
     keyboardType:KeyboardType = KeyboardType.Text,
@@ -70,7 +70,7 @@ fun SignupTextField(
         modifier = modifier,
         value = value,
         onValueChange = onValueChange,
-        isError = isError,
+        isError = error.isNotEmpty(),
         colors = loginTextFieldColors,
         shape = trailerxShapes.medium,
         textStyle = trailerxTypography.displayMedium,
@@ -79,7 +79,7 @@ fun SignupTextField(
         } else VisualTransformation.None ,
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
         trailingIcon = {
-            if(isError) {
+            if(error.isNotEmpty()) {
                 Icon(
                     imageVector = Icons.Default.Warning,
                     contentDescription = stringResource(
@@ -125,7 +125,7 @@ fun SignupTextFieldTextFieldPreview(){
         SignupTextField(
             text = "Name",
             value = "bengi-silva@hotmail.com",
-            isError = false,
+            error = "Error",
         ) { _ ->
 
         }
@@ -145,7 +145,7 @@ fun SignupTextFieldTextFieldPreviewNight(){
         SignupTextField(
             text = "Password",
             value = "password",
-            isError = false,
+            error = "",
             isPassword = true,
             showPassword = showPassword,
             onClickTrailingIcon = { showPassword = !showPassword }
