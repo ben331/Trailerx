@@ -71,6 +71,7 @@ fun SignupTextField(
         value = value,
         onValueChange = onValueChange,
         isError = error.isNotEmpty(),
+        supportingText = { Text(text = error)},
         colors = loginTextFieldColors,
         shape = trailerxShapes.medium,
         textStyle = trailerxTypography.displayMedium,

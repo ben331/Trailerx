@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -28,6 +30,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import tech.benhack.auth.R
@@ -56,6 +59,7 @@ fun LoginScreen(
     var showPassword by rememberSaveable { mutableStateOf(false) }
     var passwordError by rememberSaveable { mutableStateOf("") }
     var emailError by rememberSaveable { mutableStateOf("") }
+    var firstOnCreate = true
     
     Box(modifier = Modifier
         .fillMaxSize()
@@ -72,15 +76,16 @@ fun LoginScreen(
             LoginTextField(
                 modifier = Modifier
                     .onFocusChanged {
-                        passwordError = if (it.hasFocus && !FormValidator.validateEmail(email)) {
-                            "Contraseña Invalida"
+                        emailError = if (!it.hasFocus && !FormValidator.validateEmail(email) && !firstOnCreate) {
+                            "Correo Invalido"
                         }else{
                             ""
                         }
                     },
                 text = stringResource(id = R.string.email),
                 value = email,
-                error = emailError
+                error = emailError,
+                keyboardType = KeyboardType.Email
             ) { value ->
                 email = value
                 loginEnabled = FormValidator.validateLogin(email, password)
@@ -88,9 +93,10 @@ fun LoginScreen(
             LoginTextField(
                 modifier = Modifier
                     .onFocusChanged {
-                        emailError = if (it.hasFocus && !FormValidator.validateEmail(email)) {
-                            "Correo Invalido"
+                        passwordError = if (!it.hasFocus && !FormValidator.validateEmail(email) && !firstOnCreate) {
+                            "Constraseña Invalida"
                         }else{
+                            firstOnCreate = false
                             ""
                         }
                     },
@@ -100,11 +106,12 @@ fun LoginScreen(
                 isPassword = true,
                 showPassword = showPassword,
                 onClickTrailingIcon = {showPassword = !showPassword},
+                keyboardType = KeyboardType.Password
             ) { value ->
                 password = value
                 loginEnabled = FormValidator.validateLogin(email, password)
             }
-            Button(onClick = { onForgotPassword(email) }) {
+            Button(onClick = { onForgotPassword(email) }, enabled = !isLoading) {
                 Text(
                     text = stringResource(id = R.string.forgot_password),
                     style = trailerxTypography.labelSmall,
@@ -116,7 +123,7 @@ fun LoginScreen(
                     .width(280.dp)
                     .height(50.dp),
                 text = stringResource(id = R.string.login),
-                enabled = false
+                enabled = loginEnabled && !isLoading
             ) { onLoginWithEmailAndPassword(email, password) }
             Spacer(modifier = Modifier.height(16.dp))
             Text(
@@ -130,7 +137,8 @@ fun LoginScreen(
                     .size(52.dp)
                     .background(Color.White, shape = CircleShape)
                     .padding(12.dp),
-                onClick = { onLoginWithGoogle() }
+                onClick = { onLoginWithGoogle() },
+                enabled = !isLoading
             ) {
                 Image(painterResource(id = tech.benhack.ui.R.drawable.ic_google), contentDescription = "Google")
             }
@@ -140,7 +148,7 @@ fun LoginScreen(
                 style = trailerxTypography.displayMedium,
                 color = Gray800
             )
-            Button(onClick = { onRegister() }) {
+            Button(onClick = { onRegister() }, enabled = !isLoading) {
                 Text(
                     text = stringResource(id = R.string.register),
                     style = trailerxTypography.labelMedium,
@@ -148,7 +156,7 @@ fun LoginScreen(
                 )
             }
             Spacer(modifier = Modifier.height(12.dp))
-            Button(onClick = { onLoginAsGuest() }) {
+            Button(onClick = { onLoginAsGuest() }, enabled = !isLoading) {
                 Text(
                     text = stringResource(id = R.string.guest),
                     style = trailerxTypography.labelMedium,
