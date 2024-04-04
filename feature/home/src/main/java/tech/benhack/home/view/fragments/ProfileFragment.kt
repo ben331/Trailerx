@@ -34,6 +34,8 @@ class ProfileFragment :
 
     private val profileViewModel:ProfileViewModel by viewModels()
 
+    private lateinit var logoutListener: SettingsFragment.LogoutListener
+
     @Inject
     lateinit var dialogManager: DialogManager
 
@@ -205,6 +207,14 @@ class ProfileFragment :
     }
 
     private fun setupButtons(){
+
+        val parent = parentFragment?.parentFragment as NavigationFragment
+        logoutListener = parent
+        binding.btnRegister.setOnClickListener {
+            navController.popBackStack(R.id.home_nav_graph, true)
+            logoutListener.logout()
+        }
+
         binding.profileHeaderContainer.btnSettings.setOnClickListener(::showPopup)
         binding.refreshLayout.setOnRefreshListener {
             profileViewModel.refresh(requireContext())
