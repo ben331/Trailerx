@@ -2,6 +2,7 @@ package tech.benhack.home.viewmodel
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Movie
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -103,15 +104,15 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun addMovieToWatchList(movieId:Int, numberList:Int, context:Context){
+    fun addMovieToWatchList(movieId:Int, context:Context){
         isLoading.postValue(true)
-        val homeMovies = when(numberList){
-            1 -> nowPlayingMovies.value
-            2 -> upcomingMovies.value
-            3 -> popularMovies.value
-            else -> emptyList()
-        }
-        homeMovies?.find { it.id == movieId }?.let{
+        val a :List<MovieItem> = nowPlayingMovies.value ?: emptyList()
+        val b :List<MovieItem> = upcomingMovies.value ?: emptyList()
+        val c :List<MovieItem> = popularMovies.value ?: emptyList()
+
+        val homeMovies = a + b + c
+
+        homeMovies.find { it.id == movieId }?.let{
             viewModelScope.launch(ioDispatcher){
                 val isAdded = addMovieToUserListUseCase(it, CategoryType.WATCH_LIST_MOVIES, username)
                 withContext(mainDispatcher){

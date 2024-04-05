@@ -28,7 +28,6 @@ class MovieAdapter: Adapter<MovieViewHolder>() {
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.listener = moviesListener
         with(movieList[position]){
-            holder.numberList = numberList
             holder.id = id
             holder.labelName.text = title
             holder.labelStars.text= popularity.toString()
@@ -50,7 +49,6 @@ class MovieAdapter: Adapter<MovieViewHolder>() {
 class MovieViewHolder(root:View):ViewHolder(root){
     lateinit var listener: MovieListener
     var id:Int = 0
-    var numberList:Int = 0
 
     private val binding = ItemMovieBinding.bind(root)
     val image = binding.imgMovie
@@ -62,12 +60,12 @@ class MovieViewHolder(root:View):ViewHolder(root){
             listener.showDetails(id)
         }
         binding.btnBookmarkAdd.setOnClickListener {
-            listener.addToList(id, numberList)
+            listener.addToList(id)
         }
     }
 
     interface MovieListener {
         fun showDetails(id:Int)
-        fun addToList(id:Int, numberList: Int)
+        fun addToList(id:Int)
     }
 }

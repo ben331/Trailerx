@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -24,12 +25,25 @@ import tech.benhack.ui.theme.Yellow400
 import tech.benhack.ui.theme.movieShape
 import tech.benhack.ui.theme.trailerxTypography
 
+interface MovieListener {
+    fun showDetails(id: Int)
+    fun addToList(id: Int)
+    fun showInfo(id: Int)
+}
+
 @Composable
-fun ItemMovie(){
+fun ItemMovie(
+    id: Int,
+    name: String,
+    stars: String,
+    imageUrl: String,
+    listener: MovieListener?
+) {
     ConstraintLayout(
         modifier = Modifier
             .height(190.dp)
             .width(100.dp)
+            .clickable { listener?.showDetails(id) }
             .background(
                 TrailerxTheme.colorScheme.background,
                 movieShape
@@ -56,13 +70,13 @@ fun ItemMovie(){
             contentDescription = stringResource(id = R.string.btn_bookmark),
             modifier = Modifier
                 .size(30.dp)
-                .clickable {  }
-                .constrainAs(bookmarkAdd){
+                .clickable { listener?.addToList(id) }
+                .constrainAs(bookmarkAdd) {
                     start.linkTo(parent.start, 4.dp)
                     top.linkTo(parent.top)
                 },
         )
-        
+
         Image(
             modifier = Modifier
                 .size(16.dp)
@@ -75,7 +89,7 @@ fun ItemMovie(){
         )
 
         Text(
-            text = "4.5",
+            text = stars,
             style = trailerxTypography.bodySmall,
             color = TrailerxTheme.colorScheme.secondary,
             modifier = Modifier
@@ -86,13 +100,19 @@ fun ItemMovie(){
         )
 
         Text(
-            text = "Dura",
+            text = name,
             style = trailerxTypography.bodySmall.copy(fontSize = 10.sp),
             color = TrailerxTheme.colorScheme.onBackground,
+            textAlign = TextAlign.Left,
+            maxLines = 2,
             modifier = Modifier
+                .width(70.dp)
+                .height(24.dp)
                 .constrainAs(movieName) {
                     top.linkTo(iconStar.bottom)
                     start.linkTo(parent.start, 4.dp)
+                    end.linkTo(iconInfo.start)
+                    bottom.linkTo(parent.bottom)
                 }
         )
 
@@ -101,8 +121,8 @@ fun ItemMovie(){
             contentDescription = stringResource(id = R.string.btn_bookmark),
             modifier = Modifier
                 .size(16.dp)
-                .clickable {  }
-                .constrainAs(iconInfo){
+                .clickable { listener?.showInfo(id) }
+                .constrainAs(iconInfo) {
                     end.linkTo(parent.end, 4.dp)
                     bottom.linkTo(parent.bottom, 4.dp)
                 },
@@ -115,9 +135,15 @@ fun ItemMovie(){
     uiMode = Configuration.UI_MODE_NIGHT_NO
 )
 @Composable
-fun ItemMoviePreview(){
+fun ItemMoviePreview() {
     TrailerxTheme {
-        ItemMovie()
+        ItemMovie(
+            id = 1,
+            name = "Short",
+            stars = "4.0",
+            imageUrl = "",
+            listener = null
+        )
     }
 }
 
@@ -125,8 +151,14 @@ fun ItemMoviePreview(){
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
-fun ItemMoviePreviewNight(){
+fun ItemMoviePreviewNight() {
     TrailerxTheme {
-        ItemMovie()
+        ItemMovie(
+            id = 1,
+            name = "This is a title too long",
+            stars = "5.0",
+            imageUrl = "",
+            listener = null
+        )
     }
 }

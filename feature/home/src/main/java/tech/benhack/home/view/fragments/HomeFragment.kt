@@ -202,9 +202,9 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
         findNavController().navigate(action)
     }
 
-    override fun addToList(id: Int, numberList:Int) {
+    override fun addToList(id: Int) {
         if(homeViewModel.username.isNotEmpty()){
-            homeViewModel.addMovieToWatchList(id, numberList, requireContext())
+            homeViewModel.addMovieToWatchList(id, requireContext())
         }else{
             val action = HomeFragmentDirections.actionHomeFragmentToProfileFragment()
             findNavController().navigate(action)
