@@ -35,13 +35,14 @@ interface MovieListener {
 @Composable
 fun ItemMovie(
     id: Int,
-    name: String,
+    title: String,
     stars: String,
     imageUrl: String,
-    listener: MovieListener?
+    listener: MovieListener?,
+    modifier:Modifier = Modifier
 ) {
     ConstraintLayout(
-        modifier = Modifier
+        modifier = modifier
             .height(190.dp)
             .width(100.dp)
             .clickable { listener?.showDetails(id) }
@@ -55,7 +56,7 @@ fun ItemMovie(
 
         AsyncImage(
             model = imageUrl,
-            contentDescription = "$name image",
+            contentDescription = "$title image",
             modifier = Modifier
                 .height(140.dp)
                 .fillMaxWidth()
@@ -102,7 +103,7 @@ fun ItemMovie(
         )
 
         Text(
-            text = name,
+            text = title,
             style = trailerxTypography.bodySmall.copy(fontSize = 10.sp),
             color = TrailerxTheme.colorScheme.onBackground,
             textAlign = TextAlign.Left,
@@ -141,7 +142,7 @@ fun ItemMoviePreview() {
     TrailerxTheme {
         ItemMovie(
             id = 1,
-            name = "Short",
+            title = "Short",
             stars = "4.0",
             imageUrl = "${Constants.IMAGES_BASE_URL}/oe7mWkvYhK4PLRNAVSvonzyUXNy.jpg",
             listener = null
@@ -157,7 +158,7 @@ fun ItemMoviePreviewNight() {
     TrailerxTheme {
         ItemMovie(
             id = 1,
-            name = "This is a title too long",
+            title = "This is a title too long",
             stars = "5.0",
             imageUrl = "",
             listener = null
