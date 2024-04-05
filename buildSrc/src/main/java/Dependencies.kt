@@ -41,6 +41,7 @@ object Versions {
     const val compose = "2024.03.00"
     const val composeRuntime = "1.6.4"
     const val constraintLayout = "1.0.1"
+    const val coil = "2.6.0"
 }
 
 object Libs {
@@ -128,6 +129,7 @@ object Libs {
             const val liveData = "androidx.compose.runtime:runtime-livedata"
             const val rxjava = "androidx.compose.runtime:runtime-rxjava2"
             const val constraints = "androidx.constraintlayout:constraintlayout-compose:${Versions.constraintLayout}"
+            const val coil = "io.coil-kt:coil-compose:${Versions.coil}"
         }
     }
 

@@ -62,6 +62,8 @@ dependencies {
     implementation(Libs.AndroidX.constraint)
     implementation(Libs.AndroidX.splash)
 
+    implementation(Libs.Compose.Optionals.coil)
+
     //Compose
     val composeBom = platform(Libs.Compose.bom)
     implementation(composeBom)

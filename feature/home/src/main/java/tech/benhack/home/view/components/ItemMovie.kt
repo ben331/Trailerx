@@ -4,7 +4,6 @@ import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
@@ -19,6 +18,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import coil.compose.AsyncImage
+import tech.benhack.common.Constants
 import tech.benhack.home.R
 import tech.benhack.ui.theme.TrailerxTheme
 import tech.benhack.ui.theme.Yellow400
@@ -52,8 +53,9 @@ fun ItemMovie(
 
         val (bookmarkAdd, imgMovie, iconStar, labelStars, movieName, iconInfo) = createRefs()
 
-        //TODO: REPLACE WITH THE IMAGE
-        Box(
+        AsyncImage(
+            model = imageUrl,
+            contentDescription = "$name image",
             modifier = Modifier
                 .height(140.dp)
                 .fillMaxWidth()
@@ -141,7 +143,7 @@ fun ItemMoviePreview() {
             id = 1,
             name = "Short",
             stars = "4.0",
-            imageUrl = "",
+            imageUrl = "${Constants.IMAGES_BASE_URL}/oe7mWkvYhK4PLRNAVSvonzyUXNy.jpg",
             listener = null
         )
     }
