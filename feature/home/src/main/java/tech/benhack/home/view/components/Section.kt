@@ -1,9 +1,11 @@
 package tech.benhack.home.view.components
 
 import android.content.res.Configuration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
@@ -20,23 +22,30 @@ import tech.benhack.ui.theme.TrailerxTheme
 import tech.benhack.ui.theme.trailerxTypography
 
 @Composable
-fun ItemMovieList(
+fun Section(
     title:String,
     movies:List<MovieItem>,
-    showDescription:Boolean,
     modifier:Modifier = Modifier,
+    showDescription:Boolean = false,
     description:String = "",
     listener: MovieListener?,
-    showBtn:Boolean,
+    showBtn:Boolean = false,
     textButton:String = "",
-    onClick:()->Unit
+    onClick:()->Unit = {}
 ){
     Column(
         modifier = modifier
+            .background(
+                TrailerxTheme.colorScheme.surfaceContainerHigh
+            )
             .padding(start = 16.dp)
     ) {
         Spacer(modifier = Modifier.height(16.dp))
-        TitleContainer(text = title)
+        TitleContainer(
+            modifier = Modifier
+                .fillMaxWidth(),
+            text = title
+        )
         if(showDescription){
             Spacer(modifier = Modifier.height(16.dp))
             Text(
@@ -74,7 +83,7 @@ fun ItemMovieList(
 @Composable
 fun ItemMovieListPreview(){
     TrailerxTheme {
-        ItemMovieList(
+        Section(
             title = "Default Section Title",
             movies = emptyList(),
             showDescription = true,
@@ -94,7 +103,7 @@ fun ItemMovieListPreview(){
 @Composable
 fun ItemMovieListPreviewNight(){
     TrailerxTheme {
-        ItemMovieList(
+        Section(
             title = "Default Section Title",
             movies = emptyList(),
             showDescription = true,

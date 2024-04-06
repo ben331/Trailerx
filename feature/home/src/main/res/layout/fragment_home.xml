@@ -28,39 +28,14 @@
                 app:layout_constraintTop_toTopOf="parent"
                 layout="@layout/item_trailer"/>
 
-            <include
-                android:id="@+id/list_movies_one"
-                android:layout_width="wrap_content"
+            <androidx.compose.ui.platform.ComposeView
+                android:id="@+id/homeComposeView"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/mainTrailerContainer"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="@dimen/margin_medium"
-                layout="@layout/item_movies_lists"/>
-
-            <include
-                android:id="@+id/list_movies_two"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/list_movies_one"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="@dimen/margin_medium"
-                layout="@layout/item_movies_lists"/>
-
-            <include
-                android:id="@+id/list_movies_tree"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/list_movies_two"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="@dimen/margin_medium"
-                layout="@layout/item_movies_lists"/>
-
-            <View
-                android:id="@+id/divider"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/blank_space_height"
-                app:layout_constraintTop_toBottomOf="@id/list_movies_tree"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

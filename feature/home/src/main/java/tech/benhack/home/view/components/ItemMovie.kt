@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -21,6 +22,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.AsyncImage
 import tech.benhack.common.Constants
 import tech.benhack.home.R
+import tech.benhack.home.view.screens.Screen
 import tech.benhack.ui.theme.TrailerxTheme
 import tech.benhack.ui.theme.Yellow400
 import tech.benhack.ui.theme.movieShape
@@ -28,7 +30,7 @@ import tech.benhack.ui.theme.trailerxTypography
 
 interface MovieListener {
     fun showDetails(id: Int)
-    fun addToList(id: Int)
+    fun bookmarkAction(id: Int)
     fun showInfo(id: Int)
 }
 
@@ -39,7 +41,8 @@ fun ItemMovie(
     stars: String,
     imageUrl: String,
     listener: MovieListener?,
-    modifier:Modifier = Modifier
+    modifier:Modifier = Modifier,
+    screen:Screen = Screen.HOME_SCREEN,
 ) {
     ConstraintLayout(
         modifier = modifier
@@ -57,6 +60,7 @@ fun ItemMovie(
         AsyncImage(
             model = imageUrl,
             contentDescription = "$title image",
+            contentScale = ContentScale.Crop,
             modifier = Modifier
                 .height(140.dp)
                 .fillMaxWidth()
@@ -68,17 +72,34 @@ fun ItemMovie(
                 },
         )
 
-        Image(
-            painter = painterResource(id = tech.benhack.ui.R.drawable.ic_bookmark),
-            contentDescription = stringResource(id = R.string.btn_bookmark),
-            modifier = Modifier
-                .size(30.dp)
-                .clickable { listener?.addToList(id) }
-                .constrainAs(bookmarkAdd) {
-                    start.linkTo(parent.start, 4.dp)
-                    top.linkTo(parent.top)
-                },
-        )
+        if(screen == Screen.HOME_SCREEN){
+            Image(
+                painter = painterResource(id = tech.benhack.ui.R.drawable.ic_bookmark),
+                contentDescription = stringResource(id = R.string.btn_bookmark),
+                modifier = Modifier
+                    .size(30.dp)
+                    .clickable { listener?.bookmarkAction(id) }
+                    .constrainAs(bookmarkAdd) {
+                        start.linkTo(parent.start, 4.dp)
+                        top.linkTo(parent.top)
+                    },
+            )
+        }
+
+        if(screen == Screen.PROFILE_SCREEN){
+            Image(
+                painter = painterResource(id = tech.benhack.ui.R.drawable.ic_bookmark_delete),
+                contentDescription = stringResource(id = R.string.delete_icon),
+                modifier = Modifier
+                    .size(30.dp)
+                    .clickable { listener?.bookmarkAction(id) }
+                    .constrainAs(bookmarkAdd) {
+                        end.linkTo(parent.end, 4.dp)
+                        top.linkTo(parent.top)
+                    },
+            )
+        }
+
 
         Image(
             modifier = Modifier
@@ -161,7 +182,8 @@ fun ItemMoviePreviewNight() {
             title = "This is a title too long",
             stars = "5.0",
             imageUrl = "",
-            listener = null
+            listener = null,
+            screen = Screen.PROFILE_SCREEN
         )
     }
 }

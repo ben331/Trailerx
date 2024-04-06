@@ -2,7 +2,6 @@ package tech.benhack.home.viewmodel
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Movie
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

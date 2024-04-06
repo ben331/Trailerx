@@ -6,27 +6,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebChromeClient
-import android.widget.ImageView
 import android.widget.Toast
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import tech.benhack.common.Constants
 import tech.benhack.home.R
 import tech.benhack.home.databinding.FragmentHomeBinding
 import tech.benhack.ui.helpers.DialogManager
 import tech.benhack.ui.helpers.ImageLoader
-import tech.benhack.home.view.adapters.MovieAdapter
-import tech.benhack.home.view.adapters.MovieViewHolder
 import tech.benhack.home.viewmodel.HomeViewModel
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import dagger.hilt.android.AndroidEntryPoint
+import tech.benhack.home.model.SectionItem
+import tech.benhack.home.view.components.MovieListener
+import tech.benhack.home.view.screens.HomeScreen
+import tech.benhack.ui.theme.TrailerxTheme
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHolder.MovieListener {
-
+class HomeFragment : Fragment(), MovieListener {
     companion object {
         private const val FIRST_HOME_TITLE = "first_home_title"
         private const val  SECOND_HOME_TITLE= "second_home_title"
@@ -45,10 +47,6 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
 
     private val homeViewModel: HomeViewModel by viewModels()
 
-    private lateinit var nowPlayingMoviesAdapter: MovieAdapter
-    private lateinit var upcomingMoviesAdapter: MovieAdapter
-    private lateinit var popularMoviesAdapter: MovieAdapter
-
     private val remoteConfig: FirebaseRemoteConfig by lazy {
         FirebaseRemoteConfig.getInstance()
     }
@@ -57,7 +55,36 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return binding.root
+        binding.homeComposeView.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+
+                val nowPlayingMovies by homeViewModel.nowPlayingMovies.observeAsState(initial = emptyList())
+                val upcomingMovies by homeViewModel.upcomingMovies.observeAsState(initial = emptyList())
+                val popularMovies by homeViewModel.popularMovies.observeAsState(initial = emptyList())
+
+                TrailerxTheme {
+                    HomeScreen(
+                        sections = listOf(
+                            SectionItem(
+                                title = remoteConfig.getString(FIRST_HOME_TITLE),
+                                movies = nowPlayingMovies
+                            ),
+                            SectionItem(
+                                title = remoteConfig.getString(SECOND_HOME_TITLE),
+                                movies = upcomingMovies
+                            ),
+                            SectionItem(
+                                title = remoteConfig.getString(THIRD_HOME_TITLE),
+                                movies = popularMovies
+                            ),
+                        ),
+                        listener = this@HomeFragment
+                    )
+                }
+            }
+            return binding.root
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -66,9 +93,13 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
         //Setup
         setupButtons()
         setupLiveData()
-        setupRecyclerViews()
 
         refresh()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.homeComposeView.disposeComposition()
     }
 
     private fun setupButtons(){
@@ -105,19 +136,6 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
         homeViewModel.isLoading.observe(viewLifecycleOwner){
             binding.refreshLayout.isRefreshing = it
         }
-
-        homeViewModel.nowPlayingMovies.observe(viewLifecycleOwner){
-            nowPlayingMoviesAdapter.movieList = it
-            nowPlayingMoviesAdapter.notifyDataSetChanged()
-        }
-        homeViewModel.upcomingMovies.observe(viewLifecycleOwner){
-            upcomingMoviesAdapter.movieList = it
-            upcomingMoviesAdapter.notifyDataSetChanged()
-        }
-        homeViewModel.popularMovies.observe(viewLifecycleOwner){
-            popularMoviesAdapter.movieList = it
-            popularMoviesAdapter.notifyDataSetChanged()
-        }
     }
 
     private fun turnOfflineMode(isServiceAvailable: Boolean) {
@@ -146,55 +164,8 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
         }
     }
 
-    private fun setupRecyclerViews(){
-        nowPlayingMoviesAdapter = MovieAdapter()
-        upcomingMoviesAdapter = MovieAdapter()
-        popularMoviesAdapter = MovieAdapter()
-
-        nowPlayingMoviesAdapter.numberList = 1
-        upcomingMoviesAdapter.numberList = 2
-        popularMoviesAdapter.numberList = 3
-
-        nowPlayingMoviesAdapter.moviesListener = this
-        upcomingMoviesAdapter.moviesListener = this
-        popularMoviesAdapter.moviesListener = this
-
-        remoteConfig.fetchAndActivate().addOnCompleteListener { _ ->
-            with(binding.listMoviesOne){
-                titleContainer.sectionTitle.text = remoteConfig.getString(FIRST_HOME_TITLE)
-                listDescription.visibility = View.GONE
-                moviesRecyclerView.adapter = nowPlayingMoviesAdapter
-                moviesRecyclerView.layoutManager =
-                    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-                moviesRecyclerView.setHasFixedSize(true)
-            }
-
-            with(binding.listMoviesTwo){
-                titleContainer.sectionTitle.text = remoteConfig.getString(SECOND_HOME_TITLE)
-                listDescription.visibility = View.GONE
-                moviesRecyclerView.adapter = upcomingMoviesAdapter
-                moviesRecyclerView.layoutManager =
-                    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-                moviesRecyclerView.setHasFixedSize(true)
-            }
-
-            with(binding.listMoviesTree){
-                titleContainer.sectionTitle.text = remoteConfig.getString(THIRD_HOME_TITLE)
-                listDescription.visibility = View.GONE
-                moviesRecyclerView.adapter = popularMoviesAdapter
-                moviesRecyclerView.layoutManager =
-                    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-                moviesRecyclerView.setHasFixedSize(true)
-            }
-        }
-    }
-
     private fun refresh() {
         homeViewModel.onCreate()
-    }
-
-    override fun renderImage(url: String, image: ImageView) {
-        imageLoader.renderImageCenterCrop(requireContext(), url, image)
     }
 
     override fun showDetails(id: Int) {
@@ -202,7 +173,7 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
         findNavController().navigate(action)
     }
 
-    override fun addToList(id: Int) {
+    override fun bookmarkAction(id: Int) {
         if(homeViewModel.username.isNotEmpty()){
             homeViewModel.addMovieToWatchList(id, requireContext())
         }else{
@@ -211,5 +182,5 @@ class HomeFragment : Fragment(), MovieAdapter.ImageRenderListener, MovieViewHold
         }
     }
 
-
+    override fun showInfo(id: Int) { }
 }
