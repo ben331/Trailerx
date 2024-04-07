@@ -1,46 +1,40 @@
 package tech.benhack.home.view.fragments
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.PopupMenu
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.res.stringResource
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import tech.benhack.common.CategoryType
 import tech.benhack.home.R
 import tech.benhack.home.databinding.FragmentProfileBinding
-import tech.benhack.ui.helpers.DialogManager
-import tech.benhack.ui.helpers.ImageLoader
-import tech.benhack.home.view.adapters.MovieProfileAdapter
-import tech.benhack.home.view.adapters.MovieProfileViewHolder
-import tech.benhack.home.view.adapters.StatsAdapter
+import tech.benhack.home.model.SectionProfileItem
+import tech.benhack.home.view.components.MovieProfileListener
+import tech.benhack.home.view.screens.ProfileScreen
 import tech.benhack.home.viewmodel.ProfileViewModel
-import dagger.hilt.android.AndroidEntryPoint
+import tech.benhack.ui.helpers.DialogManager
+import tech.benhack.ui.theme.TrailerxTheme
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProfileFragment :
     Fragment(),
-    PopupMenu.OnMenuItemClickListener,
-    MovieProfileAdapter.ImageRenderListener,
-    MovieProfileViewHolder.MovieListener {
-
+    MovieProfileListener
+{
     private val profileViewModel:ProfileViewModel by viewModels()
 
     private lateinit var logoutListener: SettingsFragment.LogoutListener
 
     @Inject
     lateinit var dialogManager: DialogManager
-
-    @Inject
-    lateinit var imageLoader: ImageLoader
 
     private val binding: FragmentProfileBinding by lazy {
         FragmentProfileBinding.inflate(layoutInflater)
@@ -50,196 +44,84 @@ class ProfileFragment :
         findNavController()
     }
 
-    private lateinit var statsAdapter: StatsAdapter
-
-    private lateinit var watchListAdapter: MovieProfileAdapter
-    private lateinit var recentMoviesAdapter: MovieProfileAdapter
-    private lateinit var favoritePeopleAdapter: MovieProfileAdapter
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        binding.profileComposeView.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+
+                val watchList by profileViewModel.watchList.observeAsState(initial = emptyList())
+                val history by profileViewModel.recentViewed.observeAsState(initial = emptyList())
+
+                TrailerxTheme {
+                    ProfileScreen(
+                        isGuest = profileViewModel.username.isEmpty(),
+                        onLogout = ::logout,
+                        sections = listOf(
+                            SectionProfileItem(
+                                title = stringResource(id = R.string.watch_list),
+                                categoryType = CategoryType.WATCH_LIST_MOVIES,
+                                movies = watchList ?: emptyList(),
+                                showDescription = watchList?.isEmpty() ?: false,
+                                description = stringResource(id = R.string.create_watch_list),
+                                showBtn = watchList?.isEmpty() ?: false,
+                                textButton = stringResource(id = R.string.start_watch_list),
+                                onClick = {
+                                    val action =
+                                        ProfileFragmentDirections.actionProfileFragmentToHomeFragment()
+                                    findNavController().navigate(action)
+                                }
+                            ),
+                            SectionProfileItem(
+                                title = stringResource(id = R.string.recently_viewed),
+                                categoryType = CategoryType.HISTORY_MOVIES,
+                                movies = history ?: emptyList(),
+                                showDescription = history?.isEmpty() ?: false,
+                                description = stringResource(id = R.string.content_recently_viewed),
+                            )
+                        ),
+                        profileImgUrl = profileViewModel.photoUri.value.toString(),
+                        onMenuClick = {
+                            val action =
+                                ProfileFragmentDirections.actionProfileFragmentToSettingsFragment()
+                            navController.navigate(action)
+                        },
+                        listener = this@ProfileFragment
+                    )
+                }
+            }
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupLiveData()
-        setupTopRecyclerView()
         setupButtons()
-        setupRecyclerViews()
-
-        if(profileViewModel.username.isNotEmpty()){
-            hideInvitation()
-        }else{
-            hideRecyclerViews()
-        }
     }
 
     override fun onResume() {
         super.onResume()
+        binding.profileComposeView.disposeComposition()
         profileViewModel.refresh(requireContext())
     }
 
-    private fun setupTopRecyclerView(){
-        statsAdapter = StatsAdapter()
-        with(binding.profileHeaderContainer.shortcutsRecyclerView){
-            adapter = statsAdapter
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            setHasFixedSize(true)
-        }
-    }
-
-    // TODO: IMPLEMENT FAVORITE PEOPLE RECYCLER
-    private fun setupRecyclerViews(){
-        watchListAdapter = MovieProfileAdapter()
-        recentMoviesAdapter = MovieProfileAdapter()
-        favoritePeopleAdapter = MovieProfileAdapter()
-
-        watchListAdapter.listType = CategoryType.WATCH_LIST_MOVIES
-        recentMoviesAdapter.listType = CategoryType.HISTORY_MOVIES
-        favoritePeopleAdapter.listType = CategoryType.FAVORITE_PEOPLE
-
-        watchListAdapter.moviesListener = this
-        recentMoviesAdapter.moviesListener = this
-        favoritePeopleAdapter.moviesListener = this
-
-        with(binding.listMoviesOne){
-            titleContainer.sectionTitle.text = getString(R.string.watch_list)
-            listDescription.text = getString(R.string.create_watch_list)
-            btnActionList.text = getString(R.string.start_watch_list)
-            btnActionList.setOnClickListener {
-                val action = ProfileFragmentDirections.actionProfileFragmentToHomeFragment()
-                findNavController().navigate(action)
-            }
-
-            moviesRecyclerView.adapter = watchListAdapter
-            moviesRecyclerView.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            moviesRecyclerView.setHasFixedSize(true)
-        }
-
-        with(binding.listMoviesTwo){
-            titleContainer.sectionTitle.text = getString(R.string.recently_viewed)
-            listDescription.text = getString(R.string.content_recently_viewed)
-            moviesRecyclerView.adapter = recentMoviesAdapter
-            moviesRecyclerView.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            moviesRecyclerView.setHasFixedSize(true)
-        }
-
-        with(binding.listMoviesThree){
-            titleContainer.sectionTitle.text = getString(R.string.favorite_people)
-            listDescription.text = getString(R.string.content_favorite_people)
-            moviesRecyclerView.adapter = favoritePeopleAdapter
-            moviesRecyclerView.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            moviesRecyclerView.setHasFixedSize(true)
-        }
-    }
-
-    private fun hideRecyclerViews(){
-        binding.listMoviesOne.root.visibility = View.GONE
-        binding.listMoviesTwo.root.visibility = View.GONE
-        binding.listMoviesThree.root.visibility = View.GONE
-        binding.inviteToRegister.visibility = View.VISIBLE
-        binding.btnRegister.visibility = View.VISIBLE
-    }
-
-    private fun hideInvitation(){
-        binding.inviteToRegister.visibility = View.GONE
-        binding.btnRegister.visibility = View.GONE
-        binding.listMoviesOne.root.visibility = View.VISIBLE
-        binding.listMoviesTwo.root.visibility = View.VISIBLE
-        binding.listMoviesThree.root.visibility = View.VISIBLE
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    private fun setupLiveData(){
-        profileViewModel.photoUri.observe(viewLifecycleOwner) {
-            imageLoader.renderImageCenterCrop (
-                requireContext(), it,
-                binding.profileHeaderContainer.profilePhotoContainer.profileImage
-            )
-        }
-
+    private fun setupButtons(){
         profileViewModel.isLoading.observe(viewLifecycleOwner){
             binding.refreshLayout.isRefreshing = it
         }
 
-        profileViewModel.watchList.observe(viewLifecycleOwner){ movies ->
-            if(movies.isNullOrEmpty()){
-                with(binding.listMoviesOne) {
-                    listDescription.visibility = View.VISIBLE
-                    btnActionList.visibility = View.VISIBLE
-                }
-            }else{
-                with(binding.listMoviesOne) {
-                    listDescription.visibility = View.GONE
-                    btnActionList.visibility = View.GONE
-                }
-            }
-            watchListAdapter.movieList = movies ?: emptyList()
-            watchListAdapter.notifyDataSetChanged()
-        }
-
-        profileViewModel.recentViewed.observe(viewLifecycleOwner){ movies ->
-            if(movies.isNullOrEmpty()){
-                binding.listMoviesTwo.listDescription.visibility = View.VISIBLE
-            }else{
-                binding.listMoviesTwo.listDescription.visibility = View.GONE
-            }
-            recentMoviesAdapter.movieList = movies ?: emptyList()
-            recentMoviesAdapter.notifyDataSetChanged()
-        }
-
-        profileViewModel.favoritePeople.observe(viewLifecycleOwner){ movies ->
-            if(movies.isNullOrEmpty()){
-                binding.listMoviesThree.root.visibility = View.GONE
-            }else{
-                binding.listMoviesThree.root.visibility = View.VISIBLE
-            }
-            favoritePeopleAdapter.movieList = movies ?: emptyList()
-            favoritePeopleAdapter.notifyDataSetChanged()
-        }
-    }
-
-    private fun setupButtons(){
-
-        val parent = parentFragment?.parentFragment as NavigationFragment
-        logoutListener = parent
-        binding.btnRegister.setOnClickListener {
-            navController.popBackStack(R.id.home_nav_graph, true)
-            logoutListener.logout()
-        }
-
-        binding.profileHeaderContainer.btnSettings.setOnClickListener(::showPopup)
         binding.refreshLayout.setOnRefreshListener {
             profileViewModel.refresh(requireContext())
         }
     }
 
-    private fun showPopup(v: View) {
-        val popup = PopupMenu(requireActivity(), v)
-        popup.setOnMenuItemClickListener(this)
-        popup.inflate(R.menu.profile_popup_menu)
-        popup.show()
-    }
-
-    override fun onMenuItemClick(item: MenuItem?): Boolean {
-        when (item!!.itemId) {
-            R.id.item_settings -> {
-                val action = ProfileFragmentDirections.actionProfileFragmentToSettingsFragment()
-                navController.navigate(action)
-            }
-        }
-        return true
-    }
-
-    override fun renderImage(url: String, image: ImageView) {
-        imageLoader.renderImageCenterCrop(requireContext(), url, image)
+    private fun logout(){
+        val parent = parentFragment?.parentFragment as NavigationFragment
+        logoutListener = parent
+        navController.popBackStack(R.id.home_nav_graph, true)
+        logoutListener.logout()
     }
 
     override fun showDetails(id: Int) {
@@ -247,9 +129,8 @@ class ProfileFragment :
         navController.navigate(action)
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    override fun deleteFromList(id: Int, listType: CategoryType) {
-        profileViewModel.deleteMovieFromList(id, listType) { isDeleted ->
+    override fun bookmarkAction(id: Int, category: CategoryType) {
+        profileViewModel.deleteMovieFromList(id, category) { isDeleted ->
             if(isDeleted){
                 profileViewModel.refresh(requireContext())
             }else{
@@ -257,6 +138,8 @@ class ProfileFragment :
             }
         }
     }
+
+    override fun showInfo(id: Int) { }
 
     private fun handleFailure(title:Int, msg:Int){
         profileViewModel.isLoading.postValue(false)

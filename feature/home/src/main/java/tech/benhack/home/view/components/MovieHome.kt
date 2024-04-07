@@ -22,27 +22,25 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.AsyncImage
 import tech.benhack.common.Constants
 import tech.benhack.home.R
-import tech.benhack.home.view.screens.Screen
 import tech.benhack.ui.theme.TrailerxTheme
 import tech.benhack.ui.theme.Yellow400
 import tech.benhack.ui.theme.movieShape
 import tech.benhack.ui.theme.trailerxTypography
 
-interface MovieListener {
+interface MovieHomeListener {
     fun showDetails(id: Int)
     fun bookmarkAction(id: Int)
     fun showInfo(id: Int)
 }
 
 @Composable
-fun Movie(
+fun MovieHome(
     id: Int,
     title: String,
     stars: String,
     imageUrl: String,
-    listener: MovieListener?,
+    listener: MovieHomeListener?,
     modifier:Modifier = Modifier,
-    screen:Screen = Screen.HOME_SCREEN,
 ) {
     ConstraintLayout(
         modifier = modifier
@@ -72,34 +70,17 @@ fun Movie(
                 },
         )
 
-        if(screen == Screen.HOME_SCREEN){
-            Image(
-                painter = painterResource(id = tech.benhack.ui.R.drawable.ic_bookmark),
-                contentDescription = stringResource(id = R.string.btn_bookmark),
-                modifier = Modifier
-                    .size(30.dp)
-                    .clickable { listener?.bookmarkAction(id) }
-                    .constrainAs(bookmarkAdd) {
-                        start.linkTo(parent.start, 4.dp)
-                        top.linkTo(parent.top)
-                    },
-            )
-        }
-
-        if(screen == Screen.PROFILE_SCREEN){
-            Image(
-                painter = painterResource(id = tech.benhack.ui.R.drawable.ic_bookmark_delete),
-                contentDescription = stringResource(id = R.string.delete_icon),
-                modifier = Modifier
-                    .size(30.dp)
-                    .clickable { listener?.bookmarkAction(id) }
-                    .constrainAs(bookmarkAdd) {
-                        end.linkTo(parent.end, 4.dp)
-                        top.linkTo(parent.top)
-                    },
-            )
-        }
-
+        Image(
+            painter = painterResource(id = tech.benhack.ui.R.drawable.ic_bookmark),
+            contentDescription = stringResource(id = R.string.btn_bookmark),
+            modifier = Modifier
+                .size(30.dp)
+                .clickable { listener?.bookmarkAction(id) }
+                .constrainAs(bookmarkAdd) {
+                    start.linkTo(parent.start, 4.dp)
+                    top.linkTo(parent.top)
+                },
+        )
 
         Image(
             modifier = Modifier
@@ -161,7 +142,7 @@ fun Movie(
 @Composable
 fun ItemMoviePreview() {
     TrailerxTheme {
-        Movie(
+        MovieHome(
             id = 1,
             title = "Short",
             stars = "4.0",
@@ -177,13 +158,12 @@ fun ItemMoviePreview() {
 @Composable
 fun ItemMoviePreviewNight() {
     TrailerxTheme {
-        Movie(
+        MovieHome(
             id = 1,
             title = "This is a title too long",
             stars = "5.0",
             imageUrl = "",
             listener = null,
-            screen = Screen.PROFILE_SCREEN
         )
     }
 }

@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import tech.benhack.common.CategoryType
 import tech.benhack.common.Constants
 import tech.benhack.movies.model.MovieItem
 import tech.benhack.ui.components.PrimaryButton
@@ -22,16 +23,17 @@ import tech.benhack.ui.theme.TrailerxTheme
 import tech.benhack.ui.theme.trailerxTypography
 
 @Composable
-fun Section(
+fun SectionProfile(
     title:String,
     movies:List<MovieItem>,
     modifier:Modifier = Modifier,
     showDescription:Boolean = false,
     description:String = "",
-    listener: MovieListener?,
+    listener: MovieProfileListener?,
     showBtn:Boolean = false,
     textButton:String = "",
-    onClick:()->Unit = {}
+    categoryType: CategoryType,
+    onClick:()->Unit = {},
 ){
     Column(
         modifier = modifier
@@ -59,12 +61,13 @@ fun Section(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ){
             items(movies){ movie ->
-                Movie(
+                MovieProfile(
                     id = movie.id,
                     title = movie.title ?: "- - - -",
                     stars = movie.popularity.toString(),
                     imageUrl = Constants.IMAGES_BASE_URL + movie.backdropPath,
-                    listener = listener
+                    listener = listener,
+                    category = categoryType
                 )
             }
         }
@@ -83,14 +86,15 @@ fun Section(
 @Composable
 fun ItemMovieListPreview(){
     TrailerxTheme {
-        Section(
+        SectionProfile(
             title = "Default Section Title",
             movies = emptyList(),
             showDescription = true,
             description = "Crea una lista de seguimiento para no perderte niguna película!",
             listener = null,
             showBtn = true,
-            textButton = "Empieza tu lista de seguimiento"
+            textButton = "Empieza tu lista de seguimiento",
+            categoryType = CategoryType.HISTORY_MOVIES
         ) {
 
         }
@@ -103,14 +107,15 @@ fun ItemMovieListPreview(){
 @Composable
 fun ItemMovieListPreviewNight(){
     TrailerxTheme {
-        Section(
+        SectionProfile(
             title = "Default Section Title",
             movies = emptyList(),
             showDescription = true,
             description = "Crea una lista de seguimiento para no perderte niguna película!",
             listener = null,
             showBtn = true,
-            textButton = "Empieza tu lista de seguimiento"
+            textButton = "Empieza tu lista de seguimiento",
+            categoryType = CategoryType.HISTORY_MOVIES
         ) {
 
         }

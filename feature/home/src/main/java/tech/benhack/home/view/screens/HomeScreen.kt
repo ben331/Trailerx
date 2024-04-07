@@ -6,24 +6,19 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import tech.benhack.home.model.SectionItem
-import tech.benhack.home.view.components.Section
-import tech.benhack.home.view.components.MovieListener
+import tech.benhack.home.model.SectionHomeItem
+import tech.benhack.home.view.components.SectionHome
+import tech.benhack.home.view.components.MovieHomeListener
 import tech.benhack.ui.theme.TrailerxTheme
 
 @Composable
 fun HomeScreen(
-    sections:List<SectionItem>,
-    listener: MovieListener?
+    sections:List<SectionHomeItem>,
+    listener: MovieHomeListener?
 ){
     Column(
         modifier = Modifier
@@ -31,14 +26,13 @@ fun HomeScreen(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ){
         sections.forEach { section ->
-            Section(
+            SectionHome(
                 title = section.title,
                 movies = section.movies,
                 listener = listener,
             )
         }
         Spacer(modifier = Modifier.height(160.dp))
-        Text(text = "prueba")
     }
 
 }
@@ -53,11 +47,11 @@ fun HomeScreenPreview(){
     TrailerxTheme {
         HomeScreen(
             listOf(
-                SectionItem(
+                SectionHomeItem(
                     title = "Próximamente",
                     movies = emptyList()
                 ),
-                SectionItem(
+                SectionHomeItem(
                     title = "Upcoming",
                     movies = emptyList()
                 )
@@ -76,11 +70,11 @@ fun HomeScreenPreviewNight(){
     TrailerxTheme {
         HomeScreen(
             listOf(
-                SectionItem(
+                SectionHomeItem(
                     title = "Próximamente",
                     movies = emptyList()
                 ),
-                SectionItem(
+                SectionHomeItem(
                     title = "Upcoming",
                     movies = emptyList()
                 )

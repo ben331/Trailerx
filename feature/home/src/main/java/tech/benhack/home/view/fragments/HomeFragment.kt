@@ -21,14 +21,14 @@ import tech.benhack.ui.helpers.ImageLoader
 import tech.benhack.home.viewmodel.HomeViewModel
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import dagger.hilt.android.AndroidEntryPoint
-import tech.benhack.home.model.SectionItem
-import tech.benhack.home.view.components.MovieListener
+import tech.benhack.home.model.SectionHomeItem
+import tech.benhack.home.view.components.MovieHomeListener
 import tech.benhack.home.view.screens.HomeScreen
 import tech.benhack.ui.theme.TrailerxTheme
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(), MovieListener {
+class HomeFragment : Fragment(), MovieHomeListener {
     companion object {
         private const val FIRST_HOME_TITLE = "first_home_title"
         private const val  SECOND_HOME_TITLE= "second_home_title"
@@ -66,15 +66,15 @@ class HomeFragment : Fragment(), MovieListener {
                 TrailerxTheme {
                     HomeScreen(
                         sections = listOf(
-                            SectionItem(
+                            SectionHomeItem(
                                 title = remoteConfig.getString(FIRST_HOME_TITLE),
                                 movies = nowPlayingMovies
                             ),
-                            SectionItem(
+                            SectionHomeItem(
                                 title = remoteConfig.getString(SECOND_HOME_TITLE),
                                 movies = upcomingMovies
                             ),
-                            SectionItem(
+                            SectionHomeItem(
                                 title = remoteConfig.getString(THIRD_HOME_TITLE),
                                 movies = popularMovies
                             ),
