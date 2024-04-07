@@ -11,6 +11,7 @@ private val lightColorScheme = lightColorScheme(
     primary = Yellow400,
     onPrimary = Color.Black,
     secondary = Gray500,
+    tertiary = Gray500,
     onSecondary = Color.White,
     error = DeepOrange900,
     onError = Color.White,
@@ -20,12 +21,15 @@ private val lightColorScheme = lightColorScheme(
     onSurface = Gray800,
     surfaceContainer = Color.White,
     surfaceContainerHigh = Color.White,
+    surfaceContainerLow = Gray100,
+    inverseSurface =  Gray100
 )
 
 private val darkColorScheme = darkColorScheme(
     primary = Yellow400,
     onPrimary = Color.Black,
     secondary = Gray500,
+    tertiary = Gray100,
     onSecondary = Color.White,
     error = DeepOrange900,
     onError = Color.White,
@@ -34,7 +38,9 @@ private val darkColorScheme = darkColorScheme(
     surface = Gray800,
     onSurface = Color.White,
     surfaceContainer = Gray800,
-    surfaceContainerHigh = DarkGrey
+    surfaceContainerHigh = DarkGrey,
+    surfaceContainerLow = Gray500,
+    inverseSurface =  Color.Black,
 )
 
 object TrailerxTheme {

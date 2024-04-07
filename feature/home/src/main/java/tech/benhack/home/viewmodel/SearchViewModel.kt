@@ -43,11 +43,15 @@ class SearchViewModel @Inject constructor(
     fun search(
         query:String
     ) {
-        viewModelScope.launch(ioDispatcher) {
-            val result = searchMovieUseCase(query)
-            if(result.isNotEmpty()){
-                resultMovies.postValue(result)
+        if(query.isNotEmpty()){
+            viewModelScope.launch(ioDispatcher) {
+                val result = searchMovieUseCase(query)
+                if(result.isNotEmpty()){
+                    resultMovies.postValue(result)
+                }
             }
+        }else{
+            resultMovies.postValue(emptyList())
         }
     }
 }

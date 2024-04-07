@@ -59,7 +59,7 @@ fun Section(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ){
             items(movies){ movie ->
-                ItemMovie(
+                Movie(
                     id = movie.id,
                     title = movie.title ?: "- - - -",
                     stars = movie.popularity.toString(),

@@ -35,7 +35,7 @@ interface MovieListener {
 }
 
 @Composable
-fun ItemMovie(
+fun Movie(
     id: Int,
     title: String,
     stars: String,
@@ -161,7 +161,7 @@ fun ItemMovie(
 @Composable
 fun ItemMoviePreview() {
     TrailerxTheme {
-        ItemMovie(
+        Movie(
             id = 1,
             title = "Short",
             stars = "4.0",
@@ -177,7 +177,7 @@ fun ItemMoviePreview() {
 @Composable
 fun ItemMoviePreviewNight() {
     TrailerxTheme {
-        ItemMovie(
+        Movie(
             id = 1,
             title = "This is a title too long",
             stars = "5.0",

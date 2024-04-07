@@ -32,5 +32,12 @@ class FormValidator {
         fun validateIsNotBlank(field:String):Boolean{
             return field.isNotBlank()
         }
+
+
     }
 }
+
+fun String?.toYear():String =
+    if(this!=null && this.length >= 4)
+        this.subSequence(0,4).toString()
+    else "----"
