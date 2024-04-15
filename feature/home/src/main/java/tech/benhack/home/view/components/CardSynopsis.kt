@@ -102,7 +102,7 @@ fun CardSynopsis(
         )
         Text(
             text = text,
-            style = trailerxTypography.bodySmall,
+            style = trailerxTypography.bodyLarge,
             color = TrailerxTheme.colorScheme.onSurface,
             modifier = Modifier
                 .fillMaxWidth(0.6f)

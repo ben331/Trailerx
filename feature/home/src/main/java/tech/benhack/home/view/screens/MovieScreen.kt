@@ -24,10 +24,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.AsyncImage
+import tech.benhack.common.Constants
 import tech.benhack.home.R
 import tech.benhack.home.view.components.CardSynopsis
 import tech.benhack.home.view.components.TitleContainer
+import tech.benhack.movies.model.GenreItem
+import tech.benhack.movies.model.MovieDetailItem
 import tech.benhack.ui.components.PrimaryButton
+import tech.benhack.ui.helpers.TextTransforms
 import tech.benhack.ui.theme.TrailerxTheme
 import tech.benhack.ui.theme.Yellow400
 import tech.benhack.ui.theme.trailerxTypography
@@ -35,14 +39,7 @@ import tech.benhack.ui.theme.trailerxTypography
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MovieScreen(
-    movieId:Int,
-    title:String,
-    genre:String,
-    stars:String,
-    synopsis:String,
-    originalTitle:String,
-    releaseDate:String,
-    imageUrl:String,
+    movie:MovieDetailItem,
     onNavigateBack:()->Unit,
     onAddToWatchList:(movieId:Int)->Unit
 ){
@@ -59,7 +56,7 @@ fun MovieScreen(
                 ),
                 title = {
                     Text(
-                        text = title,
+                        text = movie.title ?: "Error",
                         maxLines = 1,
                         style = trailerxTypography.titleLarge,
                         color = TrailerxTheme.colorScheme.onBackground
@@ -69,7 +66,8 @@ fun MovieScreen(
                     IconButton(onClick = onNavigateBack) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Localized description"
+                            contentDescription = "Localized description",
+                            tint = TrailerxTheme.colorScheme.onBackground
                         )
                     }
                 }
@@ -90,7 +88,7 @@ fun MovieScreen(
             ) = createRefs()
             
             TitleContainer(
-                text = title,
+                text = movie.title ?: "Error",
                 modifier = Modifier
                     .constrainAs(titleRef){
                         start.linkTo(parent.start, 16.dp)
@@ -98,8 +96,8 @@ fun MovieScreen(
                     }
             )
             Text(
-                text =  originalTitle,
-                style = trailerxTypography.bodySmall,
+                text =  movie.originalTitle + " " + stringResource(id = R.string.origin_title),
+                style = trailerxTypography.bodyMedium,
                 color = TrailerxTheme.colorScheme.onBackground,
                 modifier = Modifier
                     .constrainAs(originalTitleRef) {
@@ -108,8 +106,8 @@ fun MovieScreen(
                     }
             )
             Text(
-                text =  releaseDate,
-                style = trailerxTypography.bodySmall,
+                text =  TextTransforms.createDescription(movie.tagline, movie.releaseDate),
+                style = trailerxTypography.titleMedium,
                 color = TrailerxTheme.colorScheme.onSurface,
                 modifier = Modifier
                     .constrainAs(releaseDateRef) {
@@ -118,8 +116,8 @@ fun MovieScreen(
                     }
             )
             AsyncImage(
-                model = imageUrl,
-                contentDescription = "$title image",
+                model = Constants.IMAGES_BASE_URL + movie.backdropPath,
+                contentDescription = "${movie.title} image",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .height(200.dp)
@@ -132,10 +130,10 @@ fun MovieScreen(
                     },
             )
             CardSynopsis(
-                imageUrl = imageUrl,
-                genre = genre,
-                stars = stars,
-                text = synopsis,
+                imageUrl = Constants.IMAGES_BASE_URL + movie.backdropPath,
+                genre = if(!movie.genres.isNullOrEmpty()) movie.genres!![0].name else "",
+                stars = movie.popularity.toString(),
+                text = movie.overview ?: "",
                 modifier = Modifier.constrainAs(synopsisSectionRef) {
                     top.linkTo(imageRef.bottom, 8.dp)
                     start.linkTo(parent.start)
@@ -144,7 +142,7 @@ fun MovieScreen(
             )
             PrimaryButton(
                 text = stringResource(id = R.string.add_to_watch_list),
-                onClick = { onAddToWatchList(movieId) },
+                onClick = { onAddToWatchList(movie.id) },
                 modifier = Modifier
                     .constrainAs(buttonRef) {
                         top.linkTo(synopsisSectionRef.bottom, 18.dp)
@@ -165,14 +163,29 @@ fun MovieScreen(
 fun MovieScreenPreview(){
     TrailerxTheme {
         MovieScreen(
-            1,
-            "Kung Fu Panda 4",
-            "Adventure",
-            "4.5",
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-            "Kung Fu Panda 4",
-            "2024",
-            "",
+            MovieDetailItem(
+                adult = false,
+                backdropPath = "",
+                budget = 0,
+                genres = listOf(GenreItem(1, "Adventure")),
+                homepage = "",
+                id = 0,
+                trailerxId = "",
+                originalLanguage = "",
+                originalTitle = "Kung Fu Panda 4",
+                overview = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+                popularity = 4.0,
+                posterPath = "",
+                releaseDate = "2024-03-17",
+                revenue = 0,
+                runtime = 0,
+                tagline = "Po is coming back,",
+                status = "",
+                title = "Kung Fu Panda 4",
+                video = false,
+                voteAverage = 0.0,
+                voteCount = 0
+            ),
             {},
             {}
         )
@@ -187,14 +200,29 @@ fun MovieScreenPreview(){
 fun MovieScreenPreviewDark(){
     TrailerxTheme {
         MovieScreen(
-            2,
-            "Kung Fu Panda 4",
-            "Adventure",
-            "4.5",
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-            "Kung Fu Panda 4",
-            "2024",
-            "",
+            MovieDetailItem(
+                adult = false,
+                backdropPath = "",
+                budget = 0,
+                genres = listOf(GenreItem(1, "Adventure")),
+                homepage = "",
+                id = 0,
+                trailerxId = "",
+                originalLanguage = "",
+                originalTitle = "Kung Fu Panda 4",
+                overview = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+                popularity = 4.0,
+                posterPath = "",
+                releaseDate = "2024-03-17",
+                revenue = 0,
+                runtime = 0,
+                tagline = "Po is coming back,",
+                status = "",
+                title = "Kung Fu Panda 4",
+                video = false,
+                voteAverage = 0.0,
+                voteCount = 0
+            ),
             {},
             {}
         )
