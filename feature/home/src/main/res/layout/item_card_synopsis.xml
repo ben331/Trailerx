@@ -28,15 +28,15 @@
 
     <ImageView
         android:id="@+id/icon_star"
-        android:layout_width="@dimen/icon_micro_size"
-        android:layout_height="@dimen/icon_micro_size"
+        android:layout_width="14dp"
+        android:layout_height="11dp"
         android:layout_marginStart="@dimen/padding_medium"
         android:contentDescription="@string/img_star"
         android:src="@drawable/ic_rounded_star"
         app:layout_constraintBottom_toBottomOf="@id/label_genre"
         app:layout_constraintStart_toEndOf="@id/label_genre"
         app:layout_constraintTop_toTopOf="@id/label_genre"
-        tools:ignore="ImageContrastCheck"/>
+        tools:ignore="ImageContrastCheck" />
 
     <TextView
         android:id="@+id/label_stars"
