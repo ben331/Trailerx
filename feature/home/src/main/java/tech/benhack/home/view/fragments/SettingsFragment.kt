@@ -1,20 +1,23 @@
 package tech.benhack.home.view.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import tech.benhack.home.R
 import tech.benhack.home.databinding.FragmentSettingsBinding
+import tech.benhack.home.view.screens.SettingsScreen
 import tech.benhack.home.viewmodel.SettingsViewModel
 import tech.benhack.ui.helpers.DialogManager
+import tech.benhack.ui.theme.TrailerxTheme
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -39,58 +42,47 @@ class SettingsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return binding.root
+        binding.settingsComposeView.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+
+                val isLoading by viewModel.isLoading.observeAsState(initial = false)
+
+                TrailerxTheme {
+                    SettingsScreen(
+                        isLoading = isLoading,
+                        isGuest = viewModel.email.isBlank(),
+                        onNavigateBack = { navController.popBackStack() },
+                        onLogout = ::logout,
+                        onDeleteAccount = {
+                            dialogManager.showDialog(
+                                requireContext(),
+                                R.string.warning,
+                                R.string.alert_delete_account
+                            ) { viewModel.deleteAccount(requireContext()) }
+                        }
+                    )
+                }
+            }
+            return binding.root
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupTopAppBar()
-        setupButtons()
+        subscribeListener()
         setupLiveData()
     }
 
-    private fun setupTopAppBar(){
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
-        binding.topAppBar.setupWithNavController(navController, appBarConfiguration)
-        binding.topAppBar.title = getString(R.string.settings)
-    }
-
-    private fun setupButtons(){
+    private fun subscribeListener(){
         val parent = parentFragment?.parentFragment as NavigationFragment
         logoutListener = parent
-        binding.btnLogout.setOnClickListener {
-            logout()
-        }
-
-        if(viewModel.email.isBlank()){
-            binding.btnDeleteAccount.visibility = View.GONE
-        }else {
-            binding.btnDeleteAccount.visibility = View.VISIBLE
-        }
-
-        binding.btnDeleteAccount.setOnClickListener {
-            dialogManager.showDialog(
-                requireContext(),
-                R.string.warning,
-                R.string.alert_delete_account
-            ) { viewModel.deleteAccount(requireContext()) }
-        }
     }
 
     private fun setupLiveData(){
         viewModel.accountDeleted.observe(viewLifecycleOwner){ accountDeleted ->
             if(accountDeleted){
                 logout()
-            }
-        }
-
-        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            if(isLoading){
-                binding.progressComponent.visibility = View.VISIBLE
-                binding.topAppBar.visibility = View.GONE
-            }else{
-                binding.progressComponent.visibility = View.GONE
-                binding.topAppBar.visibility = View.VISIBLE
             }
         }
     }
