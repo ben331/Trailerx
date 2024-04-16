@@ -40,6 +40,7 @@ import tech.benhack.ui.theme.trailerxTypography
 @Composable
 fun MovieScreen(
     movie:MovieDetailItem,
+    offLineMode:Boolean,
     onNavigateBack:()->Unit,
     onAddToWatchList:(movieId:Int)->Unit
 ){
@@ -186,6 +187,7 @@ fun MovieScreenPreview(){
                 voteAverage = 0.0,
                 voteCount = 0
             ),
+            false,
             {},
             {}
         )
@@ -223,6 +225,7 @@ fun MovieScreenPreviewDark(){
                 voteAverage = 0.0,
                 voteCount = 0
             ),
+            false,
             {},
             {}
         )

@@ -1,29 +1,24 @@
 package tech.benhack.home.view.fragments
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebChromeClient
-import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import tech.benhack.common.Constants
-import tech.benhack.home.R
-import tech.benhack.home.databinding.FragmentHomeBinding
-import tech.benhack.ui.helpers.DialogManager
-import tech.benhack.ui.helpers.ImageLoader
-import tech.benhack.home.viewmodel.HomeViewModel
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import dagger.hilt.android.AndroidEntryPoint
+import tech.benhack.common.Constants
+import tech.benhack.home.databinding.FragmentHomeBinding
 import tech.benhack.home.model.SectionHomeItem
 import tech.benhack.home.view.components.MovieHomeListener
 import tech.benhack.home.view.screens.HomeScreen
+import tech.benhack.home.viewmodel.HomeViewModel
+import tech.benhack.ui.helpers.DialogManager
 import tech.benhack.ui.theme.TrailerxTheme
 import javax.inject.Inject
 
@@ -38,9 +33,6 @@ class HomeFragment : Fragment(), MovieHomeListener {
     @Inject
     lateinit var dialogManager: DialogManager
 
-    @Inject
-    lateinit var imageLoader: ImageLoader
-
     private val binding: FragmentHomeBinding by lazy {
         FragmentHomeBinding.inflate(layoutInflater)
     }
@@ -51,6 +43,11 @@ class HomeFragment : Fragment(), MovieHomeListener {
         FirebaseRemoteConfig.getInstance()
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        homeViewModel.onCreate()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -59,12 +56,16 @@ class HomeFragment : Fragment(), MovieHomeListener {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
 
+                val movie by homeViewModel.mainMovie.observeAsState(initial = null)
                 val nowPlayingMovies by homeViewModel.nowPlayingMovies.observeAsState(initial = emptyList())
                 val upcomingMovies by homeViewModel.upcomingMovies.observeAsState(initial = emptyList())
                 val popularMovies by homeViewModel.popularMovies.observeAsState(initial = emptyList())
 
                 TrailerxTheme {
                     HomeScreen(
+                        mainMovieTitle = movie?.title ?: "----",
+                        mainImageUrl = Constants.IMAGES_BASE_URL + movie?.backdropPath,
+                        mainVideoUrl = "",
                         sections = listOf(
                             SectionHomeItem(
                                 title = remoteConfig.getString(FIRST_HOME_TITLE),
@@ -87,85 +88,9 @@ class HomeFragment : Fragment(), MovieHomeListener {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        //Setup
-        setupButtons()
-        setupLiveData()
-
-        refresh()
-    }
-
     override fun onResume() {
         super.onResume()
         binding.homeComposeView.disposeComposition()
-    }
-
-    private fun setupButtons(){
-        binding.refreshLayout.setOnRefreshListener(::refresh)
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    private fun setupLiveData(){
-        homeViewModel.isVideoAvailable.observe(viewLifecycleOwner, ::turnOfflineMode)
-
-        homeViewModel.mainMovie.observe(viewLifecycleOwner) { currentMovie ->
-            with(binding.mainTrailerContainer) {
-                trailerName.text = currentMovie.title
-                val imageUrl = Constants.IMAGES_BASE_URL + currentMovie.backdropPath
-                imageLoader.renderImageCenterCrop(requireContext(), imageUrl, trailerImageView)
-                imageLoader.renderImageCenterCrop(requireContext(), imageUrl, imgWebView)
-                homeViewModel.getTrailerOfMovie(currentMovie.id)
-            }
-        }
-
-        homeViewModel.videoIframe.observe(viewLifecycleOwner) { videoIframe ->
-            videoIframe?.let {
-                with(binding.mainTrailerContainer.trailerWebView){
-                    homeViewModel.isLoading.postValue(false)
-                    if(homeViewModel.isVideoAvailable.value == true){
-                        loadData(it, "text/html", "utf-8")
-                        settings.javaScriptEnabled = true
-                        webChromeClient = WebChromeClient()
-                    }
-                }
-            }
-        }
-
-        homeViewModel.isLoading.observe(viewLifecycleOwner){
-            binding.refreshLayout.isRefreshing = it
-        }
-    }
-
-    private fun turnOfflineMode(isServiceAvailable: Boolean) {
-        with(binding.mainTrailerContainer){
-            if(isServiceAvailable){
-                trailerWebView.visibility = View.VISIBLE
-                if(homeViewModel.onlineMode.value == false){
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.connection_recovered),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    homeViewModel.onlineMode.postValue(true)
-                }
-            } else {
-                trailerWebView.visibility = View.GONE
-                if(homeViewModel.onlineMode.value == true){
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.turn_offline_mode),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    homeViewModel.onlineMode.postValue(false)
-                }
-            }
-        }
-    }
-
-    private fun refresh() {
-        homeViewModel.onCreate()
     }
 
     override fun showDetails(id: Int) {

@@ -96,25 +96,10 @@ class ProfileFragment :
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupButtons()
-    }
-
     override fun onResume() {
         super.onResume()
         binding.profileComposeView.disposeComposition()
         profileViewModel.refresh(requireContext())
-    }
-
-    private fun setupButtons(){
-        profileViewModel.isLoading.observe(viewLifecycleOwner){
-            binding.refreshLayout.isRefreshing = it
-        }
-
-        binding.refreshLayout.setOnRefreshListener {
-            profileViewModel.refresh(requireContext())
-        }
     }
 
     private fun logout(){

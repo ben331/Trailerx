@@ -10,7 +10,7 @@ import tech.benhack.ui.R
 import kotlinx.coroutines.delay
 import javax.inject.Inject
 
-private const val PRELOAD_TIME = 3000L
+private const val PRELOAD_TIME = 1000L
 class ImageLoader @Inject constructor(){
 
     private val movieOptions = RequestOptions()

@@ -140,7 +140,7 @@ class NavigationFragment : Fragment(),
         val isFirstTime = prefs?.getBoolean("first_time", true) ?: true
 
         if(isFirstTime){
-            viewModel.preloadUserDataAndImages(requireContext()) {
+            viewModel.preloadUserData(requireContext()) {
                 prefs?.edit()!!.putBoolean("first_time", false).apply()
             }
         }

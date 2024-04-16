@@ -48,12 +48,14 @@ class MovieFragment : Fragment() {
             setContent {
 
                 val currentMovie by movieViewModel.currentMovie.observeAsState(initial = null)
+                val isVideoAvailable by movieViewModel.isVideoAvailable.observeAsState(initial = true)
                 val context = LocalContext.current
 
                 TrailerxTheme {
                     currentMovie?.let{
                         MovieScreen(
                             movie = it,
+                            offLineMode = !isVideoAvailable,
                             onNavigateBack = { navController.popBackStack() },
                             onAddToWatchList = { movieViewModel.addMovieToWatchList(context) }
                         )

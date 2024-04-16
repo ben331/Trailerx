@@ -4,5 +4,4 @@
     android:id="@+id/settingsComposeView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragments.MovieFragment"
-    android:background="?android:attr/colorBackgroundFloating"/>
+    tools:context=".view.fragments.MovieFragment"/>
