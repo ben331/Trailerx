@@ -52,7 +52,7 @@ class HomeViewModel @Inject constructor(
     val username:String by lazy { authRepository.getEmail() }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun onCreate() {
+    fun onRefresh() {
         isLoading.postValue(true)
         val coroutineA = viewModelScope.launch {
             val result = getNowPlayingMoviesUseCase()

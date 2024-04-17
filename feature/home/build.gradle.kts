@@ -77,6 +77,7 @@ dependencies {
     implementation(Libs.Compose.Optionals.viewModel)
     implementation(Libs.Compose.Optionals.liveData)
     implementation(Libs.Compose.Optionals.constraints)
+    implementation(Libs.Compose.Optionals.swipeRefresh)
 
     //Navigation
     implementation(Libs.Navigation.fragment)

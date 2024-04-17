@@ -45,7 +45,7 @@ class HomeFragment : Fragment(), MovieHomeListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        homeViewModel.onCreate()
+        homeViewModel.onRefresh()
     }
 
     override fun onCreateView(
@@ -56,6 +56,7 @@ class HomeFragment : Fragment(), MovieHomeListener {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
 
+                val isLoading by homeViewModel.isLoading.observeAsState(initial = false)
                 val movie by homeViewModel.mainMovie.observeAsState(initial = null)
                 val nowPlayingMovies by homeViewModel.nowPlayingMovies.observeAsState(initial = emptyList())
                 val upcomingMovies by homeViewModel.upcomingMovies.observeAsState(initial = emptyList())
@@ -63,6 +64,8 @@ class HomeFragment : Fragment(), MovieHomeListener {
 
                 TrailerxTheme {
                     HomeScreen(
+                        isLoading = isLoading,
+                        onRefresh = homeViewModel::onRefresh,
                         mainMovieTitle = movie?.title ?: "----",
                         mainImageUrl = Constants.IMAGES_BASE_URL + movie?.backdropPath,
                         mainVideoUrl = "",

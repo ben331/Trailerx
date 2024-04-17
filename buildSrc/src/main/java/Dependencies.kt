@@ -42,6 +42,7 @@ object Versions {
     const val composeRuntime = "1.6.4"
     const val constraintLayout = "1.0.1"
     const val coil = "2.6.0"
+    const val composeSwipeRefresh = "0.34.0"
 }
 
 object Libs {
@@ -130,6 +131,7 @@ object Libs {
             const val rxjava = "androidx.compose.runtime:runtime-rxjava2"
             const val constraints = "androidx.constraintlayout:constraintlayout-compose:${Versions.constraintLayout}"
             const val coil = "io.coil-kt:coil-compose:${Versions.coil}"
+            const val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:${Versions.composeSwipeRefresh}"
         }
     }
 

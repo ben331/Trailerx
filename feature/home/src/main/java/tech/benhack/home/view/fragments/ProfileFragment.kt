@@ -52,11 +52,14 @@ class ProfileFragment :
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
 
+                val isLoading by profileViewModel.isLoading.observeAsState(initial = false)
                 val watchList by profileViewModel.watchList.observeAsState(initial = emptyList())
                 val history by profileViewModel.recentViewed.observeAsState(initial = emptyList())
 
                 TrailerxTheme {
                     ProfileScreen(
+                        isLoading = isLoading,
+                        onRefresh = { profileViewModel.refresh(requireContext())},
                         isGuest = profileViewModel.username.isEmpty(),
                         onLogout = ::logout,
                         sections = listOf(
