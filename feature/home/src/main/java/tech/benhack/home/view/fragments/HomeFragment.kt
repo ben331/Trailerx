@@ -57,7 +57,8 @@ class HomeFragment : Fragment(), MovieHomeListener {
             setContent {
 
                 val isLoading by homeViewModel.isLoading.observeAsState(initial = false)
-                val movie by homeViewModel.mainMovie.observeAsState(initial = null)
+                val mainMovie by homeViewModel.mainMovie.observeAsState(initial = null)
+                val youtubeVideoId by homeViewModel.youtubeVideId.observeAsState(initial = "")
                 val nowPlayingMovies by homeViewModel.nowPlayingMovies.observeAsState(initial = emptyList())
                 val upcomingMovies by homeViewModel.upcomingMovies.observeAsState(initial = emptyList())
                 val popularMovies by homeViewModel.popularMovies.observeAsState(initial = emptyList())
@@ -66,9 +67,9 @@ class HomeFragment : Fragment(), MovieHomeListener {
                     HomeScreen(
                         isLoading = isLoading,
                         onRefresh = homeViewModel::onRefresh,
-                        mainMovieTitle = movie?.title ?: "----",
-                        mainImageUrl = Constants.IMAGES_BASE_URL + movie?.backdropPath,
-                        mainVideoUrl = "",
+                        mainMovieTitle = mainMovie?.title ?: "----",
+                        mainImageUrl = Constants.IMAGES_BASE_URL + mainMovie?.backdropPath,
+                        youtubeVideoId = youtubeVideoId,
                         sections = listOf(
                             SectionHomeItem(
                                 title = remoteConfig.getString(FIRST_HOME_TITLE),

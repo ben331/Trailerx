@@ -41,13 +41,11 @@ class HomeViewModel @Inject constructor(
 ): ViewModel() {
 
     val mainMovie = MutableLiveData<MovieItem>()
-    val videoIframe = MutableLiveData<String?>()
+    val youtubeVideId = MutableLiveData<String?>()
     val nowPlayingMovies = MutableLiveData<List<MovieItem>>()
     val upcomingMovies = MutableLiveData<List<MovieItem>>()
     val popularMovies = MutableLiveData<List<MovieItem>>()
     val isLoading = MutableLiveData(false)
-    val isVideoAvailable = MutableLiveData(true)
-    val onlineMode = MutableLiveData(true)
 
     val username:String by lazy { authRepository.getEmail() }
 
@@ -78,6 +76,7 @@ class HomeViewModel @Inject constructor(
             val coroutineD = viewModelScope.launch {
                 val result = getRandomTopMovieUseCase()
                 result?.let {
+                    getTrailerOfMovie(it.id)
                     mainMovie.postValue(it)
                 }
             }
@@ -89,15 +88,12 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getTrailerOfMovie(movieId:Int){
+    private fun getTrailerOfMovie(movieId:Int){
         isLoading.postValue(true)
         viewModelScope.launch {
-            val result = getTrailerUseCase(movieId, false)
+            val result = getTrailerUseCase(movieId)
             if(result != null){
-                videoIframe.postValue(result)
-                isVideoAvailable.postValue(true)
-            } else {
-                isVideoAvailable.postValue(false)
+                youtubeVideId.postValue(result)
             }
             isLoading.postValue(false)
         }

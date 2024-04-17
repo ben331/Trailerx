@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,6 +29,7 @@ import tech.benhack.common.Constants
 import tech.benhack.home.R
 import tech.benhack.home.view.components.CardSynopsis
 import tech.benhack.home.view.components.TitleContainer
+import tech.benhack.home.view.components.YoutubePlayer
 import tech.benhack.movies.model.GenreItem
 import tech.benhack.movies.model.MovieDetailItem
 import tech.benhack.ui.components.PrimaryButton
@@ -40,7 +42,7 @@ import tech.benhack.ui.theme.trailerxTypography
 @Composable
 fun MovieScreen(
     movie:MovieDetailItem,
-    offLineMode:Boolean,
+    youtubeVideoId:String?,
     onNavigateBack:()->Unit,
     onAddToWatchList:(movieId:Int)->Unit
 ){
@@ -84,6 +86,7 @@ fun MovieScreen(
                 originalTitleRef,
                 releaseDateRef,
                 imageRef,
+                videoPlayerRef,
                 synopsisSectionRef,
                 buttonRef,
             ) = createRefs()
@@ -130,6 +133,23 @@ fun MovieScreen(
                         end.linkTo(parent.end)
                     },
             )
+
+            youtubeVideoId?.let {
+                YoutubePlayer(
+                    lifecycleOwner = LocalLifecycleOwner.current,
+                    youtubeVideoId = youtubeVideoId,
+                    showControls = true,
+                    modifier = Modifier
+                        .height(200.dp)
+                        .fillMaxWidth()
+                        .constrainAs(videoPlayerRef) {
+                            top.linkTo(releaseDateRef.bottom, 16.dp)
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                        },
+                )
+            }
+
             CardSynopsis(
                 imageUrl = Constants.IMAGES_BASE_URL + movie.backdropPath,
                 genre = if(!movie.genres.isNullOrEmpty()) movie.genres!![0].name else "",
@@ -187,7 +207,7 @@ fun MovieScreenPreview(){
                 voteAverage = 0.0,
                 voteCount = 0
             ),
-            false,
+            "",
             {},
             {}
         )
@@ -225,7 +245,7 @@ fun MovieScreenPreviewDark(){
                 voteAverage = 0.0,
                 voteCount = 0
             ),
-            false,
+            "",
             {},
             {}
         )

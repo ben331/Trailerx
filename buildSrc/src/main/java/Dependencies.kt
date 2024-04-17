@@ -42,7 +42,7 @@ object Versions {
     const val composeRuntime = "1.6.4"
     const val constraintLayout = "1.0.1"
     const val coil = "2.6.0"
-    const val composeSwipeRefresh = "0.34.0"
+    const val youtube_player = "0.28"
 }
 
 object Libs {
@@ -92,6 +92,10 @@ object Libs {
         const val functions = "com.google.firebase:firebase-functions-ktx:${Versions.firebase_functions}"
     }
 
+    object MediaPlayer {
+        const val youtube_player = "com.pierfrancescosoffritti.androidyoutubeplayer:chromecast-sender:${Versions.youtube_player}"
+    }
+
     object JWT {
         const val api = "io.jsonwebtoken:jjwt-api:${Versions.jwt}"
         const val impl = "io.jsonwebtoken:jjwt-impl:${Versions.jwt}"
@@ -131,7 +135,6 @@ object Libs {
             const val rxjava = "androidx.compose.runtime:runtime-rxjava2"
             const val constraints = "androidx.constraintlayout:constraintlayout-compose:${Versions.constraintLayout}"
             const val coil = "io.coil-kt:coil-compose:${Versions.coil}"
-            const val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:${Versions.composeSwipeRefresh}"
         }
     }
 

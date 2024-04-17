@@ -31,7 +31,7 @@ fun HomeScreen(
     onRefresh:()->Unit,
     mainMovieTitle:String,
     mainImageUrl:String,
-    mainVideoUrl:String,
+    youtubeVideoId:String?,
     sections:List<SectionHomeItem>,
     listener: MovieHomeListener?
 ){
@@ -56,7 +56,7 @@ fun HomeScreen(
             item {
                 MainTrailer(
                     imageUrl = mainImageUrl,
-                    videoUrl = mainVideoUrl,
+                    youtubeVideoId = youtubeVideoId,
                     title = mainMovieTitle,
                 )
             }

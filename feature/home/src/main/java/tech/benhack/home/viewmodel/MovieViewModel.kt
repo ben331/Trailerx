@@ -39,8 +39,7 @@ class MovieViewModel @Inject constructor(
 
     val isLoading = MutableLiveData(false)
     val currentMovie = MutableLiveData<MovieDetailItem?>()
-    val videoIframe = MutableLiveData<String?>()
-    val isVideoAvailable = MutableLiveData(true)
+    val youtubeVideoId = MutableLiveData<String?>()
 
     val username:String by lazy { authRepository.getEmail() }
 
@@ -51,11 +50,9 @@ class MovieViewModel @Inject constructor(
             recordHistory(result)
         }
         viewModelScope.launch {
-            val result = getTrailerUseCase(movieId, true)
+            val result = getTrailerUseCase(movieId)
             if(result != null){
-                videoIframe.postValue(result)
-            } else {
-                isVideoAvailable.postValue(false)
+                youtubeVideoId.postValue(result)
             }
         }
     }

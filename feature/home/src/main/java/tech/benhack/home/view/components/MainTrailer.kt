@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -22,17 +23,16 @@ import tech.benhack.ui.theme.trailerxTypography
 @Composable
 fun MainTrailer(
     imageUrl:String,
-    videoUrl:String,
+    youtubeVideoId:String?,
     title:String,
     modifier:Modifier = Modifier,
-    offLineMode:Boolean = false,
 ){
     ConstraintLayout(
         modifier = modifier
             .fillMaxWidth()
             .height(280.dp)
     ) {
-        val (bigImageRef, smallImageRef, titleRef, labelRef) = createRefs()
+        val (videoPlayerRef, bigImageRef, smallImageRef, titleRef, labelRef) = createRefs()
 
         AsyncImage(
             model = imageUrl,
@@ -49,8 +49,20 @@ fun MainTrailer(
                 },
         )
 
-        //TODO: IMPLEMENT YOUTUBE VIDEO PLAYER HERE
-        if(!offLineMode){
+        youtubeVideoId?.let {
+            YoutubePlayer(
+                lifecycleOwner = LocalLifecycleOwner.current,
+                youtubeVideoId = youtubeVideoId,
+                modifier = Modifier
+                    .height(200.dp)
+                    .fillMaxWidth()
+                    .constrainAs(videoPlayerRef) {
+                        top.linkTo(parent.top)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    },
+            )
+
             AsyncImage(
                 model = imageUrl,
                 contentDescription = "$title image",
@@ -99,7 +111,7 @@ fun MainTrailerPreview(){
     TrailerxTheme {
         MainTrailer(
             imageUrl = "",
-            videoUrl = "",
+            youtubeVideoId = "",
             title = "Dune: Part Two"
         )
     }
@@ -114,7 +126,7 @@ fun MainTrailerPreviewDark(){
     TrailerxTheme {
         MainTrailer(
             imageUrl = "",
-            videoUrl = "",
+            youtubeVideoId = "",
             title = "Dune: Part Two"
         )
     }

@@ -50,9 +50,6 @@ dependencies {
     implementation(project(":core:ui"))
     implementation(project(":core:di"))
 
-    //Layout
-    implementation(Libs.Layouts.swipe_refresh)
-
     //  Kotlin
     implementation(Libs.Kotlin.stdlib)
 
@@ -77,7 +74,9 @@ dependencies {
     implementation(Libs.Compose.Optionals.viewModel)
     implementation(Libs.Compose.Optionals.liveData)
     implementation(Libs.Compose.Optionals.constraints)
-    implementation(Libs.Compose.Optionals.swipeRefresh)
+
+    //Youtube Player
+    implementation(Libs.MediaPlayer.youtube_player)
 
     //Navigation
     implementation(Libs.Navigation.fragment)
