@@ -6,12 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.produceState
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import tech.benhack.common.Constants
 import tech.benhack.home.databinding.FragmentHomeBinding
 import tech.benhack.home.model.SectionHomeItem
@@ -19,6 +24,7 @@ import tech.benhack.home.view.components.MovieHomeListener
 import tech.benhack.home.view.screens.HomeScreen
 import tech.benhack.home.viewmodel.HomeViewModel
 import tech.benhack.ui.helpers.DialogManager
+import tech.benhack.ui.helpers.NetworkState
 import tech.benhack.ui.theme.TrailerxTheme
 import javax.inject.Inject
 
@@ -58,14 +64,27 @@ class HomeFragment : Fragment(), MovieHomeListener {
 
                 val isLoading by homeViewModel.isLoading.observeAsState(initial = false)
                 val mainMovie by homeViewModel.mainMovie.observeAsState(initial = null)
-                val youtubeVideoId by homeViewModel.youtubeVideId.observeAsState(initial = "")
+                val youtubeVideoId by homeViewModel.youtubeVideoId.observeAsState(initial = "")
                 val nowPlayingMovies by homeViewModel.nowPlayingMovies.observeAsState(initial = emptyList())
                 val upcomingMovies by homeViewModel.upcomingMovies.observeAsState(initial = emptyList())
                 val popularMovies by homeViewModel.popularMovies.observeAsState(initial = emptyList())
 
+                val uiState by produceState<NetworkState>(
+                    initialValue = NetworkState.Loading,
+                    key1 = viewLifecycleOwner,
+                    key2 = homeViewModel
+                ) {
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        repeatOnLifecycle(state = Lifecycle.State.STARTED) {
+                            homeViewModel.uiState.collect{ value = it }
+                        }
+                    }
+                }
+
                 TrailerxTheme {
                     HomeScreen(
                         isLoading = isLoading,
+                        uiState = uiState,
                         onRefresh = homeViewModel::onRefresh,
                         mainMovieTitle = mainMovie?.title ?: "----",
                         mainImageUrl = Constants.IMAGES_BASE_URL + mainMovie?.backdropPath,

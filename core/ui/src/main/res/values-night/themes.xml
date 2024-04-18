@@ -1,5 +1,5 @@
 <resources>
-    <!-- Base application theme. -->
+
     <style name="Theme.Trailerx" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
         <!-- Primary brand color. -->
@@ -26,14 +26,6 @@
 
         <!-- Status Bar. -->
         <item name="android:statusBarColor">@color/yellow_400</item>
-
-        <!-- Text Appearances. -->
-        <item name="android:textColorPrimary">@color/white</item>
-        <item name="textAppearanceCaption">@style/TextAppearance.Trailerx.Caption</item>
-        <item name="textAppearanceButton">@style/TextAppearance.Trailerx.Button.Primary</item>
-
-        <!-- Shape Appearances. -->
-        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Trailerx.SmallComponent.Outlined</item>
     </style>
 
     <style name="Theme.Trailerx.SplashScreen" parent="Theme.SplashScreen">

@@ -18,8 +18,12 @@ import tech.benhack.movies.usecase.GetOfficialTrailerUseCase
 import tech.benhack.ui.helpers.DialogManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import tech.benhack.movies.usecase.IsServiceAvailableUseCase
+import tech.benhack.ui.helpers.NetworkState
 import javax.inject.Inject
 
 private const val TAG = "Movie"
@@ -30,6 +34,7 @@ class MovieViewModel @Inject constructor(
     private val getMovieByIdUseCase:GetMovieByIdUseCase,
     private val getTrailerUseCase:GetOfficialTrailerUseCase,
     private val addMovieToUserListUseCase:AddMovieToUserListUseCase,
+    private val isServiceAvailableUseCase: IsServiceAvailableUseCase,
     private val dialogManager: DialogManager,
     @IoDispatcher
     private val ioDispatcher: CoroutineDispatcher,
@@ -41,7 +46,19 @@ class MovieViewModel @Inject constructor(
     val currentMovie = MutableLiveData<MovieDetailItem?>()
     val youtubeVideoId = MutableLiveData<String?>()
 
-    val username:String by lazy { authRepository.getEmail() }
+    private val username:String by lazy { authRepository.getEmail() }
+
+    private val _uiState: MutableStateFlow<NetworkState> = MutableStateFlow(NetworkState.Loading)
+    val uiState: StateFlow<NetworkState> = _uiState
+
+    init {
+        viewModelScope.launch(ioDispatcher) {
+            isServiceAvailableUseCase.isServiceAvailable
+                .collect { isConnected ->
+                    _uiState.value = if(isConnected) NetworkState.Online else NetworkState.Offline
+                }
+        }
+    }
 
     fun onRefresh(movieId:Int){
         viewModelScope.launch {
@@ -51,9 +68,7 @@ class MovieViewModel @Inject constructor(
         }
         viewModelScope.launch {
             val result = getTrailerUseCase(movieId)
-            if(result != null){
-                youtubeVideoId.postValue(result)
-            }
+            youtubeVideoId.postValue(result)
         }
     }
 

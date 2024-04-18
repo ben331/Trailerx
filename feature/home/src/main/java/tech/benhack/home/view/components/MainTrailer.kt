@@ -23,6 +23,7 @@ import tech.benhack.ui.theme.trailerxTypography
 @Composable
 fun MainTrailer(
     imageUrl:String,
+    offLineMode:Boolean,
     youtubeVideoId:String?,
     title:String,
     modifier:Modifier = Modifier,
@@ -49,7 +50,7 @@ fun MainTrailer(
                 },
         )
 
-        youtubeVideoId?.let {
+        if(!offLineMode && youtubeVideoId!=null) {
             YoutubePlayer(
                 lifecycleOwner = LocalLifecycleOwner.current,
                 youtubeVideoId = youtubeVideoId,
@@ -111,6 +112,7 @@ fun MainTrailerPreview(){
     TrailerxTheme {
         MainTrailer(
             imageUrl = "",
+            false,
             youtubeVideoId = "",
             title = "Dune: Part Two"
         )
@@ -126,6 +128,7 @@ fun MainTrailerPreviewDark(){
     TrailerxTheme {
         MainTrailer(
             imageUrl = "",
+            true,
             youtubeVideoId = "",
             title = "Dune: Part Two"
         )

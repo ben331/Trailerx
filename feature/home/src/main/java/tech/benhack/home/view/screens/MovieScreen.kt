@@ -33,6 +33,7 @@ import tech.benhack.home.view.components.YoutubePlayer
 import tech.benhack.movies.model.GenreItem
 import tech.benhack.movies.model.MovieDetailItem
 import tech.benhack.ui.components.PrimaryButton
+import tech.benhack.ui.helpers.NetworkState
 import tech.benhack.ui.helpers.TextTransforms
 import tech.benhack.ui.theme.TrailerxTheme
 import tech.benhack.ui.theme.Yellow400
@@ -42,6 +43,7 @@ import tech.benhack.ui.theme.trailerxTypography
 @Composable
 fun MovieScreen(
     movie:MovieDetailItem,
+    uiState: NetworkState,
     youtubeVideoId:String?,
     onNavigateBack:()->Unit,
     onAddToWatchList:(movieId:Int)->Unit
@@ -134,7 +136,7 @@ fun MovieScreen(
                     },
             )
 
-            youtubeVideoId?.let {
+            if(uiState == NetworkState.Offline && youtubeVideoId!=null) {
                 YoutubePlayer(
                     lifecycleOwner = LocalLifecycleOwner.current,
                     youtubeVideoId = youtubeVideoId,
@@ -207,6 +209,7 @@ fun MovieScreenPreview(){
                 voteAverage = 0.0,
                 voteCount = 0
             ),
+            NetworkState.Online,
             "",
             {},
             {}
@@ -245,6 +248,7 @@ fun MovieScreenPreviewDark(){
                 voteAverage = 0.0,
                 voteCount = 0
             ),
+            NetworkState.Online,
             "",
             {},
             {}

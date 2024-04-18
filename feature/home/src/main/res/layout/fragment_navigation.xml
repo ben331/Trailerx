@@ -17,7 +17,7 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/nav_bar_height"
+        android:layout_height="72dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_navigation_menu"
         style="@style/Widget.Trailerx.BottomNavigationView"/>
@@ -33,8 +33,8 @@
         tools:visibility="visible">
         <ProgressBar
             android:id="@+id/progressBar"
-            android:layout_width="@dimen/progress_size"
-            android:layout_height="@dimen/progress_size"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
             style="@style/Widget.Trailerx.ProgressBar"/>
     </FrameLayout>
 

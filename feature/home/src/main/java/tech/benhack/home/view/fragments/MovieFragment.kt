@@ -6,18 +6,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.produceState
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import tech.benhack.home.R
 import tech.benhack.home.databinding.FragmentMovieBinding
 import tech.benhack.home.view.screens.MovieScreen
 import tech.benhack.home.viewmodel.MovieViewModel
 import tech.benhack.ui.helpers.DialogManager
+import tech.benhack.ui.helpers.NetworkState
 import tech.benhack.ui.theme.TrailerxTheme
 import javax.inject.Inject
 
@@ -51,10 +57,23 @@ class MovieFragment : Fragment() {
                 val youtubeVideoId by movieViewModel.youtubeVideoId.observeAsState(initial = "")
                 val context = LocalContext.current
 
+                val uiState by produceState<NetworkState>(
+                    initialValue = NetworkState.Loading,
+                    key1 = viewLifecycleOwner,
+                    key2 = movieViewModel
+                ) {
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        repeatOnLifecycle(state = Lifecycle.State.STARTED) {
+                            movieViewModel.uiState.collect{ value = it }
+                        }
+                    }
+                }
+
                 TrailerxTheme {
                     currentMovie?.let{
                         MovieScreen(
                             movie = it,
+                            uiState = uiState,
                             youtubeVideoId = youtubeVideoId,
                             onNavigateBack = { navController.popBackStack() },
                             onAddToWatchList = { movieViewModel.addMovieToWatchList(context) }

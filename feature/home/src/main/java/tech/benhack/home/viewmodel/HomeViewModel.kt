@@ -20,8 +20,12 @@ import tech.benhack.movies.usecase.GetUpcomingMoviesUseCase
 import tech.benhack.ui.helpers.DialogManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import tech.benhack.movies.usecase.IsServiceAvailableUseCase
+import tech.benhack.ui.helpers.NetworkState
 import javax.inject.Inject
 
 @HiltViewModel
@@ -33,6 +37,7 @@ class HomeViewModel @Inject constructor(
     private val getRandomTopMovieUseCase:GetRandomTopMovieUseCase,
     private val getUpcomingMovies:GetUpcomingMoviesUseCase,
     private val addMovieToUserListUseCase:AddMovieToUserListUseCase,
+    private val isServiceAvailableUseCase: IsServiceAvailableUseCase,
     private val dialogManager: DialogManager,
     @IoDispatcher
     private val ioDispatcher: CoroutineDispatcher,
@@ -41,13 +46,25 @@ class HomeViewModel @Inject constructor(
 ): ViewModel() {
 
     val mainMovie = MutableLiveData<MovieItem>()
-    val youtubeVideId = MutableLiveData<String?>()
+    val youtubeVideoId = MutableLiveData<String?>()
     val nowPlayingMovies = MutableLiveData<List<MovieItem>>()
     val upcomingMovies = MutableLiveData<List<MovieItem>>()
     val popularMovies = MutableLiveData<List<MovieItem>>()
     val isLoading = MutableLiveData(false)
 
     val username:String by lazy { authRepository.getEmail() }
+
+    private val _uiState: MutableStateFlow<NetworkState> = MutableStateFlow(NetworkState.Loading)
+    val uiState: StateFlow<NetworkState> = _uiState
+
+    init {
+        viewModelScope.launch(ioDispatcher) {
+            isServiceAvailableUseCase.isServiceAvailable
+                .collect { isConnected ->
+                    _uiState.value = if(isConnected) NetworkState.Online else NetworkState.Offline
+                }
+        }
+    }
 
     @SuppressLint("NotifyDataSetChanged")
     fun onRefresh() {
@@ -92,9 +109,7 @@ class HomeViewModel @Inject constructor(
         isLoading.postValue(true)
         viewModelScope.launch {
             val result = getTrailerUseCase(movieId)
-            if(result != null){
-                youtubeVideId.postValue(result)
-            }
+            youtubeVideoId.postValue(result)
             isLoading.postValue(false)
         }
     }

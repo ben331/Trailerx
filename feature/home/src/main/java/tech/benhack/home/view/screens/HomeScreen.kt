@@ -22,12 +22,14 @@ import tech.benhack.home.model.SectionHomeItem
 import tech.benhack.home.view.components.MainTrailer
 import tech.benhack.home.view.components.MovieHomeListener
 import tech.benhack.home.view.components.SectionHome
+import tech.benhack.ui.helpers.NetworkState
 import tech.benhack.ui.theme.TrailerxTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     isLoading:Boolean,
+    uiState:NetworkState,
     onRefresh:()->Unit,
     mainMovieTitle:String,
     mainImageUrl:String,
@@ -56,6 +58,7 @@ fun HomeScreen(
             item {
                 MainTrailer(
                     imageUrl = mainImageUrl,
+                    offLineMode = uiState == NetworkState.Offline,
                     youtubeVideoId = youtubeVideoId,
                     title = mainMovieTitle,
                 )
@@ -91,6 +94,7 @@ fun HomeScreenPreview(){
     TrailerxTheme {
         HomeScreen(
             false,
+            NetworkState.Online,
             {},
             "Kung Fu Panda 4",
             "",
@@ -119,6 +123,7 @@ fun HomeScreenPreviewNight(){
     TrailerxTheme {
         HomeScreen(
             true,
+            NetworkState.Online,
             {},
             "Madame Web",
             "",
